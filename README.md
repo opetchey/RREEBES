@@ -1,4 +1,4 @@
-# Reproducing Research Journal Club
+# Reproducible Research in Ecology, Evolution, Behaviour, and Environmental Studies
 
 ## Aims
 
@@ -54,4 +54,4 @@ Please use the RRJC github repository Issues and Wiki for as much communication 
 
 ## Gaining 1 ECTS
 
-Students at UZH can gain 1 ECTS for actively participating in the reproduction of two papers and attending at least 20 meetings. Please make an attendance form and bring it to each meeting.
+Students at UZH can gain 1 ECTS for actively participating in the reproduction of two papers and attending at least 20 meetings. Please make an attendance form and bring it to each meeting. This course is BIO633.
