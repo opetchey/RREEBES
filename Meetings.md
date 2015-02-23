@@ -1,4 +1,4 @@
-# Meetings in 2016
+# Meetings in 2015
 
 Meetings 10.45 to 12.00 Zurich time, location is variable.
 
