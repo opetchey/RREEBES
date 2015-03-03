@@ -4,7 +4,7 @@
 
 [Benincà, E., Huisman, J., Heerkloss, R., Jöhnk, K.D., Branco, P., Nes, E.H. Van, Scheffer, M. & Ellner, S.P. (1989) Chaos in a long-term experiment with a plankton community. , 1–35.](http://www.nature.com/nature/journal/v451/n7180/abs/nature06512.html)
 
-[Hiltunen, T., Hairston, N.G., Hooker, G., Jones, L.E. & Ellner, S.P. (2014) A newly discovered role of evolution in previously published consumer-resource dynamics. Ecology letters, 17, 915–23.](http://onlinelibrary.wiley.com/doi/10.1111/ele.12291/abstract)  Availability of data unclear.
+[Hiltunen, T., Hairston, N.G., Hooker, G., Jones, L.E. & Ellner, S.P. (2014) A newly discovered role of evolution in previously published consumer-resource dynamics. Ecology letters, 17, 915–23.](http://onlinelibrary.wiley.com/doi/10.1111/ele.12291/abstract)  Data is available and Jason Griffiths has a reproduction already.
 
 [Graham, N.A.J., Jennings, S., MacNeil, M.A., Mouillot, D. & Wilson, S.K. (2015) Predicting climate-driven regime shifts versus rebound potential in coral reefs. Nature, 518, 94–97.](http://www.nature.com/nature/journal/v518/n7537/full/nature14140.html)  Availability of data unclear.
 
