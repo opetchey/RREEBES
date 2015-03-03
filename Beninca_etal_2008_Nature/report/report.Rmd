@@ -20,7 +20,29 @@ The data are available as an Excel file supplement to [an Ecology Letters public
 
 # First get the raw data into R and tidy it.
 
-To be done.
+```{r}
+rm(list=ls())
+library(tidyr)
+library(dplyr)
+library(lubridate)
+library(stringr)
+library(ggplot2)
+
+spp.abund <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/species_abundances_original.csv", skip=7, header=T)
+spp.abund <- select(spp.abund, -X, -X.1)
+spp.abund <- spp.abund[-804:-920,]
+str(spp.abund)
+```
+
+The Protozoa variable contains some numbers with comman as the decimal separator. This creates a question about what dataset was used for the original analyses, as it could not have been this one.
+
+```{r}
+spp.abund$Protozoa <- as.numeric(str_replace(spp.abund$Protozoa, ",", ".""))
+```
+
+
+
+
 
 
 # Reproducing figure 1b through 1g
