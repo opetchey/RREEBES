@@ -50,7 +50,7 @@ Individuals might like to contribute to a reproduction outside the meeting time,
 
 ## Communication
 
-Please use the RRJC github repository Issues and Wiki for as much communication as possible. There will be no email list.
+Please use the RREEBES github repository Issues and Wiki for as much communication as possible. There will be no email list.
 
 ## Gaining 1 ECTS
 
