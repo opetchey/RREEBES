@@ -20,6 +20,7 @@ couple of months (eight meetings) at most.
 ## Reproduction guidelines
 
 Reproductions will be in R markdown, and should be generously commented.
+We will use the google R style guide (http://google-styleguide.googlecode.com/svn/trunk/Rguide.xml).
 Data manipulations allowed only in R (and other open source software, if
 required) are permitted. No alteration of original data files allowed.
 
