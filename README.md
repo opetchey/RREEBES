@@ -20,7 +20,7 @@ couple of months (eight meetings) at most.
 ## Reproduction guidelines
 
 Reproductions will be in R markdown, and should be generously commented.
-We will use the google R style guide (http://google-styleguide.googlecode.com/svn/trunk/Rguide.xml).
+We will use the google [R style guide](http://google-styleguide.googlecode.com/svn/trunk/Rguide.xml).
 Data manipulations allowed only in R (and other open source software, if
 required) are permitted. No alteration of original data files allowed.
 
@@ -47,7 +47,7 @@ Information [here](Meetings.md).
 
 ## Remote participation
 
-Individuals might like to contribute to a reproduction outside the meeting time, or may not be able to attend the meetings. Anyone can read and contribute to the reproduction on github (look [here](contributing.md) for instructions about how to). For particularly motivated folk that cannot attend the weekly meetings, we may arrange electronic attendance of the weekly meetings, e.g., via skype. 
+Individuals might like to contribute to a reproduction outside the meeting time, or may not be able to attend the meetings. Anyone can read and contribute to the reproduction on github (look [here](contributing.md) for instructions about how to; if you do not know what git and Github are, please look at these [resources](Github_resources.md) to get you started). For particularly motivated folk that cannot attend the weekly meetings, we may arrange electronic attendance of the weekly meetings, e.g., via skype. 
 
 ## Communication
 
