@@ -7,6 +7,7 @@ Make contributions by one of these methods:
 
 1. Create an Issue (the simpler option). For this you need to have a github account and to follow the [guidelines about creating issues](https://guides.github.com/features/issues/).
 2. Use a pull request (the more involved option). See here for more information on [using pull requests](https://help.github.com/articles/using-pull-requests/).
+3. Become a collaborator.
 
 (Pull requests are preferable.)
 
