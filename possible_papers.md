@@ -1,4 +1,5 @@
 # Papers we might reproduce
+﻿# Papers we might reproduce
 
 [Lagrue, C., Poulin, R. & Cohen, J.E. (2014) Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry. Proceedings of the National Academy of Sciences of the United States of America, 112, 1791–1796.](http://www.pnas.org/content/112/6/1791)
 
@@ -9,3 +10,5 @@
 [Graham, N.A.J., Jennings, S., MacNeil, M.A., Mouillot, D. & Wilson, S.K. (2015) Predicting climate-driven regime shifts versus rebound potential in coral reefs. Nature, 518, 94–97.](http://www.nature.com/nature/journal/v518/n7537/full/nature14140.html)  Availability of data unclear.
 
 [Ward, E.J., Holmes, E.E., Thorson, J.T. & Collen, B. (2014) Complexity is costly: A meta-analysis of parametric and non-parametric methods for short-term population forecasting. Oikos, 123, 652–661.](http://onlinelibrary.wiley.com/doi/10.1111/j.1600-0706.2014.00916.x/abstract) Availability of data unclear.
+
+Test the new branch
