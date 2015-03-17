@@ -37,11 +37,55 @@ str(spp.abund)
 The Protozoa variable contains some numbers with comman as the decimal separator. This creates a question about what dataset was used for the original analyses, as it could not have been this one.
 
 ```{r}
-spp.abund$Protozoa <- as.numeric(str_replace(spp.abund$Protozoa, ",", ".""))
+spp.abund$Protozoa <- as.numeric(str_replace(spp.abund$Protozoa, ",", "."))
+```
+
+Format the dates as dates
+
+```{r}
+spp.abund$Date <- dmy(spp.abund$Date)
+```
+
+Ooops... R assumes the experiment was done in the 21st century. Shouldn't matter too much.
+
+Data is in wide format, so change it to long:
+```{r}
+spp.abund <- gather(spp.abund, "variable", "value", 3:12)
+str(spp.abund)
+```
+
+Bring in the nutrient data:
+```{r}
+nuts <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/nutrients_original.csv", skip=7, header=T)
+nuts <- select(nuts, -X, -X.1)
+nuts <- nuts[-349:-8163,]
+nuts$Date <- dmy(nuts$Date)
+nuts <- select(nuts, -NO2, -NO3, -NH4)
+nuts <- gather(nuts, "variable", "value", 3:4)
+str(nuts)
+```
+
+Now put the two datasets together
+```{r}
+all.data <- rbind(spp.abund, nuts)
+```
+
+
+Constrain the date range of the data to that used in the Nature paper:
+```{r}
+#to be done
 ```
 
 
 
+First attempt at figure 1b-g
+
+```{r}
+
+ggplot(all.data, aes(x=Day.number, y=value)) + geom_line() +
+  facet_wrap(~variable, scales="free_y")
+
+```
 
 
 
