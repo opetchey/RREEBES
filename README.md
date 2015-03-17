@@ -16,6 +16,7 @@
 We will likely spend a lot of time on any single paper, so their
 selection is very important. Please make suggestions [here](possible_papers.md). Raw data must be available. Reproduction should appear feasible in a
 couple of months (eight meetings) at most.
+Please email authors of a paper when we start the reproduction, telling them what we're up to.
 
 ## Reproduction guidelines
 
