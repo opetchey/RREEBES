@@ -6,6 +6,8 @@ Assign person to take meeting minutes.
 
 New people (get photo)?
 
+Any outstanding issues?
+
 Any suggested papers added to the repository?
 
 Any progress on focal paper since last week?
