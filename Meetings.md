@@ -43,6 +43,16 @@ Frank introduced how to get on Github and to clone info. between Github and your
 
 ## 10.3
 
+Recap for those that missed the previous meeting:
+* what are git and github, what is version control;
+* how to keep an eye on a github repository by using the “watch” option;
+* using github desktop app for managing repositories.
+
+Homeworks for next time:
+* create a github account
+* find the RREEBES repository and follow its changes and developments using the “watch” option
+* try to make a change to one of the existing files and make a “pull” request
+
 ## 17.3
 
 ## 24.3
