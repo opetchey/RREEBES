@@ -27,8 +27,10 @@ library(dplyr)
 library(lubridate)
 library(stringr)
 library(ggplot2)
+library(RCurl)
 
-spp.abund <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/species_abundances_original.csv", skip=7, header=T)
+spp.abund <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/species_abundances_original.csv"), skip=7, header=T)
+
 spp.abund <- select(spp.abund, -X, -X.1)
 spp.abund <- spp.abund[-804:-920,]
 str(spp.abund)
@@ -56,7 +58,7 @@ str(spp.abund)
 
 Bring in the nutrient data:
 ```{r}
-nuts <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/nutrients_original.csv", skip=7, header=T)
+nuts <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/nutrients_original.csv"), skip=7, header=T)
 nuts <- select(nuts, -X, -X.1)
 nuts <- nuts[-349:-8163,]
 nuts$Date <- dmy(nuts$Date)

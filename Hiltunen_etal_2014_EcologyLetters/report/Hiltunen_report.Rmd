@@ -1,0 +1,204 @@
+---
+title: "Reproduce anaylses of Hiltunen et al. (2014)"
+author: "Jason Griffiths"
+date: "04-04-2015"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+# Introduction
+
+Here we will reproduce the time series anaylses presented in the paper *A newly discovered role of evolution in previously published consumer-resource dynamics*, by Tepo Hiltunen and others. The manuscript can be found on ([the paper on the Ecology Letters website](http://onlinelibrary.wiley.com/doi/10.1111/ele.12291/abstract?deniedAccessCustomisedMessage=&userIsAuthenticated=false)). 
+
+
+The time series data sets analysed are provided in the [the Supplement to the paper](http://onlinelibrary.wiley.com/doi/10.1111/ele.12291/suppinfo). The data contains a set of 12 predator-prey time series. Each predator-prey time series is in a seperate Excel spreadsheet. Each data file details the timing of predator and prey obserations, the abundance of each observed, the start and end time of the predator prey oscilations and the dilution of medium in the system. A script detailing the data transfromation and smoothing methods are also provided in the supplementary materials.
+
+Although all data sets are analysed in this study, the Amoeba-bacteia predator-prey data set of Tsuchiya et al. (1972) was the focus of the figures in the manuscript.THerefore we also use this data set to perform the reproductio
+
+We thank and aknowledge Steve ellner for help in the reproduction of this work.
+
+
+
+
+# First get the raw data into R and tidy it.
+
+```{r}
+rm(list=ls())
+require("RColorBrewer")
+library(RCurl)
+
+# load the data from github
+x <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hiltunen_etal_2014_EcologyLetters/data/Tsuchiya%201972%20set%20C.csv",
+             cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+pp.dat <-	read.csv(text = x)
+
+```
+
+Note that the time of the predator and prey observations may differ. Also the 5th to 10th column of data contains just a single value and all the other elenments are NA.This reflects the fact that they are not part of the time series data, but are instead constants to use in the analysis.
+
+
+```{r}
+n.obs <- dim(pp.dat)[1] # total number of observations
+ww=pp.dat$window[1];    # window length as percent of total. 
+start_cut= pp.dat$start[1] #how much to remove from the start and end
+end_cut=pp.dat$end[1] 
+```
+
+Assign prey and predator observations and remove any NaNs
+
+```{r}
+preyX=pp.dat$prey_time; preyY=pp.dat$prey_pop;
+Q=cbind(preyX,preyY); Q=na.omit(Q);
+preyX=Q[,1]; preyY=Q[,2];
+
+predX=pp.dat$pred_time; predY=pp.dat$pred_pop;
+Q=cbind(predX,predY); Q=na.omit(Q);
+predX=Q[,1]; predY=Q[,2];
+
+```
+
+Scale prey and predator number relative to maximum
+
+```{r}
+preyX=preyX/max(preyX); preyY=preyY/max(preyY)
+predX=predX/max(predX); predY=predY/max(predY)
+```
+
+Join data back together and cut out initial transient
+
+```{r}
+prey1=cbind(preyX,preyY)
+prey1=data.frame(prey1)
+prey_all=data.frame(prey1)
+prey1=prey1[prey1$preyX>start_cut,];
+prey1=prey1[prey1$preyX<end_cut,];
+
+pred1=cbind(predX,predY)
+pred1=data.frame(pred1)
+pred_all=data.frame(pred1)
+pred1=pred1[pred1$predX>start_cut,];
+pred1=pred1[pred1$predX<end_cut,];
+```
+
+Plot the original data after its rescaled
+
+```{r}
+xmin=max(min(pred1$predX,na.rm=T),min(prey1$preyX,na.rm=T)); xmax=min(max(pred1$predX,na.rm=T),max(prey1$preyX,na.rm=T)); 
+yrange=range(c(pred_all$predY,prey_all$preyY)); 
+
+plot(prey_all,type='b',col = "black",xlab="Time", ylab="Scaled Population",xlim=c(min(prey_all[,1]), 1),pch=16,ylim=yrange,cex.lab=1.5)
+lines(pred_all, type='b',col = "black",ylim=yrange,xlim=c(min(prey_all[,1]), 1),pch=16)
+lines(prey1, type='b',col = "green3",lwd=2,ylim=yrange,xlim=c(min(prey_all[,1]), 1),pch=16)
+lines(pred1, type='b',col = "red",,lwd=2,ylim=yrange,xlim=c(min(prey_all[,1]), 1),pch=16)
+title(paste("Original data"),cex.main=1.5)
+```
+
+Transform scaled abundance data (log)
+
+```{r}
+##log 10 both pred and prey abundances
+prey1$preyY=log10(prey1$preyY); pred1$predY=log10(pred1$predY); 
+
+```
+
+Peform smoothing:  constrain df of spline to be <= 2/3 of time series length
+
+```{r}
+smooth_prey=smooth.spline(prey1$preyX,prey1$preyY); 
+maxdf=0.67*length(prey1$preyX); 
+if(smooth_prey$df>maxdf) smooth_prey=smooth.spline(prey1$preyX,prey1$preyY,df=maxdf);  
+
+smooth_pred=smooth.spline(pred1$predX,pred1$predY); 
+maxdf=0.67*length(pred1$predX); 
+if(smooth_pred$df>maxdf) smooth_pred=smooth.spline(pred1$predX,pred1$predY,df=maxdf); 
+
+```
+
+Predict the smoothed values of the abundances over the time of observation
+
+```{r}
+#seq of scaled times from min to max by 100
+px.prey=seq(min(prey1[, 1]),max(prey1[, 1]),length=100);
+px.pred=seq(min(pred1[, 1]),max(pred1[, 1]),length=100);
+
+smooth_pred2=predict(smooth_pred,px.pred)$y; 
+smooth_prey2=predict(smooth_prey,px.prey)$y; 
+```
+
+Plot data on log scale, with smooths (figure 1a)
+
+```{r}
+ylims=range(c(prey1$preyY,pred1$predY)); 
+
+plot(px.prey,smooth_prey2, type='l',xlab="Scaled time", ylab="log10(Scaled Populations)",
+     lwd=3,col = "green3", ylim=ylims,xlim=c(min(prey_all[,1]), 1))
+lines(prey1, type='p',col = "green3",lwd=3,xlim=c(min(prey_all[,1]), 1))
+lines(px.pred,smooth_pred2, type='l',lwd=3, col = "red",xlim=c(min(prey_all[,1]), 1))
+lines(pred1, type='p',col = "red",lwd=3,xlim=c(min(prey_all[,1]), 1))
+title("Smoothed population abundances")
+```
+
+Examine the phase plane:plot the spline smoothed predictions in time series and phase plane.
+
+Evidence of a transition from a classic ¼-period lag predator-prey cycles to eco-evolutionary cycles can be seen in a phase-plane plot of predator against prey densities (Figs 2). The dynamics transition from producing roughly oval limit cycles to antiphase dynamics
+where th pattern approaches a straight line with negative slope.
+
+This transition can be quantified by measuring how oval the dynamices are over a given window of time. As the phase plane pattern transitions from an oval to a straight line, the ratio between the orthogonal long and short axes of an ellipse increases. This value is known as eccentricity.
+
+As in the paper we add rather arbitrary dark points when there is an indication of "evolution affecting dynamics".
+
+```{r}
+plot(10^smooth_prey2[],10^smooth_pred2[],col="blue",type="b",xlab="Prey density",ylab="Predator density",xlim=c(0,1),ylim=c(0,1))
+points(10^smooth_prey2[38:100],10^smooth_pred2[38:100],type="b")
+
+```
+
+Rescale smooth abundance so that standard deviation of both pred and prey are equal to 1
+
+```{r}
+smooth.dd <- data.frame(prey=10^smooth_prey2,pred=10^smooth_pred2) 
+smooth.dd[,1] <- smooth.dd[,1]*1/sd(smooth.dd[,1])
+smooth.dd[,2] <- smooth.dd[,2]*1/sd(smooth.dd[,2])       
+
+pp.dat$window[1] <- 50
+
+```
+
+Quantify the changing shape of the trajectories path in the phase plane. 
+
+Measures of Eigenvalue ratios (circles) from principal components analysis of moving windows of the data in shows the decreasing ratio between second and first eigenvalue. This measures the ration between the min and max diameter of an oval (min:max). Thus this measure of Inverse eccentricity measures the ovalness of the phase plane trajectory. Lower values are less circular and more like a straight line
+
+```{r}
+
+ratio.comp <- sapply(1:(100-pp.dat$window[1]+1),FUN=function(x){
+  pc.smooth <-princomp(smooth.dd[x:(x+pp.dat$window[1]-1),])[[1]]
+  ratio <- min(pc.smooth)/max(pc.smooth)
+  return(ratio )})
+```
+
+Plot the changes in oval-ness of the phase plane over successive windows. Use a linear model to characterise the temporal change in the ovalness of the phase-planes trajectory
+
+```{r}
+plot(1:length(ratio.comp),ratio.comp,ylab="Principle Components ratio",xlab="Time window")
+mod.inv.ecc <- lm(ratio.comp~c(1:length(ratio.comp)))
+preds <- predict(mod.inv.ecc)
+lines(1:length(ratio.comp),preds,type="l")
+
+```
+
+Calculate an index of the strength of this change in ellipticalness. Hiltunen et al. call this the Evoluionary Dynamic index (EDI).
+
+```{r}
+EDI <- diff(c(preds[1],preds[length(ratio.comp)]))
+```
+
+To do...
+
+a Implement the significance test. This uses a bootsrapping of residuals methodology
+
+b Simulation based figures could be produced
+
+c Produce Figure 3 
