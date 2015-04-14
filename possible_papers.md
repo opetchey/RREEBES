@@ -9,3 +9,5 @@
 [Graham, N.A.J., Jennings, S., MacNeil, M.A., Mouillot, D. & Wilson, S.K. (2015) Predicting climate-driven regime shifts versus rebound potential in coral reefs. Nature, 518, 94–97.](http://www.nature.com/nature/journal/v518/n7537/full/nature14140.html)  Availability of data unclear.
 
 [Ward, E.J., Holmes, E.E., Thorson, J.T. & Collen, B. (2014) Complexity is costly: A meta-analysis of parametric and non-parametric methods for short-term population forecasting. Oikos, 123, 652–661.](http://onlinelibrary.wiley.com/doi/10.1111/j.1600-0706.2014.00916.x/abstract) Availability of data unclear.
+
+[Ye, H., Beamish, R.J., Glaser, S.M., Grant, S.C.H., Hsieh, C., Richards, L.J., Schnute, J.T. & Sugihara, G. (2015) Equation-free mechanistic ecosystem forecasting using empirical dynamic modeling. Proceedings of the National Academy of Sciences, 201417063.](http://www.pnas.org/content/112/13/E1569.long) Data and some code on github.

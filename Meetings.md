@@ -6,9 +6,9 @@ Assign person to take meeting minutes.
 
 New people (get photo)?
 
-Any outstanding issues?
-
 Any suggested papers added to the repository?
+
+Any outstanding issues?
 
 Any progress on focal paper since last week?
 
@@ -18,6 +18,7 @@ What to attempt next week (to be refered to next week)?
 
 ## 3.3
 
+(Minutes by Mikael.)
 Owen introduced and outlined REEBBES by going through the GitHub homepage
 * How to suggest papers to reproduce
 * Meeting schedule
@@ -43,17 +44,41 @@ Frank introduced how to get on Github and to clone info. between Github and your
 
 ## 10.3
 
+(Minutes by Marco.)
+Recap for those that missed the previous meeting:
+* what are git and github, what is version control;
+* how to keep an eye on a github repository by using the “watch” option;
+* using github desktop app for managing repositories.
+
+Homeworks for next time:
+* create a github account
+* find the RREEBES repository and follow its changes and developments using the “watch” option
+* try to make a change to one of the existing files and make a “pull” request
+
 ## 17.3
+
+(Minutes by Vanessa.)
+
 
 ## 24.3
 
-## 31.3
 Owen not present.
+No meeting.
+
+## 31.3
+
+Owen not present.
+No meeting.
 
 ## 7.4
+
 Owen not present.
+No meeting.
 
 ## 14.4
+
+(Minutes by Gian Marco.)
+
 
 ## 21.4
 
