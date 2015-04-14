@@ -74,7 +74,7 @@ all.data <- rbind(spp.abund, nuts)
 
 Now select only the date range used in the Nature paper. From the supplment *The analysis in Benincà et al. (Nature 2008) covered all data from 16/06/1991 until 20/10/1997*. (Remembering dates in the R dataframes are 2090s.)
 ```{r}
-an1 <- filter(an, an$Date>dmy("16/06/2091") & Date<dmy("20/10/2097"))
+all.data <- filter(all.data, Date>dmy("16/06/2091") & Date<dmy("20/10/2097"))
 ```
 
 # Reproducing figure 1b through 1g
@@ -88,6 +88,21 @@ ggplot(all.data, aes(x=Day.number, y=value)) + geom_line() +
 ```
 
 The code from here on needs modifying, as the object names are Owen's old ones, and need changing to those used above.
+
+Now we add a column that gives the variable types, same as in figure 1b through 1g.
+First make a lookup table giving species type:
+```{r}
+tt <- data.frame(variable=unique(all.data$variable),
+                 Type=c("Cyclopoids", "Herbivore", "Herbivore", "Herbivore",
+                        "Phytoplankton",  "Phytoplankton", "Phytoplankton",
+                        "Detritivore", "Detritivore", "Bacteria", "Nutrient", "Nutrient"))
+tt
+```
+
+And add the Type variable to the new dataset:
+```{r}
+all.data <- merge(all.data, tt)
+```
 
 First lets set the colours as in the original:
 ```{r}
@@ -107,18 +122,14 @@ species.colour.mapping <- c("Cyclopoids"="pink",
 
 Next change the order of the levels in the Type variable, so plots appear in the same order as in the original figure:
 ```{r}
-an$Type <- factor(an$Type, levels=c("Cyclopoids", "Herbivore", "Phytoplankton", "Nutrient",
+all.data$Type <- factor(all.data$Type, levels=c("Cyclopoids", "Herbivore", "Phytoplankton", "Nutrient",
                                     "Bacteria", "Detritivore"))
 ```
 
-Now select only the date range used in the Nature paper. From the supplment *The analysis in Benincà et al. (Nature 2008) covered all data from 16/06/1991 until 20/10/1997*. (Remembering dates in the R dataframes are 2090s.)
-```{r}
-an1 <- filter(an, an$Date>dmy("16/06/2091") & Date<dmy("20/10/2097"))
-```
 
 Now a version that doesn't try to recreate the "gap" in the y axes of the original figures:
 ```{r, warning=FALSE, fig.width=10}
-g1 <- qplot(as.numeric(Day), Abundance, col=Species, data=an1) +
+g1 <- qplot(as.numeric(Day.number), value, col=variable, data=all.data) +
   facet_wrap(~Type, ncol=2, scales="free_y") +
   geom_point() + geom_line() +
   scale_colour_manual(values = species.colour.mapping)
@@ -128,13 +139,13 @@ Looks reasonably good.
 
 Now a version that approximates the "gap", by removing data above it:
 ```{r, warning=FALSE, fig.width=10}
-an2 <- filter(an1, Type=="Cyclopoids" & Abundance<0.6 |
-                Type=="Herbivore" & Abundance<13 |
-                Type=="Phytoplankton" & Abundance<1400 |
-                Type=="Nutrient" & Abundance<50 |
-                Type=="Bacteria" & Abundance<10 |
-                Type=="Detritivore" & Abundance<0.7) 
-g1 <- qplot(as.numeric(Day), Abundance, col=Species, data=an2) +
+an2 <- filter(all.data, Type=="Cyclopoids" & value<0.6 |
+                Type=="Herbivore" & value<13 |
+                Type=="Phytoplankton" & value<1400 |
+                Type=="Nutrient" & value<50 |
+                Type=="Bacteria" & value<10 |
+                Type=="Detritivore" & value<0.7) 
+g1 <- qplot(as.numeric(Day.number), value, col=variable, data=an2) +
   facet_wrap(~Type, ncol=2, scales="free_y") +
   geom_point() + geom_line() +
   scale_colour_manual(values = species.colour.mapping)
@@ -144,13 +155,22 @@ Difficult it look like the data go off the top of the graph in ggplot.
 
 Try logarithmic y-axes:
 ```{r, warning=FALSE, fig.width=10}
-g1 <- qplot(as.numeric(Day), log10(Abundance+0.00001), col=Species, data=an1) +
+g1 <- qplot(as.numeric(Day.number), log10(value+0.00001), col=variable, data=all.data) +
   facet_wrap(~Type, ncol=2, scales="free_y") +
   geom_point() + geom_line() +
   scale_colour_manual(values = species.colour.mapping)
 g1
 ```
-Now we see why it can be useful to plot with a break in the y-axis, as in the original graphs.
+
+Try fourth root, as this is used in the subsequent stats.
+```{r, warning=FALSE, fig.width=10}
+g1 <- qplot(as.numeric(Day.number), value^0.25, col=variable, data=all.data) +
+  facet_wrap(~Type, ncol=2, scales="free_y") +
+  geom_point() + geom_line() +
+  scale_colour_manual(values = species.colour.mapping)
+g1
+```
+
 
 
 # Data transformation
