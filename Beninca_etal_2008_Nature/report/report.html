@@ -107,8 +107,10 @@ library(dplyr)</code></pre>
 <pre class="r"><code>library(lubridate)
 library(stringr)
 library(ggplot2)
+library(RCurl)</code></pre>
+<pre><code>## Loading required package: bitops</code></pre>
+<pre class="r"><code>spp.abund &lt;- read.csv(text=getURL(&quot;https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/species_abundances_original.csv&quot;), skip=7, header=T)
 
-spp.abund &lt;- read.csv(&quot;~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/species_abundances_original.csv&quot;, skip=7, header=T)
 spp.abund &lt;- select(spp.abund, -X, -X.1)
 spp.abund &lt;- spp.abund[-804:-920,]
 str(spp.abund)</code></pre>
@@ -139,7 +141,7 @@ str(spp.abund)</code></pre>
 ##  $ variable  : Factor w/ 10 levels &quot;Cyclopoids&quot;,&quot;Calanoid.copepods&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ value     : num  0 0 0.0353 0 0.0353 ...</code></pre>
 <p>Bring in the nutrient data:</p>
-<pre class="r"><code>nuts &lt;- read.csv(&quot;~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/nutrients_original.csv&quot;, skip=7, header=T)
+<pre class="r"><code>nuts &lt;- read.csv(text=getURL(&quot;https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/nutrients_original.csv&quot;), skip=7, header=T)
 nuts &lt;- select(nuts, -X, -X.1)
 nuts &lt;- nuts[-349:-8163,]
 nuts$Date &lt;- dmy(nuts$Date)
