@@ -55,12 +55,17 @@ Homeworks for next time:
 
 ## 17.3
 
+Minutes by Vanessa.
+
 ## 24.3
+
+Owen not present.
 
 ## 31.3
 Owen not present.
 
 ## 7.4
+
 Owen not present.
 
 ## 14.4
