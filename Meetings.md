@@ -58,6 +58,25 @@ Homeworks for next time:
 ## 17.3
 
 (Minutes by Vanessa.)
+New people: Gian Marco
+
+Suggestions
+* Email the authors of the papers that we start to reproduce, let them know what we are doing and where the files will be available.
+
+Questions
+* Owen and Frank showed how to properly fork and clone the repository into your own account/computer, how to edit the files and then pull them back. Thiss will be available on the wiki page.
+
+Issues
+* Jason: what kind of paper we are interested in reproducing, and also which analyses within a paper we would like to reproduce.
+* How to read data from github
+
+No progress since last week
+
+Continue to work on the Beninca et al 2008 paper:
+* Reproduce fig. 1
+* Generated figure is similar to the original one in the paper, but not exactly the same. Is this enough? Do we need to reproduce exactly the same plot?
+
+Next week: go through the modifications sent by Owen
 
 
 ## 24.3
