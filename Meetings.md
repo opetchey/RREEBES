@@ -98,6 +98,25 @@ No meeting.
 
 (Minutes by Gian Marco.)
 
+* Owen encourages to meet even in his absence.
+* Vanessa has troubles synchronising the github ?> instructions on the wiki.
+* Some of us have troubles connecting to the internet ieu Petchey ?> Go to IT to unlock the network.
+
+* Work on the master branch.
+* Issue: use package RCurl function getURL to read the file from the internet.
+* Recap of previous work done on the Beninca paper.
+
+* Change branch to Figs2b g.
+* Fix some details (names of data and variables) in the current branch.
+* Check of previous plot of time series.
+* Create a color map for the species adding colours to different functional groups.
+* Reproduce color figure without magnifications and gaps.
+* Try to approximate the gap by removing the data above a given value.
+* Plot log scale and fourth root plots.
+
+* Go back to master branch and synchronise.
+* Todo for next week: data transformation and Lyapunov exponents.
+* Jason shows reproduction of Hiltunen et al. (2014).
 
 ## 21.4
 
