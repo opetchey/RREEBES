@@ -56,4 +56,4 @@ Please use the RREEBES github repository Issues and Wiki for as much communicati
 
 ## Gaining 1 ECTS
 
-Students at UZH can gain 1 ECTS for actively participating in the reproduction of two papers and attending at least 20 meetings. Please make an attendance form and bring it to each meeting. This course is BIO633.
+Students at UZH can gain 1 ECTS for actively participating in the reproduction of two papers and attending at least 20 meetings. Please make an attendance form and bring it to each meeting. This course is BIO633. See more in the [Vorlesungsverzeichnis entry](http://www.vorlesungen.uzh.ch/FS15/suche/sm-50756171.modveranst.html#veranstaltungen).

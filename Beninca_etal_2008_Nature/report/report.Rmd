@@ -171,8 +171,6 @@ g1 <- qplot(as.numeric(Day.number), value^0.25, col=variable, data=all.data) +
 g1
 ```
 
-
-
 # Data transformation
 
 To be done.
