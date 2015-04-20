@@ -120,6 +120,8 @@ No meeting.
 
 ## 21.4
 
+Divide tasks and work during class?
+
 ## 28.4
 
 ## 5.5
