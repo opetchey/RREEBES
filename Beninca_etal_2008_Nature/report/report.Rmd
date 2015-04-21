@@ -203,11 +203,12 @@ g1
 
 # Data transformation
 
-Now we need to work with transformed data. Details of the transformation, copied from the Supplmentary information are in italic in the following sections.
+Now we need to work with transformed data. Details of the transformation, copied from the Supplmentary information are in indented quote style in the following sections... looks like this:
 
 > 3. Transformation of the time series. We transformed the original time series, shown in Fig. 1b-g of the main text, to obtain stationary time series with equidistant data and homogeneous units of measurement. The transformation steps are illustrated for the bacteria (Fig. S1).
 
 Aside: The ELE supplement contains the raw data and the transformed data, in separate data sheets. I (Owen) also got the interpolated data from Stephen Ellner directly.
+
 
 ## Interpolation
 
@@ -223,7 +224,8 @@ range(xout)
 ```
 
 ```{r}
-mt <- plyr::dlply(all.data,
+all.data1 <- na.omit(all.data)
+mt <- plyr::dlply(all.data1,
                   "variable",
                   function(xx) pracma::interp1(x=xx$Day.number,
                                                y=xx$value,
@@ -238,11 +240,10 @@ mt <- gather(mt, variable, value, 2:13)
 #ggplot(mt, aes(x=Day.number, y=value)) + facet_wrap(~variable, scales="free") + geom_line()
 ```
 
+
 ## Fourth root transform
 
 > Next, because the original time series showed many sharp spikes, the time series were rescaled using a fourth-root power transformation (Fig. S1b). The sharp spikes bias "direct method" estimates of the Lyapunov exponent, because nearby pairs of reconstructed state vectors mostly occurred in the troughs between spikes. The average rate of subsequent trajectory divergence from these pairs is therefore an estimate of the local Lyapunov exponent in the troughs, which may be very different from the global Lyapunov exponent. By making spikes and troughs more nearly symmetric, the power transformation resulted in a much more even spread of nearby state vector pairs across the full range of the data for all functional groups in the food web. The transformation is also useful for fitting nonlinear models of the deterministic skeleton (used for nonlinear predictability and indirect method estimates of the Lyapunov exponent), which was done by least squares and therefore is most efficient when error variances are stabilized. Fourth-root transformation is intermediate between the square-root transformation that would approximately stabilize the measurement error variance in count data from random subsamples, and the log transformation that is usually recommended for stabilizing process noise variance due to stochastic variation in birth and death rates.
-
-We currently do the fourth root transform before the spline, though Beninca et al do it after. Maybe we can too if we use the same spline function. (Check package pracma for hermitian cubic splines.)
 
 ```{r}
 mt$fr.value <- mt$value^0.25
@@ -254,19 +255,9 @@ mt$fr.value <- mt$value^0.25
 > The time series were then detrended using a Gaussian kernel with a bandwidth of 300 days (red line in Fig. S1b), to obtain stationary time series. Most species did not show long-term trends, except for the bacteria, detritivores (ostracods and harpacticoid copepods), dissolved inorganic nitrogen and soluble reactive phosphorus. One possible explanation for these trends in the microbial loop could be the slow accumulation of refractory organic material in the mesocosm, but we have not measured this component.
 
 ```{r}
-
 detrended <- group_by(mt, variable) %>%
   mutate(smoothed=ksmooth(Day.number, fr.value, kernel="normal", bandwidth=300)$y)
 detrended$dt.value <- detrended$value - detrended$smoothed
-
-
-soi <- "Cyclopoids"
-g1 <- ggplot(filter(detrended, variable==soi), aes(x=Day.number, y=fr.value)) +
-  facet_wrap(~variable, ncol=2, scales="free_y") +
-  geom_line(size=0.5, col="red") +
-  scale_colour_manual(values = species.colour.mapping)
-g2 <- geom_line(data=filter(detrended, variable==soi), aes(x=Day.number, y=smoothed), size=0.25, col="blue")
-g1 + g2
 ```
 
 ## Standardise
@@ -275,21 +266,21 @@ g1 + g2
 
 ```{r}
 final <- group_by(detrended, variable) %>%
-  mutate(y=scale(dt.value))
+  mutate(y=as.numeric(scale(dt.value)))
 summarise(final, mean=mean(y), sd=sd(y))
 ```
 
-WHY NAs???
+**We now have a y variable to work with in data.frame "final", variable name "y".**
 
-We now have a y variable to work with in data.frame "final", variable name "y".
 ```{r}
-str(final)
+glimpse(final)
 ```
 
 ## Zero removal
 
 > The time series of cyclopoid copepods, protozoa, filamentous diatoms, harpacticoid copepods and ostracods contained long sequences of zero values. This does not imply that these species were absent from the food web during these periods, but that their concentrations were below the detection limit. Time series dominated by many zeros can bias the statistical analysis. Therefore, these time series were shortened to remove long sequences of zero values, before the data transformation. The transformed data of all species in the food web are shown in Figure S2.
 
+This is not done. May need to be done only for analyses for Table 1.
 
 ## Figure S1 (visualising the transformation)
 
@@ -298,13 +289,13 @@ Choose a species to plot:
 soi <- "Bacteria"
 ```
 
-Interpolated data:
+Raw and interpolated data:
 
 ```{r}
-g1 <- ggplot(filter(all.data, variable==soi), aes(x=Day.number, y=fr.value)) +
+g1 <- ggplot(filter(all.data, variable==soi), aes(x=Day.number, y=value)) +
   facet_wrap(~variable, ncol=2, scales="free_y") +
-  geom_line(size=0.5, col="red") +
-  scale_colour_manual(values = species.colour.mapping)
+  geom_point(size=1, col="black") + geom_line(size=0.1) +
+  scale_colour_manual(values = species.colour.mapping) + ggtitle("Raw and interpolated data")
 g2 <- geom_line(data=filter(mt, variable==soi), aes(x=Day.number, y=value), size=0.25, col="blue")
 g1 + g2
 ```
@@ -312,13 +303,22 @@ g1 + g2
 Fourth root transformed with trend:
 
 ```{r}
-
+g1 <- ggplot(filter(detrended, variable==soi), aes(x=Day.number, y=fr.value)) +
+  facet_wrap(~variable, ncol=2, scales="free_y") +
+  geom_point(size=0.5, col="black") + geom_line(size=0.1) +
+  scale_colour_manual(values = species.colour.mapping) + ggtitle("Quarter power trans. and trend")
+g2 <- geom_line(data=filter(detrended, variable==soi), aes(x=Day.number, y=smoothed), size=0.25, col="blue")
+g1 + g2
 ```
 
 Detrended and normalised:
 
 ```{r}
-
+g1 <- ggplot(filter(final, variable==soi), aes(x=Day.number, y=y)) +
+  facet_wrap(~variable, ncol=2, scales="free_y") +
+  geom_point(size=0.5, col="black") + geom_line(size=0.1) +
+  scale_colour_manual(values = species.colour.mapping) + ggtitle("Detrended and normalised")
+g1
 ```
 
 
