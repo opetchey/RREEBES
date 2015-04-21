@@ -173,7 +173,49 @@ g1
 
 # Data transformation
 
-To be done.
+Now we need to work with transformed data. Details of the transformation, copied from the Supplmentary information:
+
+> 3. Transformation of the time series. We transformed the original time series, shown in Fig. 1b-g of the main text, to obtain stationary time series with equidistant data and homogeneous units of measurement. The transformation steps are illustrated for the bacteria (Fig. S1).
+
+> First, the time series were interpolated using cubic hermite interpolation, to obtain data with equidistant time intervals of 3.35 days (Fig. S1a).
+
+> Next, because the original time series showed many sharp spikes, the time series were rescaled using a fourth-root power transformation (Fig. S1b). The sharp spikes bias "direct method" estimates of the Lyapunov exponent, because nearby pairs of reconstructed state vectors mostly occurred in the troughs between spikes. The average rate of subsequent trajectory divergence from these pairs is therefore an estimate of the local Lyapunov exponent in the troughs, which may be very different from the global Lyapunov exponent. By making spikes and troughs more nearly symmetric, the power transformation resulted in a much more even spread of nearby state vector pairs across the full range of the data for all functional groups in the food web. The transformation is also useful for fitting nonlinear models of the deterministic skeleton (used for nonlinear predictability and indirect method estimates of the Lyapunov exponent), which was done by least squares and therefore is most efficient when error variances are stabilized. Fourth-root transformation is intermediate between the square-root transformation that would approximately stabilize the measurement error variance in count data from random subsamples, and the log transformation that is usually recommended for stabilizing process noise variance due to stochastic variation in birth and death rates.
+
+> The time series were then detrended using a Gaussian kernel with a bandwidth of 300 days (red line in Fig. S1b), to obtain stationary time series. Most species did not show long-term trends, except for the bacteria, detritivores (ostracods and harpacticoid copepods), dissolved inorganic nitrogen and soluble reactive phosphorus. One possible explanation for these trends in the microbial loop could be the slow accumulation of refractory organic material in the mesocosm, but we have not measured this component.
+
+> Finally, the time series were linearly rescaled to have zero mean and a standard deviation of 1 (Fig. S1c).
+
+> The time series of cyclopoid copepods, protozoa, filamentous diatoms, harpacticoid copepods and ostracods contained long sequences of zero values. This does not imply that these species were absent from the food web during these periods, but that their concentrations were below the detection limit. Time series dominated by many zeros can bias the statistical analysis. Therefore, these time series were shortened to remove long sequences of zero values, before the data transformation. The transformed data of all species in the food web are shown in Figure S2.
+
+The ELE supplement contains the raw data and the transformed data, in separate data sheets. I (Owen) also got the interpolated data from Stephen Ellner directly.
+
+And do the spline interpolation
+```{r}
+mt <- plyr::dlply(all.data,
+                  "Species",
+                  function(xx) spline(x=xx$Day.number,
+                                      y=xx$Abundance,
+                                      xout=xout,
+                                      method="fmm")$y)
+mt <- as.data.frame(mt)
+mt <- cbind(Day.number=xout, mt)
+mt <- gather(mt, Species, Abundance, 2:13)
+```
+
+And compare with the original data
+```{r}
+soi <- "Bacteria"
+g1 <- ggplot(filter(all.data, Species==soi), aes(x=Day.Number, y=Abundance)) +
+  facet_wrap(~Species, ncol=2, scales="free_y") +
+  geom_line(size=0.5, col="red") +
+  scale_colour_manual(values = species.colour.mapping)
+g2 <- geom_line(data=filter(mt, Species==soi), aes(x=Day.number, y=Abundance), size=0.25)
+g1 + g2
+```
+
+
+# Create dataset with zeros removed
+
 
 # Spectral analyses
 
