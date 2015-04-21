@@ -1,0 +1,674 @@
+---
+title: "Reproduce anaylses of Beninca et al (2008)"
+author: "Owen Petchey"
+date: "29 Jan 2015"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+# Introduction
+
+This is an attempt to reproduce the anaylses presented in the paper *Chaos in a long-term experiment with a plankton community*, by Elisa Benincà and others ([the paper on the Nature website](http://www.nature.com/nature/journal/v451/n7180/abs/nature06512.html)). Details of the methods are in [the Supplement to the Nature paper](http://www.nature.com/nature/journal/v451/n7180/extref/nature06512-s1.pdf).
+
+* Here include some text about what is presented below in the basic reproduction, and what additional was done and where that is described.
+
+The data are available as an Excel file supplement to [an Ecology Letters publication](http://onlinelibrary.wiley.com/doi/10.1111/j.1461-0248.2009.01391.x/abstract). The Excel file contains several datasheets. Two are particularly important, as they are the source of the raw data (one contains original species abundances, the one with the nutrient concentrations). There are two ancillary datasets: one is another datasheet in the ELE supplement (it contains transformed abundances / nutrient concentrations), the other came direct from Stephen Ellner and contains interpolated (but otherwise untransformed abundances). Stephen Ellner also provided some code (specified where it occurs below), and both Elisa Beninca and Stephen Ellner assisted with the reproduction (though given sufficient time, the reproduction would likely have been possible without their assistance).
+
+
+
+
+# First get the data into R and tidy it.
+
+Wipe R:
+```{r}
+rm(list=ls())
+```
+
+Enter the location of the folder *Reproduce_Beninca*:
+```{r}
+work.dir <- "~/Dropbox (Dept of Geography)/"
+```
+
+Bring in some useful packages:
+```{r, message=FALSE}
+library(tidyr)
+library(dplyr)
+library(lubridate)
+library(stringr)
+library(ggplot2)
+```
+
+Import and tidy the data. First the species abundances:
+```{r}
+aa <- read.csv(paste(work.dir, "Reproduce_Beninca/data/species_abundances_original.csv", sep=""), skip=7, na.string="")
+aa <- select(aa, -X, -X.1) ## remove the last two columns (one empty, one contains notes)
+aa <- aa[-804:-920,] ## remove some empty rows
+```
+
+The protozoa column comes in as a factor, due to some commas instead of periods as decimal separator. Fix this:
+```{r}
+aa$Protozoa <- as.numeric(str_replace(aa$Protozoa, ",", "."))
+```
+
+Format dates as dates:
+```{r}
+aa$Date <- dmy(aa$Date)
+head(aa$Date)
+```
+Oops, experiment done in 1990's, not 2090's. Shouldn't matter though.
+
+Change to long format and check all is well:
+```{r}
+aa <- gather(aa, key="Species", value="Abundance", 3:12)
+str(aa)
+```
+
+Now more or less the same for the nutrients:
+```{r}
+nn <- read.csv(paste(work.dir, "Reproduce_Beninca/data/nutrients_original.csv", sep=""), skip=7)
+nn <- select(nn, -X, -X.1) ## remove the last two columns (one empty, one contains notes)
+nn <- nn[-349:-length(nn[,1]),] ## remove some empty rows
+nn$Date <- dmy(nn$Date) ## format dates as dates -- oops, experiment done in 1990's, not 2090's. Shouldn't matter though.
+```
+
+
+Some defunct code, to be deleted:
+```{r}
+##nn$Date[nn$Date < dmy("01.01.2050")]
+##nn$Date[nn$Date < dmy("01.01.2050")] <- dmy("28.10.2096")
+```
+
+Carrying on with the tidying:
+```{r}
+nn <- select(nn, -NO2, -NO3, -NH4)
+str(nn)
+nn <- gather(nn, key="Species", value="Abundance", Total.dissolved.inorganic.nitrogen, Soluble.reactive.phosphorus)
+## 
+str(nn)
+```
+(Although it's innacurate to use Species and Abundance for the nutrient variables, but makes subsequent work much easier.)
+
+Combine the abundance and nutrient data:
+```{r} 
+an <- rbind(aa, nn)
+glimpse(an)
+```
+
+Now we add a column that gives the variable types, same as in figure 1b through 1g.
+First make a lookup table giving species type:
+```{r}
+tt <- data.frame(Species=unique(an$Species),
+                 Type=c("Cyclopoids", "Herbivore", "Herbivore", "Herbivore",
+                        "Phytoplankton",  "Phytoplankton", "Phytoplankton",
+                        "Detritivore", "Detritivore", "Bacteria", "Nutrient", "Nutrient"))
+tt
+```
+
+And add the Type variable to the new dataset:
+```{r}
+an <- merge(an, tt)
+```
+
+Check the Date and Day.number variable, noting that the Day.number variable is 1 on the first day, so we need to add one when we use the Date variable to recreate the daynumber variable:
+```{r, }
+an <- mutate(an, Day=1+difftime(Date, min(Date), units="days"))
+```
+
+```{r}
+head(an[which(an$Day != an$Day.number),])
+```
+Good. All lines up.
+
+
+
+# Reproducing figure 1b through 1g
+
+(No attempt to reproduce Figure 1a, as its a food web diagram.)
+
+First lets set the colours as in the original:
+```{r}
+species.colour.mapping <- c("Cyclopoids"="pink",
+                            "Calanoid.copepods"="red",
+                            "Rotifers"="blue",
+                            "Protozoa"="green",
+                            "Nanophytoplankton"="red",
+                            "Picophytoplankton"="black",
+                            "Filamentous.diatoms"="green",
+                            "Ostracods"="lightblue",
+                            "Harpacticoids"="purple",
+                            "Bacteria"="black",
+                            "Total.dissolved.inorganic.nitrogen"="red",
+                            "Soluble.reactive.phosphorus"="black")                            
+```
+
+Next change the order of the levels in the Type variable, so plots appear in the same order as in the original figure:
+```{r}
+an$Type <- factor(an$Type, levels=c("Cyclopoids", "Herbivore", "Phytoplankton", "Nutrient",
+                                    "Bacteria", "Detritivore"))
+```
+
+Now select only the date range used in the Nature paper. From the supplment *The analysis in Benincà et al. (Nature 2008) covered all data from 16/06/1991 until 20/10/1997*. (Remembering dates in the R dataframes are 2090s.)
+```{r}
+an1 <- filter(an, an$Date>dmy("16/06/2091") & Date<dmy("20/10/2097"))
+```
+
+Now a version that doesn't try to recreate the "gap" in the y axes of the original figures:
+```{r, warning=FALSE, fig.width=10}
+g1 <- qplot(as.numeric(Day), Abundance, col=Species, data=an1) +
+  facet_wrap(~Type, ncol=2, scales="free_y") +
+  geom_point() + geom_line() +
+  scale_colour_manual(values = species.colour.mapping)
+g1
+```
+Looks reasonably good.
+
+Now a version that approximates the "gap", by removing data above it:
+```{r, warning=FALSE, fig.width=10}
+an2 <- filter(an1, Type=="Cyclopoids" & Abundance<0.6 |
+                Type=="Herbivore" & Abundance<13 |
+                Type=="Phytoplankton" & Abundance<1400 |
+                Type=="Nutrient" & Abundance<50 |
+                Type=="Bacteria" & Abundance<10 |
+                Type=="Detritivore" & Abundance<0.7) 
+g1 <- qplot(as.numeric(Day), Abundance, col=Species, data=an2) +
+  facet_wrap(~Type, ncol=2, scales="free_y") +
+  geom_point() + geom_line() +
+  scale_colour_manual(values = species.colour.mapping)
+g1
+```
+Difficult it look like the data go off the top of the graph in ggplot.
+
+Try logarithmic y-axes:
+```{r, warning=FALSE, fig.width=10}
+g1 <- qplot(as.numeric(Day), log10(Abundance+0.00001), col=Species, data=an1) +
+  facet_wrap(~Type, ncol=2, scales="free_y") +
+  geom_point() + geom_line() +
+  scale_colour_manual(values = species.colour.mapping)
+g1
+```
+Now we see why it can be useful to plot with a break in the y-axis, as in the original graphs.
+
+
+# Spectral analyses
+To be added.
+Unclear if this was performed on untransformed or transformed data.
+
+
+## Data transformation
+
+Now we need to work with transformed data. Details of the transformation, copied from the Supplmentary information:
+
+> 3. Transformation of the time series. We transformed the original time series, shown in Fig. 1b-g of the main text, to obtain stationary time series with equidistant data and homogeneous units of measurement. The transformation steps are illustrated for the bacteria (Fig. S1).
+
+> First, the time series were interpolated using cubic hermite interpolation, to obtain data with equidistant time intervals of 3.35 days (Fig. S1a).
+
+> Next, because the original time series showed many sharp spikes, the time series were rescaled using a fourth-root power transformation (Fig. S1b). The sharp spikes bias "direct method" estimates of the Lyapunov exponent, because nearby pairs of reconstructed state vectors mostly occurred in the troughs between spikes. The average rate of subsequent trajectory divergence from these pairs is therefore an estimate of the local Lyapunov exponent in the troughs, which may be very different from the global Lyapunov exponent. By making spikes and troughs more nearly symmetric, the power transformation resulted in a much more even spread of nearby state vector pairs across the full range of the data for all functional groups in the food web. The transformation is also useful for fitting nonlinear models of the deterministic skeleton (used for nonlinear predictability and indirect method estimates of the Lyapunov exponent), which was done by least squares and therefore is most efficient when error variances are stabilized. Fourth-root transformation is intermediate between the square-root transformation that would approximately stabilize the measurement error variance in count data from random subsamples, and the log transformation that is usually recommended for stabilizing process noise variance due to stochastic variation in birth and death rates.
+
+> The time series were then detrended using a Gaussian kernel with a bandwidth of 300 days (red line in Fig. S1b), to obtain stationary time series. Most species did not show long-term trends, except for the bacteria, detritivores (ostracods and harpacticoid copepods), dissolved inorganic nitrogen and soluble reactive phosphorus. One possible explanation for these trends in the microbial loop could be the slow accumulation of refractory organic material in the mesocosm, but we have not measured this component.
+
+> Finally, the time series were linearly rescaled to have zero mean and a standard deviation of 1 (Fig. S1c).
+
+> The time series of cyclopoid copepods, protozoa, filamentous diatoms, harpacticoid copepods and ostracods contained long sequences of zero values. This does not imply that these species were absent from the food web during these periods, but that their concentrations were below the detection limit. Time series dominated by many zeros can bias the statistical analysis. Therefore, these time series were shortened to remove long sequences of zero values, before the data transformation. The transformed data of all species in the food web are shown in Figure S2.
+
+The ELE supplement contains the raw data and the transformed data, in separate data sheets. I (Owen) also got the interpolated data from Stephen Ellner directly.
+
+## Comparing the raw and the interpolated data Stephen Ellner sent
+
+```{r}
+ww <- read.csv(paste(work.dir, "Reproduce_Beninca/data/direct from Steve/interp_short_allsystem_newnames.csv", sep=""))
+ww <- gather(ww, Species, Abundance, 2:13)
+
+g1 <- ggplot(an2, aes(x=as.numeric(Day), y=Abundance)) +
+  facet_wrap(~Species, ncol=2, scales="free_y") +
+  geom_point(size=0.5, col="red") +
+  scale_colour_manual(values = species.colour.mapping)
+g2 <- geom_line(data=ww, aes(x=Day.Number, y=Abundance))
+g1 + g2
+```
+Looks good.
+
+## Look at the transformed data in the ELE supplement
+
+Now take a look at the transformed data provided in the ELE Supplement, in the data sheet *transformed_data_Nature2008*.
+
+Import the data and tidy it:
+```{r}
+tr <- read.csv(paste(work.dir, "Reproduce_Beninca/data/transformed_data_Nature2008.csv",
+                     sep=""),
+               skip=7, na.string="", )
+tr <- tr[,-14:-24] ## remove bad columns
+tr <- tr[-693:-694,] ## remove last two rows (contain summary stats)
+tr <- gather(tr, key="Species", value="Abundance", 2:13)
+tr$Day.Number <- as.numeric(as.character((tr$Day.Number)))
+tt1 <- data.frame(Species=unique(tr$Species),
+                 Type=c("Cyclopoids", "Herbivore", "Herbivore", "Herbivore",
+                        "Phytoplankton",  "Phytoplankton", "Phytoplankton",
+                        "Detritivore", "Detritivore", "Bacteria", "Nutrient", "Nutrient"))
+tr <- merge(tr, tt1)
+levels(tr$Species)[levels(tr$Species)=="Calanoids"] <- "Calanoid.copepods"
+levels(tr$Species)[levels(tr$Species)=="Total.Dissolved.Inorganic.Nitrogen"] <- "Total.dissolved.inorganic.nitrogen"
+```
+
+Plot this, to create something similar to the Figure S2 in the Supplement.
+```{r, warning=FALSE, fig.width=10}
+tr$Type <- factor(tr$Type, levels=c("Cyclopoids", "Herbivore", "Phytoplankton", "Nutrient",
+                                    "Bacteria", "Detritivore"))
+species.colour.mapping <- c("Cyclopoids"="pink",
+                            "Calanoid.copepods"="red",
+                            "Rotifers"="blue",
+                            "Protozoa"="green",
+                            "Nanophytoplankton"="red",
+                            "Picophytoplankton"="black",
+                            "Filamentous.diatoms"="green",
+                            "Ostracods"="lightblue",
+                            "Harpacticoids"="purple",
+                            "Bacteria"="black",
+                            "Total.dissolved.inorganic.nitrogen"="red",
+                            "Soluble.reactive.phosphorus"="black")     
+g1 <- ggplot(tr, aes(x=Day.Number, y=Abundance, col=Species)) + 
+  facet_wrap(~Type, ncol=2, scales="free_y") +
+  geom_line() + ylim(-5,5) +
+  scale_colour_manual(values = species.colour.mapping)
+g1
+```
+Looks like it should. Though important to note that it has had series of low values / zero removed.
+
+## Comparing the ELE supplement transformed data with the data that Ellner sent direct
+
+As well as providing the interpolated data, Stephen Ellner provided code to perform the transformation. Lets do that on the interpolated abundances he provided.
+```{r}
+ww
+
+## All data is first fourth-root transformed:
+ww$T1 <- ww$Abundance^0.25
+
+## species to detrend
+ww.td <- filter(ww, Species=="Total.dissolved.inorganic.nitrogen" |
+                  Species=="Soluble.reactive.phosphorus" |
+                  Species=="Bacteria" |
+                  Species=="Ostracods" |
+                  Species=="Harpacticoids")
+## and to not detrend
+ww.ntd <- filter(ww, Species!="Total.dissolved.inorganic.nitrogen" &
+                  Species!="Soluble.reactive.phosphorus" &
+                  Species!="Bacteria" &
+                  Species!="Ostracods" &
+                  Species!="Harpacticoids")
+## detrend:
+ww1 <- group_by(ww.td, Species) %>%
+  mutate(y=ksmooth(Day.Number,T1,bandwidth=300,kernel="normal")$y)
+ww1$T2 <- ww1$T1-ww1$y
+ww1 <- select(ww1, -y)
+
+## don't detrend
+ww2 <- ww.ntd
+ww2$T2 <- ww2$T1
+
+## rejoin
+detr <- rbind(ww1, ww2)
+
+ds <- group_by(detr, Species) %>%
+  mutate(X1=T2-mean(T2), X2=X1/sd(X1))
+
+group_by(ds, Species) %>%
+  summarise(mean=mean(X2), sd=sd(X2))
+
+g1 <- ggplot(tr, aes(x=Day.Number, y=Abundance)) + 
+  facet_wrap(~Species, ncol=2, scales="free_y") +
+  geom_line() + ylim(-5,5) +
+  scale_colour_manual(values = species.colour.mapping)
+g2 <- geom_line(data=ds, aes(x=Day.Number, y=X2), col="#00ff22ff")
+g1 + g2
+```
+The ELE supplement data are the same as the transformed data from Ellner, except the six species where the ELE supplement data have fewer data points. Probabaly because they are standardised to mean=0 and sd=1 after removal of data.
+
+## Lets try going from the raw abundance data
+
+First interpolated using cubic hermite spline interpolation.
+
+Get the times to interpolate to from the data sent directly by SE:
+```{r}
+xout <- sort(unique(ww$Day.Number))
+```
+
+And do the spline interpolation
+```{r}
+mt <- plyr::dlply(an,
+                  "Species",
+                  function(xx) spline(x=xx$Day.number,
+                                      y=xx$Abundance,
+                                      xout=xout,
+                                      method="fmm")$y)
+mt <- as.data.frame(mt)
+mt <- cbind(Day.number=xout, mt)
+mt <- gather(mt, Species, Abundance, 2:13)
+```
+
+And compare to the interpolated data direct from Ellner:
+```{r}
+soi <- "Bacteria"
+g1 <- ggplot(filter(ww, Species==soi), aes(x=Day.Number, y=Abundance)) +
+  facet_wrap(~Species, ncol=2, scales="free_y") +
+  geom_line(size=0.5, col="red") +
+  scale_colour_manual(values = species.colour.mapping)
+g2 <- geom_line(data=filter(mt, Species==soi), aes(x=Day.number, y=Abundance), size=0.25)
+g1 + g2
+```
+Not the same as the data direct from Ellner. Probably not the same spline function for interpolation.
+
+
+# Reproducing Table 1 using ELE supplement data.
+
+Now for the correlations in Table 1:
+```{r}
+trw <- spread(tr[,-4], Species, Abundance)
+xx <- cor(trw[, 2:13], use="pairwise.complete.obs")
+oo <- c(10, 9, 8, 11, 12, 6, 5, 3, 4, 2)
+xx1 <-xx[oo,oo]
+library(knitr)
+sn <- c("Bacteria", "Harps", "Ostr", "N", "P", "Picophyt", "Nanophyt", "Rotifers", "Protozoa", "Calanoids")
+dimnames(xx1) <- list(sn, sn)
+kable(round(xx1,2))
+```
+
+Seems to match Table 1.
+
+
+
+# Predictability (Figure 2)
+
+The procedure is, for each species as the focal species, to construct a model that predicts current abundance from previous abundances. The model uses as explanatory variables the abundances of the species that are directly connected to the focal species in the food web in Figure 1a of the Nature report. This figure has arrows with different thickness to represent "*a first indication of the food preferences of the species, as derived from general knowledge of their biology*".
+
+*Extra* When making a matrix version of the food web, thick=3, thin=2, and dashed=1, and self-self always 3. (Figure 1a has two lines going from nanophytes to protozoa... assuming for now that this is thick.) There is also a Detritus compartment in Figure 1a, and its connections from other compartments is a bit ambiguous. For now I've assumed that all other compartments feed into Detritus, but probably the Nutrients compartment should not.
+
+The food web in Figure 1a is represented (given the caveats in the previous paragraph) in the data file *food_web.csv*:
+```{r}
+ff <- read.csv(paste(work.dir, "Reproduce_Beninca/data/food_web.csv", sep=""), row.names=1)
+```
+
+Make a list of each of the species that will be modelled, i.e., will be a focal species:
+```{r}
+each.focal.species <- unique(tr$Species)
+```
+
+*Extra* Define a link certainty threshold, i.e., threshold=3 would retain use only the most certain links in the model, while threshold=1 would use all links with certain 1 or greater.
+```{r}
+link.certainty.threshold <- 1
+```
+
+*Extra* Define whether we use in, out, or both links:
+```{r}
+which.links <- "both" ## can be "in", "out", or "both"
+```
+
+*Extra* Define whether to use self-self links:
+```{r}
+self.self <- TRUE
+```
+
+*Extra* Remove detritus, as its not in the dataset of measured variables:
+```{r}
+wd <- which(names(ff)=="Detritus")
+ff <- ff[-wd, -wd]
+```
+
+
+The predictive model used in the Nature report is a neural network model, but lets start with something simpler, like linear regression!
+
+```{r}
+i <- 1
+focal.species <- as.character(each.focal.species[i])
+ff1 <- ifelse(ff>=link.certainty.threshold, 1, 0)
+links.in <- ff1[,focal.species]==1
+links.in <- names(links.in)[links.in]
+links.out <- ff1[focal.species,]==1
+links.out <- names(links.out)[links.out]
+if(which.links=="both")
+  links <- unique(c(links.in, links.out))
+if(which.links=="in")
+  links <- links.in
+if(which.links=="out")
+  links <- links.out
+if(!self.self) links <- links[links!=focal.species]
+```
+
+*Extra*
+
+Now, there is quite a lot of non-overlap in the time series among species, so we need to figure out which species will be included as explanatory variables, in order that there is "good" overlap.
+```{r}
+pot.varbs <- trw[, unique(c(focal.species, links))]
+rownames(pot.varbs)[apply(pot.varbs, 1, function(x) sum(!is.na(x)))==length(pot.varbs[1,])]
+```
+For example, there are no complete rows for Bacteria as the focal species. This is because there is no overlap in the time series of herbivores, in the transformed data (probably due to removal of zeros?)
+
+
+This could mean that the modelling was done on the untransformed data. Though in order to do that, we probably would benefit from equally spaced time series data, which is how the transformed data is. So its unclear what to do.
+
+First stages of using the raw abundance data are below. These are incomplete due to the uncertainty in the previous paragraph.
+```{r}
+#ddfd <- an[,c(1,3,4)]
+#anw <- spread(an[,c(1,3,4)], Species, Abundance)
+```
+
+Extensions that spring to mind:
+
+* Compare predictability when using combinations of in, out, both, self-self links.
+
+* Compare predictability of real food web links to random ones.
+
+* Compare predictability of different types of model (e.g., use those in the forecast package of R).
+
+
+
+
+# Lyapunov exponents by direct method (Figure 3)
+
+Estimate the Lyapunov exponents of the time series, via time-delayed embedding. The Nature report used the [Tisean software](http://www.mpipks-dresden.mpg.de/~tisean/), which was available from CRAN [until mid 2014](http://cran.r-project.org/web/packages/RTisean/index.html). Based on this, and being a bit less well integrated with R, we'll instead use the [tseriesChaos](http://cran.r-project.org/web/packages/tseriesChaos/index.html) package, which was *largely inspired by the TISEAN project*. 
+```{r}
+library(tseriesChaos)
+```
+
+Unclear if this was performed on untransformed or transformed data. First try with the transformed data.
+Time delay (1), embedding dimension (6), and Theiler window (50) were used in the Nature report. Other parameters are chosen rather randomly, though don't seem to matter too much!
+```{r}
+time.delay <- 1
+embedding.dimension <- 6
+Theiler.window <- 50
+```
+
+Note that a time step is 3.35 days in the transformed data. So to get a graph with 80 days on the x-axis (as in Figure 3 in the Nature report), we need 80/3.35 = 24 time steps for the calculation of Lyapunov exponents.
+```{r}
+time.steps <- 24
+```
+
+Remove the species that were not analysed in the Nature report, due to too many zeros in the time series:
+```{r}
+led <- filter(tr, Species!="Filamentous.diatoms",
+                Species!="Protozoa",
+                Species!="Cyclopoids")
+```
+
+Get the data for the graphs:
+```{r, message=TRUE, error=TRUE}
+all.species <- unique(as.character(led$Species))
+diverg <- matrix(NA, time.steps, length(all.species))
+colnames(diverg) <- all.species
+for(i in 1:length(all.species)) {
+  print(all.species[i])
+  tr.fs <- filter(tr, Species==all.species[i])$Abundance
+  diverg[,i] <- as.numeric(try(lyap_k(tr.fs,
+                                      m=embedding.dimension,
+                                      d=time.delay,
+                                      k=20, # number of considered neighbours 20
+                                      ref=100, # number of points to take into account 100
+                                      t=Theiler.window,
+                                      s=time.steps,
+                                      eps=10 # radius where to find nearest neighbours 10
+                                      )))
+}
+## a bit of a fudge with the translation to days
+diverg <- as.data.frame(cbind(days=1:time.steps, diverg))
+diverg <- gather(diverg, Species, Difference, 2:10)
+diverg$days <- diverg$days*3.35
+#str(diverg)
+```
+
+Next calculate the Lyapunov exponents, noting that 6 or 7 points were used in the regressions in the Nature report
+```{r}
+diverg$Difference[is.na(diverg$Difference)] <- 0
+diverg.short <- filter(diverg, days<24) ## 24 is about 6 steps, after initial gap
+LEs <- group_by(diverg.short, Species) %>%
+  summarise(le=coef(lm(Difference[1:6] ~ days[1:6]))[2])
+#pval=summary(lm(Difference[1:6] ~ days[1:6]))$coefficients[2,4])
+```
+
+Then plot the graphs with LE:
+```{r}
+diverg$Species <- factor(diverg$Species, levels=c("Picophytoplankton",
+                                                  "Nanophytoplankton",
+                                                  "Calanoids",
+                                                  "Soluble.reactive.phosphorus",
+                                                  "Total.Dissolved.Inorganic.Nitrogen",
+                                                  "Rotifers",
+                                                  "Ostracods",
+                                                  "Harpacticoids",
+                                                  "Bacteria"))
+LEs <- mutate(LEs, days=20, Difference=-0.5)
+g1 <- ggplot(diverg, aes(x=days, y=Difference)) + geom_point() + facet_wrap(~Species) +
+  geom_text(data=LEs, aes(label=round(le,3)), group=NULL)
+g1
+```
+
+Not exactly the same at Figure 3 in the Nature report. Qualitatively the same, except for where the time-delayed embedding failed.
+
+*How does time-delayed embedding deal with the other state variables that may not have the same value when the focal one does?*
+
+*Check if randomisation of the time series removes the positive and significant LEs. It doesn't:*
+
+```{r}
+## The Ricker model and a function to iterate it
+ricker  <- function(N,r) N*exp(r*(1-N)) ## copied from ecolMod package!
+iterate.ricker <- function(r, N, its, demo.stoch=F)
+{
+  Ns <- numeric(length(its)+1)
+  Ns[1] <- N
+  for(i in 2:its) {
+    if(!demo.stoch)
+      Ns[i] <- ricker(Ns[i-1], r)
+    if(demo.stoch) {
+      exp.N <- ricker(Ns[i-1], r)
+      Ns[i] <- exp.N + rnorm(1, exp.N, sd=exp.N*0.01)
+    }
+  }
+  Ns
+} 
+x <- iterate.ricker(3.5, 0.1, 1000)
+plot(x)
+
+###
+le <- lyap_k(x,
+       m=6,
+       d=1,
+       k=20, # number of considered neighbours 20
+       ref=100, # number of points to take into account 100
+       t=50,
+       s=24,
+       eps=10 # radius where to find nearest neighbours 10
+)
+plot(le)
+
+for(i in 1:100) {
+  le.r <- lyap_k(sample(x),
+                 m=6,
+                 d=1,
+                 k=20, # number of considered neighbours 20
+                 ref=100, # number of points to take into account 100
+                 t=50,
+                 s=24,
+                 eps=10 # radius where to find nearest neighbours 10
+                 )
+  lines(le.r, col="#ff000099")
+}
+```
+
+Which seems to mean that the null hypothesis for testing if a LE is chaotic should not be zero, but rather based on some randomisation.
+
+Check if the divergence rates (i.e., LEs) of the observed data are different from randomised data. First by eye:
+
+```{r}
+
+reps <- 50
+storage <- expand.grid(days=1:time.steps,
+                       reps=1:reps,
+                       Species=all.species,
+                       Difference=NA)
+
+
+for(i in 1:length(all.species)) {
+  for(j in 1:reps) {
+    print(c(all.species[i], j))
+    tr.fs <- filter(tr, Species==all.species[i])$Abundance
+    tr.fs.rand <- sample(tr.fs)
+    print(tr.fs.rand[1:5])
+    temp <- as.numeric(try(lyap_k(tr.fs.rand,
+                                  m=embedding.dimension,
+                                  d=time.delay,
+                                  k=20, # number of considered neighbours 20
+                                  ref=100, # number of points to take into account 100
+                                  t=Theiler.window,
+                                  s=time.steps,
+                                  eps=10 # radius where to find nearest neighbours 10
+    )))
+    print(temp[1:5])
+    storage[storage$Species==all.species[i] &
+              storage$reps==j, "Difference"] <- temp
+  }
+}
+
+storage$days <- storage$days*3.35
+
+g1 <- ggplot(diverg, aes(x=days, y=Difference)) + geom_point() + facet_wrap(~Species) +
+  geom_text(data=LEs, aes(label=round(le,3)), group=NULL) +
+  geom_line(data=storage, aes(x=days, y=Difference, group=as.factor(reps)), col="#ff000022")
+g1
+```
+
+Rather suspicious about how similar are all of the randomised divergence rates. But perhaps this is what happens when one randomises???
+
+And why are the intercepts so different between observed and randomised? Does this have any importance?
+
+Lets make all the randomised lines start at the height of the first observed difference:
+```{r}
+
+diverg1 <- filter(diverg, days==3.35)
+diverg2 <- filter(storage, days==3.35)
+diverg2$origin <- rep(diverg1$Difference, each=reps)
+diverg2 <- mutate(diverg2, diff=Difference-origin)
+diverg2 <- diverg2[, -c(1, 4, 5)]
+storage.corr <- merge(storage, diverg2)
+storage.corr <- mutate(storage.corr, corr.Difference=Difference - diff)
+storage.corr <- arrange(storage.corr, Species, reps, days)
+
+g1 <- ggplot(diverg, aes(x=days, y=Difference)) + geom_point() + facet_wrap(~Species) +
+  geom_text(data=LEs, aes(label=round(le,3)), group=NULL) +
+  geom_line(data=storage.corr, aes(x=days, y=corr.Difference, group=as.factor(reps)), col="#ff000022")
+g1
+
+```
+
+Looks like the slopes are greater than expected by randomisation, perhaps except for Nanophyt., although this is likely sensitive to number of points considered, as the initial divergence rate may be higher for random in all graphs.
+
+
+
+
+
+# Lyapunov exponents by indirect method
+
+Unclear if this was performed on untransformed or transformed data.
+
+
+
+
