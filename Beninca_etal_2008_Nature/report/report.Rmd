@@ -50,6 +50,34 @@ spp.abund$Date <- dmy(spp.abund$Date)
 
 Ooops... R assumes the experiment was done in the 21st century. Shouldn't matter too much.
 
+Check dates match the Day.number (should give true):
+```{r}
+sum(spp.abund$Day.number == 1+as.numeric((spp.abund$Date - spp.abund$Date[1]) / 24 / 60 / 60)) == length(spp.abund$Date)
+```
+
+Check for duplicate dates:
+```{r}
+spp.abund$Date[duplicated(spp.abund$Date)]
+which(duplicated(spp.abund$Date))
+```
+
+Original dataset contains a duplicated date: 28/10/1996 (row 709 and 710 in excel sheet). Lets change the date in row 709 to 26/10/1996, which will put it half way between the two surrounding dates:
+
+```{r}
+which(spp.abund$Date==ymd("2096-10-28 UTC"))
+spp.abund$Date[701] <- ymd("2096-10-26 UTC")
+```
+
+Check dates match the Day.number (should give true):
+```{r}
+sum(spp.abund$Day.number == 1+as.numeric((spp.abund$Date - spp.abund$Date[1]) / 24 / 60 / 60)) == length(spp.abund$Date)
+```
+
+Fix the Day.number problem:
+```{r}
+spp.abund$Day.number <- 1+as.numeric((spp.abund$Date - spp.abund$Date[1]) / 24 / 60 / 60)
+```
+
 Data is in wide format, so change it to long:
 ```{r}
 spp.abund <- gather(spp.abund, "variable", "value", 3:12)
@@ -63,6 +91,8 @@ nuts <- select(nuts, -X, -X.1)
 nuts <- nuts[-349:-8163,]
 nuts$Date <- dmy(nuts$Date)
 nuts <- select(nuts, -NO2, -NO3, -NH4)
+nuts$Date[duplicated(nuts$Date)]
+which(duplicated(nuts$Date))
 nuts <- gather(nuts, "variable", "value", 3:4)
 str(nuts)
 ```
@@ -173,50 +203,104 @@ g1
 
 # Data transformation
 
-Now we need to work with transformed data. Details of the transformation, copied from the Supplmentary information:
+Now we need to work with transformed data. Details of the transformation, copied from the Supplmentary information are in italic in the following sections.
 
 > 3. Transformation of the time series. We transformed the original time series, shown in Fig. 1b-g of the main text, to obtain stationary time series with equidistant data and homogeneous units of measurement. The transformation steps are illustrated for the bacteria (Fig. S1).
 
-> First, the time series were interpolated using cubic hermite interpolation, to obtain data with equidistant time intervals of 3.35 days (Fig. S1a).
-
-> Next, because the original time series showed many sharp spikes, the time series were rescaled using a fourth-root power transformation (Fig. S1b). The sharp spikes bias "direct method" estimates of the Lyapunov exponent, because nearby pairs of reconstructed state vectors mostly occurred in the troughs between spikes. The average rate of subsequent trajectory divergence from these pairs is therefore an estimate of the local Lyapunov exponent in the troughs, which may be very different from the global Lyapunov exponent. By making spikes and troughs more nearly symmetric, the power transformation resulted in a much more even spread of nearby state vector pairs across the full range of the data for all functional groups in the food web. The transformation is also useful for fitting nonlinear models of the deterministic skeleton (used for nonlinear predictability and indirect method estimates of the Lyapunov exponent), which was done by least squares and therefore is most efficient when error variances are stabilized. Fourth-root transformation is intermediate between the square-root transformation that would approximately stabilize the measurement error variance in count data from random subsamples, and the log transformation that is usually recommended for stabilizing process noise variance due to stochastic variation in birth and death rates.
-
-> The time series were then detrended using a Gaussian kernel with a bandwidth of 300 days (red line in Fig. S1b), to obtain stationary time series. Most species did not show long-term trends, except for the bacteria, detritivores (ostracods and harpacticoid copepods), dissolved inorganic nitrogen and soluble reactive phosphorus. One possible explanation for these trends in the microbial loop could be the slow accumulation of refractory organic material in the mesocosm, but we have not measured this component.
-
-> Finally, the time series were linearly rescaled to have zero mean and a standard deviation of 1 (Fig. S1c).
-
-> The time series of cyclopoid copepods, protozoa, filamentous diatoms, harpacticoid copepods and ostracods contained long sequences of zero values. This does not imply that these species were absent from the food web during these periods, but that their concentrations were below the detection limit. Time series dominated by many zeros can bias the statistical analysis. Therefore, these time series were shortened to remove long sequences of zero values, before the data transformation. The transformed data of all species in the food web are shown in Figure S2.
-
-The ELE supplement contains the raw data and the transformed data, in separate data sheets. I (Owen) also got the interpolated data from Stephen Ellner directly.
+Aside: The ELE supplement contains the raw data and the transformed data, in separate data sheets. I (Owen) also got the interpolated data from Stephen Ellner directly.
 
 ## Interpolation
 
-Make a sequence of times at which to interpolate.
-```{r}
-xout <- seq(min(all.data$Day.number), max(all.data$Day.number), by=3.35)
-```
+> First, the time series were interpolated using cubic hermite interpolation, to obtain data with equidistant time intervals of 3.35 days (Fig. S1a).
 
-We currently do the fourth root transform before the spline, though Beninca et al do it after. Maybe we can too if we use the same spline function. (Check package pracma for hermitian cubic splines.)
+Make a sequence of times at which to interpolate. 
 
 ```{r}
-all.data$fr.value <- all.data$value^0.25
+#aggregate(Day.number ~ variable, all.data, min)
+#aggregate(Day.number ~ variable, all.data, max)
+xout <- seq(342, 2651, by=3.35)
+range(xout)
 ```
 
 ```{r}
 mt <- plyr::dlply(all.data,
                   "variable",
-                  function(xx) spline(x=xx$Day.number,
-                                      y=xx$fr.value,
-                                      xout=xout,
-                                      method="fmm")$y)
+                  function(xx) pracma::interp1(x=xx$Day.number,
+                                               y=xx$value,
+                                               xi=xout,
+                                               method="cubic"))
+## Aside: the duplicated date that was previously fixed was ponly discovered by a warning message
+## given by the pracma::interp1 function!!!
+
 mt <- as.data.frame(mt)
 mt <- cbind(Day.number=xout, mt)
 mt <- gather(mt, variable, value, 2:13)
+#ggplot(mt, aes(x=Day.number, y=value)) + facet_wrap(~variable, scales="free") + geom_line()
 ```
 
-And compare with the original data
+## Fourth root transform
+
+> Next, because the original time series showed many sharp spikes, the time series were rescaled using a fourth-root power transformation (Fig. S1b). The sharp spikes bias "direct method" estimates of the Lyapunov exponent, because nearby pairs of reconstructed state vectors mostly occurred in the troughs between spikes. The average rate of subsequent trajectory divergence from these pairs is therefore an estimate of the local Lyapunov exponent in the troughs, which may be very different from the global Lyapunov exponent. By making spikes and troughs more nearly symmetric, the power transformation resulted in a much more even spread of nearby state vector pairs across the full range of the data for all functional groups in the food web. The transformation is also useful for fitting nonlinear models of the deterministic skeleton (used for nonlinear predictability and indirect method estimates of the Lyapunov exponent), which was done by least squares and therefore is most efficient when error variances are stabilized. Fourth-root transformation is intermediate between the square-root transformation that would approximately stabilize the measurement error variance in count data from random subsamples, and the log transformation that is usually recommended for stabilizing process noise variance due to stochastic variation in birth and death rates.
+
+We currently do the fourth root transform before the spline, though Beninca et al do it after. Maybe we can too if we use the same spline function. (Check package pracma for hermitian cubic splines.)
+
 ```{r}
+mt$fr.value <- mt$value^0.25
+```
+
+
+## Detrend
+
+> The time series were then detrended using a Gaussian kernel with a bandwidth of 300 days (red line in Fig. S1b), to obtain stationary time series. Most species did not show long-term trends, except for the bacteria, detritivores (ostracods and harpacticoid copepods), dissolved inorganic nitrogen and soluble reactive phosphorus. One possible explanation for these trends in the microbial loop could be the slow accumulation of refractory organic material in the mesocosm, but we have not measured this component.
+
+```{r}
+
+detrended <- group_by(mt, variable) %>%
+  mutate(smoothed=ksmooth(Day.number, fr.value, kernel="normal", bandwidth=300)$y)
+detrended$dt.value <- detrended$value - detrended$smoothed
+
+
 soi <- "Cyclopoids"
+g1 <- ggplot(filter(detrended, variable==soi), aes(x=Day.number, y=fr.value)) +
+  facet_wrap(~variable, ncol=2, scales="free_y") +
+  geom_line(size=0.5, col="red") +
+  scale_colour_manual(values = species.colour.mapping)
+g2 <- geom_line(data=filter(detrended, variable==soi), aes(x=Day.number, y=smoothed), size=0.25, col="blue")
+g1 + g2
+```
+
+## Standardise
+
+> Finally, the time series were linearly rescaled to have zero mean and a standard deviation of 1 (Fig. S1c).
+
+```{r}
+final <- group_by(detrended, variable) %>%
+  mutate(y=scale(dt.value))
+summarise(final, mean=mean(y), sd=sd(y))
+```
+
+WHY NAs???
+
+We now have a y variable to work with in data.frame "final", variable name "y".
+```{r}
+str(final)
+```
+
+## Zero removal
+
+> The time series of cyclopoid copepods, protozoa, filamentous diatoms, harpacticoid copepods and ostracods contained long sequences of zero values. This does not imply that these species were absent from the food web during these periods, but that their concentrations were below the detection limit. Time series dominated by many zeros can bias the statistical analysis. Therefore, these time series were shortened to remove long sequences of zero values, before the data transformation. The transformed data of all species in the food web are shown in Figure S2.
+
+
+## Figure S1 (visualising the transformation)
+
+Choose a species to plot:
+```{r}
+soi <- "Bacteria"
+```
+
+Interpolated data:
+
+```{r}
 g1 <- ggplot(filter(all.data, variable==soi), aes(x=Day.number, y=fr.value)) +
   facet_wrap(~variable, ncol=2, scales="free_y") +
   geom_line(size=0.5, col="red") +
@@ -225,55 +309,17 @@ g2 <- geom_line(data=filter(mt, variable==soi), aes(x=Day.number, y=value), size
 g1 + g2
 ```
 
-
-## Fourth root transform
-
-Currently this is done before the spline.
-
-## Detrend
+Fourth root transformed with trend:
 
 ```{r}
 
-final <. group_by(mt, variable) %>%
-  do(ksmooth, Day.number, value, kernel="normal", bandwidth=300)
-
-final <- group_by(mt, variable) %>%
-  mutate(smoothed=ksmooth(Day.number, value, kernel="normal", bandwidth=300)$y)
-
-soi <- "Cyclopoids"
-g1 <- ggplot(filter(final, variable==soi), aes(x=Day.number, y=value)) +
-  facet_wrap(~variable, ncol=2, scales="free_y") +
-  geom_line(size=0.5, col="red") +
-  scale_colour_manual(values = species.colour.mapping)
-g2 <- geom_line(data=filter(final, variable==soi), aes(x=Day.number, y=smoothed), size=0.25, col="blue")
-g1 + g2
-
-
-g1 <- ggplot(final, aes(x=Day.number, y=value)) +
-  facet_wrap(~variable, ncol=2, scales="free_y") +
-  geom_line(size=0.5, col="red") +
-  scale_colour_manual(values = species.colour.mapping)
-g2 <- geom_line(data=final, aes(x=Day.number, y=smoothed), size=0.25, col="blue")
-g1 + g2
-
-final$detrended <- final$value - final$smoothed
-
-
 ```
 
-## Standardise
+Detrended and normalised:
 
 ```{r}
-final <- group_by(final, variable) %>%
-  mutate(y=scale(detrended))
-summarise(final, mean=mean(y), sd=sd(y))
-```
 
-We now have a y variable to work with in data.frame "final", variable name "y".
-```{r}
-str(final)
 ```
-
 
 
 # Spectral analyses
