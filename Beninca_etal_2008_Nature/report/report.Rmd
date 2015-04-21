@@ -189,39 +189,102 @@ Now we need to work with transformed data. Details of the transformation, copied
 
 The ELE supplement contains the raw data and the transformed data, in separate data sheets. I (Owen) also got the interpolated data from Stephen Ellner directly.
 
-And do the spline interpolation
+## Interpolation
+
+Make a sequence of times at which to interpolate.
+```{r}
+xout <- seq(min(all.data$Day.number), max(all.data$Day.number), by=3.35)
+```
+
+We currently do the fourth root transform before the spline, though Beninca et al do it after. Maybe we can too if we use the same spline function. (Check package pracma for hermitian cubic splines.)
+
+```{r}
+all.data$fr.value <- all.data$value^0.25
+```
+
 ```{r}
 mt <- plyr::dlply(all.data,
-                  "Species",
+                  "variable",
                   function(xx) spline(x=xx$Day.number,
-                                      y=xx$Abundance,
+                                      y=xx$fr.value,
                                       xout=xout,
                                       method="fmm")$y)
 mt <- as.data.frame(mt)
 mt <- cbind(Day.number=xout, mt)
-mt <- gather(mt, Species, Abundance, 2:13)
+mt <- gather(mt, variable, value, 2:13)
 ```
 
 And compare with the original data
 ```{r}
-soi <- "Bacteria"
-g1 <- ggplot(filter(all.data, Species==soi), aes(x=Day.Number, y=Abundance)) +
-  facet_wrap(~Species, ncol=2, scales="free_y") +
+soi <- "Cyclopoids"
+g1 <- ggplot(filter(all.data, variable==soi), aes(x=Day.number, y=fr.value)) +
+  facet_wrap(~variable, ncol=2, scales="free_y") +
   geom_line(size=0.5, col="red") +
   scale_colour_manual(values = species.colour.mapping)
-g2 <- geom_line(data=filter(mt, Species==soi), aes(x=Day.number, y=Abundance), size=0.25)
+g2 <- geom_line(data=filter(mt, variable==soi), aes(x=Day.number, y=value), size=0.25, col="blue")
 g1 + g2
 ```
 
 
-# Create dataset with zeros removed
+## Fourth root transform
+
+Currently this is done before the spline.
+
+## Detrend
+
+```{r}
+
+final <. group_by(mt, variable) %>%
+  do(ksmooth, Day.number, value, kernel="normal", bandwidth=300)
+
+final <- group_by(mt, variable) %>%
+  mutate(smoothed=ksmooth(Day.number, value, kernel="normal", bandwidth=300)$y)
+
+soi <- "Cyclopoids"
+g1 <- ggplot(filter(final, variable==soi), aes(x=Day.number, y=value)) +
+  facet_wrap(~variable, ncol=2, scales="free_y") +
+  geom_line(size=0.5, col="red") +
+  scale_colour_manual(values = species.colour.mapping)
+g2 <- geom_line(data=filter(final, variable==soi), aes(x=Day.number, y=smoothed), size=0.25, col="blue")
+g1 + g2
+
+
+g1 <- ggplot(final, aes(x=Day.number, y=value)) +
+  facet_wrap(~variable, ncol=2, scales="free_y") +
+  geom_line(size=0.5, col="red") +
+  scale_colour_manual(values = species.colour.mapping)
+g2 <- geom_line(data=final, aes(x=Day.number, y=smoothed), size=0.25, col="blue")
+g1 + g2
+
+final$detrended <- final$value - final$smoothed
+
+
+```
+
+## Standardise
+
+```{r}
+final <- group_by(final, variable) %>%
+  mutate(y=scale(detrended))
+summarise(final, mean=mean(y), sd=sd(y))
+```
+
+We now have a y variable to work with in data.frame "final", variable name "y".
+```{r}
+str(final)
+```
+
 
 
 # Spectral analyses
 
-To be done.
+Jason, Frank.
 
 # Reproducing Table 1 using ELE supplement data.
+
+Kevin, Marco.
+
+Create dataset with zeros removed for this table.
 
 To be done.
 
@@ -231,10 +294,10 @@ To be done.
 
 # Lyapunov exponents by direct method (Figure 3)
 
-To be done.
+Gian Marco, Mikael.
 
 # Lyapunov exponents by indirect method
 
-To be done.
+Dennis, Vanessa.
 
 
