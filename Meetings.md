@@ -58,6 +58,25 @@ Homeworks for next time:
 ## 17.3
 
 (Minutes by Vanessa.)
+New people: Gian Marco
+
+Suggestions
+* Email the authors of the papers that we start to reproduce, let them know what we are doing and where the files will be available.
+
+Questions
+* Owen and Frank showed how to properly fork and clone the repository into your own account/computer, how to edit the files and then pull them back. Thiss will be available on the wiki page.
+
+Issues
+* Jason: what kind of paper we are interested in reproducing, and also which analyses within a paper we would like to reproduce.
+* How to read data from github
+
+No progress since last week
+
+Continue to work on the Beninca et al 2008 paper:
+* Reproduce fig. 1
+* Generated figure is similar to the original one in the paper, but not exactly the same. Is this enough? Do we need to reproduce exactly the same plot?
+
+Next week: go through the modifications sent by Owen
 
 
 ## 24.3
@@ -79,8 +98,69 @@ No meeting.
 
 (Minutes by Gian Marco.)
 
+* Owen encourages to meet even in his absence.
+* Vanessa has troubles synchronising the github ?> instructions on the wiki.
+* Some of us have troubles connecting to the internet ieu Petchey ?> Go to IT to unlock the network.
+
+* Work on the master branch.
+* Issue: use package RCurl function getURL to read the file from the internet.
+* Recap of previous work done on the Beninca paper.
+
+* Change branch to Figs2b g.
+* Fix some details (names of data and variables) in the current branch.
+* Check of previous plot of time series.
+* Create a color map for the species adding colours to different functional groups.
+* Reproduce color figure without magnifications and gaps.
+* Try to approximate the gap by removing the data above a given value.
+* Plot log scale and fourth root plots.
+
+* Go back to master branch and synchronise.
+* Todo for next week: data transformation and Lyapunov exponents.
+* Jason shows reproduction of Hiltunen et al. (2014).
 
 ## 21.4
+
+(Minutes taken by Frank)
+
+#### Organization:
+
+* no new papers or faces
+* change the working of RREEBES: groups (e.g. 2 persons) work in parallel rather than watch Owen code; Tuesdays to present progress and work on specific issues that appeared during group work
+
+##### Continuation reproducing Beninca et al. 2008:
+
+Getting data ready for analysis:
+
+1. interpolation
+	* no cubic hermite interpolation function in R, so we use spline to get time points with equidistance of 3.35 days (see open issue)
+	* spline -> provides various methods, we are not sure which may be the exact corresponding method but hopefully it should not matter too much for following analysis; potential alternative package pracma
+
+	* interpolations look mostly reasonable, but seems strongly affected by NAs in the data; funky shapes that go below zero for some species
+
+2. transformation 
+	* use fourth square root transform to get rid of sharp spikes
+	* some question whether we should do the transformation before the interpolation: in Beninca et al, it is done after interpolation, but we do it before
+
+3. Detrending
+	* detrending the data with gaussian kernel (function ksmooth())
+
+4. Scaling
+	* re-scaling data to mean 0 and SD of 1
+
+
+**We are now ready analyze the data (y variable in dataset final)**
+
+
+#### Distributing tasks for next meeting:
+
+* spectral analysis: Jason, Frank
+* table: Kevin, Marco
+* Lyapunov (direct): Gian-Marco, Mikael
+* Lyapunov (indirect): Vanessa, Dennis
+
+Some material collected by Owen to assist with analyses found here: /Beninca_etal_2008_Nature/report/material_to_use
+
+
 
 ## 28.4
 
