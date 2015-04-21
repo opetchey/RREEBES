@@ -120,7 +120,47 @@ No meeting.
 
 ## 21.4
 
-Divide tasks and work during class?
+(Minutes taken by Frank)
+
+#### Organization:
+
+* no new papers or faces
+* change the working of RREEBES: groups (e.g. 2 persons) work in parallel rather than watch Owen code; Tuesdays to present progress and work on specific issues that appeared during group work
+
+##### Continuation reproducing Beninca et al. 2008:
+
+Getting data ready for analysis:
+
+1. interpolation
+	* no cubic hermite interpolation function in R, so we use spline to get time points with equidistance of 3.35 days (see open issue)
+	* spline -> provides various methods, we are not sure which may be the exact corresponding method but hopefully it should not matter too much for following analysis; potential alternative package pracma
+
+	* interpolations look mostly reasonable, but seems strongly affected by NAs in the data; funky shapes that go below zero for some species
+
+2. transformation 
+	* use fourth square root transform to get rid of sharp spikes
+	* some question whether we should do the transformation before the interpolation: in Beninca et al, it is done after interpolation, but we do it before
+
+3. Detrending
+	* detrending the data with gaussian kernel (function ksmooth())
+
+4. Scaling
+	* re-scaling data to mean 0 and SD of 1
+
+
+**We are now ready analyze the data (y variable in dataset final)**
+
+
+#### Distributing tasks for next meeting:
+
+* spectral analysis: Jason, Frank
+* table: Kevin, Marco
+* Lyapunov (direct): Gian-Marco, Mikael
+* Lyapunov (indirect): Vanessa, Dennis
+
+Some material collected by Owen to assist with analyses found here: /Beninca_etal_2008_Nature/report/material_to_use
+
+
 
 ## 28.4
 
