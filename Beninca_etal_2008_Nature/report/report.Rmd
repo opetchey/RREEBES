@@ -326,24 +326,35 @@ g1
 
 Jason, Frank.
 
+Use data.frame `final`, response variable `y`.
+
+
 # Reproducing Table 1 using ELE supplement data.
 
 Kevin, Marco.
 
-Create dataset with zeros removed for this table.
+Use data.frame `final`, response variable `y`. Create dataset with zeros removed for this table.
 
 To be done.
+
 
 # Predictability (Figure 2)
 
 To be done.
 
+Use data.frame `final`, response variable `y`.
+
+
 # Lyapunov exponents by direct method (Figure 3)
 
 Gian Marco, Mikael.
+
+Use data.frame `final`, response variable `y`.
+
 
 # Lyapunov exponents by indirect method
 
 Dennis, Vanessa.
 
+Use data.frame `final`, response variable `y`.
 
