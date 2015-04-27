@@ -280,6 +280,36 @@ str(final)
 
 Jason, Frank.
 
+```{r}
+
+# Raw spectrum
+
+spectra <- final %>% group_by(variable) %>% do(spectra = spectrum(as.ts(.$y), log='no', method="pgram", detrend=F, plot=F))
+spec <- spectra %>% do(data.frame(spec = .$spec[[2]], freq = .$spec[[1]], group = .[[1]]))
+
+ggplot(spec, aes(y=spec, x=1/freq, group=group)) + geom_line() + facet_wrap(~group) +
+coord_cartesian(ylim=c(0,25), xlim=c(0,240))
+
+freq.est <- spec %>% group_by(group) %>% mutate(max_spec = max(spec), freq = freq)
+freq.est <- subset(freq.est, max_spec==spec, select=c(freq,group))
+freq.est$freq <- 1/freq.est$freq
+freq.est
+
+# Welch's periodogram
+
+wspectra <- final %>% group_by(variable) %>% do(spectra = pwelch(as.ts(.$y), window=5, method="pgram", plot=F))
+wspec <- wspectra %>% do(data.frame(spec = .$spec[[2]], freq = .$spec[[1]], group = .[[1]]))
+
+ggplot(wspec, aes(y=spec, x=1/freq, group=group)) + geom_line() + facet_wrap(~group) +
+coord_cartesian(ylim=c(0.1,100), xlim=c(0,240))+
+scale_y_continuous(trans="log")
+
+freq.est <- wspec %>% group_by(group) %>% mutate(max_spec = max(spec), freq = freq)
+freq.est <- subset(freq.est, max_spec==spec, select=c(freq,group))
+freq.est$freq <- 1/freq.est$freq
+
+```
+
 # Reproducing Table 1 using ELE supplement data.
 
 Kevin, Marco.
