@@ -3,9 +3,9 @@ title: "Reproduce anaylses of Beninca et al (2008)"
 author: "Owen Petchey"
 date: "29 Jan 2015"
 output:
-  html_document:
-    toc: yes
   pdf_document:
+    toc: yes
+  html_document:
     toc: yes
 ---
 
@@ -332,10 +332,75 @@ Use data.frame `final`, response variable `y`.
 # Reproducing Table 1 using ELE supplement data.
 
 Kevin, Marco.
+Use data.frame `final`, response variable `y`. 
+Create dataset with zeros removed for this table:
+```{r}
+final_nozeros <- final[final$y!=0,]
+# make it wide format
+library(tidyr)
+final_wide <- spread(final_nozeros[,c(1,2,7)], variable,y)
+```
 
-Use data.frame `final`, response variable `y`. Create dataset with zeros removed for this table.
+Calculate correlation coefficients:
+```{r}
+cor.coefs <- cor(final_wide[,c(-1)])
+```
 
-To be done.
+Only keep the upper triangle of the cor.pvals matrix:
+```{r}
+for(i in 1:12){
+  for(j in 1:12){
+  cor.coefs[i,j] <- ifelse(i<j, cor.coefs[i,j], NA)
+}}
+```
+
+Get p-vals too:
+```{r}
+# https://stat.ethz.ch/pipermail/r-help/2005-July/076050.html
+pn <- function(X){crossprod(!is.na(X))}
+cor.prob <- function(X){
+# Correlations Below Main Diagonal
+# Significance Tests with Pairwise Deletion
+# Above Main Diagonal
+# Believe part of this came from Bill Venables
+pair.SampSize <- pn(X)
+above1 <- row(pair.SampSize) < col(pair.SampSize)
+pair.df <- pair.SampSize[above1] - 2
+R <- cor(X, use="pair")
+above2 <- row(R) < col(R)
+r2 <- R[above2]^2
+Fstat <- (r2 * pair.df)/(1 - r2)
+R[above2] <- 1 - pf(Fstat, 1, pair.df)
+R
+}
+cor.pvals <- cor.prob(final_wide[,c(-1)])
+```
+
+Only keep the upper triangle of the cor.pvals matrix:
+```{r}
+for(i in 1:12){
+  for(j in 1:12){
+  cor.pvals[i,j] <- ifelse(i<j, cor.pvals[i,j], NA)
+}}
+```
+
+
+Add significance "stars" to cor.coefs from cor.pvals
+```{r}
+cor.stars <- cor.pvals
+cor.stars <- ifelse(cor.pvals<0.0001, "***",
+                    ifelse(cor.pvals<0.001, "**",
+                           ifelse(cor.pvals<0.05, "*", "")))
+```
+
+```{r}
+cor.cp <- cor.coefs
+for(i in 1:12){
+  for(j in 1:12){
+  cor.cp[i,j] <- paste(round(cor.coefs[i,j],3), cor.stars[i,j])
+}}
+```
+
 
 
 # Predictability (Figure 2)
