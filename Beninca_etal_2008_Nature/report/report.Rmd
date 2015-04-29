@@ -3,9 +3,9 @@ title: "Reproduce anaylses of Beninca et al (2008)"
 author: "Owen Petchey"
 date: "29 Jan 2015"
 output:
-  pdf_document:
-    toc: yes
   html_document:
+    toc: yes
+  pdf_document:
     toc: yes
 ---
 
@@ -401,13 +401,20 @@ for(i in 1:12){
 }}
 ```
 
+Remove NAs:
+```{r}
+for(i in 1:12){
+  for(j in 1:12){
+  cor.cp[i,j] <- ifelse(cor.cp[i,j]=="NA NA", "", cor.cp[i,j])
+}}
+```
+
 Make it a table:
 ```{r}
 library(knitr)
-table1 <- kable(cor.cp, format="markdown", col.names = colnames(cor.cp))
+table1 <- kable(cor.cp, format="html", col.names = colnames(cor.cp))
 table1
 ```
-
 
 
 # Predictability (Figure 2)
