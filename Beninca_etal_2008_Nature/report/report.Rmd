@@ -401,6 +401,13 @@ for(i in 1:12){
 }}
 ```
 
+Make it a table:
+```{r}
+library(knitr)
+table1 <- kable(cor.cp, format="markdown", col.names = colnames(cor.cp))
+table1
+```
+
 
 
 # Predictability (Figure 2)
