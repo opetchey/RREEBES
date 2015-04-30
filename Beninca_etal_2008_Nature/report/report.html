@@ -401,12 +401,14 @@ g1</code></pre>
 <pre class="r"><code>final_nozeros &lt;- final[final$y!=0,]
 # make it wide format
 library(tidyr)
-final_wide &lt;- spread(final_nozeros[,c(1,2,7)], variable,y)</code></pre>
+final_long &lt;- final_nozeros[final_nozeros$variable!=&quot;Cyclopoids&quot; &amp; final_nozeros$variable!=&quot;Filamentous.diatoms&quot;,c(1,2,7)]
+final_wide &lt;- spread(final_long, variable,y)
+# we also removed data on Cyclopoids, not used in the table</code></pre>
 <p>Calculate correlation coefficients:</p>
 <pre class="r"><code>cor.coefs &lt;- cor(final_wide[,c(-1)])</code></pre>
 <p>Only keep the upper triangle of the cor.pvals matrix:</p>
-<pre class="r"><code>for(i in 1:12){
-  for(j in 1:12){
+<pre class="r"><code>for(i in 1:10){
+  for(j in 1:10){
   cor.coefs[i,j] &lt;- ifelse(i&lt;j, cor.coefs[i,j], NA)
 }}</code></pre>
 <p>Get p-vals too:</p>
@@ -429,8 +431,8 @@ R
 }
 cor.pvals &lt;- cor.prob(final_wide[,c(-1)])</code></pre>
 <p>Only keep the upper triangle of the cor.pvals matrix:</p>
-<pre class="r"><code>for(i in 1:12){
-  for(j in 1:12){
+<pre class="r"><code>for(i in 1:10){
+  for(j in 1:10){
   cor.pvals[i,j] &lt;- ifelse(i&lt;j, cor.pvals[i,j], NA)
 }}</code></pre>
 <p>Add significance “stars” to cor.coefs from cor.pvals</p>
@@ -439,58 +441,61 @@ cor.stars &lt;- ifelse(cor.pvals&lt;0.0001, &quot;***&quot;,
                     ifelse(cor.pvals&lt;0.001, &quot;**&quot;,
                            ifelse(cor.pvals&lt;0.05, &quot;*&quot;, &quot;&quot;)))</code></pre>
 <pre class="r"><code>cor.cp &lt;- cor.coefs
-for(i in 1:12){
-  for(j in 1:12){
+for(i in 1:10){
+  for(j in 1:10){
   cor.cp[i,j] &lt;- paste(round(cor.coefs[i,j],3), cor.stars[i,j])
 }}</code></pre>
 <p>Remove NAs:</p>
-<pre class="r"><code>for(i in 1:12){
-  for(j in 1:12){
+<pre class="r"><code>for(i in 1:10){
+  for(j in 1:10){
   cor.cp[i,j] &lt;- ifelse(cor.cp[i,j]==&quot;NA NA&quot;, &quot;&quot;, cor.cp[i,j])
+}}
+for(i in 1:10){
+  for(j in 1:10){
+  cor.cp[i,j] &lt;- ifelse(i==j, &quot;1&quot;, cor.cp[i,j])
 }}</code></pre>
 <p>Make it a table:</p>
 <pre class="r"><code>library(knitr)
-table1 &lt;- kable(cor.cp, format=&quot;html&quot;, col.names = colnames(cor.cp))
+table1 &lt;- kable(cor.cp, format=&quot;html&quot;, col.names = colnames(cor.cp), align=&quot;c&quot;,
+                caption=&quot;Table 1.'Correlations between the species in the food web. Table entries show the product–moment correlation coefficients, after transformation of the data to stationary time series (see Methods). Significance tests were corrected for multiple hypothesis testing by calculation of adjusted P values using the false discovery rate.' Significant correlations are indicated as follows: *: P&lt;0.05; **: P&lt;0.01; ***: P&lt;0.001. 'The correlation between calanoid copepods and protozoa could not be calculated, because their time series did not overlap. Filamentous diatoms and cyclopoid copepods were not included in the correlation analysis, because their time series contained too many zeros.' (Beninca et al. 2008)&quot;)
+
 table1</code></pre>
 <table>
+<caption>
+Table 1.‘Correlations between the species in the food web. Table entries show the product–moment correlation coefficients, after transformation of the data to stationary time series (see Methods). Significance tests were corrected for multiple hypothesis testing by calculation of adjusted P values using the false discovery rate.’ Significant correlations are indicated as follows: <em>: P&lt;0.05; <strong>: P&lt;0.01; </strong></em>: P&lt;0.001. ‘The correlation between calanoid copepods and protozoa could not be calculated, because their time series did not overlap. Filamentous diatoms and cyclopoid copepods were not included in the correlation analysis, because their time series contained too many zeros.’ (Beninca et al. 2008)
+</caption>
 <thead>
 <tr>
 <th style="text-align:left;">
 </th>
-<th style="text-align:left;">
-Cyclopoids
-</th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Calanoid.copepods
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Rotifers
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Protozoa
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Nanophytoplankton
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Picophytoplankton
 </th>
-<th style="text-align:left;">
-Filamentous.diatoms
-</th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Ostracods
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Harpacticoids
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Bacteria
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Total.dissolved.inorganic.nitrogen
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Soluble.reactive.phosphorus
 </th>
 </tr>
@@ -498,80 +503,36 @@ Soluble.reactive.phosphorus
 <tbody>
 <tr>
 <td style="text-align:left;">
-Cyclopoids
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-0.037
-</td>
-<td style="text-align:left;">
-0.009
-</td>
-<td style="text-align:left;">
-0.011
-</td>
-<td style="text-align:left;">
-0.047
-</td>
-<td style="text-align:left;">
--0.011
-</td>
-<td style="text-align:left;">
--0.084 *
-</td>
-<td style="text-align:left;">
-0.115 *
-</td>
-<td style="text-align:left;">
-0.018
-</td>
-<td style="text-align:left;">
-0.182 ***
-</td>
-<td style="text-align:left;">
--0.13 **
-</td>
-<td style="text-align:left;">
--0.009
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 Calanoid.copepods
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
+1
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.094 *
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.032
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.025
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.178 ***
 </td>
-<td style="text-align:left;">
--0.03
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.004
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.018
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.117 *
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.041
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.008
 </td>
 </tr>
@@ -579,37 +540,33 @@ Calanoid.copepods
 <td style="text-align:left;">
 Rotifers
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
+1
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.006
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.055
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.037
 </td>
-<td style="text-align:left;">
--0.03
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.163 ***
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.144 **
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.282 ***
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.046
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.147 **
 </td>
 </tr>
@@ -617,36 +574,32 @@ Rotifers
 <td style="text-align:left;">
 Protozoa
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
+1
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.044
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.018
 </td>
-<td style="text-align:left;">
--0.01
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.023
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.025
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.025
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.005
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.005
 </td>
 </tr>
@@ -654,35 +607,31 @@ Protozoa
 <td style="text-align:left;">
 Nanophytoplankton
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
+1
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.033
 </td>
-<td style="text-align:left;">
--0.014
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.024
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.036
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.01
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.045
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.047
 </td>
 </tr>
@@ -690,101 +639,60 @@ Nanophytoplankton
 <td style="text-align:left;">
 Picophytoplankton
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
+1
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
--0.031
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.018
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.054
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.033
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.034
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.029
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Filamentous.diatoms
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
--0.076 *
-</td>
-<td style="text-align:left;">
--0.038
-</td>
-<td style="text-align:left;">
--0.032
-</td>
-<td style="text-align:left;">
-0.01
-</td>
-<td style="text-align:left;">
--0.007
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 Ostracods
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
+1
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.289 ***
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.211 ***
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.12 *
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.2 ***
 </td>
 </tr>
@@ -792,31 +700,28 @@ Ostracods
 <td style="text-align:left;">
 Harpacticoids
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
+1
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.293 ***
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.035
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.266 ***
 </td>
 </tr>
@@ -824,30 +729,27 @@ Harpacticoids
 <td style="text-align:left;">
 Bacteria
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
+1
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.129 **
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 0.343 ***
 </td>
 </tr>
@@ -855,29 +757,26 @@ Bacteria
 <td style="text-align:left;">
 Total.dissolved.inorganic.nitrogen
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
+1
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 -0.071
 </td>
 </tr>
@@ -885,29 +784,26 @@ Total.dissolved.inorganic.nitrogen
 <td style="text-align:left;">
 Soluble.reactive.phosphorus
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 </td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+<td style="text-align:center;">
+1
 </td>
 </tr>
 </tbody>
