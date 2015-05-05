@@ -1,4 +1,4 @@
-# Meetings in 2015
+﻿# Meetings in 2015
 
 Meetings 10.45 to 12.00 Zurich time, location is variable.
 
@@ -163,6 +163,27 @@ Some material collected by Owen to assist with analyses found here: /Beninca_eta
 
 
 ## 28.4
+(Minutes taken by Jason)
+
+#### Organization:
+
+* Gian Marco suggests paper on ABC
+
+#### Issues:
+
+*Owen opened issues regarding transformations: not sure if data transformation methods match those of original paper (date ranges not the same: Nature supplement vs Ellner file info)
+
+##### Continuation reproducing Beninca et al. 2008:
+##### Progress
+*Transformations improved by Owen using Pracma package. Still need to do data removal
+*Method avoids values less than zero and large peaks
+
+* Frank and Jason implemented some Spectral density estimation analyses  
+* Discussed the purpose of the spectral analysis
+* Seem to be differences between the reproduction of J & F when compared to that of Beninca et al.
+* Should check for differences between transformed data produced by this group and the authors.
+
+##### Break out to work on group sections
 
 ## 5.5
 

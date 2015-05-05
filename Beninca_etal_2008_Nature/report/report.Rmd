@@ -28,6 +28,8 @@ library(lubridate)
 library(stringr)
 library(ggplot2)
 library(RCurl)
+library(pracma)
+library(oce)
 
 spp.abund <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/species_abundances_original.csv"), skip=7, header=T)
 
@@ -209,7 +211,6 @@ Now we need to work with transformed data. Details of the transformation, copied
 
 Aside: The ELE supplement contains the raw data and the transformed data, in separate data sheets. I (Owen) also got the interpolated data from Stephen Ellner directly.
 
-
 ## Interpolation
 
 > First, the time series were interpolated using cubic hermite interpolation, to obtain data with equidistant time intervals of 3.35 days (Fig. S1a).
@@ -259,8 +260,6 @@ detrended <- group_by(mt, variable) %>%
   mutate(smoothed=ksmooth(Day.number, fr.value, kernel="normal", bandwidth=300)$y)
 detrended$dt.value <- detrended$value - detrended$smoothed
 ```
-
-## Standardise
 
 > Finally, the time series were linearly rescaled to have zero mean and a standard deviation of 1 (Fig. S1c).
 
@@ -326,16 +325,132 @@ g1
 
 Jason, Frank.
 
-Use data.frame `final`, response variable `y`.
+```{r}
 
+# Raw spectrum
+spectra <- final %>% group_by(variable) %>% do(spectra = spectrum(ts(data=.$y, end=2650.15, deltat=3.35), log='no', method="pgram", detrend=F, plot=F))
+spec <- spectra %>% do(data.frame(spec = .$spec[[2]], freq = .$spec[[1]], group = .[[1]]))
+
+ggplot(spec, aes(y=spec, x=1/freq, group=group)) + geom_line() + facet_wrap(~group) +
+coord_cartesian(ylim=c(0,40), xlim=c(0,240))
+
+freq.est <- spec %>% group_by(group) %>% mutate(max_spec = max(spec), freq = freq)
+freq.est <- subset(freq.est, max_spec==spec, select=c(freq,group))
+freq.est$freq <- 1/freq.est$freq
+freq.est
+
+# Welch's periodogram
+
+wspectra <- final %>% group_by(variable) %>% do(spectra = pwelch(ts(data=.$y, end=2650.15, deltat=3.35), window=5, method="pgram", plot=F))
+wspec <- wspectra %>% do(data.frame(spec = .$spec[[2]], freq = .$spec[[1]], group = .[[1]]))
+
+ggplot(wspec, aes(y=spec, x=1/freq, group=group)) + geom_line() + facet_wrap(~group) +
+coord_cartesian(ylim=c(0.1,100), xlim=c(0,240))+
+scale_y_continuous(trans="log")
+
+freq.est <- wspec %>% group_by(group) %>% mutate(max_spec = max(spec), freq = freq)
+freq.est <- subset(freq.est, max_spec==spec, select=c(freq,group))
+freq.est$freq <- 1/freq.est$freq
+frequency(final$y)
+ts <- as.ts(final$y, frequency = 0.3)
+#time(ts)
+
+```
 
 # Reproducing Table 1 using ELE supplement data.
 
 Kevin, Marco.
+Use data.frame `final`, response variable `y`. 
+Create dataset with zeros removed for this table:
+```{r}
+final_nozeros <- final[final$y!=0,]
+# make it wide format
+library(tidyr)
+final_long <- final_nozeros[final_nozeros$variable!="Cyclopoids" & final_nozeros$variable!="Filamentous.diatoms",c(1,2,7)]
+final_wide <- spread(final_long, variable,y)
+# we also removed data on Cyclopoids, not used in the table
+```
 
-Use data.frame `final`, response variable `y`. Create dataset with zeros removed for this table.
+Calculate correlation coefficients:
+```{r}
+cor.coefs <- cor(final_wide[,c(-1)])
+```
 
-To be done.
+Only keep the upper triangle of the cor.pvals matrix:
+```{r}
+for(i in 1:10){
+  for(j in 1:10){
+  cor.coefs[i,j] <- ifelse(i<j, cor.coefs[i,j], NA)
+}}
+```
+
+Get p-vals too:
+```{r}
+# https://stat.ethz.ch/pipermail/r-help/2005-July/076050.html
+pn <- function(X){crossprod(!is.na(X))}
+cor.prob <- function(X){
+# Correlations Below Main Diagonal
+# Significance Tests with Pairwise Deletion
+# Above Main Diagonal
+# Believe part of this came from Bill Venables
+pair.SampSize <- pn(X)
+above1 <- row(pair.SampSize) < col(pair.SampSize)
+pair.df <- pair.SampSize[above1] - 2
+R <- cor(X, use="pair")
+above2 <- row(R) < col(R)
+r2 <- R[above2]^2
+Fstat <- (r2 * pair.df)/(1 - r2)
+R[above2] <- 1 - pf(Fstat, 1, pair.df)
+R
+}
+cor.pvals <- cor.prob(final_wide[,c(-1)])
+```
+
+Only keep the upper triangle of the cor.pvals matrix:
+```{r}
+for(i in 1:10){
+  for(j in 1:10){
+  cor.pvals[i,j] <- ifelse(i<j, cor.pvals[i,j], NA)
+}}
+```
+
+
+Add significance "stars" to cor.coefs from cor.pvals
+```{r}
+cor.stars <- cor.pvals
+cor.stars <- ifelse(cor.pvals<0.0001, "***",
+                    ifelse(cor.pvals<0.001, "**",
+                           ifelse(cor.pvals<0.05, "*", "")))
+```
+
+```{r}
+cor.cp <- cor.coefs
+for(i in 1:10){
+  for(j in 1:10){
+  cor.cp[i,j] <- paste(round(cor.coefs[i,j],3), cor.stars[i,j])
+}}
+```
+
+Remove NAs:
+```{r}
+for(i in 1:10){
+  for(j in 1:10){
+  cor.cp[i,j] <- ifelse(cor.cp[i,j]=="NA NA", "", cor.cp[i,j])
+}}
+for(i in 1:10){
+  for(j in 1:10){
+  cor.cp[i,j] <- ifelse(i==j, "1", cor.cp[i,j])
+}}
+```
+
+Make it a table:
+```{r}
+library(knitr)
+table1 <- kable(cor.cp, format="html", col.names = colnames(cor.cp), align="c",
+                caption="Table 1.'Correlations between the species in the food web. Table entries show the product–moment correlation coefficients, after transformation of the data to stationary time series (see Methods). Significance tests were corrected for multiple hypothesis testing by calculation of adjusted P values using the false discovery rate.' Significant correlations are indicated as follows: *: P<0.05; **: P<0.01; ***: P<0.001. 'The correlation between calanoid copepods and protozoa could not be calculated, because their time series did not overlap. Filamentous diatoms and cyclopoid copepods were not included in the correlation analysis, because their time series contained too many zeros.' (Beninca et al. 2008)")
+
+table1
+```
 
 
 # Predictability (Figure 2)
