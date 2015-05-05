@@ -11,3 +11,5 @@
 [Ward, E.J., Holmes, E.E., Thorson, J.T. & Collen, B. (2014) Complexity is costly: A meta-analysis of parametric and non-parametric methods for short-term population forecasting. Oikos, 123, 652–661.](http://onlinelibrary.wiley.com/doi/10.1111/j.1600-0706.2014.00916.x/abstract) Availability of data unclear.
 
 [Ye, H., Beamish, R.J., Glaser, S.M., Grant, S.C.H., Hsieh, C., Richards, L.J., Schnute, J.T. & Sugihara, G. (2015) Equation-free mechanistic ecosystem forecasting using empirical dynamic modeling. Proceedings of the National Academy of Sciences, 201417063.](http://www.pnas.org/content/112/13/E1569.long) Data and some code on github.
+
+[Tina Toni, David Welch, Natalja Strelkowa, Andreas Ipsen, Michael P.H. Stumpf (2009) Approximate Bayesian computation scheme for parameter inference and model selection in dynamical systems. Journal of the Royal Society Interface, 6, 187-202.] (http://rsif.royalsocietypublishing.org/content/6/31/187) Propose to reproduce ABC on Lotka Volterra euqations. No data needed
