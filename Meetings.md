@@ -188,7 +188,19 @@ Some material collected by Owen to assist with analyses found here: /Beninca_eta
 ## 5.5
 (Minutes by Mikael)
 
+*Owen introduces REEBES to Alejandra
+*Progress since last meeting
+	-Marco did reproduce table1.
+		-Table 1. was reproduced and the results were qualitatively similar. 
+	-Frank and Jason did some progress on the spectral analysis.
+	-Vanessa and Dennis has started working on the Lyapunov (indirect) but has done little progress.
+	-Gian-Marco and Mikael did not make any progress on Lyapunov (direct).
+*The different groups worked independently on their problems. 
+
 ## 12.5
+(Minutes by Mikael)
+
+*The different groups worked independently on their problems.
 
 ## 19.5
 
