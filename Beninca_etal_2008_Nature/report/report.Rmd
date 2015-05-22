@@ -363,7 +363,8 @@ Kevin, Marco.
 Use data.frame `final`, response variable `y`. 
 Create dataset with zeros removed for this table:
 ```{r}
-final_nozeros <- final[final$y!=0,]
+final_nozeros <- final
+final_nozeros$y <- ifelse(final_nozeros$y!=0, final_nozeros$y, NA)
 # make it wide format
 #library(tidyr)
 final_long <- final_nozeros[final_nozeros$variable!="Cyclopoids" & final_nozeros$variable!="Filamentous.diatoms",c(1,2,7)]
@@ -441,15 +442,21 @@ for(i in 1:10){
   for(j in 1:10){
   cor.cp[i,j] <- ifelse(i==j, "1", cor.cp[i,j])
 }}
+
+colnames(cor.cp) <- c("Calanoid.copepods  ","Rotifers  ","Protozoa  ","Nanophytoplankton  ","Picophytoplankton  ",
+"Ostracods  ","Harpacticoid.copepods  ","Bacteria  ","Nitrogen  ","Phosphorus  ")
+rownames(cor.cp)<-colnames(cor.cp)
 ```
 
 Make it a table:
 ```{r}
 library(knitr)
-table1 <- kable(cor.cp, format="html", col.names = colnames(cor.cp), align="c",
+table1b <- kable(cor.cp, format="html", col.names = colnames(cor.cp), align="c",
                 caption="Table 1.'Correlations between the species in the food web. Table entries show the product–moment correlation coefficients, after transformation of the data to stationary time series (see Methods). Significance tests were corrected for multiple hypothesis testing by calculation of adjusted P values using the false discovery rate.' Significant correlations are indicated as follows: *: P<0.05; **: P<0.01; ***: P<0.001. 'The correlation between calanoid copepods and protozoa could not be calculated, because their time series did not overlap. Filamentous diatoms and cyclopoid copepods were not included in the correlation analysis, because their time series contained too many zeros.' (Beninca et al. 2008)")
 
-table1
+table1b
+
+# differs from the one published by Beninca et al.!
 ```
 
 
