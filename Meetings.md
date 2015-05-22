@@ -1,4 +1,4 @@
-﻿# Meetings in 2015
+# Meetings in 2015
 
 Meetings 10.45 to 12.00 Zurich time, location is variable.
 
@@ -186,10 +186,31 @@ Some material collected by Owen to assist with analyses found here: /Beninca_eta
 ##### Break out to work on group sections
 
 ## 5.5
+(Minutes by Mikael)
+
+*Owen introduces REEBES to Alejandra
+*Progress since last meeting
+	-Marco did reproduce table1.
+		-Table 1. was reproduced and the results were qualitatively similar. 
+	-Frank and Jason did some progress on the spectral analysis.
+	-Vanessa and Dennis has started working on the Lyapunov (indirect) but has done little progress.
+	-Gian-Marco and Mikael did not make any progress on Lyapunov (direct).
+*The different groups worked independently on their problems. 
 
 ## 12.5
+(Minutes by Mikael)
+
+*The different groups worked independently on their problems.
 
 ## 19.5
+
+(Owen takes minutes.)
+
+Colette Ward present as a guest. Many others not present.
+
+* Owen showed the work he did while in China, on the Beninca paper, so that we can move on to a new paper.
+* Still a few issues with the Beninca paper reproduction, but probably 90% complete. Owen (and anyone else interested) will clean up the reproduction and fix any remaining issues.
+* Next week we will decide on the next paper to reproduce, and start on that.
 
 ## 26.5
 

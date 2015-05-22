@@ -365,7 +365,7 @@ Create dataset with zeros removed for this table:
 ```{r}
 final_nozeros <- final[final$y!=0,]
 # make it wide format
-library(tidyr)
+#library(tidyr)
 final_long <- final_nozeros[final_nozeros$variable!="Cyclopoids" & final_nozeros$variable!="Filamentous.diatoms",c(1,2,7)]
 final_wide <- spread(final_long, variable,y)
 # we also removed data on Cyclopoids, not used in the table
