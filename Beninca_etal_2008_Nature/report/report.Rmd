@@ -660,6 +660,7 @@ LEs <- group_by(diverg.short, Species) %>%
 #pval=summary(lm(Difference[1:6] ~ days[1:6]))$coefficients[2,4])
 ```
 
+
 Then plot the graphs with LE:
 ```{r}
 LEs <- mutate(LEs, days=20, Difference=-0.5)
@@ -711,9 +712,7 @@ LE <- Get_GLE_Beninca(X)
 LE[[1]]
 ```
 
-This is quite far from the number using code and data from Steve (0.08415112). But recall that the functions have been carefully checked. Probably it is the data going into this function. A final step would be to save the data here, and take it into Steve's function.
-
-# Make the preceding point an issue!!!
+This is quite far from the number using code and data from Steve (0.08415112). But recall that the functions have been carefully checked. Probably it is the data going into this function. A final step would be to save the data here, and take it into Steve's function. (This point is an issue on github.)
 
 # Predictability (Figure 2)
 
