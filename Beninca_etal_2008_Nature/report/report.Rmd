@@ -34,9 +34,9 @@ library(tseriesChaos)
 library(reshape2)
 
 
-#spp.abund <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/species_abundances_original.csv"), skip=7, header=T)
+spp.abund <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/species_abundances_original.csv"), skip=7, header=T)
 
-spp.abund <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/species_abundances_original.csv", skip=7, header=T)
+#spp.abund <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/species_abundances_original.csv", skip=7, header=T)
 
 
 spp.abund <- select(spp.abund, -X, -X.1)
@@ -94,8 +94,8 @@ str(spp.abund)
 
 Bring in the nutrient data:
 ```{r}
-#nuts <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/nutrients_original.csv"), skip=7, header=T)
-nuts <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/nutrients_original.csv", skip=7, header=T)
+nuts <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/nutrients_original.csv"), skip=7, header=T)
+#nuts <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/nutrients_original.csv", skip=7, header=T)
 
 nuts <- select(nuts, -X, -X.1)
 nuts <- nuts[-349:-8163,]
@@ -261,7 +261,10 @@ mt <- gather(mt, variable, value, 2:13)
 Check this against the data direct from Steve:
 
 ```{r}
-from.steve <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/direct from Steve/interp_short_allsystem_newnames.csv")
+#from.steve <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/direct from Steve/interp_short_allsystem_newnames.csv")
+
+from.steve <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_owen/Beninca_etal_2008_Nature/data/direct%20from%20Steve/interp_short_allsystem_newnames.csv"), header=T)
+
 from.steve <- gather(from.steve, Species, Abundance, 2:13)
 
 names(from.steve) <- c("Day.number", "variable", "value")
@@ -348,7 +351,7 @@ summarise(final, mean=mean(y), sd=sd(y))
 ```{r}
 ## save up to here
 #save.image("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_transform.Rdata")
-load("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_transform.Rdata")
+#load("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_transform.Rdata")
 ```
 
 
@@ -410,8 +413,13 @@ Now take a look at the transformed data provided in the ELE Supplement, in the d
 First note that the data in the ELE supplement include a data point at day 2658.1, whereas the data above finish at 2654.85. This is because the real data end at 2658, and the interpolation method above doesn't want to create data outside the range of the original data.
 
 ```{r, echo=FALSE}
-tr <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/transformed_data_Nature2008.csv",
-               skip=7, na.string="", )
+#tr <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/transformed_data_Nature2008.csv", skip=7, na.string="")
+
+tr <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_owen/Beninca_etal_2008_Nature/data/transformed_data_Nature2008.csv"),
+               skip=7, na.string="")
+
+
+
 tr <- tr[,-14:-24] ## remove bad columns
 tr <- tr[-693:-694,] ## remove last two rows (contain summary stats)
 tr <- gather(tr, key="Species", value="Abundance", 2:13)
@@ -425,12 +433,15 @@ levels(tr$Species)[levels(tr$Species)=="Calanoids"] <- "Calanoid.copepods"
 levels(tr$Species)[levels(tr$Species)=="Total.Dissolved.Inorganic.Nitrogen"] <- "Total.dissolved.inorganic.nitrogen"
 names(tr)[1] <- "variable"
 names(tr)[2] <- "Day.number"
+
 ```
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=F}
 
-two.datasets <- merge(tr, final)
+## Days are not matching at present, so the following doesn't work with the merge
+
+two.datasets <- merge(tr, final, all=T)
 
 ggplot(two.datasets, aes(x=Abundance, y=y)) + geom_point()
 
@@ -446,18 +457,7 @@ ggplot(two.datasets, aes(x=Day.number, y=Abundance)) + geom_line() +
 
 Looks good. Apart from when there were series of zeros removed, presumably before the standardisation.
 
-```{r, echo=FALSE, eval=FALSE}
-## This code reads in data received direct from Stephen Ellner. It is the 
-from.steve <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/direct from Steve/interp_short_allsystem_newnames.csv")
-from.steve <- gather(from.steve, Species, Abundance, 2:13)
 
-g1 <- ggplot(from.steve, aes(x=as.numeric(Day.Number), y=Abundance)) +
-  facet_wrap(~Species, ncol=2, scales="free_y") +
-  geom_point(size=0.5, col="red") +
-  scale_colour_manual(values = species.colour.mapping)
-g2 <- geom_line(data=from.steve, aes(x=Day.Number, y=Abundance))
-g1 + g2
-```
 
 
 # Spectral analyses
@@ -694,7 +694,12 @@ e=as.numeric(row.names(X)) < 2654; X=X[e,];
 Load and run the functions:
 
 ```{r}
-source("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/report/functions/indirect_method_functions.r")
+# read script lines from website
+script <- getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_owen/Beninca_etal_2008_Nature/report/functions/indirect_method_functions.R", ssl.verifypeer = FALSE)
+
+# parase lines and evealuate in the global environement
+eval(parse(text = script))
+
 LE <- Get_GLE_Beninca(X)
 LE[[1]]
 ```
@@ -714,7 +719,7 @@ names(all.gams)
 
 ```{r}
 ## save up to here
-save.image("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_LE_indirect.Rdata")
+#save.image("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_LE_indirect.Rdata")
 #load("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_LE_indirect.Rdata")
 ```
 
@@ -729,14 +734,21 @@ species will be 12
 start location will be length of time series - 12
 
 ```{r}
-preds <- array(NA, c(12, 12, 691-12))
+x <- X
+
+time.to.predict <- 12
+
+nn <- length(x[,1])-time.to.predict
+
+preds <- array(NA, c(12, 12, nn))
+
 
 dimnames(preds) <- list(dist=1:12,
                         species=names(x),
-                        start.time=1:679)
+                        start.time=1:nn)
 all.species <- names(all.gams)
 for(i in 1:length(all.species))
-  preds[1,i,] <- predict(all.gams[[i]])[1:679]
+  preds[1,i,] <- predict(all.gams[[i]])[1:nn]
 
 ```
 
@@ -747,8 +759,8 @@ Now for the predictions at t+2 from predictions at t+1
 pred.time <- 2
 for(pred.time in 2:12) {
   for(i in 1:length(all.species))
-    preds[pred.time,i,pred.time:679] <- predict(all.gams[[i]],
-                                                newdata=as.data.frame(t(preds[pred.time-1,,])))[pred.time:679]
+    preds[pred.time,i,pred.time:nn] <- predict(all.gams[[i]],
+                                                newdata=as.data.frame(t(preds[pred.time-1,,])))[pred.time:nn]
 }
 
 
@@ -758,10 +770,10 @@ dimnames(cors) = list(dist=1:12,
                         species=names(x))
 for(i in 1:12) {
   for(j in 1:12) {
-    cors[j,i] <- cor(z[1:679,i], preds[j, i, ], use="complete.obs")^2
+    cors[j,i] <- cor(X[1:nn,i], preds[j, i, ], use="complete.obs")^2
 }}
 
-plot(z[1:679,"Bacteria"],preds[i, "Bacteria", ])
+plot(X[1:nn,"Bacteria"],preds[i, "Bacteria", ])
 
 cors <- data.frame(dist=as.numeric(I(rownames(cors))), cors)
 cors.long <- gather(as.data.frame(cors), key=dist)
@@ -777,5 +789,5 @@ ggplot(cors.long, aes(x=Prediction_distance, y=Correlation)) +
 
 ```
 
-
+Clearly not quite right. Still, skeleton is working. Just needs bugs ironing out!
 
