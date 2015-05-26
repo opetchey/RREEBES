@@ -1,6 +1,6 @@
 ---
 title: "Reproduce anaylses of Beninca et al (2008)"
-author: "Owen Petchey"
+author: "Owen Petchey et al"
 date: "29 Jan 2015"
 output:
   html_document:
@@ -30,8 +30,14 @@ library(ggplot2)
 library(RCurl)
 library(pracma)
 library(oce)
+library(tseriesChaos)
+library(reshape2)
+
 
 spp.abund <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/species_abundances_original.csv"), skip=7, header=T)
+
+#spp.abund <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/species_abundances_original.csv", skip=7, header=T)
+
 
 spp.abund <- select(spp.abund, -X, -X.1)
 spp.abund <- spp.abund[-804:-920,]
@@ -89,6 +95,8 @@ str(spp.abund)
 Bring in the nutrient data:
 ```{r}
 nuts <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/nutrients_original.csv"), skip=7, header=T)
+#nuts <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/nutrients_original.csv", skip=7, header=T)
+
 nuts <- select(nuts, -X, -X.1)
 nuts <- nuts[-349:-8163,]
 nuts$Date <- dmy(nuts$Date)
@@ -106,7 +114,11 @@ all.data <- rbind(spp.abund, nuts)
 
 Now select only the date range used in the Nature paper. From the supplment *The analysis in Benincà et al. (Nature 2008) covered all data from 16/06/1991 until 20/10/1997*. (Remembering dates in the R dataframes are 2090s.)
 ```{r}
-all.data <- filter(all.data, Date>dmy("16/06/2091") & Date<dmy("20/10/2097"))
+all.data <- filter(all.data, Date>=dmy("15/06/2091") & Date<=dmy("21/10/2097"))
+
+#all.data[all.data$Date==dmy("16/06/2091"),]
+#all.data[all.data$Date==dmy("20/10/2097"),]
+
 ```
 
 # Reproducing figure 1b through 1g
@@ -220,19 +232,24 @@ Make a sequence of times at which to interpolate.
 ```{r}
 #aggregate(Day.number ~ variable, all.data, min)
 #aggregate(Day.number ~ variable, all.data, max)
-xout <- seq(342, 2651, by=3.35)
+#xout <- seq(343.35, 2657.2, by=3.35)
+xout <- seq(341.7, 2653.1, by=3.35)
+
 range(xout)
 ```
 
 ```{r}
 all.data1 <- na.omit(all.data)
+
+group_by(all.data1, variable) %>% summarise(out=min(Day.number))
+
 mt <- plyr::dlply(all.data1,
                   "variable",
                   function(xx) pracma::interp1(x=xx$Day.number,
                                                y=xx$value,
                                                xi=xout,
                                                method="cubic"))
-## Aside: the duplicated date that was previously fixed was ponly discovered by a warning message
+## Aside: the duplicated date that was previously fixed was only discovered by a warning message
 ## given by the pracma::interp1 function!!!
 
 mt <- as.data.frame(mt)
@@ -240,6 +257,28 @@ mt <- cbind(Day.number=xout, mt)
 mt <- gather(mt, variable, value, 2:13)
 #ggplot(mt, aes(x=Day.number, y=value)) + facet_wrap(~variable, scales="free") + geom_line()
 ```
+
+Check this against the data direct from Steve:
+
+```{r}
+#from.steve <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/direct from Steve/interp_short_allsystem_newnames.csv")
+
+from.steve <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_owen/Beninca_etal_2008_Nature/data/direct%20from%20Steve/interp_short_allsystem_newnames.csv"), header=T)
+
+from.steve <- gather(from.steve, Species, Abundance, 2:13)
+
+names(from.steve) <- c("Day.number", "variable", "value")
+
+g1 <- ggplot(mt, aes(x=as.numeric(Day.number), y=value)) +
+  facet_wrap(~variable, ncol=2, scales="free_y") +
+  geom_line(size=0.5, col="black") +
+  scale_colour_manual(values = species.colour.mapping)
+g2 <- geom_line(data=from.steve, aes(x=Day.number, y=value), col="red")
+g1 + g2
+
+```
+
+Looks very good.
 
 
 ## Fourth root transform
@@ -255,19 +294,66 @@ mt$fr.value <- mt$value^0.25
 
 > The time series were then detrended using a Gaussian kernel with a bandwidth of 300 days (red line in Fig. S1b), to obtain stationary time series. Most species did not show long-term trends, except for the bacteria, detritivores (ostracods and harpacticoid copepods), dissolved inorganic nitrogen and soluble reactive phosphorus. One possible explanation for these trends in the microbial loop could be the slow accumulation of refractory organic material in the mesocosm, but we have not measured this component.
 
+
+
+
 ```{r}
-detrended <- group_by(mt, variable) %>%
-  mutate(smoothed=ksmooth(Day.number, fr.value, kernel="normal", bandwidth=300)$y)
-detrended$dt.value <- detrended$value - detrended$smoothed
+ww.td <- filter(mt, variable=="Total.dissolved.inorganic.nitrogen" |
+                  variable=="Soluble.reactive.phosphorus" |
+                  variable=="Bacteria" |
+                  variable=="Ostracods" |
+                  variable=="Harpacticoids")
+## and to not detrend
+ww.ntd <- filter(mt, variable!="Total.dissolved.inorganic.nitrogen" &
+                  variable!="Soluble.reactive.phosphorus" &
+                  variable!="Bacteria" &
+                  variable!="Ostracods" &
+                  variable!="Harpacticoids")
+## detrend:
+ww1 <- group_by(ww.td, variable) %>%
+  mutate(trend=ksmooth(Day.number,fr.value,bandwidth=300,kernel="normal")$y)
+ww1$dt.value <- ww1$fr.value-ww1$trend
+#ww1 <- select(ww1, trend)
+
+## don't detrend
+ww2 <- ww.ntd
+ww2$trend <- 0
+
+ww2$dt.value <- ww2$fr.value
+
+## rejoin
+detrended <- rbind(ww1, ww2)
+
 ```
+
+
+
+
+
+## Rescale
 
 > Finally, the time series were linearly rescaled to have zero mean and a standard deviation of 1 (Fig. S1c).
 
+(Note that this standardisation is not done in the code sent by Stephen. Probably shouldn't make a difference in the GAMs?)
+
 ```{r}
-final <- group_by(detrended, variable) %>%
-  mutate(y=as.numeric(scale(dt.value)))
+## standardise
+#final <- group_by(detrended, variable) %>%
+#  mutate(y=as.numeric(scale(dt.value)))
+#summarise(final, mean=mean(y), sd=sd(y))
+
+## or don't standardise
+final <- detrended
+final$y <- final$dt.value
 summarise(final, mean=mean(y), sd=sd(y))
 ```
+
+```{r}
+## save up to here
+#save.image("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_transform.Rdata")
+#load("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_transform.Rdata")
+```
+
 
 **We now have a y variable to work with in data.frame "final", variable name "y".**
 
@@ -285,7 +371,7 @@ This is not done. May need to be done only for analyses for Table 1.
 
 Choose a species to plot:
 ```{r}
-soi <- "Bacteria"
+soi <- "Rotifers"
 ```
 
 Raw and interpolated data:
@@ -295,18 +381,18 @@ g1 <- ggplot(filter(all.data, variable==soi), aes(x=Day.number, y=value)) +
   facet_wrap(~variable, ncol=2, scales="free_y") +
   geom_point(size=1, col="black") + geom_line(size=0.1) +
   scale_colour_manual(values = species.colour.mapping) + ggtitle("Raw and interpolated data")
-g2 <- geom_line(data=filter(mt, variable==soi), aes(x=Day.number, y=value), size=0.25, col="blue")
+g2 <- geom_line(data=filter(final, variable==soi), aes(x=Day.number, y=value), size=0.25, col="blue")
 g1 + g2
 ```
 
 Fourth root transformed with trend:
 
 ```{r}
-g1 <- ggplot(filter(detrended, variable==soi), aes(x=Day.number, y=fr.value)) +
+g1 <- ggplot(filter(final, variable==soi), aes(x=Day.number, y=fr.value)) +
   facet_wrap(~variable, ncol=2, scales="free_y") +
   geom_point(size=0.5, col="black") + geom_line(size=0.1) +
   scale_colour_manual(values = species.colour.mapping) + ggtitle("Quarter power trans. and trend")
-g2 <- geom_line(data=filter(detrended, variable==soi), aes(x=Day.number, y=smoothed), size=0.25, col="blue")
+g2 <- geom_line(data=filter(final, variable==soi), aes(x=Day.number, y=trend), size=0.25, col="blue")
 g1 + g2
 ```
 
@@ -320,10 +406,62 @@ g1 <- ggplot(filter(final, variable==soi), aes(x=Day.number, y=y)) +
 g1
 ```
 
+## Compare the data made above to published data
+
+Now take a look at the transformed data provided in the ELE Supplement, in the data sheet *transformed_data_Nature2008*.
+
+First note that the data in the ELE supplement include a data point at day 2658.1, whereas the data above finish at 2654.85. This is because the real data end at 2658, and the interpolation method above doesn't want to create data outside the range of the original data.
+
+```{r, echo=FALSE}
+#tr <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/transformed_data_Nature2008.csv", skip=7, na.string="")
+
+tr <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_owen/Beninca_etal_2008_Nature/data/transformed_data_Nature2008.csv"),
+               skip=7, na.string="")
+
+
+
+tr <- tr[,-14:-24] ## remove bad columns
+tr <- tr[-693:-694,] ## remove last two rows (contain summary stats)
+tr <- gather(tr, key="Species", value="Abundance", 2:13)
+tr$Day.Number <- as.numeric(as.character((tr$Day.Number)))
+tt1 <- data.frame(Species=unique(tr$Species),
+                 Type=c("Cyclopoids", "Herbivore", "Herbivore", "Herbivore",
+                        "Phytoplankton",  "Phytoplankton", "Phytoplankton",
+                        "Detritivore", "Detritivore", "Bacteria", "Nutrient", "Nutrient"))
+tr <- merge(tr, tt1)
+levels(tr$Species)[levels(tr$Species)=="Calanoids"] <- "Calanoid.copepods"
+levels(tr$Species)[levels(tr$Species)=="Total.Dissolved.Inorganic.Nitrogen"] <- "Total.dissolved.inorganic.nitrogen"
+names(tr)[1] <- "variable"
+names(tr)[2] <- "Day.number"
+
+```
+
+
+```{r, echo=FALSE, eval=F}
+
+## Days are not matching at present, so the following doesn't work with the merge
+
+two.datasets <- merge(tr, final, all=T)
+
+ggplot(two.datasets, aes(x=Abundance, y=y)) + geom_point()
+
+ggplot(filter(two.datasets, variable=="Rotifers"), aes(x=Day.number, y=Abundance)) + geom_line() +
+  facet_wrap(~variable) +
+  geom_line(aes(y=y), col="red")
+
+ggplot(two.datasets, aes(x=Day.number, y=Abundance)) + geom_line() +
+  facet_wrap(~variable) +
+  geom_line(aes(y=y), col="red")
+
+```
+
+Looks good. Apart from when there were series of zeros removed, presumably before the standardisation.
+
+
+
 
 # Spectral analyses
 
-Jason, Frank.
 
 ```{r}
 
@@ -359,11 +497,10 @@ ts <- as.ts(final$y, frequency = 0.3)
 
 # Reproducing Table 1 using ELE supplement data.
 
-Kevin, Marco.
-Use data.frame `final`, response variable `y`. 
-Create dataset with zeros removed for this table:
+Create dataset with zeros removed for this table (note that this is probably not how Beninca et al did this):
 ```{r}
-final_nozeros <- final[final$y!=0,]
+final_nozeros <- final
+final_nozeros$y <- ifelse(final_nozeros$y!=0, final_nozeros$y, NA)
 # make it wide format
 #library(tidyr)
 final_long <- final_nozeros[final_nozeros$variable!="Cyclopoids" & final_nozeros$variable!="Filamentous.diatoms",c(1,2,7)]
@@ -441,35 +578,222 @@ for(i in 1:10){
   for(j in 1:10){
   cor.cp[i,j] <- ifelse(i==j, "1", cor.cp[i,j])
 }}
+
+colnames(cor.cp) <- c("Calanoid.copepods  ","Rotifers  ","Protozoa  ","Nanophytoplankton  ","Picophytoplankton  ",
+"Ostracods  ","Harpacticoid.copepods  ","Bacteria  ","Nitrogen  ","Phosphorus  ")
+rownames(cor.cp)<-colnames(cor.cp)
 ```
 
 Make it a table:
 ```{r}
 library(knitr)
-table1 <- kable(cor.cp, format="html", col.names = colnames(cor.cp), align="c",
+table1b <- kable(cor.cp, format="html", col.names = colnames(cor.cp), align="c",
                 caption="Table 1.'Correlations between the species in the food web. Table entries show the product–moment correlation coefficients, after transformation of the data to stationary time series (see Methods). Significance tests were corrected for multiple hypothesis testing by calculation of adjusted P values using the false discovery rate.' Significant correlations are indicated as follows: *: P<0.05; **: P<0.01; ***: P<0.001. 'The correlation between calanoid copepods and protozoa could not be calculated, because their time series did not overlap. Filamentous diatoms and cyclopoid copepods were not included in the correlation analysis, because their time series contained too many zeros.' (Beninca et al. 2008)")
 
-table1
+table1b
+
+# differs from the one published by Beninca et al.!
 ```
 
 
 # Predictability (Figure 2)
 
-To be done.
-
-Use data.frame `final`, response variable `y`.
-
+This will be done after getting Lyapunov exponents by the indirect method, as the model for that is used here (we believe).
 
 # Lyapunov exponents by direct method (Figure 3)
 
-Gian Marco, Mikael.
+Estimate the Lyapunov exponents of the time series, via time-delayed embedding. The Nature report used the [Tisean software](http://www.mpipks-dresden.mpg.de/~tisean/), which was available from CRAN [until mid 2014](http://cran.r-project.org/web/packages/RTisean/index.html). Based on this, and being a bit less well integrated with R, we'll instead use the [tseriesChaos](http://cran.r-project.org/web/packages/tseriesChaos/index.html) package, which was *largely inspired by the TISEAN project*. 
 
-Use data.frame `final`, response variable `y`.
+Unclear if this was performed on untransformed or transformed data. First try with the transformed data.
+Time delay (1), embedding dimension (6), and Theiler window (50) were used in the Nature report. Other parameters are chosen rather randomly, though don't seem to matter too much!
+
+```{r}
+time.delay <- 1
+embedding.dimension <- 6
+Theiler.window <- 50
+```
+
+Note that a time step is 3.35 days in the transformed data. So to get a graph with 80 days on the x-axis (as in Figure 3 in the Nature report), we need 80/3.35 = 24 time steps for the calculation of Lyapunov exponents.
+```{r}
+time.steps <- 24
+```
+
+Remove the species that were not analysed in the Nature report, due to too many zeros in the time series:
+```{r}
+led <- filter(tr, variable!="Filamentous.diatoms",
+                variable!="Protozoa",
+                variable!="Cyclopoids")
+```
+
+Get the data for the graphs:
+```{r, message=TRUE, error=TRUE}
+all.species <- unique(as.character(led$variable))
+diverg <- matrix(NA, time.steps, length(all.species))
+colnames(diverg) <- all.species
+for(i in 1:length(all.species)) {
+  print(all.species[i])
+  tr.fs <- filter(final, variable==all.species[i])$y
+  diverg[,i] <- as.numeric(try(lyap_k(tr.fs,
+                                      m=embedding.dimension,
+                                      d=time.delay,
+                                      k=10, # number of considered neighbours 20
+                                      ref=100, # number of points to take into account 100
+                                      t=Theiler.window,
+                                      s=time.steps,
+                                      eps=10 # radius where to find nearest neighbours 10
+                                      )))
+}
+## a bit of a fudge with the translation to days
+diverg <- as.data.frame(cbind(days=1:time.steps, diverg))
+diverg <- gather(diverg, Species, Difference, 2:10)
+diverg$days <- diverg$days*3.35
+#str(diverg)
+```
+
+Next calculate the Lyapunov exponents, noting that 6 or 7 points were used in the regressions in the Nature report
+```{r}
+diverg$Difference[is.na(diverg$Difference)] <- 0
+diverg$Difference[is.infinite(diverg$Difference)] <- 0
+diverg.short <- filter(diverg, days<24) ## 24 is about 6 steps, after initial gap
+LEs <- group_by(diverg.short, Species) %>%
+  summarise(le=coef(lm(Difference[1:6] ~ days[1:6]))[2])
+#pval=summary(lm(Difference[1:6] ~ days[1:6]))$coefficients[2,4])
+```
+
+
+Then plot the graphs with LE:
+```{r}
+LEs <- mutate(LEs, days=20, Difference=-0.5)
+g1 <- ggplot(diverg, aes(x=days, y=Difference)) + geom_point() + facet_wrap(~Species) +
+  geom_text(data=LEs, aes(label=round(le,3)), group=NULL)
+g1
+```
+
+Not exactly the same at Figure 3 in the Nature report. Qualitatively the same, except for where the time-delayed embedding failed.
 
 
 # Lyapunov exponents by indirect method
 
-Dennis, Vanessa.
+The functions used in the code below are based on code received from Stephen Ellner. The modifications have been tested, and produce the same results as Ellner's original code.
 
-Use data.frame `final`, response variable `y`.
+The function needs a matrix, X, with species abundances in wide format. Be careful to work on the unstandardised data (or standardised, if you wish) (comment out appropriate lines here.
+
+```{r}
+## use next line to work on unstandardised data
+final.to.melt <- final[, c("variable", "dt.value", "Day.number")]
+## use next line to work on standardised
+#final.to.melt <- final[, c("variable", "y", "Day.number")]
+
+names(final.to.melt)[1] <- "Species"
+melted <- melt(final.to.melt, id=c("Species", "Day.number"))
+X <- acast(melted, formula= Day.number ~ Species)
+#str(X)
+X <- as.data.frame(X)
+```
+
+Restrict range of data appropriately:
+```{r}
+## Select the time period to use 
+start.longest=334; start.longer=808; start.shorter=1035; 
+e=as.numeric(row.names(X)) > start.longer; X=X[e,];
+e=as.numeric(row.names(X)) < 2654; X=X[e,]; 
+```
+
+Load and run the functions:
+
+```{r}
+# read script lines from website
+script <- getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_owen/Beninca_etal_2008_Nature/report/functions/indirect_method_functions.R", ssl.verifypeer = FALSE)
+
+# parase lines and evealuate in the global environement
+eval(parse(text = script))
+
+LE <- Get_GLE_Beninca(X)
+LE[[1]]
+```
+
+This is quite far from the number using code and data from Steve (0.08415112). But recall that the functions have been carefully checked. Probably it is the data going into this function. A final step would be to save the data here, and take it into Steve's function. (This point is an issue on github.)
+
+# Predictability (Figure 2)
+
+```{r, echo=FALSE}
+## put the models together into a list
+all.gams <- LE[[2]]
+names(all.gams)
+```
+
+
+```{r}
+## save up to here
+#save.image("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_LE_indirect.Rdata")
+#load("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_LE_indirect.Rdata")
+```
+
+
+
+Need to predict until about 40 days ahead = 40 / 3.35 time steps = 12 time steps.
+
+From each time in the series, predict 12 steps ahead. Put results in an array:
+time x species, start.location
+time will be 12
+species will be 12
+start location will be length of time series - 12
+
+```{r}
+x <- X
+
+time.to.predict <- 12
+
+nn <- length(x[,1])-time.to.predict
+
+preds <- array(NA, c(12, 12, nn))
+
+
+dimnames(preds) <- list(dist=1:12,
+                        species=names(x),
+                        start.time=1:nn)
+all.species <- names(all.gams)
+for(i in 1:length(all.species))
+  preds[1,i,] <- predict(all.gams[[i]])[1:nn]
+
+```
+
+Now for the predictions at t+2 from predictions at t+1
+
+
+```{r}
+pred.time <- 2
+for(pred.time in 2:12) {
+  for(i in 1:length(all.species))
+    preds[pred.time,i,pred.time:nn] <- predict(all.gams[[i]],
+                                                newdata=as.data.frame(t(preds[pred.time-1,,])))[pred.time:nn]
+}
+
+
+
+cors <- matrix(NA, 12, 12)
+dimnames(cors) = list(dist=1:12,
+                        species=names(x))
+for(i in 1:12) {
+  for(j in 1:12) {
+    cors[j,i] <- cor(X[1:nn,i], preds[j, i, ], use="complete.obs")^2
+}}
+
+plot(X[1:nn,"Bacteria"],preds[i, "Bacteria", ])
+
+cors <- data.frame(dist=as.numeric(I(rownames(cors))), cors)
+cors.long <- gather(as.data.frame(cors), key=dist)
+
+names(cors.long) <- c("Prediction_distance", "Variable", "Correlation")
+
+str(cors.long)
+
+ggplot(cors.long, aes(x=Prediction_distance, y=Correlation)) +
+  geom_point() +
+  facet_wrap(~Variable, scales="free_y" )
+
+
+```
+
+Clearly not quite right. Still, skeleton is working. Just needs bugs ironing out!
 

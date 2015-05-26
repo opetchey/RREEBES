@@ -1,4 +1,4 @@
-﻿# Meetings in 2015
+# Meetings in 2015
 
 Meetings 10.45 to 12.00 Zurich time, location is variable.
 
@@ -203,6 +203,14 @@ Some material collected by Owen to assist with analyses found here: /Beninca_eta
 *The different groups worked independently on their problems.
 
 ## 19.5
+
+(Owen takes minutes.)
+
+Colette Ward present as a guest. Many others not present.
+
+* Owen showed the work he did while in China, on the Beninca paper, so that we can move on to a new paper.
+* Still a few issues with the Beninca paper reproduction, but probably 90% complete. Owen (and anyone else interested) will clean up the reproduction and fix any remaining issues.
+* Next week we will decide on the next paper to reproduce, and start on that.
 
 ## 26.5
 
