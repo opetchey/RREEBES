@@ -695,7 +695,7 @@ e=as.numeric(row.names(X)) > start.longer; X=X[e,];
 e=as.numeric(row.names(X)) < 2654; X=X[e,]; 
 ```
 
-Load and run the functions:
+Load and run the functions, or read in from data file (default option, for which you will need to change the path to the data file.)
 
 ```{r}
 # read script lines from website
@@ -704,16 +704,16 @@ script <- getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_ow
 # parase lines and evealuate in the global environement
 eval(parse(text = script))
 
-LE <- Get_GLE_Beninca(X)
-
+## don't run this as it takes a while
+#LE <- Get_GLE_Beninca(X)
 #save(LE, file="~/Desktop/GLE_estimate.Rdata")
 
-x.tmp <- getURL("https:/")
-writeLines(x.tmp, tmp <- tempfile())
-y <- load(tmp)
+## rather, read the data file from your local copy
+load("~/Desktop/git/RREEBES/Beninca_etal_2008_Nature/data/GLE_estimate.Rdata")
 
-load(LE, file="~/Desktop/GLE_estimate.Rdata")
-
+## would be nice to load directly from github, but this not working
+#download.file("https://github.com/opetchey/RREEBES/raw/Beninca_cleaning/Beninca_etal_2008_Nature/data/GLE_estimate.Rdata", "myfile", method="curl")
+#load("myfile")
 
 LE[[1]]
 ```

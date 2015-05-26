@@ -1016,16 +1016,23 @@ X &lt;- as.data.frame(X)</code></pre>
 start.longest=334; start.longer=808; start.shorter=1035; 
 e=as.numeric(row.names(X)) &gt; start.longer; X=X[e,];
 e=as.numeric(row.names(X)) &lt; 2654; X=X[e,]; </code></pre>
-<p>Load and run the functions:</p>
+<p>Load and run the functions, or read in from data file (default option, for which you will need to change the path to the data file.)</p>
 <pre class="r"><code># read script lines from website
 script &lt;- getURL(&quot;https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_owen/Beninca_etal_2008_Nature/report/functions/indirect_method_functions.R&quot;, ssl.verifypeer = FALSE)
 
 # parase lines and evealuate in the global environement
 eval(parse(text = script))
 
-LE &lt;- Get_GLE_Beninca(X)
+## don't run this as it takes a while
+#LE &lt;- Get_GLE_Beninca(X)
+#save(LE, file=&quot;~/Desktop/GLE_estimate.Rdata&quot;)
 
-save(LE, file=&quot;~/Desktop/GLE_estimate.Rdata&quot;)
+## rather, read the data file from your local copy
+load(&quot;~/Desktop/git/RREEBES/Beninca_etal_2008_Nature/data/GLE_estimate.Rdata&quot;)
+
+## would be nice to load directly from github, but this not working
+#download.file(&quot;https://github.com/opetchey/RREEBES/raw/Beninca_cleaning/Beninca_etal_2008_Nature/data/GLE_estimate.Rdata&quot;, &quot;myfile&quot;, method=&quot;curl&quot;)
+#load(&quot;myfile&quot;)
 
 LE[[1]]</code></pre>
 <pre><code>## [1] 0.00969605</code></pre>
