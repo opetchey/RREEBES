@@ -13,3 +13,5 @@
 [Ye, H., Beamish, R.J., Glaser, S.M., Grant, S.C.H., Hsieh, C., Richards, L.J., Schnute, J.T. & Sugihara, G. (2015) Equation-free mechanistic ecosystem forecasting using empirical dynamic modeling. Proceedings of the National Academy of Sciences, 201417063.](http://www.pnas.org/content/112/13/E1569.long) Data and some code on github.
 
 [Tina Toni, David Welch, Natalja Strelkowa, Andreas Ipsen, Michael P.H. Stumpf (2009) Approximate Bayesian computation scheme for parameter inference and model selection in dynamical systems. Journal of the Royal Society Interface, 6, 187-202.] (http://rsif.royalsocietypublishing.org/content/6/31/187) Propose to reproduce ABC on Lotka Volterra equations. No data needed
+
+[Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, Miguel B. Araújo (2015) Inferring biotic interactions from proxies. TREE xx 1-10](http://www.sciencedirect.com/science/article/pii/S0169534715000774) Would be very interesting to get an idea about the interactions that were removed (forbidden interactions) - and to actually evaluate the accuracy of predictions the authors made (because they don't).
