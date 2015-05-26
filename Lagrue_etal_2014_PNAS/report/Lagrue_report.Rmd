@@ -1,5 +1,5 @@
 ---
-title: "Reproduce anaylses of Lague et al (2014)"
+title: "Reproduce analyses of Lague et al.s (2014)"
 author: "Alejandra, Marco et al."
 date: "26 May 2015"
 output:
@@ -11,10 +11,7 @@ output:
 
 # Introduction
 
-This is an attempt to reproduce the anaylses presented in the paper 
-
-[Lagrue, C., Poulin, R. & Cohen, J.E. (2014) . Proceedings of the National Academy of Sciences of the United States of America, 112, 1791–1796.]()
-*Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry*, by Lagrue and others ([http://www.pnas.org/content/112/6/1791](http://www.pnas.org/content/112/6/1791)). Data are on [Dryad](http://datadryad.org/resource/doi:10.5061/dryad.sj2hv).
+This is an attempt to reproduce the anaylses presented in the paper *Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry*, by Lagrue, Poulin, and Cohen ([http://www.pnas.org/content/112/6/1791](http://www.pnas.org/content/112/6/1791)). Data are [here](http://www.pnas.org/content/suppl/2014/12/30/1422475112.DCSupplemental/pnas.1422475112.sd01.txt) as a txt, but need to be saved as csv.
 
 * Here include some text about what is presented below in the basic reproduction, and what additional was done and where that is described.
 
@@ -36,8 +33,11 @@ library(reshape2)
 
 # Load data:
 spp.abund <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/species_abundances_original.csv"), skip=7, header=T)
+```
 
-# Reproducing Table 1
+# Tables
+
+## Reproducing Table 1
 
 > This is how to quote in Markdown.
 
@@ -47,7 +47,7 @@ To do.
 #R code here
 ```
 
-# Reproducing Table 2
+## Reproducing Table 2
 
 > This is how to quote in Markdown.
 
@@ -57,7 +57,9 @@ To do.
 #R code here
 ```
 
-## Reproducing Fig.1
+# Figures
+
+## Reproducing Fig. 1
 
 > This is how to quote in Markdown.
 
@@ -67,7 +69,7 @@ To do.
 #R code here
 ```
 
-## Reproducing Fig.2
+## Reproducing Fig. 2
 
 > This is how to quote in Markdown.
 
@@ -77,7 +79,7 @@ To do.
 #R code here
 ```
 
-## Reproducing Fig.2
+## Reproducing Fig. 3
 
 > This is how to quote in Markdown.
 
