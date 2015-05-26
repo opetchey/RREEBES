@@ -1,0 +1,20 @@
+---
+title: "GRAHAM_etal_2015_Nature"
+author: "Vanessa, Gian-Marco and Thomas"
+date: "26 May 2015"
+output: html_document
+---
+
+# Reproducing the analysis of Graham et al. (2015, Nature)
+
+GRAHAM, Nicholas AJ (2015, Nature) Predicting climate-driven regime shifts versus rebound potential in coral reefs
+
+```{r}
+x <- seq(0,1,100)
+```
+
+
+```{r, echo=FALSE}
+y <- sin(x)
+```
+
