@@ -32,7 +32,7 @@ library(RCurl)
 library(reshape2)
 
 # Load data:
-spp.abund <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/species_abundances_original.csv"), skip=7, header=T)
+dd <- read.csv(text=getURL("https://raw.githubusercontent.com/marcoplebani85/RREEBES/Lagrue/Lagrue_etal_2014_PNAS/data/Lague2014.csv"), header=T)
 ```
 
 # Tables
