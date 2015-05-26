@@ -1,5 +1,5 @@
 ---
-title: "Reproduce analyses of Lague et al.s (2014)"
+title: "Reproduce analyses of Lague et al. (2014)"
 author: "Alejandra, Marco et al."
 date: "26 May 2015"
 output:
@@ -11,13 +11,17 @@ output:
 
 # Introduction
 
-This is an attempt to reproduce the anaylses presented in the paper *Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry*, by Lagrue, Poulin, and Cohen ([http://www.pnas.org/content/112/6/1791](http://www.pnas.org/content/112/6/1791)). Data are [here](http://www.pnas.org/content/suppl/2014/12/30/1422475112.DCSupplemental/pnas.1422475112.sd01.txt) as a txt, but need to be saved as csv.
+This is an attempt to reproduce the anaylses presented in the paper *Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry*, by Lagrue, Poulin, and Cohen ([http://www.pnas.org/content/112/6/1791](http://www.pnas.org/content/112/6/1791)). Data are [here](http://www.pnas.org/content/suppl/2014/12/30/1422475112.DCSupplemental/pnas.1422475112.sd01.txt) as txt, but need to be saved as csv.
 
-* Here include some text about what is presented below in the basic reproduction, and what additional was done and where that is described.
+* From the article summary:
+
+> [The study was conducted] in metazoan communities in lakes of Otago, New Zealand. In 13,752 samples comprising 1,037,058 organisms, we found that species of different lifestyles differed in taxonomic distribution and body mass and were well described by three power laws: a spatial Taylor’s law (the spatial variance in population density was a power-law function of the spatial mean population density); density-mass allometry (the spatial mean population density was a power-law function of mean body mass); and variance-mass allometry (the spatial variance in population density was a power-law function of mean body mass). To our knowledge, this constitutes the first empirical confirmation of variance-mass allometry for any animal community. We found that the parameter values of all three relationships differed for species with different lifestyles in the same communities. Taylor’s law and density-mass allometry accurately predicted the form and parameter values of variance-mass allometry. We conclude that species of different lifestyles in these metazoan communities obeyed the same major ecological power-law relationships but did so with parameters specific to each lifestyle [...].
+
+Let's see if we are able to reproduce their results.
 
 # First get the raw data into R and tidy it.
 
-To do.
+Clean R's memory, load useful packages, load data.
 
 ```{r}
 # clean R's memory:
@@ -33,13 +37,15 @@ library(reshape2)
 
 # Load data:
 dd <- read.csv(text=getURL("https://raw.githubusercontent.com/marcoplebani85/RREEBES/Lagrue/Lagrue_etal_2014_PNAS/data/Lague2014.csv"), header=T)
+# head(dd)
+# str(dd)
 ```
 
 # Tables
 
 ## Reproducing Table 1
 
-> This is how to quote in Markdown.
+> Numbers (counts) and percentages of samples from broad taxonomic groups for each lifestyle separately.
 
 To do.
 
@@ -49,7 +55,7 @@ To do.
 
 ## Reproducing Table 2
 
-> This is how to quote in Markdown.
+> Parameter estimates using ordinary least squares linear regression to fit TL, DMA, and VMA to log- transformed data on the spatial variation of population density (individuals per square meter) of free-living unparasitized species, free-living parasitized species, and parasitic species; and the distribution of average body masses of species in each lifestyle.
 
 To do.
 
@@ -61,7 +67,7 @@ To do.
 
 ## Reproducing Fig. 1
 
-> This is how to quote in Markdown.
+> Test of TL. Log variance of population density was an approximately linear function of the log mean of population density for (A) free-living un- parasitized species, (B) free-living parasitized species, and (C) parasites. Each dot represents the log variance and log mean of population density of multiple samples of one life stage of one species at one lake in one season. The solid lines represent least-squares regressions. The estimated parameters and their 95% confidence intervals, the number of data points N (dots), and the adjusted R2 are given in Table 2.
 
 To do.
 
@@ -71,7 +77,7 @@ To do.
 
 ## Reproducing Fig. 2
 
-> This is how to quote in Markdown.
+> Test of DMA. Log mean of population density was a linear function of the log mean body mass for (A) free-living unparasitized species, (B) free-living parasitized species, and (C) parasites. Plotting symbols are as in Fig. 1. The estimated parameters and their 95% confidence intervals, the number of data points N (dots), and the adjusted R2 are given in Table 2.
 
 To do.
 
@@ -81,7 +87,7 @@ To do.
 
 ## Reproducing Fig. 3
 
-> This is how to quote in Markdown.
+> Test of VMA. Log variance of population density was a linear function of the log mean body mass for (A) free-living unparasitized species, (B) free- living parasitized species, and (C) parasites. Plotting symbols are as in Fig. 1. The estimated parameters and their 95% confidence intervals, the number of data points N (dots), and the adjusted R2 are given in Table 2.
 
 To do.
 
