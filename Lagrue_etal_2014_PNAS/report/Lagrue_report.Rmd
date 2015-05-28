@@ -117,6 +117,17 @@ abline(lm(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Parasite",]))
 
 > Test of DMA. Log mean of population density was a linear function of the log mean body mass for (A) free-living unparasitized species, (B) free-living parasitized species, and (C) parasites. Plotting symbols are as in Fig. 1. The estimated parameters and their 95% confidence intervals, the number of data points N (dots), and the adjusted R2 are given in Table 2.
 
+Again, we like to plot the data untransformed first:
+```{r}
+par(mfrow=c(1,3))
+plot(Mean_density ~ Body_mass_mg, data=dd[dd$Life.style=="Free-living",], main="Free-living unparasitized")
+plot(Mean_density ~ Body_mass_mg, data=dd[dd$Life.style=="Free-living parasitised",], main="Free-living parasitized")
+plot(Mean_density ~ Body_mass_mg, data=dd[dd$Life.style=="Parasite",], main="Parasite")
+```
+
+A very steep exponential decay, perhaps?
+
+Figure 2:
 ```{r}
 p <- qplot(Log.body.mass, Log.mean, data=dd)
 p + 
@@ -134,8 +145,18 @@ theme(text=element_text(family="Times New Roman"), axis.title.x = element_text(v
 
 > Test of VMA. Log variance of population density was a linear function of the log mean body mass for (A) free-living unparasitized species, (B) free- living parasitized species, and (C) parasites. Plotting symbols are as in Fig. 1. The estimated parameters and their 95% confidence intervals, the number of data points N (dots), and the adjusted R2 are given in Table 2.
 
-To do.
-
+Plots of untransformed data:
 ```{r}
-#R code here
+par(mfrow=c(1,3))
+plot(Variance ~ Body_mass_mg, data=dd[dd$Life.style=="Free-living",], main="Free-living unparasitized")
+plot(Variance ~ Body_mass_mg, data=dd[dd$Life.style=="Free-living parasitised",], main="Free-living parasitized")
+plot(Variance ~ Body_mass_mg, data=dd[dd$Life.style=="Parasite",], main="Parasite")
 ```
+
+A very steep exponential decay, perhaps?
+
+Figure 3:
+```{r}
+# R code here
+```
+
