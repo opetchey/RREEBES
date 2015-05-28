@@ -91,9 +91,7 @@ theme(text=element_text(family="Times New Roman"), axis.title.x = element_text(v
 ```
 
 Although large mean values are not very well represented, there is a general trend toward an exponential increase in variance with increasing mean.
-
 Here is the reproduction of figure 1, with log(variances) versus log(means):
-
 ```{r}
 par(mfrow=c(1,3))
 
@@ -125,9 +123,7 @@ plot(Mean_density ~ Body_mass_mg, data=dd[dd$Life.style=="Free-living parasitise
 plot(Mean_density ~ Body_mass_mg, data=dd[dd$Life.style=="Parasite",], main="Parasite")
 ```
 
-A very steep exponential decay, perhaps?
-
-Figure 2:
+A very steep exponential decay, perhaps? Plot log-transformed body masses and mean densities to get Figure 2:
 ```{r}
 p <- qplot(Log.body.mass, Log.mean, data=dd)
 p + 
@@ -153,9 +149,7 @@ plot(Variance ~ Body_mass_mg, data=dd[dd$Life.style=="Free-living parasitised",]
 plot(Variance ~ Body_mass_mg, data=dd[dd$Life.style=="Parasite",], main="Parasite")
 ```
 
-A very steep exponential decay, perhaps?
-
-Figure 3:
+A very steep exponential decay, perhaps? Plot log-transformed variance and bodymass to get Figure 3:
 ```{r}
 # R code here
 ```
