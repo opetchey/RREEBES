@@ -19,7 +19,7 @@ This is an attempt to reproduce the anaylses presented in the paper *Parasitism 
 
 Let's see if we are able to reproduce their results.
 
-# First get the raw data into R and tidy it.
+# Housework
 
 Clean R's memory, load useful packages, load data.
 
@@ -96,14 +96,17 @@ Here is the reproduction of figure 1, with log(variances) versus log(means):
 
 ```{r}
 par(mfrow=c(1,3))
+
 plot(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Free-living",],
      xlim=c(-3,5), ylim=c(-6,10), main="Free-living",
      xlab="log mean", ylab="log variance")
 abline(lm(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Free-living",]))
+
 plot(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Free-living parasitised",],
      xlim=c(-3,5), ylim=c(-6,10), main="Free-living parasitised",
      xlab="log mean", ylab="log variance")
 abline(lm(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Free-living parasitised",]))
+
 plot(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Parasite",],
      xlim=c(-3,5), ylim=c(-6,12), main="Parasite",
      xlab="log mean", ylab="log variance")

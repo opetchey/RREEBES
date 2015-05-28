@@ -70,7 +70,7 @@ img {
 <div id="TOC">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#first-get-the-raw-data-into-r-and-tidy-it.">First get the raw data into R and tidy it.</a></li>
+<li><a href="#housework">Housework</a></li>
 <li><a href="#tables">Tables</a><ul>
 <li><a href="#reproducing-table-1">Reproducing Table 1</a></li>
 <li><a href="#reproducing-table-2">Reproducing Table 2</a></li>
@@ -94,8 +94,8 @@ img {
 </blockquote>
 <p>Let’s see if we are able to reproduce their results.</p>
 </div>
-<div id="first-get-the-raw-data-into-r-and-tidy-it." class="section level1">
-<h1>First get the raw data into R and tidy it.</h1>
+<div id="housework" class="section level1">
+<h1>Housework</h1>
 <p>Clean R’s memory, load useful packages, load data.</p>
 <pre class="r"><code># clean R's memory:
 rm(list=ls())
@@ -171,14 +171,17 @@ theme(text=element_text(family=&quot;Times New Roman&quot;), axis.title.x = elem
 <p>Although large mean values are not very well represented, there is a general trend toward an exponential increase in variance with increasing mean.</p>
 <p>Here is the reproduction of figure 1, with log(variances) versus log(means):</p>
 <pre class="r"><code>par(mfrow=c(1,3))
+
 plot(Log.variance ~ Log.mean, data=dd[dd$Life.style==&quot;Free-living&quot;,],
      xlim=c(-3,5), ylim=c(-6,10), main=&quot;Free-living&quot;,
      xlab=&quot;log mean&quot;, ylab=&quot;log variance&quot;)
 abline(lm(Log.variance ~ Log.mean, data=dd[dd$Life.style==&quot;Free-living&quot;,]))
+
 plot(Log.variance ~ Log.mean, data=dd[dd$Life.style==&quot;Free-living parasitised&quot;,],
      xlim=c(-3,5), ylim=c(-6,10), main=&quot;Free-living parasitised&quot;,
      xlab=&quot;log mean&quot;, ylab=&quot;log variance&quot;)
 abline(lm(Log.variance ~ Log.mean, data=dd[dd$Life.style==&quot;Free-living parasitised&quot;,]))
+
 plot(Log.variance ~ Log.mean, data=dd[dd$Life.style==&quot;Parasite&quot;,],
      xlim=c(-3,5), ylim=c(-6,12), main=&quot;Parasite&quot;,
      xlab=&quot;log mean&quot;, ylab=&quot;log variance&quot;)
