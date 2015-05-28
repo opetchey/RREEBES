@@ -1,0 +1,3 @@
+Eric Ward kindly provided the raw data, processed data and R scripts to re-run the forecasting analyses in a dedicated [github repository](https://github.com/eric-ward/complexity-costly). So far, only the fish time-series are publicly available, but that's good enough to get us started with reproducing the results and learn the techniques.
+
+The raw data, processed data and R scripts are in the respective article folder. 
