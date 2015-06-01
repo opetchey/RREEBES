@@ -12,6 +12,8 @@
 
 [Yampolsky, Lev Y., Tobias M. M. Schaer, and Dieter Ebert. “Adaptive Phenotypic Plasticity and Local Adaptation for Temperature Tolerance in Freshwater Zooplankton.” Proceedings of the Royal Society of London B: Biological Sciences 281, no. 1776 (February 7, 2014): 20132744.] (http://rspb.royalsocietypublishing.org/content/281/1776/20132744) Data available on Dryad.
 
+[Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araujo (2015) Inferring biotic interactions from proxies. TREE xx 1-10](http://www.cell.com/trends/ecology-evolution/abstract/S0169-5347(15)00077-4?rss=yes) TMM: Would be interesting to reproduce to get an idea about the removed interactions (forbidden ones) - and the ones that are still in, but false. Maybe one could also apply this to a smaller food web and test for the accuracy of this approach.
+
 # Papers below are at least mostly done.
 
 [Benincà, E., Huisman, J., Heerkloss, R., Jöhnk, K.D., Branco, P., Nes, E.H. Van, Scheffer, M. & Ellner, S.P. (1989) Chaos in a long-term experiment with a plankton community. , 1–35.](http://www.nature.com/nature/journal/v451/n7180/abs/nature06512.html)
