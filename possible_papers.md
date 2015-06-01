@@ -10,6 +10,8 @@
 
 [Tina Toni, David Welch, Natalja Strelkowa, Andreas Ipsen, Michael P.H. Stumpf (2009) Approximate Bayesian computation scheme for parameter inference and model selection in dynamical systems. Journal of the Royal Society Interface, 6, 187-202.] (http://rsif.royalsocietypublishing.org/content/6/31/187) Propose to reproduce ABC on Lotka Volterra equations. No data needed
 
+[Hooper DU, Adair EC, Cardinale BJ, Byrnes JEK, Hungate BA, et al. 2012. A global synthesis reveals biodiversity loss as a major driver of ecosystem change. Nature 486:105–8] (http://jarrettbyrnes.info/pdfs/Hooper_et_al_2012_Nature.pdf). Meta-analysis so: lots of data. Some available in original papers cited in this one. The summaries have been requested from author.  
+
 # Papers below are at least mostly done.
 
 [Benincà, E., Huisman, J., Heerkloss, R., Jöhnk, K.D., Branco, P., Nes, E.H. Van, Scheffer, M. & Ellner, S.P. (1989) Chaos in a long-term experiment with a plankton community. , 1–35.](http://www.nature.com/nature/journal/v451/n7180/abs/nature06512.html)
