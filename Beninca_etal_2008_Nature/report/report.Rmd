@@ -36,6 +36,7 @@ library(oce)
 library(tseriesChaos)
 library(reshape2)
 library(mgcv)
+library(repmis)
 
 
 spp.abund <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/species_abundances_original.csv"), skip=7, header=T)
@@ -708,12 +709,8 @@ eval(parse(text = script))
 #LE <- Get_GLE_Beninca(X)
 #save(LE, file="~/Desktop/GLE_estimate.Rdata")
 
-## rather, read the data file from your local copy
-load("~/Desktop/git/RREEBES/Beninca_etal_2008_Nature/data/GLE_estimate.Rdata")
-
-## would be nice to load directly from github, but this not working
-#download.file("https://github.com/opetchey/RREEBES/raw/Beninca_cleaning/Beninca_etal_2008_Nature/data/GLE_estimate.Rdata", "myfile", method="curl")
-#load("myfile")
+## load the already saved data from github (this can take some time depending on the internet connection)
+source_data("https://github.com/opetchey/RREEBES/raw/Beninca_cleaning/Beninca_etal_2008_Nature/data/GLE_estimate.Rdata?raw=True")
 
 LE[[1]]
 ```
