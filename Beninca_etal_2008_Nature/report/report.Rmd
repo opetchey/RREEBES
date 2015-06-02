@@ -17,10 +17,17 @@ This is an attempt to reproduce the anaylses presented in the paper *Chaos in a 
 
 The data are available as an Excel file supplement to [an Ecology Letters publication](http://onlinelibrary.wiley.com/doi/10.1111/j.1461-0248.2009.01391.x/abstract). The Excel file contains several datasheets. Two are particularly important, as they are the source of the raw data (one contains original species abundances, the one with the nutrient concentrations). Another datasheet in the ELE supplement contains transformed variables.
 
+Known issues with this reproduction are [here](https://github.com/opetchey/RREEBES/issues). Please submit any issues there.
+
+# Known issues
+
+The known issues / problems with this reproduction are with the prefix "Beninca" [here](https://github.com/opetchey/RREEBES/issues). Please add and or solve issues there.
 
 # First get the raw data into R and tidy it.
 
-```{r}
+All required libraries:
+
+```{r, message=FALSE}
 rm(list=ls())
 library(tidyr)
 library(dplyr)
@@ -32,12 +39,11 @@ library(pracma)
 library(oce)
 library(tseriesChaos)
 library(reshape2)
+library(mgcv)
+library(repmis)
 
 
 spp.abund <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/species_abundances_original.csv"), skip=7, header=T)
-
-#spp.abund <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/species_abundances_original.csv", skip=7, header=T)
-
 
 spp.abund <- select(spp.abund, -X, -X.1)
 spp.abund <- spp.abund[-804:-920,]
@@ -101,8 +107,8 @@ nuts <- select(nuts, -X, -X.1)
 nuts <- nuts[-349:-8163,]
 nuts$Date <- dmy(nuts$Date)
 nuts <- select(nuts, -NO2, -NO3, -NH4)
-nuts$Date[duplicated(nuts$Date)]
-which(duplicated(nuts$Date))
+#nuts$Date[duplicated(nuts$Date)]
+#which(duplicated(nuts$Date))
 nuts <- gather(nuts, "variable", "value", 3:4)
 str(nuts)
 ```
@@ -131,8 +137,6 @@ ggplot(all.data, aes(x=Day.number, y=value)) + geom_line() +
   facet_wrap(~variable, scales="free_y")
 ```
 
-The code from here on needs modifying, as the object names are Owen's old ones, and need changing to those used above.
-
 Now we add a column that gives the variable types, same as in figure 1b through 1g.
 First make a lookup table giving species type:
 ```{r}
@@ -140,7 +144,7 @@ tt <- data.frame(variable=unique(all.data$variable),
                  Type=c("Cyclopoids", "Herbivore", "Herbivore", "Herbivore",
                         "Phytoplankton",  "Phytoplankton", "Phytoplankton",
                         "Detritivore", "Detritivore", "Bacteria", "Nutrient", "Nutrient"))
-tt
+#tt
 ```
 
 And add the Type variable to the new dataset:
@@ -170,6 +174,8 @@ all.data$Type <- factor(all.data$Type, levels=c("Cyclopoids", "Herbivore", "Phyt
                                     "Bacteria", "Detritivore"))
 ```
 
+<!--
+Here are some versions of the graphs that are not included in the report, hence the html comment:
 
 Now a version that doesn't try to recreate the "gap" in the y axes of the original figures:
 ```{r, warning=FALSE, fig.width=10}
@@ -206,7 +212,11 @@ g1 <- qplot(as.numeric(Day.number), log10(value+0.00001), col=variable, data=all
 g1
 ```
 
-Try fourth root, as this is used in the subsequent stats.
+End of html comment
+-->
+
+The graph with abundances fourth root transformed, as this is the transformation used in the ms.
+
 ```{r, warning=FALSE, fig.width=10}
 g1 <- qplot(as.numeric(Day.number), value^0.25, col=variable, data=all.data) +
   facet_wrap(~Type, ncol=2, scales="free_y") +
@@ -233,15 +243,14 @@ Make a sequence of times at which to interpolate.
 #aggregate(Day.number ~ variable, all.data, min)
 #aggregate(Day.number ~ variable, all.data, max)
 #xout <- seq(343.35, 2657.2, by=3.35)
-xout <- seq(341.7, 2653.1, by=3.35)
-
-range(xout)
+xout <- seq(343.35, 2658, by=3.35)
+#range(xout)
 ```
 
 ```{r}
 all.data1 <- na.omit(all.data)
 
-group_by(all.data1, variable) %>% summarise(out=min(Day.number))
+#group_by(all.data1, variable) %>% summarise(out=min(Day.number))
 
 mt <- plyr::dlply(all.data1,
                   "variable",
@@ -338,24 +347,15 @@ detrended <- rbind(ww1, ww2)
 
 ```{r}
 ## standardise
-#final <- group_by(detrended, variable) %>%
-#  mutate(y=as.numeric(scale(dt.value)))
-#summarise(final, mean=mean(y), sd=sd(y))
+final <- group_by(detrended, variable) %>%
+  mutate(stand.y=as.numeric(scale(dt.value)))
+summarise(final, mean=mean(stand.y), sd=sd(stand.y))
 
 ## or don't standardise
-final <- detrended
+#final <- detrended
 final$y <- final$dt.value
 summarise(final, mean=mean(y), sd=sd(y))
 ```
-
-```{r}
-## save up to here
-#save.image("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_transform.Rdata")
-#load("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_transform.Rdata")
-```
-
-
-**We now have a y variable to work with in data.frame "final", variable name "y".**
 
 ```{r}
 glimpse(final)
@@ -371,7 +371,7 @@ This is not done. May need to be done only for analyses for Table 1.
 
 Choose a species to plot:
 ```{r}
-soi <- "Rotifers"
+soi <- "Bacteria"
 ```
 
 Raw and interpolated data:
@@ -412,51 +412,53 @@ Now take a look at the transformed data provided in the ELE Supplement, in the d
 
 First note that the data in the ELE supplement include a data point at day 2658.1, whereas the data above finish at 2654.85. This is because the real data end at 2658, and the interpolation method above doesn't want to create data outside the range of the original data.
 
+The graph isn't produced here, as there is a mismatch in days abundances were interpolated to. Should fix this...
+
 ```{r, echo=FALSE}
-#tr <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/transformed_data_Nature2008.csv", skip=7, na.string="")
 
 tr <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_owen/Beninca_etal_2008_Nature/data/transformed_data_Nature2008.csv"),
                skip=7, na.string="")
 
-
+#head(tr)
 
 tr <- tr[,-14:-24] ## remove bad columns
 tr <- tr[-693:-694,] ## remove last two rows (contain summary stats)
 tr <- gather(tr, key="Species", value="Abundance", 2:13)
-tr$Day.Number <- as.numeric(as.character((tr$Day.Number)))
-tt1 <- data.frame(Species=unique(tr$Species),
-                 Type=c("Cyclopoids", "Herbivore", "Herbivore", "Herbivore",
-                        "Phytoplankton",  "Phytoplankton", "Phytoplankton",
-                        "Detritivore", "Detritivore", "Bacteria", "Nutrient", "Nutrient"))
-tr <- merge(tr, tt1)
 levels(tr$Species)[levels(tr$Species)=="Calanoids"] <- "Calanoid.copepods"
 levels(tr$Species)[levels(tr$Species)=="Total.Dissolved.Inorganic.Nitrogen"] <- "Total.dissolved.inorganic.nitrogen"
-names(tr)[1] <- "variable"
-names(tr)[2] <- "Day.number"
+names(tr)[2] <- "variable"
+names(tr)[1] <- "Day.number"
 
 ```
 
 
-```{r, echo=FALSE, eval=F}
+```{r, echo=FALSE, eval=T}
 
 ## Days are not matching at present, so the following doesn't work with the merge
 
-two.datasets <- merge(tr, final, all=T)
+two.datasets <- merge(tr, final)
+#head(two.datasets)
+#match(tr$Day.number, final$Day.number)
 
-ggplot(two.datasets, aes(x=Abundance, y=y)) + geom_point()
 
-ggplot(filter(two.datasets, variable=="Rotifers"), aes(x=Day.number, y=Abundance)) + geom_line() +
-  facet_wrap(~variable) +
-  geom_line(aes(y=y), col="red")
+#ggplot(two.datasets, aes(x=Abundance, y=stand.y)) + geom_point()
 
-ggplot(two.datasets, aes(x=Day.number, y=Abundance)) + geom_line() +
-  facet_wrap(~variable) +
-  geom_line(aes(y=y), col="red")
+#ggplot(filter(two.datasets, variable=="Rotifers"), aes(x=as.numeric(Day.number), y=stand.y)) + geom_line() +
+#  facet_wrap(~variable) +
+#  geom_line(aes(y=Abundance), col="red")
+
+#ggplot(two.datasets, aes(x=as.numeric(Day.number), y=stand.y)) + geom_line() +
+#  facet_wrap(~variable) +
+#  geom_line(aes(y=Abundance), col="red")
+
+ggplot(two.datasets, aes(x=Abundance, y=stand.y)) + geom_point() +
+  facet_wrap(~variable) 
+
+
 
 ```
 
-Looks good. Apart from when there were series of zeros removed, presumably before the standardisation.
-
+Looks OK, but suggests / shows that that data in the ELE supplement were standardised after removal of the zeros, whereas we don't do any zero removal (this is the same as in Ellner's code.)
 
 
 
@@ -475,7 +477,7 @@ coord_cartesian(ylim=c(0,40), xlim=c(0,240))
 freq.est <- spec %>% group_by(group) %>% mutate(max_spec = max(spec), freq = freq)
 freq.est <- subset(freq.est, max_spec==spec, select=c(freq,group))
 freq.est$freq <- 1/freq.est$freq
-freq.est
+#freq.est
 
 # Welch's periodogram
 
@@ -489,7 +491,7 @@ scale_y_continuous(trans="log")
 freq.est <- wspec %>% group_by(group) %>% mutate(max_spec = max(spec), freq = freq)
 freq.est <- subset(freq.est, max_spec==spec, select=c(freq,group))
 freq.est$freq <- 1/freq.est$freq
-frequency(final$y)
+#frequency(final$y)
 ts <- as.ts(final$y, frequency = 0.3)
 #time(ts)
 
@@ -497,14 +499,16 @@ ts <- as.ts(final$y, frequency = 0.3)
 
 # Reproducing Table 1 using ELE supplement data.
 
+
 Create dataset with zeros removed for this table (note that this is probably not how Beninca et al did this):
 ```{r}
 final_nozeros <- final
 final_nozeros$y <- ifelse(final_nozeros$y!=0, final_nozeros$y, NA)
 # make it wide format
-#library(tidyr)
-final_long <- final_nozeros[final_nozeros$variable!="Cyclopoids" & final_nozeros$variable!="Filamentous.diatoms",c(1,2,7)]
-final_wide <- spread(final_long, variable,y)
+#
+final_long <- final_nozeros[final_nozeros$variable!="Cyclopoids" & final_nozeros$variable!="Filamentous.diatoms",c("Day.number","variable","stand.y")]
+
+final_wide <- spread(final_long, variable, stand.y)
 # we also removed data on Cyclopoids, not used in the table
 ```
 
@@ -595,17 +599,18 @@ table1b
 # differs from the one published by Beninca et al.!
 ```
 
+-->
 
 # Predictability (Figure 2)
 
-This will be done after getting Lyapunov exponents by the indirect method, as the model for that is used here (we believe).
+This will be done after getting global Lyapunov exponents by the indirect method.
 
 # Lyapunov exponents by direct method (Figure 3)
 
 Estimate the Lyapunov exponents of the time series, via time-delayed embedding. The Nature report used the [Tisean software](http://www.mpipks-dresden.mpg.de/~tisean/), which was available from CRAN [until mid 2014](http://cran.r-project.org/web/packages/RTisean/index.html). Based on this, and being a bit less well integrated with R, we'll instead use the [tseriesChaos](http://cran.r-project.org/web/packages/tseriesChaos/index.html) package, which was *largely inspired by the TISEAN project*. 
 
 Unclear if this was performed on untransformed or transformed data. First try with the transformed data.
-Time delay (1), embedding dimension (6), and Theiler window (50) were used in the Nature report. Other parameters are chosen rather randomly, though don't seem to matter too much!
+Time delay (1), embedding dimension (6), and Theiler window (50) were used in the Nature report. Other parameters are chosen rather randomly, though don't seem to matter too much.
 
 ```{r}
 time.delay <- 1
@@ -626,7 +631,7 @@ led <- filter(tr, variable!="Filamentous.diatoms",
 ```
 
 Get the data for the graphs:
-```{r, message=TRUE, error=TRUE}
+```{r, message=FALSE, error=TRUE}
 all.species <- unique(as.character(led$variable))
 diverg <- matrix(NA, time.steps, length(all.species))
 colnames(diverg) <- all.species
@@ -699,7 +704,7 @@ e=as.numeric(row.names(X)) > start.longer; X=X[e,];
 e=as.numeric(row.names(X)) < 2654; X=X[e,]; 
 ```
 
-Load and run the functions:
+Load and run the functions, or read in from data file (default option, for which you will need to change the path to the data file.)
 
 ```{r}
 # read script lines from website
@@ -708,7 +713,13 @@ script <- getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_ow
 # parase lines and evealuate in the global environement
 eval(parse(text = script))
 
-LE <- Get_GLE_Beninca(X)
+## don't run this as it takes a while
+#LE <- Get_GLE_Beninca(X)
+#save(LE, file="~/Desktop/GLE_estimate.Rdata")
+
+## load the already saved data from github (this can take some time depending on the internet connection)
+source_data("https://github.com/opetchey/RREEBES/raw/Beninca_cleaning/Beninca_etal_2008_Nature/data/GLE_estimate.Rdata?raw=True")
+
 LE[[1]]
 ```
 
@@ -719,17 +730,8 @@ This is quite far from the number using code and data from Steve (0.08415112). B
 ```{r, echo=FALSE}
 ## put the models together into a list
 all.gams <- LE[[2]]
-names(all.gams)
+#names(all.gams)
 ```
-
-
-```{r}
-## save up to here
-#save.image("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_LE_indirect.Rdata")
-#load("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/up_to_LE_indirect.Rdata")
-```
-
-
 
 Need to predict until about 40 days ahead = 40 / 3.35 time steps = 12 time steps.
 
@@ -786,7 +788,7 @@ cors.long <- gather(as.data.frame(cors), key=dist)
 
 names(cors.long) <- c("Prediction_distance", "Variable", "Correlation")
 
-str(cors.long)
+#str(cors.long)
 
 ggplot(cors.long, aes(x=Prediction_distance, y=Correlation)) +
   geom_point() +
