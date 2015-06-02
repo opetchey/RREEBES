@@ -151,6 +151,26 @@ plot(Variance ~ Body_mass_mg, data=dd[dd$Life.style=="Parasite",], main="Parasit
 
 A very steep exponential decay, perhaps? Plot log-transformed variance and bodymass to get Figure 3:
 ```{r}
-# R code here
+par(mfrow=c(1,3))
+plot(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Free-living",], main="Free-living unparasitized",axes = FALSE)
+box()
+axis(lwd=0,side=1,line=-0.4,at=c(seq(from=-3,to=6,by=1)))
+axis(lwd=0,side=2,line=-0.4,at=c(seq(from=-6,to=10,by=2)))
+fit<-lm(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Free-living",])  
+abline(fit) 
+
+plot(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Free-living parasitised",], main="Free-living parasitized",axes = FALSE)
+box()
+axis(lwd=0,side=1,line=-0.4,at=c(seq(from=0,to=6,by=1)))
+axis(lwd=0,side=2,line=-0.4,at=c(seq(from=-6,to=10,by=2)))
+fit2<-lm(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Free-living parasitised",])  
+abline(fit2) 
+
+plot(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Parasite",], main="Parasite",axes = FALSE)
+box()
+axis(lwd=0,side=1,line=-0.4,at=c(seq(from=-3,to=2,by=1)))
+axis(lwd=0,side=2,line=-0.4,at=c(seq(from=-6,to=12,by=2)))
+fit3<-lm(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Parasite",])  
+abline(fit3) 
 ```
 
