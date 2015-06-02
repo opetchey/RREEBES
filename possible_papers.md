@@ -14,6 +14,8 @@
 
 [Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araujo (2015) Inferring biotic interactions from proxies. TREE xx 1-10](http://www.cell.com/trends/ecology-evolution/abstract/S0169-5347(15)00077-4?rss=yes) TMM: Would be interesting to reproduce this study to get an idea about the removed interactions (the forbidden ones) - and the ones that are still in, but false. Maybe one could also apply this to a smaller food web and test for the accuracy of this approach. Because the authors do not provide any test for accuracy... :(
 
+Os Schmitz paper about effects of perturbations. Owen to find it.
+
 # Papers below are at least mostly done.
 
 [Benincà, E., Huisman, J., Heerkloss, R., Jöhnk, K.D., Branco, P., Nes, E.H. Van, Scheffer, M. & Ellner, S.P. (1989) Chaos in a long-term experiment with a plankton community. , 1–35.](http://www.nature.com/nature/journal/v451/n7180/abs/nature06512.html)
