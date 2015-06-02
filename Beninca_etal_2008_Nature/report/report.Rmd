@@ -236,10 +236,10 @@ Aside: The ELE supplement contains the raw data and the transformed data, in sep
 Make a sequence of times at which to interpolate. 
 
 ```{r}
-#aggregate(Day.number ~ variable, all.data, min)
-#aggregate(Day.number ~ variable, all.data, max)
+aggregate(Day.number ~ variable, all.data, min)
+aggregate(Day.number ~ variable, all.data, max)
 #xout <- seq(343.35, 2657.2, by=3.35)
-xout <- seq(341.7, 2653.1, by=3.35)
+xout <- seq(343.35, 2658, by=3.35)
 #range(xout)
 ```
 
@@ -343,12 +343,12 @@ detrended <- rbind(ww1, ww2)
 
 ```{r}
 ## standardise
-#final <- group_by(detrended, variable) %>%
-#  mutate(y=as.numeric(scale(dt.value)))
-#summarise(final, mean=mean(y), sd=sd(y))
+final <- group_by(detrended, variable) %>%
+  mutate(stand.y=as.numeric(scale(dt.value)))
+summarise(final, mean=mean(stand.y), sd=sd(stand.y))
 
 ## or don't standardise
-final <- detrended
+#final <- detrended
 final$y <- final$dt.value
 summarise(final, mean=mean(y), sd=sd(y))
 ```
@@ -411,26 +411,19 @@ First note that the data in the ELE supplement include a data point at day 2658.
 The graph isn't produced here, as there is a mismatch in days abundances were interpolated to. Should fix this...
 
 ```{r, echo=FALSE}
-#tr <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/transformed_data_Nature2008.csv", skip=7, na.string="")
 
 tr <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_owen/Beninca_etal_2008_Nature/data/transformed_data_Nature2008.csv"),
                skip=7, na.string="")
 
-
+head(tr)
 
 tr <- tr[,-14:-24] ## remove bad columns
 tr <- tr[-693:-694,] ## remove last two rows (contain summary stats)
 tr <- gather(tr, key="Species", value="Abundance", 2:13)
-tr$Day.Number <- as.numeric(as.character((tr$Day.Number)))
-tt1 <- data.frame(Species=unique(tr$Species),
-                 Type=c("Cyclopoids", "Herbivore", "Herbivore", "Herbivore",
-                        "Phytoplankton",  "Phytoplankton", "Phytoplankton",
-                        "Detritivore", "Detritivore", "Bacteria", "Nutrient", "Nutrient"))
-tr <- merge(tr, tt1)
 levels(tr$Species)[levels(tr$Species)=="Calanoids"] <- "Calanoid.copepods"
 levels(tr$Species)[levels(tr$Species)=="Total.Dissolved.Inorganic.Nitrogen"] <- "Total.dissolved.inorganic.nitrogen"
-names(tr)[1] <- "variable"
-names(tr)[2] <- "Day.number"
+names(tr)[2] <- "variable"
+names(tr)[1] <- "Day.number"
 
 ```
 
@@ -439,21 +432,29 @@ names(tr)[2] <- "Day.number"
 
 ## Days are not matching at present, so the following doesn't work with the merge
 
-two.datasets <- merge(tr, final, all=T)
+two.datasets <- merge(tr, final)
+head(two.datasets)
+#match(tr$Day.number, final$Day.number)
 
-ggplot(two.datasets, aes(x=Abundance, y=y)) + geom_point()
 
-ggplot(filter(two.datasets, variable=="Rotifers"), aes(x=Day.number, y=Abundance)) + geom_line() +
+ggplot(two.datasets, aes(x=Abundance, y=stand.y)) + geom_point()
+
+ggplot(filter(two.datasets, variable=="Rotifers"), aes(x=as.numeric(Day.number), y=stand.y)) + geom_line() +
   facet_wrap(~variable) +
-  geom_line(aes(y=y), col="red")
+  geom_line(aes(y=Abundance), col="red")
 
-ggplot(two.datasets, aes(x=Day.number, y=Abundance)) + geom_line() +
+ggplot(two.datasets, aes(x=as.numeric(Day.number), y=stand.y)) + geom_line() +
   facet_wrap(~variable) +
-  geom_line(aes(y=y), col="red")
+  geom_line(aes(y=Abundance), col="red")
+
+ggplot(two.datasets, aes(x=Abundance, y=stand.y)) + geom_point() +
+  facet_wrap(~variable) 
+
+
 
 ```
 
-
+Looks OK, but shows that that data in the ELE supplement were standardised after removal of the zeros, whereas we don't do any zero removal (this is the same as in Ellner's code.)
 
 
 
