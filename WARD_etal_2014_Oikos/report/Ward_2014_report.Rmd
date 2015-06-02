@@ -56,31 +56,40 @@ metainfo <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RRE
 
 #look at data structure
 str(ts)
+head(ts)
+
 # number of fish ts
 length(unique(ts$ID))
+ts$ID_old <- as.factor(ts$ID)
+ts$ID_new <- as.numeric(ts$ID_old)
+ts$ID <- ts$ID_new
+
 ```
 
 Explore some time series visually to get an idea of the variability. Year-Mean(Year) and Value - Mean(Value) are plotted to easily compare time series.
 
 ```{r, warning=FALSE, fig.width=10}
-set.seed(42)
-ggplot(data=subset(ts, ID %in% sample(ts$ID,size=15)), aes(x=Year-mean(Year), y=Value-mean(Value))) + geom_line() + facet_wrap(~Species,ncol=5,nrow=3, scales="free")
+set.seed(12345678)
+ggplot(data=subset(ts, ID %in% sample(ts$ID,size=15)), aes(x=Year-mean(Year), y=Value-mean(Value))) + geom_line() + facet_wrap(ID~Species,ncol=5,nrow=3, scales="free")
 ```
 
 
 ```{r, eval=F}
 # Load in the data. This dataset only contains the 
-dat <- ts
+set.seed(12345678)
+
+#dat <- subset(ts, ID %in% sample(ts$ID,size=15))
+dat <- ts[ts$ID==1,]
 
 NAHEAD = 5 # number of points ahead to forecast
-MODELS = 150  # number of candidates (this is overestimate)
+MODELS = 50  # number of candidates (this is overestimate)
 
 # dimension predicted and predictedSE to have the same dimensions
 # as dat, so that each observation will have a predicted value and se
 predicted = matrix(NA,dim(dat)[1],MODELS) 
 predictedSE = matrix(NA,dim(dat)[1],MODELS)
 
-numRec = length(unique(dat$ID)) # number of unique time series 
+numRec = max(unique(dat$ID)) # number of unique time series 
 model.output = array(list(),c(numRec,MODELS)) # list of model objects
 
 # source Jim's file. Note that a more recent version
@@ -90,9 +99,7 @@ source_url(SourceURL)
 tent
 
 for(w in 1:numRec) {
-  
-  if(w %in% unique(dat$ID)){
-w<- 62
+ w<-1
   y = dat$Value[which(dat$ID==w)]
   
   # to standardize by the mean, uncomment
@@ -682,11 +689,11 @@ w<- 62
   predicted[which(dat$ID==w)[(n.y-NAHEAD+4):(n.y-NAHEAD+4)],model.count] = ranfor.pred
   predictedSE[which(dat$ID==w)[(n.y-NAHEAD+4):(n.y-NAHEAD+4)],model.count] = NA    
     
-  model.output[[w,model.count]] = ranfor
-  predicted[which(dat$ID==w)[(n.y-NAHEAD+5):(n.y-NAHEAD+5)],model.count] = NA          
-  predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
-  model.output[[w,model.count]] = list(smap.embed, smap.oneAhead)
-  model.names[model.count] = "randomForest v2"  
+#   model.output[[w,model.count]] = ranfor
+#   predicted[which(dat$ID==w)[(n.y-NAHEAD+5):(n.y-NAHEAD+5)],model.count] = NA          
+#   predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
+#   model.output[[w,model.count]] = list(smap.embed, smap.oneAhead)
+#   model.names[model.count] = "randomForest v2"  
   
   # Simple linear regression model
   n.y = length(y) # length of time series
@@ -706,7 +713,7 @@ w<- 62
   model.names[model.count] = "simple regression"    
   
 }
-}
+
 
 ```
 
