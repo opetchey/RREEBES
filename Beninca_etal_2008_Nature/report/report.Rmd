@@ -19,6 +19,10 @@ The data are available as an Excel file supplement to [an Ecology Letters public
 
 Known issues with this reproduction are [here](https://github.com/opetchey/RREEBES/issues). Please submit any issues there.
 
+# Known issues
+
+The known issues / problems with this reproduction are with the prefix "Beninca" [here](https://github.com/opetchey/RREEBES/issues). Please add and or solve issues there.
+
 # First get the raw data into R and tidy it.
 
 All required libraries:
@@ -236,8 +240,8 @@ Aside: The ELE supplement contains the raw data and the transformed data, in sep
 Make a sequence of times at which to interpolate. 
 
 ```{r}
-aggregate(Day.number ~ variable, all.data, min)
-aggregate(Day.number ~ variable, all.data, max)
+#aggregate(Day.number ~ variable, all.data, min)
+#aggregate(Day.number ~ variable, all.data, max)
 #xout <- seq(343.35, 2657.2, by=3.35)
 xout <- seq(343.35, 2658, by=3.35)
 #range(xout)
@@ -415,7 +419,7 @@ The graph isn't produced here, as there is a mismatch in days abundances were in
 tr <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_owen/Beninca_etal_2008_Nature/data/transformed_data_Nature2008.csv"),
                skip=7, na.string="")
 
-head(tr)
+#head(tr)
 
 tr <- tr[,-14:-24] ## remove bad columns
 tr <- tr[-693:-694,] ## remove last two rows (contain summary stats)
@@ -428,24 +432,24 @@ names(tr)[1] <- "Day.number"
 ```
 
 
-```{r, echo=FALSE, eval=F}
+```{r, echo=FALSE, eval=T}
 
 ## Days are not matching at present, so the following doesn't work with the merge
 
 two.datasets <- merge(tr, final)
-head(two.datasets)
+#head(two.datasets)
 #match(tr$Day.number, final$Day.number)
 
 
-ggplot(two.datasets, aes(x=Abundance, y=stand.y)) + geom_point()
+#ggplot(two.datasets, aes(x=Abundance, y=stand.y)) + geom_point()
 
-ggplot(filter(two.datasets, variable=="Rotifers"), aes(x=as.numeric(Day.number), y=stand.y)) + geom_line() +
-  facet_wrap(~variable) +
-  geom_line(aes(y=Abundance), col="red")
+#ggplot(filter(two.datasets, variable=="Rotifers"), aes(x=as.numeric(Day.number), y=stand.y)) + geom_line() +
+#  facet_wrap(~variable) +
+#  geom_line(aes(y=Abundance), col="red")
 
-ggplot(two.datasets, aes(x=as.numeric(Day.number), y=stand.y)) + geom_line() +
-  facet_wrap(~variable) +
-  geom_line(aes(y=Abundance), col="red")
+#ggplot(two.datasets, aes(x=as.numeric(Day.number), y=stand.y)) + geom_line() +
+#  facet_wrap(~variable) +
+#  geom_line(aes(y=Abundance), col="red")
 
 ggplot(two.datasets, aes(x=Abundance, y=stand.y)) + geom_point() +
   facet_wrap(~variable) 
@@ -454,7 +458,7 @@ ggplot(two.datasets, aes(x=Abundance, y=stand.y)) + geom_point() +
 
 ```
 
-Looks OK, but shows that that data in the ELE supplement were standardised after removal of the zeros, whereas we don't do any zero removal (this is the same as in Ellner's code.)
+Looks OK, but suggests / shows that that data in the ELE supplement were standardised after removal of the zeros, whereas we don't do any zero removal (this is the same as in Ellner's code.)
 
 
 
@@ -495,14 +499,16 @@ ts <- as.ts(final$y, frequency = 0.3)
 
 # Reproducing Table 1 using ELE supplement data.
 
+
 Create dataset with zeros removed for this table (note that this is probably not how Beninca et al did this):
 ```{r}
 final_nozeros <- final
 final_nozeros$y <- ifelse(final_nozeros$y!=0, final_nozeros$y, NA)
 # make it wide format
-#library(tidyr)
-final_long <- final_nozeros[final_nozeros$variable!="Cyclopoids" & final_nozeros$variable!="Filamentous.diatoms",c(1,2,7)]
-final_wide <- spread(final_long, variable,y)
+#
+final_long <- final_nozeros[final_nozeros$variable!="Cyclopoids" & final_nozeros$variable!="Filamentous.diatoms",c("Day.number","variable","stand.y")]
+
+final_wide <- spread(final_long, variable, stand.y)
 # we also removed data on Cyclopoids, not used in the table
 ```
 
@@ -593,17 +599,18 @@ table1b
 # differs from the one published by Beninca et al.!
 ```
 
+-->
 
 # Predictability (Figure 2)
 
-This will be done after getting Lyapunov exponents by the indirect method, as the model for that is used here (we believe).
+This will be done after getting global Lyapunov exponents by the indirect method.
 
 # Lyapunov exponents by direct method (Figure 3)
 
 Estimate the Lyapunov exponents of the time series, via time-delayed embedding. The Nature report used the [Tisean software](http://www.mpipks-dresden.mpg.de/~tisean/), which was available from CRAN [until mid 2014](http://cran.r-project.org/web/packages/RTisean/index.html). Based on this, and being a bit less well integrated with R, we'll instead use the [tseriesChaos](http://cran.r-project.org/web/packages/tseriesChaos/index.html) package, which was *largely inspired by the TISEAN project*. 
 
 Unclear if this was performed on untransformed or transformed data. First try with the transformed data.
-Time delay (1), embedding dimension (6), and Theiler window (50) were used in the Nature report. Other parameters are chosen rather randomly, though don't seem to matter too much!
+Time delay (1), embedding dimension (6), and Theiler window (50) were used in the Nature report. Other parameters are chosen rather randomly, though don't seem to matter too much.
 
 ```{r}
 time.delay <- 1
