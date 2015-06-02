@@ -229,13 +229,41 @@ Vanessa knows about a tutorial on Github at the beginning of June.
 Thomas would like to add a paper to reproduce.
 
 We split into groups, reading the papers and looking for the data.
-Mikael Frank Aurelie work on Ward et al.
-Thomas Vanessa and Gian Marco work on Graham et al.
-Marco and Alejandra work on Lagrue et al.
-
+Mikael Frank Aurelie work on Ward et al.    
+Thomas Vanessa and Gian Marco work on Graham et al.     
+Marco and Alejandra work on Lagrue et al.     
 
 
 ## 2.6
+
+(Minutes by Frank)
+
+###Any suggested papers added to the repository?
+
+New papers added by Alejandra, Marco and Thomas
+
+###Any outstanding issues?
+
+Some conflicts resulted from multiple additions of new papers (2 issues); 
+Owen resolved the two issues demonstrating how to fix the file causing the conflict.   
+NB: being a collaborator you can send a pull request (via github) and then merge it yourself.
+
+2 sections added to organize "potential papers to reproduce": 
+* papers in progress
+* papers where reproduction failed because of unavailable data etc.
+
+###Any progress on focal paper since last week?
+
+Ward et al. -> raw data, processed data and scripts provided by Eric Ward; does not work out of the box 
+because only subset of data available; opens question how to proceed with papers that have high 
+degree of reproducibility from the start.
+
+Graham et al. -> data not made public yet, hence no reproduction possible. Will be stated as a matter of fact in the repo. 
+
+Lagrue et al. -> Marco & Alejandra reproduced two first figures of paper
+
+
+
 
 ## 9.6
 
