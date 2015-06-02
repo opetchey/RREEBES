@@ -16,6 +16,8 @@
 
 Os Schmitz paper about effects of perturbations. Owen to find it.
 
+[Hooper DU, Adair EC, Cardinale BJ, Byrnes JEK, Hungate BA, et al. 2012. A global synthesis reveals biodiversity loss as a major driver of ecosystem change. Nature 486:105–8] (http://jarrettbyrnes.info/pdfs/Hooper_et_al_2012_Nature.pdf). Database is available at the National Center for Ecological Analysis and Synthesis: (http://knb.ecoinformatics.org/knb/metacat/nceas.984/nceas). 
+
 # Papers below are at least mostly done.
 
 [Benincà, E., Huisman, J., Heerkloss, R., Jöhnk, K.D., Branco, P., Nes, E.H. Van, Scheffer, M. & Ellner, S.P. (1989) Chaos in a long-term experiment with a plankton community. , 1–35.](http://www.nature.com/nature/journal/v451/n7180/abs/nature06512.html)
