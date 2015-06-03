@@ -272,7 +272,7 @@ Check this against the data direct from Steve:
 ```{r}
 #from.steve <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/direct from Steve/interp_short_allsystem_newnames.csv")
 
-from.steve <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_owen/Beninca_etal_2008_Nature/data/direct%20from%20Steve/interp_short_allsystem_newnames.csv"), header=T)
+from.steve <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Beninca_development/Beninca_etal_2008_Nature/data/direct%20from%20Steve/interp_short_allsystem_newnames.csv"), header=T)
 
 from.steve <- gather(from.steve, Species, Abundance, 2:13)
 
@@ -416,7 +416,7 @@ The graph isn't produced here, as there is a mismatch in days abundances were in
 
 ```{r, echo=FALSE}
 
-tr <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_owen/Beninca_etal_2008_Nature/data/transformed_data_Nature2008.csv"),
+tr <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Beninca_development/Beninca_etal_2008_Nature/data/transformed_data_Nature2008.csv"),
                skip=7, na.string="")
 
 #head(tr)
@@ -508,7 +508,7 @@ final_nozeros$y <- ifelse(final_nozeros$y!=0, final_nozeros$y, NA)
 #
 final_long <- final_nozeros[final_nozeros$variable!="Cyclopoids" & final_nozeros$variable!="Filamentous.diatoms",c("Day.number","variable","stand.y")]
 
-final_wide <- spread(final_long, variable, stand.y)
+final_wide <- spread(as.data.frame(final_long), variable, stand.y)
 # we also removed data on Cyclopoids, not used in the table
 ```
 
@@ -642,7 +642,7 @@ for(i in 1:length(all.species)) {
                                       m=embedding.dimension,
                                       d=time.delay,
                                       k=10, # number of considered neighbours 20
-                                      ref=100, # number of points to take into account 100
+                                      ref=40, # number of points to take into account 100
                                       t=Theiler.window,
                                       s=time.steps,
                                       eps=10 # radius where to find nearest neighbours 10
@@ -708,7 +708,7 @@ Load and run the functions, or read in from data file (default option, for which
 
 ```{r}
 # read script lines from website
-script <- getURL("https://raw.githubusercontent.com/opetchey/RREEBES/boost_by_owen/Beninca_etal_2008_Nature/report/functions/indirect_method_functions.R", ssl.verifypeer = FALSE)
+script <- getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Beninca_development/Beninca_etal_2008_Nature/report/functions/indirect_method_functions.R", ssl.verifypeer = FALSE)
 
 # parase lines and evealuate in the global environement
 eval(parse(text = script))
@@ -718,7 +718,7 @@ eval(parse(text = script))
 #save(LE, file="~/Desktop/GLE_estimate.Rdata")
 
 ## load the already saved data from github (this can take some time depending on the internet connection)
-source_data("https://github.com/opetchey/RREEBES/raw/Beninca_cleaning/Beninca_etal_2008_Nature/data/GLE_estimate.Rdata?raw=True")
+source_data("https://github.com/opetchey/RREEBES/raw/Beninca_development/Beninca_etal_2008_Nature/data/GLE_estimate.Rdata?raw=True")
 
 LE[[1]]
 ```
@@ -735,6 +735,8 @@ all.gams <- LE[[2]]
 
 Need to predict until about 40 days ahead = 40 / 3.35 time steps = 12 time steps.
 
+Do this from each time in the time series as initial abundances.
+
 From each time in the series, predict 12 steps ahead. Put results in an array:
 time x species, start.location
 time will be 12
@@ -744,21 +746,45 @@ start location will be length of time series - 12
 ```{r}
 x <- X
 
+Z <- LE[[3]]
+Z1 <- Z[,13:24]
+
+all.species <- names(all.gams)
+
 time.to.predict <- 12
 
-nn <- length(x[,1])-time.to.predict
+nn <- length(Z1[,1])-time.to.predict
 
 preds <- array(NA, c(12, 12, nn))
 
 
 dimnames(preds) <- list(dist=1:12,
-                        species=names(x),
+                        species=all.species,
                         start.time=1:nn)
-all.species <- names(all.gams)
 for(i in 1:length(all.species))
   preds[1,i,] <- predict(all.gams[[i]])[1:nn]
 
+for(i in 1:length(all.species))
+  print(length( predict(all.gams[[i]])))
+
 ```
+
+Look at the correlation between observed and predicted abundances:
+
+```{r}
+
+layout(matrix(1:12, 4, 3))
+for(soi in all.species){
+  xxx <- Z1[1:nn,soi]
+  yyy <- preds[1, soi, ]
+  plot(xxx, yyy,
+       xlab="Observed abundance",
+       ylab="Predicted abundance",
+       main=paste(soi, "rsq =", round(cor(xxx,yyy)^2,2)))
+}
+
+```
+
 
 Now for the predictions at t+2 from predictions at t+1
 
@@ -772,16 +798,14 @@ for(pred.time in 2:12) {
 }
 
 
-
 cors <- matrix(NA, 12, 12)
 dimnames(cors) = list(dist=1:12,
                         species=names(x))
 for(i in 1:12) {
   for(j in 1:12) {
-    cors[j,i] <- cor(X[1:nn,i], preds[j, i, ], use="complete.obs")^2
+    cors[j,i] <- cor(Z1[1:nn,i], preds[j, i, ], use="complete.obs")^2
 }}
 
-plot(X[1:nn,"Bacteria"],preds[i, "Bacteria", ])
 
 cors <- data.frame(dist=as.numeric(I(rownames(cors))), cors)
 cors.long <- gather(as.data.frame(cors), key=dist)
@@ -797,5 +821,4 @@ ggplot(cors.long, aes(x=Prediction_distance, y=Correlation)) +
 
 ```
 
-Clearly not quite right. Still, skeleton is working. Just needs bugs ironing out!
-
+First pass working. Need to double check everything. Quite different patterns from in figure 2 of the nature paper.
