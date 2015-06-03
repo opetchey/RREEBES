@@ -25,6 +25,6 @@ Os Schmitz paper about effects of perturbations. Owen to find it.
 
 # Papers below are at least mostly done.
 
-[Benincà, E., Huisman, J., Heerkloss, R., Jöhnk, K.D., Branco, P., Nes, E.H. Van, Scheffer, M. & Ellner, S.P. (1989) Chaos in a long-term experiment with a plankton community. , 1–35.](http://www.nature.com/nature/journal/v451/n7180/abs/nature06512.html)
+[Benincà, E., Huisman, J., Heerkloss, R., Jöhnk, K.D., Branco, P., Nes, E.H. Van, Scheffer, M. & Ellner, S.P. (1989) Chaos in a long-term experiment with a plankton community. , 1–35.](http://www.nature.com/nature/journal/v451/n7180/abs/nature06512.html). [Reproduction published on Rpubs](http://rpubs.com/owenpetchey/84465)
 
 [Hiltunen, T., Hairston, N.G., Hooker, G., Jones, L.E. & Ellner, S.P. (2014) A newly discovered role of evolution in previously published consumer-resource dynamics. Ecology letters, 17, 915–23.](http://onlinelibrary.wiley.com/doi/10.1111/ele.12291/abstract)  Data is available and Jason Griffiths has a reproduction already.
