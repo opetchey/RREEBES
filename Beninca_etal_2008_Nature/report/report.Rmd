@@ -13,7 +13,7 @@ output:
 
 This is an attempt to reproduce the anaylses presented in the paper *Chaos in a long-term experiment with a plankton community*, by Elisa Benincà and others ([the paper on the Nature website](http://www.nature.com/nature/journal/v451/n7180/abs/nature06512.html)). Details of the methods are in [the Supplement to the Nature paper](http://www.nature.com/nature/journal/v451/n7180/extref/nature06512-s1.pdf).
 
-* Here include some text about what is presented below in the basic reproduction, and what additional was done and where that is described.
+The code and data for the reproduction are [here](https://github.com/opetchey/RREEBES/tree/Beninca_development) on github.
 
 The data are available as an Excel file supplement to [an Ecology Letters publication](http://onlinelibrary.wiley.com/doi/10.1111/j.1461-0248.2009.01391.x/abstract). The Excel file contains several datasheets. Two are particularly important, as they are the source of the raw data (one contains original species abundances, the one with the nutrient concentrations). Another datasheet in the ELE supplement contains transformed variables.
 
