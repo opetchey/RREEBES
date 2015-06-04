@@ -8,7 +8,7 @@
 
 [Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araujo (2015) Inferring biotic interactions from proxies. TREE xx 1-10](http://www.sciencedirect.com/science/article/pii/S0169534715000774) TMM: Would be interesting to reproduce this study to get an idea about the removed interactions (the forbidden ones) - and the ones that are still in, but false. Maybe one could also apply this to a smaller food web and test for the accuracy of this approach. Because the authors do not provide any test for accuracy... :(
 
-Os Schmitz paper about effects of perturbations. Owen to find it.
+[Schmitz, O. (1997) Press pertubations and the predictability of ecological interactions in a food web. Ecology, 78, 55–69.] (http://www.esajournals.org/doi/abs/10.1890/0012-9658(1997)078%5B0055:PPATPO%5D2.0.CO;2)
 
 [Hooper DU, Adair EC, Cardinale BJ, Byrnes JEK, Hungate BA, et al. 2012. A global synthesis reveals biodiversity loss as a major driver of ecosystem change. Nature 486:105–8] (http://jarrettbyrnes.info/pdfs/Hooper_et_al_2012_Nature.pdf). Database is available at the National Center for Ecological Analysis and Synthesis: (http://knb.ecoinformatics.org/knb/metacat/nceas.984/nceas). 
 
@@ -17,7 +17,7 @@ Os Schmitz paper about effects of perturbations. Owen to find it.
 [Lagrue, C., Poulin, R. & Cohen, J.E. (2014) Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry. Proceedings of the National Academy of Sciences of the United States of America, 112, 1791–1796.](http://www.pnas.org/content/112/6/1791)
 
 
-[Ward, E.J., Holmes, E.E., Thorson, J.T. & Collen, B. (2014) Complexity is costly: A meta-analysis of parametric and non-parametric methods for short-term population forecasting. Oikos, 123, 652–661.](http://onlinelibrary.wiley.com/doi/10.1111/j.1600-0706.2014.00916.x/abstract) Availability of data unclear.
+[Ward, E.J., Holmes, E.E., Thorson, J.T. & Collen, B. (2014) Complexity is costly: A meta-analysis of parametric and non-parametric methods for short-term population forecasting. Oikos, 123, 652–661.](http://onlinelibrary.wiley.com/doi/10.1111/j.1600-0706.2014.00916.x/abstract)
 
 # Papers without appropriate data
 
