@@ -14,7 +14,7 @@
 ## Paper selection
 
 We will likely spend a lot of time on any single paper, so their
-selection is very important. Please make suggestions [here](possible_papers.md). Raw data must be available. Reproduction should appear feasible in a
+selection is very important. Please make suggestions [here](papers.md). Raw data must be available. Reproduction should appear feasible in a
 couple of months (eight meetings) at most. Probably good to focus on papers with mostly analyses of empirical data (rather than lots of numerical modelling).
 Please email authors of a paper when we start the reproduction, telling them what we're up to.
 
