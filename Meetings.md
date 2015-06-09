@@ -214,6 +214,27 @@ Colette Ward present as a guest. Many others not present.
 
 ## 26.5
 
+(Minutes by Gian Marco)
+
+Outstanding issues for Beninca paper
+
+Owen shows figure 2 and 3. Figure 2 seems to be quite wrong and needs a bit of fixing.
+Marco shows table 1 which also needs work (issue created).
+The code is running and needs just cleaning.
+
+Owen suggests to go through papers we might reproduce, specifically Lagrue et al., Graham et al., Ward et al. 
+We need to check data availability. We should split into groups and commit to reproduce the papers working at least one hour a week.
+
+Vanessa knows about a tutorial on Github at the beginning of June.
+Thomas would like to add a paper to reproduce.
+
+We split into groups, reading the papers and looking for the data.
+Mikael Frank Aurelie work on Ward et al.
+Thomas Vanessa and Gian Marco work on Graham et al.
+Marco and Alejandra work on Lagrue et al.
+
+
+
 ## 2.6
 
 ## 9.6

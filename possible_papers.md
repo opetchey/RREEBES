@@ -10,6 +10,14 @@
 
 [Tina Toni, David Welch, Natalja Strelkowa, Andreas Ipsen, Michael P.H. Stumpf (2009) Approximate Bayesian computation scheme for parameter inference and model selection in dynamical systems. Journal of the Royal Society Interface, 6, 187-202.] (http://rsif.royalsocietypublishing.org/content/6/31/187) Propose to reproduce ABC on Lotka Volterra equations. No data needed
 
+[Yampolsky, Lev Y., Tobias M. M. Schaer, and Dieter Ebert. “Adaptive Phenotypic Plasticity and Local Adaptation for Temperature Tolerance in Freshwater Zooplankton.” Proceedings of the Royal Society of London B: Biological Sciences 281, no. 1776 (February 7, 2014): 20132744.] (http://rspb.royalsocietypublishing.org/content/281/1776/20132744) Data available on Dryad.
+
+[Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araujo (2015) Inferring biotic interactions from proxies. TREE xx 1-10](http://www.sciencedirect.com/science/article/pii/S0169534715000774) TMM: Would be interesting to reproduce this study to get an idea about the removed interactions (the forbidden ones) - and the ones that are still in, but false. Maybe one could also apply this to a smaller food web and test for the accuracy of this approach. Because the authors do not provide any test for accuracy... :(
+
+Os Schmitz paper about effects of perturbations. Owen to find it.
+
+[Hooper DU, Adair EC, Cardinale BJ, Byrnes JEK, Hungate BA, et al. 2012. A global synthesis reveals biodiversity loss as a major driver of ecosystem change. Nature 486:105–8] (http://jarrettbyrnes.info/pdfs/Hooper_et_al_2012_Nature.pdf). Database is available at the National Center for Ecological Analysis and Synthesis: (http://knb.ecoinformatics.org/knb/metacat/nceas.984/nceas). 
+
 # Papers below are at least mostly done.
 
 [Benincà, E., Huisman, J., Heerkloss, R., Jöhnk, K.D., Branco, P., Nes, E.H. Van, Scheffer, M. & Ellner, S.P. (1989) Chaos in a long-term experiment with a plankton community. , 1–35.](http://www.nature.com/nature/journal/v451/n7180/abs/nature06512.html)
