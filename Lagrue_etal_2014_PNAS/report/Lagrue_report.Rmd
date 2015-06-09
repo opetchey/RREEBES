@@ -53,7 +53,15 @@ colnames(dd)[which(names(dd) == "Body.mass..mg.")] <- "Body_mass_mg"
 To do.
 
 ```{r}
-#R code here
+#?aggregate
+
+counts <- aggregate(x=dd$Species, by=list(Taxa=dd$Taxonomic.group, lifestyle=dd$Life.style), function(x) length(x))
+colnames(counts)<-c("Taxa", "Lifestyle","Counts")
+total <- aggregate(x=dd$Species, by=list(Lifestyle=dd$Life.style), function(x) length(x))
+colnames(total)<- c("Lifestyle", "Total")
+tab1 <- merge(counts, total, by="Lifestyle")
+tab1$percent <- tab1$Counts / tab1$Total * 100
+tab1$percent <- round(tab1$percent, 0)
 ```
 
 ## Reproducing Table 2
