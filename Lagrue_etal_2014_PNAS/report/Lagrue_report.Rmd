@@ -54,6 +54,11 @@ colnames(dd)[which(names(dd) == "Body.mass..mg.")] <- "Body_mass_mg"
 #?aggregate
 
 counts <- aggregate(x=dd$Species, by=list(Taxa=dd$Taxonomic.group, lifestyle=dd$Life.style), function(x) length(x))
+# same information in a different format:
+counts2 <- tapply(dd$Species, list(Taxa=dd$Taxonomic.group, lifestyle=dd$Life.style), length)
+# it displays NAs for some entries that we know to be zero. Confusing!
+# we should be able to discern zeroes from NAs automatically. Given the small matrix we can eyeball it:
+counts2.bytaxa <- tapply(dd$Species, list(Taxa=dd$Taxonomic.group), length)
 colnames(counts)<-c("Taxa", "Lifestyle","Counts")
 total <- aggregate(x=dd$Species, by=list(Lifestyle=dd$Life.style), function(x) length(x))
 colnames(total)<- c("Lifestyle", "Total")
@@ -62,7 +67,7 @@ tab1$percent <- tab1$Counts / tab1$Total * 100
 tab1$percent <- round(tab1$percent, 0)
 ```
 
-Make sure that counts = 0 are also present.
+
 
 ## Reproducing Table 2
 
