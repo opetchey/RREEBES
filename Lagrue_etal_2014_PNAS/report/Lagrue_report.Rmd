@@ -1,7 +1,7 @@
 ---
 title: "Reproduce analyses of Lague et al. (2014)"
-author: "Alejandra, Marco et al."
-date: "26 May 2015"
+author: "Alejandra, Julia, Marco et al."
+date: "09 June 2015"
 output:
   html_document:
     toc: yes
@@ -50,8 +50,6 @@ colnames(dd)[which(names(dd) == "Body.mass..mg.")] <- "Body_mass_mg"
 
 > Numbers (counts) and percentages of samples from broad taxonomic groups for each lifestyle separately.
 
-To do.
-
 ```{r}
 #?aggregate
 
@@ -63,6 +61,8 @@ tab1 <- merge(counts, total, by="Lifestyle")
 tab1$percent <- tab1$Counts / tab1$Total * 100
 tab1$percent <- round(tab1$percent, 0)
 ```
+
+Make sure that counts = 0 are also present.
 
 ## Reproducing Table 2
 
