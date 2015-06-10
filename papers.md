@@ -12,7 +12,7 @@
 
 [Hooper DU, Adair EC, Cardinale BJ, Byrnes JEK, Hungate BA, et al. 2012. A global synthesis reveals biodiversity loss as a major driver of ecosystem change. Nature 486:105–8] (http://jarrettbyrnes.info/pdfs/Hooper_et_al_2012_Nature.pdf). Database is available at the National Center for Ecological Analysis and Synthesis: (http://knb.ecoinformatics.org/knb/metacat/nceas.984/nceas). 
 
-[Hekstra, D.R. & Leibler, S. (2012) Contingency and statistical laws in replicate microbial closed ecosystems. Cell, 149, 1164–1173.] (http://www.sciencedirect.com/science/article/pii/S0092867412005156)
+[Hekstra, D.R. & Leibler, S. (2012) Contingency and statistical laws in replicate microbial closed ecosystems. Cell, 149, 1164–1173.] (http://www.sciencedirect.com/science/article/pii/S0092867412005156). Data available by request, but cannot be put in public domain.
 
 # Papers with reproduction underway
 
