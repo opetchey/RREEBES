@@ -79,7 +79,7 @@ ggplot(data=subset(ts, ID %in% sample(ts$ID,size=15)), aes(x=Year-mean(Year), y=
 set.seed(12345678)
 
 #dat <- subset(ts, ID %in% sample(ts$ID,size=15))
-dat <- ts[ts$ID==1,]
+dat <- ts[ts$ID<=10,]
 
 NAHEAD = 5 # number of points ahead to forecast
 MODELS = 50  # number of candidates (this is overestimate)
@@ -96,10 +96,9 @@ model.output = array(list(),c(numRec,MODELS)) # list of model objects
 # of this function is here, https://github.com/James-Thorson/NLTS
 SourceURL <- "https://raw.githubusercontent.com/opetchey/RREEBES/WARD_etal_2014_Oikos/WARD_etal_2014_Oikos/code/Fn_simplex_and_smap_2012-05-04.r"
 source_url(SourceURL)
-tent
 
 for(w in 1:numRec) {
- w<-1
+
   y = dat$Value[which(dat$ID==w)]
   
   # to standardize by the mean, uncomment
@@ -714,8 +713,15 @@ for(w in 1:numRec) {
   
 }
 
+predicted <- as.data.frame(predicted)
+names(predicted) <- model.names
+dat <- cbind(dat,predicted)
+
+prediction <- gather(dat, model_type, Value_predicted,  11:(MODELS+10))
 
 ```
+
+
 
 
 
