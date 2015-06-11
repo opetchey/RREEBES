@@ -268,13 +268,14 @@ Lagrue et al. -> Marco & Alejandra reproduced two first figures of paper
 ## 9.6
 (Minutes by Aurelie)
 
-### New papers added
+###New papers added
 * Hekstra. But the data could NOT be public. Find a solution to do not show the data (cf. Issue 81)
 * Hooper *et al.*. Meta-analysis paper on biodiversity loss as a driver of environmental changes.
 	* integrative study
 	* deal with big data (200 papers)
 	* **high priority** for RREEBES
-### On going papers
+
+###On going papers
 * Lagrue. 
 	* Three figures reproduced, and on going tables (maybe not exactly the same format)
 	* it is a goof example for learning R
@@ -287,7 +288,7 @@ Lagrue et al. -> Marco & Alejandra reproduced two first figures of paper
 * Beninca. 
 	* Owen fixing the last figures: fig.3 (parameters are not the same), fig.2 (some differences in the slope and pattern), and tab.1 (OK).
 
-## General information
+###General information
 * Publishing the reproduction: using the GitHub webpage instead of RPubs.
 * Getting data on desktop: (cf issue 77). possibilities:
 	* cloning repository
