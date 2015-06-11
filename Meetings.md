@@ -266,6 +266,42 @@ Lagrue et al. -> Marco & Alejandra reproduced two first figures of paper
 
 
 ## 9.6
+(Minutes by Aurelie)
+
+### New papers added
+* Hekstra. But the data could NOT be public. Find a solution to do not show the data (cf. Issue 81)
+* Hooper *et al.*. Meta-analysis paper on biodiversity loss as a driver of environmental changes.
+	* integrative study
+	* deal with big data (200 papers)
+	* **high priority** for RREEBES
+### On going papers
+* Lagrue. 
+	* Three figures reproduced, and on going tables (maybe not exactly the same format)
+	* it is a goof example for learning R
+* Ward.
+	* Code provided by the author.
+	* Keep on familiarising with the script also provided.
+* Graham.
+	* CANCELLED because data can not made available to public.
+* Vanessa, GM and Thomas focusing now on TREE paper
+* Beninca. 
+	* Owen fixing the last figures: fig.3 (parameters are not the same), fig.2 (some differences in the slope and pattern), and tab.1 (OK).
+
+## General information
+* Publishing the reproduction: using the GitHub webpage instead of RPubs.
+* Getting data on desktop: (cf issue 77). possibilities:
+	* cloning repository
+	* reading from GitHub online and "save as"
+	* using the URL of the "raw" script available online
+* Finished paper: give a short presentation to the class/group of the methods used.
+* Management of the repository: 
+	* each paper must has a new branch (and we work on this specific branch until the paper is finished).
+	* can work directly on the master branch to update the minutes or new papers.
+* Possibility to use a saved back up:
+	1. On the local repository, 
+	2. in the commit history,
+	3. select the last commit that you want to keep,
+	4. on the parameter option, prefer to click on "revert this commit" 
 
 ## 16.6
 
