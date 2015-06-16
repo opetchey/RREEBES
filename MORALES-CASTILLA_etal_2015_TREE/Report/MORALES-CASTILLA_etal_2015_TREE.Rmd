@@ -1,23 +1,29 @@
 ---
-title: "Morales-Castilla"
+title: "Morales-Castilla et al. (2015, TREE) Inferring biotic interactions from proxies."
 author: "Vanessa, Gian-Marco, Thomas"
 date: "June 16, 2015"
 output: html_document
 ---
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
 
 ```{r}
+# Load libraries.
 library(igraph)
+library(RCurl)
 
 ```
 
 
-
+Load the data.
 ```{r}
-dd.01 <- read.csv("~/SWITCHdrive/UZH/GitHub/RREEBES/MORALES-CASTILLA_etal_2015_TREE/Serengeti data/journal.pcbi.1002321.s004.csv")
+dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES-CASTILLA_etal_2015_TREE/Data/Serengeti%20data/journal.pcbi.1002321.s004.CSV",
+             cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+dd.01 <- read.csv(text = dd)
+
+
+# dd.01 <- read.csv("~/SWITCHdrive/UZH/GitHub/RREEBES/MORALES-CASTILLA_etal_2015_TREE/Serengeti data/journal.pcbi.1002321.s004.csv")
 dd.02 <- read.csv("~/SWITCHdrive/UZH/GitHub/RREEBES/MORALES-CASTILLA_etal_2015_TREE/Serengeti data/journal.pcbi.1002321.s005.csv")
 dd.03 <- read.csv("~/SWITCHdrive/UZH/GitHub/RREEBES/MORALES-CASTILLA_etal_2015_TREE/Serengeti data/journal.pcbi.1002321.s006.csv")
 
