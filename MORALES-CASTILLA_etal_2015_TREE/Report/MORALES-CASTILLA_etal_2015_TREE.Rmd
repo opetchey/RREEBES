@@ -18,14 +18,17 @@ library(RCurl)
 
 Load the data.
 ```{r}
+# Species in the Serengeti food web.
 dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES-CASTILLA_etal_2015_TREE/Data/Serengeti%20data/journal.pcbi.1002321.s004.CSV",
              cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 dd.01 <- read.csv(text = dd)
-
-
-# dd.01 <- read.csv("~/SWITCHdrive/UZH/GitHub/RREEBES/MORALES-CASTILLA_etal_2015_TREE/Serengeti data/journal.pcbi.1002321.s004.csv")
-dd.02 <- read.csv("~/SWITCHdrive/UZH/GitHub/RREEBES/MORALES-CASTILLA_etal_2015_TREE/Serengeti data/journal.pcbi.1002321.s005.csv")
+# Feeding links in the Serengeti food web.
+dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES-CASTILLA_etal_2015_TREE/Data/Serengeti%20data/journal.pcbi.1002321.s005.CSV",
+             cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+dd.02 <- read.csv(text = dd)
+# Consensus partition.
 dd.03 <- read.csv("~/SWITCHdrive/UZH/GitHub/RREEBES/MORALES-CASTILLA_etal_2015_TREE/Serengeti data/journal.pcbi.1002321.s006.csv")
+# Link densities between groups in the consensus partition.
 
 ```
 
