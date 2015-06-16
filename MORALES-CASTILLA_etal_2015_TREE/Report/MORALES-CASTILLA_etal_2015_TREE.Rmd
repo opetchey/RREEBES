@@ -1,0 +1,32 @@
+---
+title: "Morales-Castilla"
+author: "Vanessa, Gian-Marco, Thomas"
+date: "June 16, 2015"
+output: html_document
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+library(igraph)
+
+```
+
+
+
+```{r}
+dd.01 <- read.csv("~/SWITCHdrive/UZH/GitHub/RREEBES/MORALES-CASTILLA_etal_2015_TREE/Serengeti data/journal.pcbi.1002321.s004.csv")
+dd.02 <- read.csv("~/SWITCHdrive/UZH/GitHub/RREEBES/MORALES-CASTILLA_etal_2015_TREE/Serengeti data/journal.pcbi.1002321.s005.csv")
+dd.03 <- read.csv("~/SWITCHdrive/UZH/GitHub/RREEBES/MORALES-CASTILLA_etal_2015_TREE/Serengeti data/journal.pcbi.1002321.s006.csv")
+
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
