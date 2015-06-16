@@ -306,8 +306,8 @@ Lagrue et al. -> Marco & Alejandra reproduced two first figures of paper
 
 ## 16.6
 
-### Present
-Owen, Thomas, Aurelie, Marco, Gian Marco, Alejandra, Vanessa.
+(Minutes by Marco)
+Present: Owen, Thomas, Aurelie, Marco, Gian Marco, Alejandra, Vanessa.
 
 ### Progress
 
