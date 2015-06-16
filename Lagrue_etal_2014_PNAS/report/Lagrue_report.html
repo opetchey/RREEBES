@@ -8,9 +8,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
-<meta name="author" content="Alejandra, Marco et al." />
+<meta name="author" content="Alejandra, Julia, Marco et al." />
 
-<meta name="date" content="2015-05-26" />
+<meta name="date" content="2015-06-09" />
 
 <title>Reproduce analyses of Lague et al. (2014)</title>
 
@@ -63,8 +63,8 @@ img {
 
 <div id="header">
 <h1 class="title">Reproduce analyses of Lague et al. (2014)</h1>
-<h4 class="author"><em>Alejandra, Marco et al.</em></h4>
-<h4 class="date"><em>26 May 2015</em></h4>
+<h4 class="author"><em>Alejandra, Julia, Marco et al.</em></h4>
+<h4 class="date"><em>09 June 2015</em></h4>
 </div>
 
 <div id="TOC">
@@ -134,10 +134,14 @@ colnames(dd)[which(names(dd) == &quot;Body.mass..mg.&quot;)] &lt;- &quot;Body_ma
 <blockquote>
 <p>Numbers (counts) and percentages of samples from broad taxonomic groups for each lifestyle separately.</p>
 </blockquote>
-<p>To do.</p>
 <pre class="r"><code>#?aggregate
 
 counts &lt;- aggregate(x=dd$Species, by=list(Taxa=dd$Taxonomic.group, lifestyle=dd$Life.style), function(x) length(x))
+# same information in a different format:
+counts2 &lt;- tapply(dd$Species, list(Taxa=dd$Taxonomic.group, lifestyle=dd$Life.style), length)
+# it displays NAs for some entries that we know to be zero. Confusing!
+# we should be able to discern zeroes from NAs automatically. Given the small matrix we can eyeball it:
+counts2.bytaxa &lt;- tapply(dd$Species, list(Taxa=dd$Taxonomic.group), length)
 colnames(counts)&lt;-c(&quot;Taxa&quot;, &quot;Lifestyle&quot;,&quot;Counts&quot;)
 total &lt;- aggregate(x=dd$Species, by=list(Lifestyle=dd$Life.style), function(x) length(x))
 colnames(total)&lt;- c(&quot;Lifestyle&quot;, &quot;Total&quot;)
