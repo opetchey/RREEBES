@@ -11,6 +11,7 @@ output:
 
 # Introduction
 
+
 This is an attempt to reproduce the anaylses presented in the paper *Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry*, by Lagrue, Poulin, and Cohen ([http://www.pnas.org/content/112/6/1791](http://www.pnas.org/content/112/6/1791)). Data are [here](http://www.pnas.org/content/suppl/2014/12/30/1422475112.DCSupplemental/pnas.1422475112.sd01.txt) as txt, but need to be saved as csv.
 
 * From the article summary:
@@ -54,12 +55,12 @@ colnames(dd)[which(names(dd) == "Body.mass..mg.")] <- "Body_mass_mg"
 #?aggregate
 
 counts <- aggregate(x=dd$Species, by=list(Taxa=dd$Taxonomic.group, lifestyle=dd$Life.style), function(x) length(x))
-# same information in a different format:
-counts2 <- tapply(dd$Species, list(Taxa=dd$Taxonomic.group, lifestyle=dd$Life.style), length)
-# it displays NAs for some entries that we know to be zero. Confusing!
-# we should be able to discern zeroes from NAs automatically. Given the small matrix we can eyeball it:
-counts2.bytaxa <- tapply(dd$Species, list(Taxa=dd$Taxonomic.group), length)
 colnames(counts)<-c("Taxa", "Lifestyle","Counts")
+# same information in a different format:
+counts2 <- tapply(dd$Species, list(Taxa=dd$Taxonomic.group, lifestyle=dd$Life.style), na.omit(length))
+# replace NA's with zeroes:
+counts2[is.na(counts2)]<- 0
+
 total <- aggregate(x=dd$Species, by=list(Lifestyle=dd$Life.style), function(x) length(x))
 colnames(total)<- c("Lifestyle", "Total")
 tab1 <- merge(counts, total, by="Lifestyle")
