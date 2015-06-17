@@ -10,6 +10,8 @@
 
 [Hekstra, D.R. & Leibler, S. (2012) Contingency and statistical laws in replicate microbial closed ecosystems. Cell, 149, 1164–1173.] (http://www.sciencedirect.com/science/article/pii/S0092867412005156). Data available by request, but cannot be put in public domain.
 
+[Scheffer, M., Carpenter, S., Foley, J. a, Folke, C. & Walker, B. (2001) Catastrophic shifts in ecosystems. Nature, 413, 591–6.] (http://www.nature.com/nature/journal/v413/n6856/full/413591a0.html) At least reproduce / use the minimal mathematical model in Box 1, to recreate something like figure 3.
+
 # Papers with reproduction underway
 
 [Lagrue, C., Poulin, R. & Cohen, J.E. (2014) Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry. Proceedings of the National Academy of Sciences of the United States of America, 112, 1791–1796.](http://www.pnas.org/content/112/6/1791)
