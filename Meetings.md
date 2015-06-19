@@ -311,15 +311,15 @@ Present: Owen, Thomas, Aurelie, Marco, Gian Marco, Alejandra, Vanessa.
 
 ### Progress
 
-*Lagrue: to be finished in 1-2-hour work time.
-*Ward: ongoing.
-*Morales-Castilla: foodweb data available. Trait-based criteria used to remove redundant links are obscure.
+* Lagrue: to be finished in 1-2-hour work time.
+* Ward: ongoing.
+* Morales-Castilla: foodweb data available. Trait-based criteria used to remove redundant links are obscure.
 
 ### Minutes
 
-*No new papers added to the ‘to-reproduce’ list.
-*What to do once a reproduced paper is done: publish it on GitHug Pages, but wait until most of the group members are present before giving a wrap-up presentation.
-*Owen gave a presentation about the newly-implemented RREEBES “wiki” section. There is already a page explaining how to publish a report using GitHub Pages.
+* No new papers added to the ‘to-reproduce’ list.
+* What to do once a reproduced paper is done: publish it on GitHug Pages, but wait until most of the group members are present before giving a wrap-up presentation.
+* Owen gave a presentation about the newly-implemented RREEBES “wiki” section. There is already a page explaining how to publish a report using GitHub Pages.
 
 ## 23.6
 
