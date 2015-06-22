@@ -25,6 +25,8 @@ library(RCurl)
 ```
 
 Load the data from GitHub straight into R.
+
+Serengeti food web.
 ```{r}
 # Species in the Serengeti food web.
 dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES-CASTILLA_etal_2015_TREE/Data/Serengeti%20data/journal.pcbi.1002321.s004.CSV",
@@ -43,4 +45,22 @@ dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES
              cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 dd.04 <- read.csv(text = dd)
 ```
+
+
+The cuban coral reef food web.
+```{r}
+/Users/Thomas/SWITCHdrive/UZH/GitHub/RREEBES/MORALES-CASTILLA_etal_2015_TREE/Data/Coral reef data
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
