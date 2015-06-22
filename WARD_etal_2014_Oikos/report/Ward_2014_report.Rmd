@@ -721,6 +721,26 @@ prediction <- gather(dat, model_type, Value_predicted,  11:(MODELS+10))
 
 ```
 
+````{r ASE_function}
+get.ASE <- function(x){
+  # x is the data used in ddply for each "ID_new" and "model_type"
+  training_dd <- x[1:(nrow(x)-5),]
+  mean.abs.error <-( 1/(nrow(training_dd)-1) ) * sum(abs(training_dd[2:nrow(training_dd),"Value"] - training_dd[1:nrow(training_dd)-1,"Value"]))
+  
+  res_ASE <- rep(NA,nrow(x))  
+  for (t in 1:5){
+    #t=1
+    res_ASE[nrow(training_dd)+t] <- abs(x[nrow(training_dd)+t,"Value"]-x[nrow(training_dd)+t,"Value_predicted"]) / mean.abs.error
+  }
+  
+  cbind.data.frame(x,ASE=res_ASE)
+}
+
+#out put with ASE estimate
+prediction_ASE <- ddply(.data=prediction, c("ID_new","model_type"), get.ASE)
+
+```
+
 
 
 
