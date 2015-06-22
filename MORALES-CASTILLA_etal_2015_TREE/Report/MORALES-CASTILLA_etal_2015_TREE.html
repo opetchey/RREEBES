@@ -83,6 +83,7 @@ library(igraph)
 library(RCurl)</code></pre>
 <pre><code>## Loading required package: bitops</code></pre>
 <p>Load the data from GitHub straight into R.</p>
+<p>Serengeti food web.</p>
 <pre class="r"><code># Species in the Serengeti food web.
 dd &lt;-  getURL(&quot;https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES-CASTILLA_etal_2015_TREE/Data/Serengeti%20data/journal.pcbi.1002321.s004.CSV&quot;,
              cainfo = system.file(&quot;CurlSSL&quot;, &quot;cacert.pem&quot;, package = &quot;RCurl&quot;))
@@ -99,6 +100,38 @@ dd.03 &lt;- read.csv(text = dd)
 dd &lt;-  getURL(&quot;https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES-CASTILLA_etal_2015_TREE/Data/Serengeti%20data/journal.pcbi.1002321.s007.CSV&quot;,
              cainfo = system.file(&quot;CurlSSL&quot;, &quot;cacert.pem&quot;, package = &quot;RCurl&quot;))
 dd.04 &lt;- read.csv(text = dd)</code></pre>
+<p>The cuban coral reef food web.</p>
+<pre class="r"><code>dd &lt;-  getURL(&quot;https://raw.githubusercontent.com/opetchey/RREEBES/Morales-Castilla_etal_2015_TREE/MORALES-CASTILLA_etal_2015_TREE/Data/Coral%20reef%20data/857470.item.4%20-%20Guild%20key%2C%20all%20data%20sets.csv&quot;,
+             cainfo = system.file(&quot;CurlSSL&quot;, &quot;cacert.pem&quot;, package = &quot;RCurl&quot;))
+dd.05 &lt;- read.csv(text = dd)
+str(dd.05)</code></pre>
+<pre><code>## 'data.frame':    755 obs. of  6 variables:
+##  $ Guild.Number    : int  1 2 2 2 2 2 2 2 2 2 ...
+##  $ Taxa            : Factor w/ 753 levels &quot;&quot;,&quot;                               &quot;,..: 1 661 120 126 127 132 282 396 407 685 ...
+##  $ Fish.Body.Length: num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ Cayman.Islands  : Factor w/ 3 levels &quot;&quot;,&quot;  &quot;,&quot;x &quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Cuba            : Factor w/ 3 levels &quot;&quot;,&quot; &quot;,&quot;x&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Jamaica         : Factor w/ 3 levels &quot;&quot;,&quot; &quot;,&quot;x&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<pre class="r"><code># Convert 'dd.05$Guild.Number' frmo integer to factor.
+dd.05$Guild.Number   &lt;- as.factor(dd.05$Guild.Number)
+# str(dd.05)
+
+# Only data with species from the Cuban food web.
+# Guilds only in Cuban food web.
+dd.05.a              &lt;- subset(dd.05, Cuba==&quot;x&quot;)
+n.guilds.Cuba        &lt;- length(levels(factor(dd.05.a$Guild.Number)))
+
+# Species only in Cuban food web.
+n.species.Cuba       &lt;- length(subset(dd.05, Cuba==&quot;x&quot;)$Cuba)
+n.links.species.Cuba &lt;- n.species.Cuba^2-n.species.Cuba
+
+# Species and guilds in all three food webs.
+dd.05.b              &lt;- subset(dd.05, Cuba==&quot;x&quot; | Jamaica==&quot;x&quot; | Cayman.Islands==&quot;x&quot;)
+n.species.all        &lt;- length(dd.05.b[,1])
+n.links.species.all  &lt;- n.species.all^2-n.species.all 
+n.guilds.all         &lt;- length(levels(factor(dd.05.b$Guild.Number)))
+n.links.guilds.all   &lt;- n.guilds.all^2-n.guilds.all</code></pre>
+<p>Well, overall there are 175 species in the three food webs, and 171 species in the Cuban food web. This would give a total number of potential links of 30.450 or 29.070, respectively. There are 144 guilds in all three food webs and 140 in the Cuban one. Based on guilds, this would give a a total number of links of 20.592 or 19.460, respectively. The question is: where do the 231 species/guilds come from that Ingacio was telling us entered their calculations…?!?</p>
 </div>
 
 

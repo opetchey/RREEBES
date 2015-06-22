@@ -49,10 +49,33 @@ dd.04 <- read.csv(text = dd)
 
 The cuban coral reef food web.
 ```{r}
-/Users/Thomas/SWITCHdrive/UZH/GitHub/RREEBES/MORALES-CASTILLA_etal_2015_TREE/Data/Coral reef data
+dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Morales-Castilla_etal_2015_TREE/MORALES-CASTILLA_etal_2015_TREE/Data/Coral%20reef%20data/857470.item.4%20-%20Guild%20key%2C%20all%20data%20sets.csv",
+             cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+dd.05 <- read.csv(text = dd)
+str(dd.05)
+# Convert 'dd.05$Guild.Number' frmo integer to factor.
+dd.05$Guild.Number   <- as.factor(dd.05$Guild.Number)
+# str(dd.05)
+
+# Only data with species from the Cuban food web.
+# Guilds only in Cuban food web.
+dd.05.a              <- subset(dd.05, Cuba=="x")
+n.guilds.Cuba        <- length(levels(factor(dd.05.a$Guild.Number)))
+
+# Species only in Cuban food web.
+n.species.Cuba       <- length(subset(dd.05, Cuba=="x")$Cuba)
+n.links.species.Cuba <- n.species.Cuba^2-n.species.Cuba
+
+# Species and guilds in all three food webs.
+dd.05.b              <- subset(dd.05, Cuba=="x" | Jamaica=="x" | Cayman.Islands=="x")
+n.species.all        <- length(dd.05.b[,1])
+n.links.species.all  <- n.species.all^2-n.species.all 
+n.guilds.all         <- length(levels(factor(dd.05.b$Guild.Number)))
+n.links.guilds.all   <- n.guilds.all^2-n.guilds.all
+
 ```
 
-
+Well, overall there are 175 species in the three food webs, and 171 species in the Cuban food web. This would give a total number of potential links of 30.450 or 29.070, respectively. There are 144 guilds in all three food webs and 140 in the Cuban one. Based on guilds, this would give a a total number of links of 20.592 or 19.460, respectively. The question is: where do the 231 species/guilds come from that Ingacio was telling us entered their calculations...?!?
 
 
 
