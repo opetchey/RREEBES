@@ -23,7 +23,6 @@ rm(list=ls())
 # libraries for data management
 library(tidyr)
 library(plyr)
-library(dplyr)
 library(lubridate)
 library(stringr)
 library(ggplot2)
@@ -31,18 +30,18 @@ library(RCurl)
 library(reshape2)
 
 library(devtools)
-#devtools::install_github("James-Thorson/NLTS")
+devtools::install_github("James-Thorson/NLTS")
 
 # libraries need for prediction
-#install.packages(c("MARSS", "nlts", "mgcv", "np", "locfit", "forecast", "kernlab", "tsDyn", "ltsa", "timsac", "randomForest"))
+#install.packages(c("MARSS", "NLTS", "mgcv", "np", "locfit", "forecast", "kernlab", "tsDyn", "ltsa", "timsac", "randomForest"))
+library(tsDyn)
 library(MARSS)
-library(nlts)
 library(mgcv)
 library(np)
 library(locfit)
 library(forecast)
 library(kernlab)
-library(tsDyn)
+
 library(ltsa)
 library(timsac)
 library(randomForest)
@@ -76,12 +75,6 @@ set.seed(12345678)
 ggplot(data=subset(ts, ID %in% sample(ts$ID,size=15)), aes(x=Year-mean(Year), y=Value-mean(Value))) + geom_line() + facet_wrap(ID~Species,ncol=5,nrow=3, scales="free")
 ```
 
-Get an idea of the distribution of time series length (number of observations).
-
-```{r, warning=FALSE, fig.width=10}
-ggplot(data=ts %>% group_by(ID_new) %>% summarise(observations=n()), aes(x=observations)) + geom_histogram() 
-```
-
 Run the script to get forecasts based on the training data.
 
 ```{r, eval=F}
@@ -108,8 +101,7 @@ model.output = array(list(),c(numRec,MODELS)) # list of model objects
 # source_url(SourceURL)
 
 for(w in 1:numRec) {
-
-  w=1
+w=1
   y = dat$Value[which(dat$ID==w)]
   
   # to standardize by the mean, uncomment
@@ -132,56 +124,53 @@ for(w in 1:numRec) {
   model.names[model.count] = "GAM (gam)"  
   model.count = model.count + 1
 
-#   # Neural network time series model with embedding dimension = 1, hidden units (size) = 1
-#   nnetTs.11 = nnetTs(as.ts(y.train),m=1,d=1,steps=1,size=1)
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = predict(nnetTs.11,n.ahead = NAHEAD)
-#   predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
-#   model.output[[w,model.count]] = nnetTs.11
-#   model.names[model.count] = "nnetTs.11 (nnetTs)"  
-#   model.count = model.count + 1
-#   browser()
-#   is.na(y.train)
+  # Neural network time series model with embedding dimension = 1, hidden units (size) = 1
+  nnetTs.11 = nnetTs(ts(y.train),m=1,d=1,steps=1,size=1)
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = predict(nnetTs.11,n.ahead = NAHEAD)
+  predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
+  model.output[[w,model.count]] = nnetTs.11
+  model.names[model.count] = "nnetTs.11 (nnetTs)"  
+  model.count = model.count + 1
 
-# 
-#   # Neural network time series model with embedding dimension = 1, hidden units (size) = 2
-#   nnetTs.12 = nnetTs(y.train,m=1,size=2)
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = predict(nnetTs.12,n.ahead = NAHEAD)
-#   predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
-#   model.output[[w,model.count]] = nnetTs.12
-#   model.names[model.count] = "nnetTs.12 (nnetTs)"  
-#   model.count = model.count + 1
-# 
-#   # Neural network time series model with embedding dimension = 2, hidden units (size) = 1  
-#   nnetTs.21 = nnetTs(y.train,m=2,size=1)
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = predict(nnetTs.21,n.ahead = NAHEAD)
-#   predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
-#   model.output[[w,model.count]] = nnetTs.21
-#   model.names[model.count] = "nnetTs.21 (nnetTs)"  
-#   model.count = model.count + 1
-#   
-#   # Neural network time series model with embedding dimension = 2, hidden units (size) = 2  
-#   nnetTs.22 = nnetTs(y.train,m=2,size=2)
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = predict(nnetTs.22,n.ahead = NAHEAD)
-#   predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
-#   model.output[[w,model.count]] = nnetTs.22
-#   model.names[model.count] = "nnetTs.22 (nnetTs)"  
-#   model.count = model.count + 1 
-# 
-#   # Neural network time series model with embedding dimension = 3, hidden units (size) = 1
-#   nnetTs.31 = nnetTs(y.train,m=3,size=1)
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = predict(nnetTs.31,n.ahead = NAHEAD)
-#   predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
-#   model.output[[w,model.count]] = nnetTs.31
-#   model.names[model.count] = "nnetTs.31 (nnetTs)"  
-#   model.count = model.count + 1 
-# 
-#   # Neural network time series model with embedding dimension = 3, hidden units (size) = 2  
-#   nnetTs.32 = nnetTs(y.train,m=3,size=2)
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = predict(nnetTs.32,n.ahead = NAHEAD)
-#   predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
-#   model.output[[w,model.count]] = nnetTs.32
-#   model.names[model.count] = "nnetTs.32 (nnetTs)"  
-#   model.count = model.count + 1
+  # Neural network time series model with embedding dimension = 1, hidden units (size) = 2
+  nnetTs.12 = nnetTs(y.train,m=1,size=2)
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = predict(nnetTs.12,n.ahead = NAHEAD)
+  predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
+  model.output[[w,model.count]] = nnetTs.12
+  model.names[model.count] = "nnetTs.12 (nnetTs)"  
+  model.count = model.count + 1
+
+  # Neural network time series model with embedding dimension = 2, hidden units (size) = 1  
+  nnetTs.21 = nnetTs(y.train,m=2,size=1)
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = predict(nnetTs.21,n.ahead = NAHEAD)
+  predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
+  model.output[[w,model.count]] = nnetTs.21
+  model.names[model.count] = "nnetTs.21 (nnetTs)"  
+  model.count = model.count + 1
+  
+  # Neural network time series model with embedding dimension = 2, hidden units (size) = 2  
+  nnetTs.22 = nnetTs(y.train,m=2,size=2)
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = predict(nnetTs.22,n.ahead = NAHEAD)
+  predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
+  model.output[[w,model.count]] = nnetTs.22
+  model.names[model.count] = "nnetTs.22 (nnetTs)"  
+  model.count = model.count + 1 
+
+  # Neural network time series model with embedding dimension = 3, hidden units (size) = 1
+  nnetTs.31 = nnetTs(y.train,m=3,size=1)
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = predict(nnetTs.31,n.ahead = NAHEAD)
+  predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
+  model.output[[w,model.count]] = nnetTs.31
+  model.names[model.count] = "nnetTs.31 (nnetTs)"  
+  model.count = model.count + 1 
+
+  # Neural network time series model with embedding dimension = 3, hidden units (size) = 2  
+  nnetTs.32 = nnetTs(y.train,m=3,size=2)
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = predict(nnetTs.32,n.ahead = NAHEAD)
+  predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
+  model.output[[w,model.count]] = nnetTs.32
+  model.names[model.count] = "nnetTs.32 (nnetTs)"  
+  model.count = model.count + 1
   
   # Simple random walk with no drift using the rwf() function
   fit.nodrift <- rwf(y.train,h=NAHEAD) # ~ random walk forecast model, no drift
@@ -759,6 +748,11 @@ get.ASE <- function(x){
 
 #out put with ASE estimate
 prediction_ASE <- ddply(.data=prediction, c("ID_new","model_type"), get.ASE)
+```
+
+```{r}
+# only load dplyr package after model fitting due to clashes with tsDyn package
+library(dplyr)
 ```
 
 Visualize forecasting performance:
