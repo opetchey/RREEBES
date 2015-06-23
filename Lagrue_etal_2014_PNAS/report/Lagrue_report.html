@@ -105,9 +105,9 @@ library(dplyr)</code></pre>
 <pre><code>## 
 ## Attaching package: 'dplyr'
 ## 
-## The following object is masked from 'package:stats':
+## The following objects are masked from 'package:stats':
 ## 
-##     filter
+##     filter, lag
 ## 
 ## The following objects are masked from 'package:base':
 ## 
@@ -118,9 +118,10 @@ library(ggplot2)
 library(RCurl)</code></pre>
 <pre><code>## Loading required package: bitops</code></pre>
 <pre class="r"><code>library(reshape2)
+library(knitr)
 
 # Load data:
-dd &lt;- read.csv(text=getURL(&quot;https://raw.githubusercontent.com/marcoplebani85/RREEBES/Lagrue/Lagrue_etal_2014_PNAS/data/Lague2014.csv&quot;), header=T)
+dd &lt;- read.csv(text=getURL(&quot;https://raw.githubusercontent.com/opetchey/RREEBES/Lagrue/Lagrue_etal_2014_PNAS/data/Lague2014.csv&quot;), header=T)
 # head(dd)
 # str(dd)
 # make some colnames more R-friendly:
@@ -137,25 +138,422 @@ colnames(dd)[which(names(dd) == &quot;Body.mass..mg.&quot;)] &lt;- &quot;Body_ma
 <pre class="r"><code>#?aggregate
 
 counts &lt;- aggregate(x=dd$Species, by=list(Taxa=dd$Taxonomic.group, lifestyle=dd$Life.style), function(x) length(x))
-# same information in a different format:
-counts2 &lt;- tapply(dd$Species, list(Taxa=dd$Taxonomic.group, lifestyle=dd$Life.style), length)
-# it displays NAs for some entries that we know to be zero. Confusing!
-# we should be able to discern zeroes from NAs automatically. Given the small matrix we can eyeball it:
-counts2.bytaxa &lt;- tapply(dd$Species, list(Taxa=dd$Taxonomic.group), length)
 colnames(counts)&lt;-c(&quot;Taxa&quot;, &quot;Lifestyle&quot;,&quot;Counts&quot;)
+# same information in a different format:
+counts2 &lt;- tapply(dd$Species, list(Taxa=dd$Taxonomic.group, lifestyle=dd$Life.style), na.omit(length))
+# replace NA's with zeroes:
+counts2[is.na(counts2)]&lt;- 0
+
 total &lt;- aggregate(x=dd$Species, by=list(Lifestyle=dd$Life.style), function(x) length(x))
 colnames(total)&lt;- c(&quot;Lifestyle&quot;, &quot;Total&quot;)
 tab1 &lt;- merge(counts, total, by=&quot;Lifestyle&quot;)
 tab1$percent &lt;- tab1$Counts / tab1$Total * 100
-tab1$percent &lt;- round(tab1$percent, 0)</code></pre>
+tab1$percent &lt;- round(tab1$percent, 0)
+
+kable(tab1)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Lifestyle</th>
+<th align="left">Taxa</th>
+<th align="right">Counts</th>
+<th align="right">Total</th>
+<th align="right">percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Free-living</td>
+<td align="left">Annelid</td>
+<td align="right">26</td>
+<td align="right">329</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">Free-living</td>
+<td align="left">Crustacean</td>
+<td align="right">107</td>
+<td align="right">329</td>
+<td align="right">33</td>
+</tr>
+<tr class="odd">
+<td align="left">Free-living</td>
+<td align="left">Fish</td>
+<td align="right">5</td>
+<td align="right">329</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Free-living</td>
+<td align="left">Insect</td>
+<td align="right">122</td>
+<td align="right">329</td>
+<td align="right">37</td>
+</tr>
+<tr class="odd">
+<td align="left">Free-living</td>
+<td align="left">Mite</td>
+<td align="right">12</td>
+<td align="right">329</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">Free-living</td>
+<td align="left">Mollusc</td>
+<td align="right">35</td>
+<td align="right">329</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">Free-living</td>
+<td align="left">Other</td>
+<td align="right">22</td>
+<td align="right">329</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">Free-living parasitised</td>
+<td align="left">Annelid</td>
+<td align="right">18</td>
+<td align="right">151</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">Free-living parasitised</td>
+<td align="left">Crustacean</td>
+<td align="right">18</td>
+<td align="right">151</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">Free-living parasitised</td>
+<td align="left">Fish</td>
+<td align="right">58</td>
+<td align="right">151</td>
+<td align="right">38</td>
+</tr>
+<tr class="odd">
+<td align="left">Free-living parasitised</td>
+<td align="left">Insect</td>
+<td align="right">45</td>
+<td align="right">151</td>
+<td align="right">30</td>
+</tr>
+<tr class="even">
+<td align="left">Free-living parasitised</td>
+<td align="left">Mollusc</td>
+<td align="right">12</td>
+<td align="right">151</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">Parasite</td>
+<td align="left">Acanthocephalan</td>
+<td align="right">8</td>
+<td align="right">253</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Parasite</td>
+<td align="left">Cestode</td>
+<td align="right">2</td>
+<td align="right">253</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Parasite</td>
+<td align="left">Mite</td>
+<td align="right">4</td>
+<td align="right">253</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Parasite</td>
+<td align="left">Nematoda</td>
+<td align="right">26</td>
+<td align="right">253</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">Parasite</td>
+<td align="left">Trematode</td>
+<td align="right">213</td>
+<td align="right">253</td>
+<td align="right">84</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="reproducing-table-2" class="section level2">
 <h2>Reproducing Table 2</h2>
 <blockquote>
 <p>Parameter estimates using ordinary least squares linear regression to fit TL, DMA, and VMA to log- transformed data on the spatial variation of population density (individuals per square meter) of free-living unparasitized species, free-living parasitized species, and parasitic species; and the distribution of average body masses of species in each lifestyle.</p>
 </blockquote>
-<p>To do.</p>
-<pre class="r"><code>#R code here</code></pre>
+<pre class="r"><code># TL: variance = a × (mean density)^b
+# ie Log.variance = log10a + Log.mean * b
+lm.tl.unp &lt;- lm(Log.variance ~ Log.mean, data=dd[dd$Life.style==&quot;Free-living&quot;,])
+lm.tl.prtz &lt;- lm(Log.variance ~ Log.mean, data=dd[dd$Life.style==&quot;Free-living parasitised&quot;,])
+lm.tl.par &lt;- lm(Log.variance ~ Log.mean, data=dd[dd$Life.style==&quot;Parasite&quot;,])
+
+# DMA: Mean density = u × (mean body mass)^v
+lm.dma.unp &lt;- lm(Log.mean ~ Log.body.mass, data=dd[dd$Life.style==&quot;Free-living&quot;,])
+lm.dma.prtz &lt;- lm(Log.mean ~ Log.body.mass, data=dd[dd$Life.style==&quot;Free-living parasitised&quot;,])
+lm.dma.par &lt;- lm(Log.mean ~ Log.body.mass, data=dd[dd$Life.style==&quot;Parasite&quot;,])
+
+# VMA: variance = c × (mean body mass)^d
+lm.vma.unp &lt;- lm(Log.variance ~ Log.body.mass, data=dd[dd$Life.style==&quot;Free-living&quot;,])
+lm.vma.prtz &lt;- lm(Log.variance ~ Log.body.mass, data=dd[dd$Life.style==&quot;Free-living parasitised&quot;,])
+lm.vma.par &lt;- lm(Log.variance ~ Log.body.mass, data=dd[dd$Life.style==&quot;Parasite&quot;,])
+
+# Create a dataframe where to store info:
+table2 &lt;- data.frame(model=c(rep(&quot;TL&quot;, 7), rep(&quot;DMA&quot;,7), rep(&quot;VMA&quot;,7)))
+table2$values &lt;- c(&quot;log10a&quot;, &quot;log10a - 95%CI&quot;, &quot;log10a + 95%CI&quot;,
+                   &quot;b&quot;, &quot;b - 95%CI&quot;, &quot;b + 95%CI&quot;, &quot;adj.R2&quot;,
+                   &quot;log10u&quot;, &quot;log10u - 95%CI&quot;, &quot;log10u + 95%CI&quot;,
+                   &quot;v&quot;, &quot;v - 95%CI&quot;, &quot;v + 95%CI&quot;,&quot;adj.R2&quot;,
+                   &quot;log10c&quot;, &quot;log10c - 95%CI&quot;, &quot;log10c + 95%CI&quot;,
+                   &quot;d&quot;, &quot;d - 95%CI&quot;, &quot;d + 95%CI&quot;,&quot;adj.R2&quot;
+                   )
+table2$free.living.unparasitized &lt;- rep(&quot;NA&quot;,21)
+table2$free.living.parasitized &lt;- rep(&quot;NA&quot;,21)
+table2$parasite &lt;- rep(&quot;NA&quot;,21)
+
+# enter info about TL
+table2[1,3]&lt;-round(summary(lm.tl.unp)$coef[1,1],4)
+table2[2,3]&lt;-round(summary(lm.tl.unp)$coef[1,1] - 1.96*summary(lm.tl.unp)$coef[1,2],4)
+table2[3,3]&lt;-round(summary(lm.tl.unp)$coef[1,1] + 1.96*summary(lm.tl.unp)$coef[1,2],4)
+table2[4,3]&lt;-round(summary(lm.tl.unp)$coef[2,1],4)
+table2[5,3]&lt;-round(summary(lm.tl.unp)$coef[2,1] - 1.96*summary(lm.tl.unp)$coef[2,2],4)
+table2[6,3]&lt;-round(summary(lm.tl.unp)$coef[2,1] + 1.96*summary(lm.tl.unp)$coef[2,2],4)
+table2[7,3]&lt;-round(summary(lm.tl.unp)$adj.r.squared,4)
+
+table2[1,4]&lt;-round(summary(lm.tl.prtz)$coef[1,1],4)
+table2[2,4]&lt;-round(summary(lm.tl.prtz)$coef[1,1] - 1.96*summary(lm.tl.prtz)$coef[1,2],4)
+table2[3,4]&lt;-round(summary(lm.tl.prtz)$coef[1,1] + 1.96*summary(lm.tl.prtz)$coef[1,2],4)
+table2[4,4]&lt;-round(summary(lm.tl.prtz)$coef[2,1],4)
+table2[5,4]&lt;-round(summary(lm.tl.prtz)$coef[2,1] - 1.96*summary(lm.tl.prtz)$coef[2,2],4)
+table2[6,4]&lt;-round(summary(lm.tl.prtz)$coef[2,1] + 1.96*summary(lm.tl.prtz)$coef[2,2],4)
+table2[7,4]&lt;-round(summary(lm.tl.prtz)$adj.r.squared,4)
+
+table2[1,5]&lt;-round(summary(lm.tl.par)$coef[1,1],4)
+table2[2,5]&lt;-round(summary(lm.tl.par)$coef[1,1] - 1.96*summary(lm.tl.par)$coef[1,2],4)
+table2[3,5]&lt;-round(summary(lm.tl.par)$coef[1,1] + 1.96*summary(lm.tl.par)$coef[1,2],4)
+table2[4,5]&lt;-round(summary(lm.tl.par)$coef[2,1],4)
+table2[5,5]&lt;-round(summary(lm.tl.par)$coef[2,1] - 1.96*summary(lm.tl.par)$coef[2,2],4)
+table2[6,5]&lt;-round(summary(lm.tl.par)$coef[2,1] + 1.96*summary(lm.tl.par)$coef[2,2],4)
+table2[7,5]&lt;-round(summary(lm.tl.par)$adj.r.squared,4)
+
+# enter info about DMA
+table2[1+7,3]&lt;-round(summary(lm.dma.unp)$coef[1,1],4)
+table2[2+7,3]&lt;-round(summary(lm.dma.unp)$coef[1,1] - 1.96*summary(lm.dma.unp)$coef[1,2],4)
+table2[3+7,3]&lt;-round(summary(lm.dma.unp)$coef[1,1] + 1.96*summary(lm.dma.unp)$coef[1,2],4)
+table2[4+7,3]&lt;-round(summary(lm.dma.unp)$coef[2,1],4)
+table2[5+7,3]&lt;-round(summary(lm.dma.unp)$coef[2,1] - 1.96*summary(lm.dma.unp)$coef[2,2],4)
+table2[6+7,3]&lt;-round(summary(lm.dma.unp)$coef[2,1] + 1.96*summary(lm.dma.unp)$coef[2,2],4)
+table2[7+7,3]&lt;-round(summary(lm.dma.unp)$adj.r.squared,4)
+
+table2[1+7,4]&lt;-round(summary(lm.dma.prtz)$coef[1,1],4)
+table2[2+7,4]&lt;-round(summary(lm.dma.prtz)$coef[1,1] - 1.96*summary(lm.dma.prtz)$coef[1,2],4)
+table2[3+7,4]&lt;-round(summary(lm.dma.prtz)$coef[1,1] + 1.96*summary(lm.dma.prtz)$coef[1,2],4)
+table2[4+7,4]&lt;-round(summary(lm.dma.prtz)$coef[2,1],4)
+table2[5+7,4]&lt;-round(summary(lm.dma.prtz)$coef[2,1] - 1.96*summary(lm.dma.prtz)$coef[2,2],4)
+table2[6+7,4]&lt;-round(summary(lm.dma.prtz)$coef[2,1] + 1.96*summary(lm.dma.prtz)$coef[2,2],4)
+table2[7+7,4]&lt;-round(summary(lm.dma.prtz)$adj.r.squared,4)
+
+table2[1+7,5]&lt;-round(summary(lm.dma.par)$coef[1,1],4)
+table2[2+7,5]&lt;-round(summary(lm.dma.par)$coef[1,1] - 1.96*summary(lm.dma.par)$coef[1,2],4)
+table2[3+7,5]&lt;-round(summary(lm.dma.par)$coef[1,1] + 1.96*summary(lm.dma.par)$coef[1,2],4)
+table2[4+7,5]&lt;-round(summary(lm.dma.par)$coef[2,1],4)
+table2[5+7,5]&lt;-round(summary(lm.dma.par)$coef[2,1] - 1.96*summary(lm.dma.par)$coef[2,2],4)
+table2[6+7,5]&lt;-round(summary(lm.dma.par)$coef[2,1] + 1.96*summary(lm.dma.par)$coef[2,2],4)
+table2[7+7,5]&lt;-round(summary(lm.dma.par)$adj.r.squared,4)
+
+# enter info about VMA
+table2[1+14,3]&lt;-round(summary(lm.dma.unp)$coef[1,1],4)
+table2[2+14,3]&lt;-round(summary(lm.dma.unp)$coef[1,1] - 1.96*summary(lm.dma.unp)$coef[1,2],4)
+table2[3+14,3]&lt;-round(summary(lm.dma.unp)$coef[1,1] + 1.96*summary(lm.dma.unp)$coef[1,2],4)
+table2[4+14,3]&lt;-round(summary(lm.dma.unp)$coef[2,1],4)
+table2[5+14,3]&lt;-round(summary(lm.dma.unp)$coef[2,1] - 1.96*summary(lm.dma.unp)$coef[2,2],4)
+table2[6+14,3]&lt;-round(summary(lm.dma.unp)$coef[2,1] + 1.96*summary(lm.dma.unp)$coef[2,2],4)
+table2[7+14,3]&lt;-round(summary(lm.dma.unp)$adj.r.squared,4)
+
+table2[1+14,4]&lt;-round(summary(lm.dma.prtz)$coef[1,1],4)
+table2[2+14,4]&lt;-round(summary(lm.dma.prtz)$coef[1,1] - 1.96*summary(lm.dma.prtz)$coef[1,2],4)
+table2[3+14,4]&lt;-round(summary(lm.dma.prtz)$coef[1,1] + 1.96*summary(lm.dma.prtz)$coef[1,2],4)
+table2[4+14,4]&lt;-round(summary(lm.dma.prtz)$coef[2,1],4)
+table2[5+14,4]&lt;-round(summary(lm.dma.prtz)$coef[2,1] - 1.96*summary(lm.dma.prtz)$coef[2,2],4)
+table2[6+14,4]&lt;-round(summary(lm.dma.prtz)$coef[2,1] + 1.96*summary(lm.dma.prtz)$coef[2,2],4)
+table2[7+14,4]&lt;-round(summary(lm.dma.prtz)$adj.r.squared,4)
+
+table2[1+14,5]&lt;-round(summary(lm.dma.par)$coef[1,1],4)
+table2[2+14,5]&lt;-round(summary(lm.dma.par)$coef[1,1] - 1.96*summary(lm.dma.par)$coef[1,2],4)
+table2[3+14,5]&lt;-round(summary(lm.dma.par)$coef[1,1] + 1.96*summary(lm.dma.par)$coef[1,2],4)
+table2[4+14,5]&lt;-round(summary(lm.dma.par)$coef[2,1],4)
+table2[5+14,5]&lt;-round(summary(lm.dma.par)$coef[2,1] - 1.96*summary(lm.dma.par)$coef[2,2],4)
+table2[6+14,5]&lt;-round(summary(lm.dma.par)$coef[2,1] + 1.96*summary(lm.dma.par)$coef[2,2],4)
+table2[7+14,5]&lt;-round(summary(lm.dma.par)$adj.r.squared,4)
+
+kable(table2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">model</th>
+<th align="left">values</th>
+<th align="left">free.living.unparasitized</th>
+<th align="left">free.living.parasitized</th>
+<th align="left">parasite</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">TL</td>
+<td align="left">log10a</td>
+<td align="left">0.806</td>
+<td align="left">0.2903</td>
+<td align="left">0.4333</td>
+</tr>
+<tr class="even">
+<td align="left">TL</td>
+<td align="left">log10a - 95%CI</td>
+<td align="left">0.7529</td>
+<td align="left">0.205</td>
+<td align="left">0.3553</td>
+</tr>
+<tr class="odd">
+<td align="left">TL</td>
+<td align="left">log10a + 95%CI</td>
+<td align="left">0.859</td>
+<td align="left">0.3755</td>
+<td align="left">0.5114</td>
+</tr>
+<tr class="even">
+<td align="left">TL</td>
+<td align="left">b</td>
+<td align="left">1.6802</td>
+<td align="left">2.0193</td>
+<td align="left">2.102</td>
+</tr>
+<tr class="odd">
+<td align="left">TL</td>
+<td align="left">b - 95%CI</td>
+<td align="left">1.6442</td>
+<td align="left">1.9743</td>
+<td align="left">2.057</td>
+</tr>
+<tr class="even">
+<td align="left">TL</td>
+<td align="left">b + 95%CI</td>
+<td align="left">1.7162</td>
+<td align="left">2.0642</td>
+<td align="left">2.147</td>
+</tr>
+<tr class="odd">
+<td align="left">TL</td>
+<td align="left">adj.R2</td>
+<td align="left">0.9623</td>
+<td align="left">0.981</td>
+<td align="left">0.9708</td>
+</tr>
+<tr class="even">
+<td align="left">DMA</td>
+<td align="left">log10u</td>
+<td align="left">0.8577</td>
+<td align="left">1.9905</td>
+<td align="left">-0.2538</td>
+</tr>
+<tr class="odd">
+<td align="left">DMA</td>
+<td align="left">log10u - 95%CI</td>
+<td align="left">0.732</td>
+<td align="left">1.738</td>
+<td align="left">-0.4741</td>
+</tr>
+<tr class="even">
+<td align="left">DMA</td>
+<td align="left">log10u + 95%CI</td>
+<td align="left">0.9834</td>
+<td align="left">2.2431</td>
+<td align="left">-0.0334</td>
+</tr>
+<tr class="odd">
+<td align="left">DMA</td>
+<td align="left">v</td>
+<td align="left">-0.2167</td>
+<td align="left">-0.7983</td>
+<td align="left">-0.9088</td>
+</tr>
+<tr class="even">
+<td align="left">DMA</td>
+<td align="left">v - 95%CI</td>
+<td align="left">-0.296</td>
+<td align="left">-0.8808</td>
+<td align="left">-1.0642</td>
+</tr>
+<tr class="odd">
+<td align="left">DMA</td>
+<td align="left">v + 95%CI</td>
+<td align="left">-0.1375</td>
+<td align="left">-0.7159</td>
+<td align="left">-0.7535</td>
+</tr>
+<tr class="even">
+<td align="left">DMA</td>
+<td align="left">adj.R2</td>
+<td align="left">0.0779</td>
+<td align="left">0.7055</td>
+<td align="left">0.341</td>
+</tr>
+<tr class="odd">
+<td align="left">VMA</td>
+<td align="left">log10c</td>
+<td align="left">0.8577</td>
+<td align="left">1.9905</td>
+<td align="left">-0.2538</td>
+</tr>
+<tr class="even">
+<td align="left">VMA</td>
+<td align="left">log10c - 95%CI</td>
+<td align="left">0.732</td>
+<td align="left">1.738</td>
+<td align="left">-0.4741</td>
+</tr>
+<tr class="odd">
+<td align="left">VMA</td>
+<td align="left">log10c + 95%CI</td>
+<td align="left">0.9834</td>
+<td align="left">2.2431</td>
+<td align="left">-0.0334</td>
+</tr>
+<tr class="even">
+<td align="left">VMA</td>
+<td align="left">d</td>
+<td align="left">-0.2167</td>
+<td align="left">-0.7983</td>
+<td align="left">-0.9088</td>
+</tr>
+<tr class="odd">
+<td align="left">VMA</td>
+<td align="left">d - 95%CI</td>
+<td align="left">-0.296</td>
+<td align="left">-0.8808</td>
+<td align="left">-1.0642</td>
+</tr>
+<tr class="even">
+<td align="left">VMA</td>
+<td align="left">d + 95%CI</td>
+<td align="left">-0.1375</td>
+<td align="left">-0.7159</td>
+<td align="left">-0.7535</td>
+</tr>
+<tr class="odd">
+<td align="left">VMA</td>
+<td align="left">adj.R2</td>
+<td align="left">0.0779</td>
+<td align="left">0.7055</td>
+<td align="left">0.341</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="figures" class="section level1">
