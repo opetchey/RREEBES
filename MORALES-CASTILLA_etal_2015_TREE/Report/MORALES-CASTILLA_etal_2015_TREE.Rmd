@@ -7,7 +7,7 @@ output: html_document
 
 ## Introduction
 
-This is the reproduction of the analyses presented in the article *Inferring biotic interactions from proxies* by Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araújo (2015, TREE). The article can be found [here](http://www.sciencedirect.com/science/article/pii/S0169534715000774).
+This is the reproduction of the analyses presented in the article *Inferring biotic interactions from proxies* by Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Ara??jo (2015, TREE). The article can be found [here](http://www.sciencedirect.com/science/article/pii/S0169534715000774).
 
 
 
@@ -103,9 +103,15 @@ n.links.guilds.all   <- n.guilds.all^2-n.guilds.all
 
 ## Serengeti foob web analysis
 
+```{r}
+
+### get the data
+g <- graph.data.frame(dd.02, directed=TRUE, vertices=NULL)
+dim(g)
+tkplot(g)
 
 
-
+```
 
 ## Cuban coral reef food web
 
