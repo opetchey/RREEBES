@@ -99,13 +99,37 @@ n.links.guilds.all   <- n.guilds.all^2-n.guilds.all
 
 "*The procedure for building the backbone of an interaction network starts with the identification of species more likely to share similar interactions. The concept is similar to that of modules [28], but we avoid this terminology because modules are usually determined a posteriori and can also refer to simple assemblages of species such as linear food chains or apparent competition [29]. Instead, we define interacting groups based on a priori expectations of interactions. The concept is also analogous to that of guilds [30]. Guilds, however, are restricted to species shar- ing similar resources, and thus do not encompass non- consumptive interactions such as competition or niche construction [27]. A flexible definition of interacting groups based on traits, phylogenies, and geographical distribu- tions would enable combination of heterogeneous information.*" (page 4, bottom-right)
 
-"*Interacting groups of species are defined a priori to simplify the removal of forbidden links. The groups were defined based on the trophic hierarchy of the different species within each eco- system (e.g., primary producers, grazers, small and large carnivores). This process of trophic classification of species led to identification of forbidden links and removal of 􏰁30% of all potential direct links in the coral reef, and 􏰁22% in the Serengeti (e.g., herbivores eating predators; Figure 1).*" (page 5, bootom-left)
+"*Interacting groups of species are defined a priori to simplify the removal of forbidden links. The groups were defined based on the trophic hierarchy of the different species within each eco- system (e.g., primary producers, grazers, small and large carnivores). This process of trophic classification of species led to identification of forbidden links and removal of 􏰁30% of all potential direct links in the coral reef, and 􏰁22% in the Serengeti (e.g., herbivores eating predators; Figure 1).*" (page 5, bottom-left)
 
 "*Refinement of the species groupings was achieved by con- sidering the characteristics of the consumer species (e.g., distinguishing small versus large carnivores in the Seren- geti example, or separating invertebrate feeders, omnivo- rous, and carnivorous fish in the coral reef example; Figure 1).*" (page 5, bottom-right)
 
 ## Serengeti foob web analysis
 
-This is what the real food web looks like. So far, there is no ordering accoring to any traits (e.g., nutrition, size...)
+Taking all potential links into account the food webs would look like this:
+```{r}
+dd.01.a <- expand.grid(dd.01$code, dd.01$code)
+# Build the graph.
+f <- graph.data.frame(dd.01.a, directed=F, vertices=NULL)
+# Now, remove inraspecific trophic interactions - there is no cannibalism. 
+dd.01.b <- dd.01.a[which(dd.01.a[,1]!=dd.01.a[,2]),]
+```
+  
+```{r, fig.width=10, fig.height=10}  
+# Now, plot the graph.
+plot.igraph(f, 
+     layout=layout.circle, 
+     main="Serengeti food web (no information)",
+     vertex.size=8, 
+     vertex.color=adjustcolor("#A6B07E", alpha.f=0.6),
+     vertex.label.cex=0.5,
+     vertex.label.family = "sans",
+     edge.width=0.2, 
+     edge.color=adjustcolor("#999999", alpha.f=0.3),
+     vertex.label.color="#7D1D3F",
+     vertex.frame.color="white")
+```
+
+This is what the real food web looks like. So far, there is no ordering according to any traits (e.g., nutrition, size...)
 ```{r}
 # Build the graph.
 g <- graph.data.frame(dd.02, directed=F, vertices=NULL)
@@ -118,7 +142,24 @@ g <- graph.data.frame(dd.02, directed=F, vertices=NULL)
 
 ```{r, fig.width=10, fig.height=10}
 plot.igraph(g, 
-     layout=layout.fruchterman.reingold, 
+#      layout=layout.fruchterman.reingold, 
+     layout=layout.circle, 
+     main="Serengeti food web (real food web)",
+     vertex.size=8, 
+     vertex.color=adjustcolor("#A6B07E", alpha.f=0.6),
+     vertex.label.cex=0.5,
+     vertex.label.family = "sans",
+     edge.width=0.2, 
+     edge.color=adjustcolor("#333333", alpha.f=0.6),
+     vertex.label.color="#7D1D3F",
+     vertex.frame.color="white")
+```
+
+Once we know about the trophic levels the species/guilds belong to we can use ``layout.reingold.tilford(g, flip.y=FALSE)`` to introduce some hierarchy. For example, if we assign three trophic levels just randomly then the food web can be displayed like this:
+```{r, fig.width=10, fig.height=10}
+plot.igraph(g, 
+#      layout=layout.fruchterman.reingold, 
+     layout=layout.reingold.tilford(g, flip.y=FALSE),
      main="Serengeti food web (no trait information)",
      vertex.size=8, 
      vertex.color=adjustcolor("#A6B07E", alpha.f=0.6),
@@ -128,7 +169,6 @@ plot.igraph(g,
      vertex.label.color="#7D1D3F",
      vertex.frame.color="white")
 ```
-
 
 
 
