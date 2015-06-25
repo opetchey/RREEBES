@@ -5,14 +5,14 @@ date: "June 16, 2015"
 output: html_document
 ---
 
-# Introduction
+## Introduction
 
 This is the reproduction of the analyses presented in the article *Inferring biotic interactions from proxies* by Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araújo (2015, TREE). The article can be found [here](http://www.sciencedirect.com/science/article/pii/S0169534715000774).
 
 
 
 
-# Load data
+## Load data
 
 Clear R environment and load libraries.
 ```{r}
@@ -46,6 +46,22 @@ dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES
 dd.04 <- read.csv(text = dd)
 ```
 
+Calculate the number of species and the number of potential links one could expect from this.
+```{r}
+# Species only in Cuban food web.
+n.species.Serengeti       <- length(dd.01[,1])
+n.links.species.Serengeti <- n.species.Serengeti^2-n.species.Serengeti
+
+```
+
+
+
+
+**Note**: 
+
+* 
+
+
 
 The cuban coral reef food web.
 ```{r}
@@ -75,9 +91,23 @@ n.links.guilds.all   <- n.guilds.all^2-n.guilds.all
 
 ```
 
-Well, overall there are 175 species in the three food webs, and 171 species in the Cuban food web. This would give a total number of potential links of 30.450 or 29.070, respectively. There are 144 guilds in all three food webs and 140 in the Cuban one. Based on guilds, this would give a a total number of links of 20.592 or 19.460, respectively. The question is: where do the 231 species/guilds come from that Ingacio was telling us entered their calculations...?!?
+**Note**: 
+
+* Well, overall there are **175 species** in the three food webs, and **171 species** in the Cuban food web. This would give a total number of potential links of **30.450** or **29.070**, respectively. 
+
+* There are **144 guilds** in all three food webs and **140 guilds** in the Cuban one. Based on guilds, this would give a a total number of links of **20.592** or **19.460**, respectively. The question is: where do the 231 species/guilds come from that Ingacio Morales-Castilla was telling us entered their calculations...?!?
+
+## How to...?
+
+"*The procedure for building the backbone of an interaction network starts with the identification of species more likely to share similar interactions. The concept is similar to that of modules [28], but we avoid this terminology because modules are usually determined a posteriori and can also refer to simple assemblages of species such as linear food chains or apparent competition [29]. Instead, we define interacting groups based on a priori expectations of interactions. The concept is also analogous to that of guilds [30]. Guilds, however, are restricted to species shar- ing similar resources, and thus do not encompass non- consumptive interactions such as competition or niche construction [27]. A flexible definition of interacting groups based on traits, phylogenies, and geographical distribu- tions would enable combination of heterogeneous information.*" (page 4, bottom-right)
+
+## Serengeti foob web analysis
 
 
+
+
+
+## Cuban coral reef food web
 
 
 

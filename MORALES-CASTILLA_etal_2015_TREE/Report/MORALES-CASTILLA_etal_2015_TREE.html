@@ -68,12 +68,12 @@ img {
 </div>
 
 
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
 <p>This is the reproduction of the analyses presented in the article <em>Inferring biotic interactions from proxies</em> by Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araújo (2015, TREE). The article can be found <a href="http://www.sciencedirect.com/science/article/pii/S0169534715000774">here</a>.</p>
 </div>
-<div id="load-data" class="section level1">
-<h1>Load data</h1>
+<div id="load-data" class="section level2">
+<h2>Load data</h2>
 <p>Clear R environment and load libraries.</p>
 <pre class="r"><code># Clear workspace.
 rm(list=ls())
@@ -100,6 +100,14 @@ dd.03 &lt;- read.csv(text = dd)
 dd &lt;-  getURL(&quot;https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES-CASTILLA_etal_2015_TREE/Data/Serengeti%20data/journal.pcbi.1002321.s007.CSV&quot;,
              cainfo = system.file(&quot;CurlSSL&quot;, &quot;cacert.pem&quot;, package = &quot;RCurl&quot;))
 dd.04 &lt;- read.csv(text = dd)</code></pre>
+<p>Calculate the number of species and the number of potential links one could expect from this.</p>
+<pre class="r"><code># Species only in Cuban food web.
+n.species.Serengeti       &lt;- length(dd.01[,1])
+n.links.species.Serengeti &lt;- n.species.Serengeti^2-n.species.Serengeti</code></pre>
+<p><strong>Note</strong>:</p>
+<ul>
+<li></li>
+</ul>
 <p>The cuban coral reef food web.</p>
 <pre class="r"><code>dd &lt;-  getURL(&quot;https://raw.githubusercontent.com/opetchey/RREEBES/Morales-Castilla_etal_2015_TREE/MORALES-CASTILLA_etal_2015_TREE/Data/Coral%20reef%20data/857470.item.4%20-%20Guild%20key%2C%20all%20data%20sets.csv&quot;,
              cainfo = system.file(&quot;CurlSSL&quot;, &quot;cacert.pem&quot;, package = &quot;RCurl&quot;))
@@ -131,7 +139,15 @@ n.species.all        &lt;- length(dd.05.b[,1])
 n.links.species.all  &lt;- n.species.all^2-n.species.all 
 n.guilds.all         &lt;- length(levels(factor(dd.05.b$Guild.Number)))
 n.links.guilds.all   &lt;- n.guilds.all^2-n.guilds.all</code></pre>
-<p>Well, overall there are 175 species in the three food webs, and 171 species in the Cuban food web. This would give a total number of potential links of 30.450 or 29.070, respectively. There are 144 guilds in all three food webs and 140 in the Cuban one. Based on guilds, this would give a a total number of links of 20.592 or 19.460, respectively. The question is: where do the 231 species/guilds come from that Ingacio was telling us entered their calculations…?!?</p>
+<p><strong>Note</strong>:</p>
+<ul>
+<li><p>Well, overall there are <strong>175 species</strong> in the three food webs, and <strong>171 species</strong> in the Cuban food web. This would give a total number of potential links of <strong>30.450</strong> or <strong>29.070</strong>, respectively.</p></li>
+<li><p>There are <strong>144 guilds</strong> in all three food webs and <strong>140 guilds</strong> in the Cuban one. Based on guilds, this would give a a total number of links of <strong>20.592</strong> or <strong>19.460</strong>, respectively. The question is: where do the 231 species/guilds come from that Ingacio Morales-Castilla was telling us entered their calculations…?!?</p></li>
+</ul>
+</div>
+<div id="how-to" class="section level2">
+<h2>How to…?</h2>
+<p>“<em>The procedure for building the backbone of an interac- tion network starts with the identification of species more likely to share similar interactions. The concept is similar to that of modules [28], but we avoid this terminology because modules are usually determined a posteriori and can also refer to simple assemblages of species such as linear food chains or apparent competition [29]. Instead, we define interacting groups based on a priori expectations of interactions. The concept is also analogous to that of guilds [30]. Guilds, however, are restricted to species shar- ing similar resources, and thus do not encompass non- consumptive interactions such as competition or niche construction [27]. A flexible definition of interacting groups based on traits, phylogenies, and geographical distribu- tions would enable combination of heterogeneous information.</em>”</p>
 </div>
 
 
