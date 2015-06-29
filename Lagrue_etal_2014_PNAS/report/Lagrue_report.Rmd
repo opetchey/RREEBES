@@ -1,0 +1,274 @@
+---
+title: "Reproduce analyses of Lague et al. (2014)"
+author: "Alejandra, Julia, Marco et al."
+date: "09 June 2015"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+# Introduction
+
+
+This is an attempt to reproduce the anaylses presented in the paper *Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry*, by Lagrue, Poulin, and Cohen ([http://www.pnas.org/content/112/6/1791](http://www.pnas.org/content/112/6/1791)). Data are [here](http://www.pnas.org/content/suppl/2014/12/30/1422475112.DCSupplemental/pnas.1422475112.sd01.txt) as txt, but need to be saved as csv.
+
+* From the article summary:
+
+> [The study was conducted] in metazoan communities in lakes of Otago, New Zealand. In 13,752 samples comprising 1,037,058 organisms, we found that species of different lifestyles differed in taxonomic distribution and body mass and were well described by three power laws: a spatial Taylor’s law (the spatial variance in population density was a power-law function of the spatial mean population density); density-mass allometry (the spatial mean population density was a power-law function of mean body mass); and variance-mass allometry (the spatial variance in population density was a power-law function of mean body mass). To our knowledge, this constitutes the first empirical confirmation of variance-mass allometry for any animal community. We found that the parameter values of all three relationships differed for species with different lifestyles in the same communities. Taylor’s law and density-mass allometry accurately predicted the form and parameter values of variance-mass allometry. We conclude that species of different lifestyles in these metazoan communities obeyed the same major ecological power-law relationships but did so with parameters specific to each lifestyle [...].
+
+Let's see if we are able to reproduce their results.
+
+# Housework
+
+Clean R's memory, load useful packages, load data.
+
+```{r}
+# clean R's memory:
+rm(list=ls())
+# Load packages:
+library(tidyr)
+library(dplyr)
+library(lubridate)
+library(stringr)
+library(ggplot2)
+library(RCurl)
+library(reshape2)
+library(knitr)
+
+# Load data:
+dd <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Lagrue/Lagrue_etal_2014_PNAS/data/Lague2014.csv"), header=T)
+# head(dd)
+# str(dd)
+# make some colnames more R-friendly:
+colnames(dd)[which(names(dd) == "Mean.density..m..")] <- "Mean_density"
+colnames(dd)[which(names(dd) == "Body.mass..mg.")] <- "Body_mass_mg"
+```
+
+# Tables
+
+## Reproducing Table 1
+
+> Numbers (counts) and percentages of samples from broad taxonomic groups for each lifestyle separately.
+
+```{r}
+#?aggregate
+
+counts <- aggregate(x=dd$Species, by=list(Taxa=dd$Taxonomic.group, lifestyle=dd$Life.style), function(x) length(x))
+colnames(counts)<-c("Taxa", "Lifestyle","Counts")
+# same information in a different format:
+counts2 <- tapply(dd$Species, list(Taxa=dd$Taxonomic.group, lifestyle=dd$Life.style), na.omit(length))
+# replace NA's with zeroes:
+counts2[is.na(counts2)]<- 0
+
+total <- aggregate(x=dd$Species, by=list(Lifestyle=dd$Life.style), function(x) length(x))
+colnames(total)<- c("Lifestyle", "Total")
+tab1 <- merge(counts, total, by="Lifestyle")
+tab1$percent <- tab1$Counts / tab1$Total * 100
+tab1$percent <- round(tab1$percent, 0)
+
+kable(tab1)
+```
+
+
+
+## Reproducing Table 2
+
+> Parameter estimates using ordinary least squares linear regression to fit TL, DMA, and VMA to log- transformed data on the spatial variation of population density (individuals per square meter) of free-living unparasitized species, free-living parasitized species, and parasitic species; and the distribution of average body masses of species in each lifestyle.
+
+
+```{r}
+# TL: variance = a × (mean density)^b
+# ie Log.variance = log10a + Log.mean * b
+lm.tl.unp <- lm(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Free-living",])
+lm.tl.prtz <- lm(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Free-living parasitised",])
+lm.tl.par <- lm(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Parasite",])
+
+# DMA: Mean density = u × (mean body mass)^v
+lm.dma.unp <- lm(Log.mean ~ Log.body.mass, data=dd[dd$Life.style=="Free-living",])
+lm.dma.prtz <- lm(Log.mean ~ Log.body.mass, data=dd[dd$Life.style=="Free-living parasitised",])
+lm.dma.par <- lm(Log.mean ~ Log.body.mass, data=dd[dd$Life.style=="Parasite",])
+
+# VMA: variance = c × (mean body mass)^d
+lm.vma.unp <- lm(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Free-living",])
+lm.vma.prtz <- lm(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Free-living parasitised",])
+lm.vma.par <- lm(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Parasite",])
+
+# Create a dataframe where to store info:
+table2 <- data.frame(model=c(rep("TL", 7), rep("DMA",7), rep("VMA",7)))
+table2$values <- c("log10a", "log10a - 95%CI", "log10a + 95%CI",
+                   "b", "b - 95%CI", "b + 95%CI", "adj.R2",
+                   "log10u", "log10u - 95%CI", "log10u + 95%CI",
+                   "v", "v - 95%CI", "v + 95%CI","adj.R2",
+                   "log10c", "log10c - 95%CI", "log10c + 95%CI",
+                   "d", "d - 95%CI", "d + 95%CI","adj.R2"
+                   )
+table2$free.living.unparasitized <- rep("NA",21)
+table2$free.living.parasitized <- rep("NA",21)
+table2$parasite <- rep("NA",21)
+
+# enter info about TL
+table2[1,3]<-round(summary(lm.tl.unp)$coef[1,1],4)
+table2[2,3]<-round(summary(lm.tl.unp)$coef[1,1] - 1.96*summary(lm.tl.unp)$coef[1,2],4)
+table2[3,3]<-round(summary(lm.tl.unp)$coef[1,1] + 1.96*summary(lm.tl.unp)$coef[1,2],4)
+table2[4,3]<-round(summary(lm.tl.unp)$coef[2,1],4)
+table2[5,3]<-round(summary(lm.tl.unp)$coef[2,1] - 1.96*summary(lm.tl.unp)$coef[2,2],4)
+table2[6,3]<-round(summary(lm.tl.unp)$coef[2,1] + 1.96*summary(lm.tl.unp)$coef[2,2],4)
+table2[7,3]<-round(summary(lm.tl.unp)$adj.r.squared,4)
+
+table2[1,4]<-round(summary(lm.tl.prtz)$coef[1,1],4)
+table2[2,4]<-round(summary(lm.tl.prtz)$coef[1,1] - 1.96*summary(lm.tl.prtz)$coef[1,2],4)
+table2[3,4]<-round(summary(lm.tl.prtz)$coef[1,1] + 1.96*summary(lm.tl.prtz)$coef[1,2],4)
+table2[4,4]<-round(summary(lm.tl.prtz)$coef[2,1],4)
+table2[5,4]<-round(summary(lm.tl.prtz)$coef[2,1] - 1.96*summary(lm.tl.prtz)$coef[2,2],4)
+table2[6,4]<-round(summary(lm.tl.prtz)$coef[2,1] + 1.96*summary(lm.tl.prtz)$coef[2,2],4)
+table2[7,4]<-round(summary(lm.tl.prtz)$adj.r.squared,4)
+
+table2[1,5]<-round(summary(lm.tl.par)$coef[1,1],4)
+table2[2,5]<-round(summary(lm.tl.par)$coef[1,1] - 1.96*summary(lm.tl.par)$coef[1,2],4)
+table2[3,5]<-round(summary(lm.tl.par)$coef[1,1] + 1.96*summary(lm.tl.par)$coef[1,2],4)
+table2[4,5]<-round(summary(lm.tl.par)$coef[2,1],4)
+table2[5,5]<-round(summary(lm.tl.par)$coef[2,1] - 1.96*summary(lm.tl.par)$coef[2,2],4)
+table2[6,5]<-round(summary(lm.tl.par)$coef[2,1] + 1.96*summary(lm.tl.par)$coef[2,2],4)
+table2[7,5]<-round(summary(lm.tl.par)$adj.r.squared,4)
+
+# enter info about DMA
+table2[1+7,3]<-round(summary(lm.dma.unp)$coef[1,1],4)
+table2[2+7,3]<-round(summary(lm.dma.unp)$coef[1,1] - 1.96*summary(lm.dma.unp)$coef[1,2],4)
+table2[3+7,3]<-round(summary(lm.dma.unp)$coef[1,1] + 1.96*summary(lm.dma.unp)$coef[1,2],4)
+table2[4+7,3]<-round(summary(lm.dma.unp)$coef[2,1],4)
+table2[5+7,3]<-round(summary(lm.dma.unp)$coef[2,1] - 1.96*summary(lm.dma.unp)$coef[2,2],4)
+table2[6+7,3]<-round(summary(lm.dma.unp)$coef[2,1] + 1.96*summary(lm.dma.unp)$coef[2,2],4)
+table2[7+7,3]<-round(summary(lm.dma.unp)$adj.r.squared,4)
+
+table2[1+7,4]<-round(summary(lm.dma.prtz)$coef[1,1],4)
+table2[2+7,4]<-round(summary(lm.dma.prtz)$coef[1,1] - 1.96*summary(lm.dma.prtz)$coef[1,2],4)
+table2[3+7,4]<-round(summary(lm.dma.prtz)$coef[1,1] + 1.96*summary(lm.dma.prtz)$coef[1,2],4)
+table2[4+7,4]<-round(summary(lm.dma.prtz)$coef[2,1],4)
+table2[5+7,4]<-round(summary(lm.dma.prtz)$coef[2,1] - 1.96*summary(lm.dma.prtz)$coef[2,2],4)
+table2[6+7,4]<-round(summary(lm.dma.prtz)$coef[2,1] + 1.96*summary(lm.dma.prtz)$coef[2,2],4)
+table2[7+7,4]<-round(summary(lm.dma.prtz)$adj.r.squared,4)
+
+table2[1+7,5]<-round(summary(lm.dma.par)$coef[1,1],4)
+table2[2+7,5]<-round(summary(lm.dma.par)$coef[1,1] - 1.96*summary(lm.dma.par)$coef[1,2],4)
+table2[3+7,5]<-round(summary(lm.dma.par)$coef[1,1] + 1.96*summary(lm.dma.par)$coef[1,2],4)
+table2[4+7,5]<-round(summary(lm.dma.par)$coef[2,1],4)
+table2[5+7,5]<-round(summary(lm.dma.par)$coef[2,1] - 1.96*summary(lm.dma.par)$coef[2,2],4)
+table2[6+7,5]<-round(summary(lm.dma.par)$coef[2,1] + 1.96*summary(lm.dma.par)$coef[2,2],4)
+table2[7+7,5]<-round(summary(lm.dma.par)$adj.r.squared,4)
+
+# enter info about VMA
+table2[1+14,3]<-round(summary(lm.dma.unp)$coef[1,1],4)
+table2[2+14,3]<-round(summary(lm.dma.unp)$coef[1,1] - 1.96*summary(lm.dma.unp)$coef[1,2],4)
+table2[3+14,3]<-round(summary(lm.dma.unp)$coef[1,1] + 1.96*summary(lm.dma.unp)$coef[1,2],4)
+table2[4+14,3]<-round(summary(lm.dma.unp)$coef[2,1],4)
+table2[5+14,3]<-round(summary(lm.dma.unp)$coef[2,1] - 1.96*summary(lm.dma.unp)$coef[2,2],4)
+table2[6+14,3]<-round(summary(lm.dma.unp)$coef[2,1] + 1.96*summary(lm.dma.unp)$coef[2,2],4)
+table2[7+14,3]<-round(summary(lm.dma.unp)$adj.r.squared,4)
+
+table2[1+14,4]<-round(summary(lm.dma.prtz)$coef[1,1],4)
+table2[2+14,4]<-round(summary(lm.dma.prtz)$coef[1,1] - 1.96*summary(lm.dma.prtz)$coef[1,2],4)
+table2[3+14,4]<-round(summary(lm.dma.prtz)$coef[1,1] + 1.96*summary(lm.dma.prtz)$coef[1,2],4)
+table2[4+14,4]<-round(summary(lm.dma.prtz)$coef[2,1],4)
+table2[5+14,4]<-round(summary(lm.dma.prtz)$coef[2,1] - 1.96*summary(lm.dma.prtz)$coef[2,2],4)
+table2[6+14,4]<-round(summary(lm.dma.prtz)$coef[2,1] + 1.96*summary(lm.dma.prtz)$coef[2,2],4)
+table2[7+14,4]<-round(summary(lm.dma.prtz)$adj.r.squared,4)
+
+table2[1+14,5]<-round(summary(lm.dma.par)$coef[1,1],4)
+table2[2+14,5]<-round(summary(lm.dma.par)$coef[1,1] - 1.96*summary(lm.dma.par)$coef[1,2],4)
+table2[3+14,5]<-round(summary(lm.dma.par)$coef[1,1] + 1.96*summary(lm.dma.par)$coef[1,2],4)
+table2[4+14,5]<-round(summary(lm.dma.par)$coef[2,1],4)
+table2[5+14,5]<-round(summary(lm.dma.par)$coef[2,1] - 1.96*summary(lm.dma.par)$coef[2,2],4)
+table2[6+14,5]<-round(summary(lm.dma.par)$coef[2,1] + 1.96*summary(lm.dma.par)$coef[2,2],4)
+table2[7+14,5]<-round(summary(lm.dma.par)$adj.r.squared,4)
+
+kable(table2)
+```
+
+
+# Figures
+
+## Reproducing Fig. 1
+
+> Test of TL. Log variance of population density was an approximately linear function of the log mean of population density for (A) free-living un- parasitized species, (B) free-living parasitized species, and (C) parasites. Each dot represents the log variance and log mean of population density of multiple samples of one life stage of one species at one lake in one season. The solid lines represent least-squares regressions. The estimated parameters and their 95% confidence intervals, the number of data points N (dots), and the adjusted R2 are given in Table 2.
+
+First, explore the data by plotting untransformed variances versus untransformed means for each lifestyle:
+
+```{r}
+# in ggplot2:
+p <- qplot(Mean_density, Variance, data=dd)
+p + 
+theme_bw((base_size = 18)) + facet_wrap(~Life.style) + guides(fill=F) +
+stat_smooth(method="lm", se=TRUE, fill=NA,formula=y ~ poly(x, 2, raw=TRUE),colour="black") + 
+scale_x_continuous(name = "Mean density") + 
+scale_y_continuous(name = "Variance") +
+theme(text=element_text(family="Times New Roman"), axis.title.x = element_text(vjust=-0.4),axis.title.y = element_text(vjust=0.2))
+```
+
+Although large mean values are not very well represented, there is a general trend toward an exponential increase in variance with increasing mean.
+Here is the reproduction of figure 1, with log(variances) versus log(means):
+```{r}
+par(mfrow=c(1,3))
+
+plot(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Free-living",],
+     xlim=c(-3,5), ylim=c(-6,10), main="Free-living",
+     xlab="log mean", ylab="log variance")
+abline(lm(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Free-living",]))
+
+plot(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Free-living parasitised",],
+     xlim=c(-3,5), ylim=c(-6,10), main="Free-living parasitised",
+     xlab="log mean", ylab="log variance")
+abline(lm(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Free-living parasitised",]))
+
+plot(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Parasite",],
+     xlim=c(-3,5), ylim=c(-6,12), main="Parasite",
+     xlab="log mean", ylab="log variance")
+abline(lm(Log.variance ~ Log.mean, data=dd[dd$Life.style=="Parasite",]))
+```
+
+## Reproducing Fig. 2
+
+> Test of DMA. Log mean of population density was a linear function of the log mean body mass for (A) free-living unparasitized species, (B) free-living parasitized species, and (C) parasites. Plotting symbols are as in Fig. 1. The estimated parameters and their 95% confidence intervals, the number of data points N (dots), and the adjusted R2 are given in Table 2.
+
+```{r}
+p <- qplot(Log.body.mass, Log.mean, data=dd)
+p + 
+theme_bw((base_size = 18)) + facet_wrap(~Life.style) + guides(fill=F) +
+stat_smooth(method="lm", se=TRUE, fill=NA,
+              formula=y ~ x,colour="black") +
+scale_x_continuous(name = "log body mass") + 
+scale_y_continuous(name = "log mean") +
+theme(text=element_text(family="Times New Roman"), axis.title.x = element_text(vjust=-0.4),axis.title.y = element_text(vjust=0.2))
+
+
+```
+
+## Reproducing Fig. 3
+
+> Test of VMA. Log variance of population density was a linear function of the log mean body mass for (A) free-living unparasitized species, (B) free- living parasitized species, and (C) parasites. Plotting symbols are as in Fig. 1. The estimated parameters and their 95% confidence intervals, the number of data points N (dots), and the adjusted R2 are given in Table 2.
+
+```{r}
+par(mfrow=c(1,3))
+plot(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Free-living",], main="Free-living unparasitized",axes = FALSE)
+box()
+axis(lwd=0,side=1,line=-0.4,at=c(seq(from=-3,to=6,by=1)))
+axis(lwd=0,side=2,line=-0.4,at=c(seq(from=-6,to=10,by=2)))
+fit<-lm(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Free-living",])  
+abline(fit) 
+
+plot(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Free-living parasitised",], main="Free-living parasitized",axes = FALSE)
+box()
+axis(lwd=0,side=1,line=-0.4,at=c(seq(from=0,to=6,by=1)))
+axis(lwd=0,side=2,line=-0.4,at=c(seq(from=-6,to=10,by=2)))
+fit2<-lm(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Free-living parasitised",])  
+abline(fit2) 
+
+plot(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Parasite",], main="Parasite",axes = FALSE)
+box()
+axis(lwd=0,side=1,line=-0.4,at=c(seq(from=-3,to=2,by=1)))
+axis(lwd=0,side=2,line=-0.4,at=c(seq(from=-6,to=12,by=2)))
+fit3<-lm(Log.variance ~ Log.body.mass, data=dd[dd$Life.style=="Parasite",])  
+abline(fit3) 
+```
+
