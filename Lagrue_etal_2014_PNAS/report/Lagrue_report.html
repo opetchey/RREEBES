@@ -369,29 +369,29 @@ table2[6+7,5]&lt;-round(summary(lm.dma.par)$coef[2,1] + 1.96*summary(lm.dma.par)
 table2[7+7,5]&lt;-round(summary(lm.dma.par)$adj.r.squared,4)
 
 # enter info about VMA
-table2[1+14,3]&lt;-round(summary(lm.dma.unp)$coef[1,1],4)
-table2[2+14,3]&lt;-round(summary(lm.dma.unp)$coef[1,1] - 1.96*summary(lm.dma.unp)$coef[1,2],4)
-table2[3+14,3]&lt;-round(summary(lm.dma.unp)$coef[1,1] + 1.96*summary(lm.dma.unp)$coef[1,2],4)
-table2[4+14,3]&lt;-round(summary(lm.dma.unp)$coef[2,1],4)
-table2[5+14,3]&lt;-round(summary(lm.dma.unp)$coef[2,1] - 1.96*summary(lm.dma.unp)$coef[2,2],4)
-table2[6+14,3]&lt;-round(summary(lm.dma.unp)$coef[2,1] + 1.96*summary(lm.dma.unp)$coef[2,2],4)
-table2[7+14,3]&lt;-round(summary(lm.dma.unp)$adj.r.squared,4)
+table2[1+14,3]&lt;-round(summary(lm.vma.unp)$coef[1,1],4)
+table2[2+14,3]&lt;-round(summary(lm.vma.unp)$coef[1,1] - 1.96*summary(lm.vma.unp)$coef[1,2],4)
+table2[3+14,3]&lt;-round(summary(lm.vma.unp)$coef[1,1] + 1.96*summary(lm.vma.unp)$coef[1,2],4)
+table2[4+14,3]&lt;-round(summary(lm.vma.unp)$coef[2,1],4)
+table2[5+14,3]&lt;-round(summary(lm.vma.unp)$coef[2,1] - 1.96*summary(lm.vma.unp)$coef[2,2],4)
+table2[6+14,3]&lt;-round(summary(lm.vma.unp)$coef[2,1] + 1.96*summary(lm.vma.unp)$coef[2,2],4)
+table2[7+14,3]&lt;-round(summary(lm.vma.unp)$adj.r.squared,4)
 
-table2[1+14,4]&lt;-round(summary(lm.dma.prtz)$coef[1,1],4)
-table2[2+14,4]&lt;-round(summary(lm.dma.prtz)$coef[1,1] - 1.96*summary(lm.dma.prtz)$coef[1,2],4)
-table2[3+14,4]&lt;-round(summary(lm.dma.prtz)$coef[1,1] + 1.96*summary(lm.dma.prtz)$coef[1,2],4)
-table2[4+14,4]&lt;-round(summary(lm.dma.prtz)$coef[2,1],4)
-table2[5+14,4]&lt;-round(summary(lm.dma.prtz)$coef[2,1] - 1.96*summary(lm.dma.prtz)$coef[2,2],4)
-table2[6+14,4]&lt;-round(summary(lm.dma.prtz)$coef[2,1] + 1.96*summary(lm.dma.prtz)$coef[2,2],4)
-table2[7+14,4]&lt;-round(summary(lm.dma.prtz)$adj.r.squared,4)
+table2[1+14,4]&lt;-round(summary(lm.vma.prtz)$coef[1,1],4)
+table2[2+14,4]&lt;-round(summary(lm.vma.prtz)$coef[1,1] - 1.96*summary(lm.vma.prtz)$coef[1,2],4)
+table2[3+14,4]&lt;-round(summary(lm.vma.prtz)$coef[1,1] + 1.96*summary(lm.vma.prtz)$coef[1,2],4)
+table2[4+14,4]&lt;-round(summary(lm.vma.prtz)$coef[2,1],4)
+table2[5+14,4]&lt;-round(summary(lm.vma.prtz)$coef[2,1] - 1.96*summary(lm.vma.prtz)$coef[2,2],4)
+table2[6+14,4]&lt;-round(summary(lm.vma.prtz)$coef[2,1] + 1.96*summary(lm.vma.prtz)$coef[2,2],4)
+table2[7+14,4]&lt;-round(summary(lm.vma.prtz)$adj.r.squared,4)
 
-table2[1+14,5]&lt;-round(summary(lm.dma.par)$coef[1,1],4)
-table2[2+14,5]&lt;-round(summary(lm.dma.par)$coef[1,1] - 1.96*summary(lm.dma.par)$coef[1,2],4)
-table2[3+14,5]&lt;-round(summary(lm.dma.par)$coef[1,1] + 1.96*summary(lm.dma.par)$coef[1,2],4)
-table2[4+14,5]&lt;-round(summary(lm.dma.par)$coef[2,1],4)
-table2[5+14,5]&lt;-round(summary(lm.dma.par)$coef[2,1] - 1.96*summary(lm.dma.par)$coef[2,2],4)
-table2[6+14,5]&lt;-round(summary(lm.dma.par)$coef[2,1] + 1.96*summary(lm.dma.par)$coef[2,2],4)
-table2[7+14,5]&lt;-round(summary(lm.dma.par)$adj.r.squared,4)
+table2[1+14,5]&lt;-round(summary(lm.vma.par)$coef[1,1],4)
+table2[2+14,5]&lt;-round(summary(lm.vma.par)$coef[1,1] - 1.96*summary(lm.vma.par)$coef[1,2],4)
+table2[3+14,5]&lt;-round(summary(lm.vma.par)$coef[1,1] + 1.96*summary(lm.vma.par)$coef[1,2],4)
+table2[4+14,5]&lt;-round(summary(lm.vma.par)$coef[2,1],4)
+table2[5+14,5]&lt;-round(summary(lm.vma.par)$coef[2,1] - 1.96*summary(lm.vma.par)$coef[2,2],4)
+table2[6+14,5]&lt;-round(summary(lm.vma.par)$coef[2,1] + 1.96*summary(lm.vma.par)$coef[2,2],4)
+table2[7+14,5]&lt;-round(summary(lm.vma.par)$adj.r.squared,4)
 
 kable(table2)</code></pre>
 <table>
@@ -506,51 +506,51 @@ kable(table2)</code></pre>
 <tr class="odd">
 <td align="left">VMA</td>
 <td align="left">log10c</td>
-<td align="left">0.8577</td>
-<td align="left">1.9905</td>
-<td align="left">-0.2538</td>
+<td align="left">2.2423</td>
+<td align="left">4.4773</td>
+<td align="left">-0.0572</td>
 </tr>
 <tr class="even">
 <td align="left">VMA</td>
 <td align="left">log10c - 95%CI</td>
-<td align="left">0.732</td>
-<td align="left">1.738</td>
-<td align="left">-0.4741</td>
+<td align="left">2.0236</td>
+<td align="left">4.0086</td>
+<td align="left">-0.5363</td>
 </tr>
 <tr class="odd">
 <td align="left">VMA</td>
 <td align="left">log10c + 95%CI</td>
-<td align="left">0.9834</td>
-<td align="left">2.2431</td>
-<td align="left">-0.0334</td>
+<td align="left">2.461</td>
+<td align="left">4.946</td>
+<td align="left">0.4219</td>
 </tr>
 <tr class="even">
 <td align="left">VMA</td>
 <td align="left">d</td>
-<td align="left">-0.2167</td>
-<td align="left">-0.7983</td>
-<td align="left">-0.9088</td>
+<td align="left">-0.2967</td>
+<td align="left">-1.6841</td>
+<td align="left">-1.8657</td>
 </tr>
 <tr class="odd">
 <td align="left">VMA</td>
 <td align="left">d - 95%CI</td>
-<td align="left">-0.296</td>
-<td align="left">-0.8808</td>
-<td align="left">-1.0642</td>
+<td align="left">-0.4346</td>
+<td align="left">-1.8371</td>
+<td align="left">-2.2036</td>
 </tr>
 <tr class="even">
 <td align="left">VMA</td>
 <td align="left">d + 95%CI</td>
-<td align="left">-0.1375</td>
-<td align="left">-0.7159</td>
-<td align="left">-0.7535</td>
+<td align="left">-0.1587</td>
+<td align="left">-1.5311</td>
+<td align="left">-1.5279</td>
 </tr>
 <tr class="odd">
 <td align="left">VMA</td>
 <td align="left">adj.R2</td>
-<td align="left">0.0779</td>
-<td align="left">0.7055</td>
-<td align="left">0.341</td>
+<td align="left">0.0487</td>
+<td align="left">0.7559</td>
+<td align="left">0.3155</td>
 </tr>
 </tbody>
 </table>
