@@ -147,7 +147,7 @@ Get_GLE_Beninca <- function(X1,gval=1.4) {
   ##save(Z, file="~/Desktop/Z.Rdata")
   
   LE <- Get_LE_from_fit2(all.gams, Z[,13:24])
-  rez <- list(LE, all.gams)
+  rez <- list(LE, all.gams, Z)
   rez
 }
 

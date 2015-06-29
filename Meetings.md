@@ -229,17 +229,98 @@ Vanessa knows about a tutorial on Github at the beginning of June.
 Thomas would like to add a paper to reproduce.
 
 We split into groups, reading the papers and looking for the data.
-Mikael Frank Aurelie work on Ward et al.
-Thomas Vanessa and Gian Marco work on Graham et al.
-Marco and Alejandra work on Lagrue et al.
-
+Mikael Frank Aurelie work on Ward et al.    
+Thomas Vanessa and Gian Marco work on Graham et al.     
+Marco and Alejandra work on Lagrue et al.     
 
 
 ## 2.6
 
+(Minutes by Frank)
+
+###Any suggested papers added to the repository?
+
+New papers added by Alejandra, Marco and Thomas
+
+###Any outstanding issues?
+
+Some conflicts resulted from multiple additions of new papers (2 issues); 
+Owen resolved the two issues demonstrating how to fix the file causing the conflict.   
+NB: being a collaborator you can send a pull request (via github) and then merge it yourself.
+
+2 sections added to organize "potential papers to reproduce": 
+* papers in progress
+* papers where reproduction failed because of unavailable data etc.
+
+###Any progress on focal paper since last week?
+
+Ward et al. -> raw data, processed data and scripts provided by Eric Ward; does not work out of the box 
+because only subset of data available; opens question how to proceed with papers that have high 
+degree of reproducibility from the start.
+
+Graham et al. -> data not made public yet, hence no reproduction possible. Will be stated as a matter of fact in the repo. 
+
+Lagrue et al. -> Marco & Alejandra reproduced two first figures of paper
+
+
+
+
 ## 9.6
+(Minutes by Aurelie)
+
+###New papers added
+* Hekstra. But the data could NOT be public. Find a solution to do not show the data (cf. Issue 81)
+* Hooper *et al.*. Meta-analysis paper on biodiversity loss as a driver of environmental changes.
+	* integrative study
+	* deal with big data (200 papers)
+	* **high priority** for RREEBES
+
+###On going papers
+* Lagrue. 
+	* Three figures reproduced, and on going tables (maybe not exactly the same format)
+	* it is a goof example for learning R
+* Ward.
+	* Code provided by the author.
+	* Keep on familiarising with the script also provided.
+* Graham.
+	* CANCELLED because data can not made available to public.
+* Vanessa, GM and Thomas focusing now on TREE paper
+* Beninca. 
+	* Owen fixing the last figures: fig.3 (parameters are not the same), fig.2 (some differences in the slope and pattern), and tab.1 (OK).
+
+###General information
+* Publishing the reproduction: using the GitHub webpage instead of RPubs.
+* Getting data on desktop: (cf issue 77). possibilities:
+	* cloning repository
+	* reading from GitHub online and "save as"
+	* using the URL of the "raw" script available online
+* Finished paper: give a short presentation to the class/group of the methods used.
+* Management of the repository: 
+	* each paper must has a new branch (and we work on this specific branch until the paper is finished).
+	* can work directly on the master branch to update the minutes or new papers.
+* Possibility to use a saved back up:
+	1. On the local repository, 
+	2. in the commit history,
+	3. select the last commit that you want to keep,
+	4. on the parameter option, prefer to click on "revert this commit" 
 
 ## 16.6
+
+(Minutes by Marco)
+
+Present: Owen, Thomas, Aurelie, Marco, Gian Marco, Alejandra, Vanessa.
+
+### Progress
+
+* Lagrue: to be finished in 1-2-hour work time.
+* Ward: ongoing.
+* Morales-Castilla: foodweb data available. Trait-based criteria used to remove redundant links are obscure.
+
+### Minutes
+
+* No new papers added to the ‘to-reproduce’ list.
+* What to do once a reproduced paper is done: publish it on GitHug Pages, but wait until most of the group members are present before giving a wrap-up presentation.
+* Owen gave a presentation about the newly-implemented RREEBES “wiki” section. There is already a page explaining how to publish a report using GitHub Pages.
 
 ## 23.6
 

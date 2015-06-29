@@ -1,0 +1,7 @@
+name: Publish Document
+account: rpubs
+server: rpubs.com
+bundleId:
+        https://api.rpubs.com/api/v1/document/84465/9d3488d886054b968be0f0784d68d1ee
+url: http://rpubs.com/owenpetchey/84465
+when: 1433343843.72827
