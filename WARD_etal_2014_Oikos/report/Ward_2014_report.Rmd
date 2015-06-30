@@ -29,8 +29,8 @@ library(ggplot2)
 library(RCurl)
 library(reshape2)
 
-library(devtools)
-devtools::install_github("James-Thorson/NLTS")
+#library(devtools)
+#devtools::install_github("James-Thorson/NLTS")
 
 # libraries need for prediction
 #install.packages(c("MARSS", "NLTS", "mgcv", "np", "locfit", "forecast", "kernlab", "tsDyn", "ltsa", "timsac", "randomForest"))
@@ -77,12 +77,15 @@ ggplot(data=subset(ts, ID %in% sample(ts$ID,size=15)), aes(x=Year-mean(Year), y=
 
 Run the script to get forecasts based on the training data.
 
-```{r, eval=F}
+```{r, eval=T}
 # Load in the data. This dataset only contains the 
 set.seed(12345678)
 
 #dat <- subset(ts, ID %in% sample(ts$ID,size=15))
-dat <- ts[ts$ID==1,]
+# dat <- subset(ts, Database %in% c("RAMlegacy.catch","RAMlegacy.ssb","RAMlegacy.recperssb"))
+#dat <- subset(ts, Database %in% c("salmon"))
+#dat <- ts[ts$ID<=10,]
+dat <- ts
 
 NAHEAD = 5 # number of points ahead to forecast
 MODELS = 50  # number of candidates (this is overestimate)
@@ -101,7 +104,7 @@ model.output = array(list(),c(numRec,MODELS)) # list of model objects
 # source_url(SourceURL)
 
 for(w in 1:numRec) {
-w=1
+
   y = dat$Value[which(dat$ID==w)]
   
   # to standardize by the mean, uncomment
@@ -572,42 +575,43 @@ w=1
   model.names[model.count] = "MARSSnodrift"  
   model.count = model.count + 1  
   
-#   # use the Simplex and procedure from sugihara et al. here. Implemented in Jim Thorson's function
-#   simplex.embed=EmbedFn(y.train, Candidates=1:7)
-#   simplex.oneAhead = NltsPred(c(y.train,NA), Nembed=simplex.embed, PredNum=c(length(y.train)+1), Method="Simplex")
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+1):(n.y-NAHEAD+1)],model.count] = simplex.oneAhead
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+2):(n.y-NAHEAD+2)],model.count] = NA
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+3):(n.y-NAHEAD+3)],model.count] = NA
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+4):(n.y-NAHEAD+4)],model.count] = NA
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+5):(n.y-NAHEAD+5)],model.count] = NA          
-#   predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
-#   model.output[[w,model.count]] = list(simplex.embed, simplex.oneAhead)
-#   model.names[model.count] = "Simplex v1"  
-#   model.count = model.count + 1  
-#     
-#   y = dat$Value[which(dat$ID==w)]
-#   n.y = length(y) # length of time series
-#   y.train = y[1:(n.y-5)]
-#   y.test = y[(n.y-5+1):n.y]
-#   x = seq(1,length(y.train))
+  # use the Simplex and procedure from sugihara et al. here. Implemented in Jim Thorson's function
+  simplex.embed=EmbedFn(y.train, PredInterval=1, Candidates=1:7)
+  simplex.oneAhead = NltsPred(c(y.train,NA), PredInterval=1, Nembed=simplex.embed, PredNum=c(length(y.train)+1), Method="Simplex")
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+1):(n.y-NAHEAD+1)],model.count] = simplex.oneAhead
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+2):(n.y-NAHEAD+2)],model.count] = NA
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+3):(n.y-NAHEAD+3)],model.count] = NA
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+4):(n.y-NAHEAD+4)],model.count] = NA
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+5):(n.y-NAHEAD+5)],model.count] = NA          
+  predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
+  model.output[[w,model.count]] = list(simplex.embed, simplex.oneAhead)
+  model.names[model.count] = "Simplex v1"  
+  model.count = model.count + 1  
+    
+  y = dat$Value[which(dat$ID==w)]
+  n.y = length(y) # length of time series
+  y.train = y[1:(n.y-5)]
+  y.test = y[(n.y-5+1):n.y]
+  x = seq(1,length(y.train))
   
-#   # use the Simplex and procedure from sugihara et al. here. Implemented in Jim Thorson's function. This 
-#   # differs from the simplex above in that it's predicting 1:4 time steps ahead
-#   simplex.embed = EmbedFn(c(y.train,NA), PredInterval=1, Candidates=1:7)
-#   simplex.oneAhead = NltsPred(c(y.train,NA), PredInterval=1, Nembed=simplex.embed, PredNum=c(length(y.train)+1), Method="Simplex")  # PredInterval is the number of years in next year, etc)
-#   simplex.embed = EmbedFn(c(y.train,NA,NA), PredInterval=2, Candidates=1:7)
-#   simplex.twoAhead = NltsPred(c(y.train,NA,NA), PredInterval=2, Nembed=simplex.embed, PredNum=c(length(y.train)+2), Method="Simplex")  # PredInterval is the number of years in next year, etc)  
-#   simplex.embed = EmbedFn(c(y.train,NA,NA,NA), PredInterval=3, Candidates=1:7)
-#   simplex.threeAhead = NltsPred(c(y.train,NA,NA,NA), PredInterval=3, Nembed=simplex.embed, PredNum=c(length(y.train)+3), Method="Simplex")  # PredInterval is the number of years in next year, etc)
-#   simplex.embed = EmbedFn(c(y.train,NA,NA,NA,NA), PredInterval=4, Candidates=1:7)
-#   simplex.fourAhead = NltsPred(c(y.train,NA,NA,NA,NA), PredInterval=4, Nembed=simplex.embed, PredNum=c(length(y.train)+4), Method="Simplex")  # PredInterval is the number of years in next year, etc)
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+1):(n.y-NAHEAD+1)],model.count] = simplex.oneAhead
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+2):(n.y-NAHEAD+2)],model.count] = simplex.twoAhead
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+3):(n.y-NAHEAD+3)],model.count] = simplex.threeAhead
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+4):(n.y-NAHEAD+4)],model.count] = simplex.fourAhead
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+5):(n.y-NAHEAD+5)],model.count] = NA          
-#   model.output[[w,model.count]] = list(simplex.embed, simplex.oneAhead)
-#   model.names[model.count] = "Simplex v2"     
+  # use the Simplex and procedure from sugihara et al. here. Implemented in Jim Thorson's function. This 
+  # differs from the simplex above in that it's predicting 1:4 time steps ahead
+  simplex.embed = EmbedFn(c(y.train,NA), PredInterval=1, Candidates=1:7)
+  simplex.oneAhead = NltsPred(c(y.train,NA), PredInterval=1, Nembed=simplex.embed, PredNum=c(length(y.train)+1), Method="Simplex")  # PredInterval is the number of years in next year, etc)
+  simplex.embed = EmbedFn(c(y.train,NA,NA), PredInterval=2, Candidates=1:7)
+  simplex.twoAhead = NltsPred(c(y.train,NA,NA), PredInterval=2, Nembed=simplex.embed, PredNum=c(length(y.train)+2), Method="Simplex")  # PredInterval is the number of years in next year, etc)  
+  simplex.embed = EmbedFn(c(y.train,NA,NA,NA), PredInterval=3, Candidates=1:7)
+  simplex.threeAhead = NltsPred(c(y.train,NA,NA,NA), PredInterval=3, Nembed=simplex.embed, PredNum=c(length(y.train)+3), Method="Simplex")  # PredInterval is the number of years in next year, etc)
+  simplex.embed = EmbedFn(c(y.train,NA,NA,NA,NA), PredInterval=4, Candidates=1:7)
+  simplex.fourAhead = NltsPred(c(y.train,NA,NA,NA,NA), PredInterval=4, Nembed=simplex.embed, PredNum=c(length(y.train)+4), Method="Simplex")  # PredInterval is the number of years in next year, etc)
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+1):(n.y-NAHEAD+1)],model.count] = simplex.oneAhead
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+2):(n.y-NAHEAD+2)],model.count] = simplex.twoAhead
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+3):(n.y-NAHEAD+3)],model.count] = simplex.threeAhead
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+4):(n.y-NAHEAD+4)],model.count] = simplex.fourAhead
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+5):(n.y-NAHEAD+5)],model.count] = NA          
+  model.output[[w,model.count]] = list(simplex.embed, simplex.oneAhead)
+  model.names[model.count] = "Simplex v2"  
+  model.count = model.count + 1
     
   # Sugihara's S-map procedure, as implemented in Jim Thorson's function. This is just 1-step ahead
   smap.embed = EmbedFn(y.train, PredInterval=1, Candidates=1:7)
@@ -646,6 +650,7 @@ w=1
   predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
   model.output[[w,model.count]] = list(smap.embed, smap.oneAhead)
   model.names[model.count] = "SMAP v2"
+  model.count = model.count + 1
 
   # Random forest approach to time series model w/lags. This block just does 1-step ahead forecasts
   y = dat$Value[which(dat$ID==w)]
@@ -653,7 +658,8 @@ w=1
   y.train = y[1:(n.y-5)]  
   nX = length(y.train)
   ranfor <- randomForest(y=y.train[6:nX], x=cbind(y.train[1:(nX-5)],y.train[2:(nX-4)],y.train[3:(nX-3)],y.train[4:(nX-2)],y.train[5:(nX-1)]))
-  # only do predictions one step ahead
+  
+# only do predictions one step ahead
   ranfor.pred = predict(ranfor, y[(nX-4):(nX)])
   predicted[which(dat$ID==w)[(n.y-NAHEAD+1):(n.y-NAHEAD+1)],model.count] = ranfor.pred
   predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):(n.y-NAHEAD+1)],model.count] = NA  
@@ -691,11 +697,12 @@ w=1
   predicted[which(dat$ID==w)[(n.y-NAHEAD+4):(n.y-NAHEAD+4)],model.count] = ranfor.pred
   predictedSE[which(dat$ID==w)[(n.y-NAHEAD+4):(n.y-NAHEAD+4)],model.count] = NA    
     
-#   model.output[[w,model.count]] = ranfor
-#   predicted[which(dat$ID==w)[(n.y-NAHEAD+5):(n.y-NAHEAD+5)],model.count] = NA          
-#   predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
-#   model.output[[w,model.count]] = list(smap.embed, smap.oneAhead)
-#   model.names[model.count] = "randomForest v2"  
+  model.output[[w,model.count]] = ranfor
+  predicted[which(dat$ID==w)[(n.y-NAHEAD+5):(n.y-NAHEAD+5)],model.count] = NA          
+  predictedSE[which(dat$ID==w)[(n.y-NAHEAD+1):n.y],model.count] = NA
+  model.output[[w,model.count]] = list(smap.embed, smap.oneAhead)
+  model.names[model.count] = "randomForest v2"  
+  model.count = model.count + 1
   
   # Simple linear regression model
   n.y = length(y) # length of time series
@@ -721,7 +728,6 @@ names(predicted) <- model.names
 dat <- cbind(dat,predicted)
 
 prediction <- gather(dat, model_type, Value_predicted,  11:(MODELS+10))
-
 ```
 
 Implementation of the absolute scaled error (ASE) for a single time-series. The absolute error is scaled by the mean absolute
@@ -752,17 +758,37 @@ prediction_ASE <- ddply(.data=prediction, c("ID_new","model_type"), get.ASE)
 
 ```{r}
 # only load dplyr package after model fitting due to clashes with tsDyn package
-library(dplyr)
+#library(dplyr)
 ```
 
-Visualize forecasting performance:
+Prepare data for visualization by re-ordering factor levels. For some of the models it is not entirely clear which of the different specifications was taken.
 ```{r}
-ggplot(data=prediction_ASE, aes(x=model_type,y=log(ASE), group=step_ahead, colour=as.factor(step_ahead))) + geom_point() + geom_line() + 
-  theme(axis.text.x  = element_text(angle=90, vjust=0.5, size=16))
+models_selected <- subset(prediction_ASE, model_type %in% c("GAM (gam)", "nnetTs.11 (nnetTs)", "AR - no drift (rwf)", "Local regression (locfit)", "ARIMA 1.0.1 (arima)","Exp smooth (freq=1) (ets)" , "ARIMA 0.0.1 (arima)", "ARIMA 1.1.0 (arima)", "MARSSdrift", "SMAP v2", "Simplex v2" , "randomForest v2", "simple regression"))
+models_selected$model_type <- factor(models_selected$model_type)
+models_selected$model_type <- factor(models_selected$model_type,levels(models_selected$model_type)[c(13,7,3,6,4,8,9,1,5,2,11,10,12)])
 ```
 
+Figure 1: Visualize overall forecasting performance using the 13 models specified in the caption. The plot in the manuscript shows only 12 models!
+```{r}
+mean_ASE <- ddply(models_selected, .(Database, model_type, step_ahead), summarize, mean_log_ASE = log(mean(ASE, na.rm = T)))
+       
+ggplot(data=subset(mean_ASE, step_ahead<5), aes(x=model_type,y=mean_log_ASE, group=step_ahead, colour=as.factor(step_ahead))) + geom_point() + geom_line() + 
+  theme(axis.text.x  = element_text(angle=90, vjust=0.5, size=16))
 
+```
 
+Figure 2: Plot MASE for the different species of salmon separately.
+```{r}
+mean_ASE_salmon <- ddply(subset(models_selected, Class == "Actinopterygii"), .(Database, Species, model_type, step_ahead), summarize, mean_log_ASE = log(mean(ASE, na.rm = T)))
+
+ggplot(data=subset(mean_ASE_salmon, step_ahead<5), aes(x=model_type,y=mean_log_ASE, group=step_ahead, colour=as.factor(step_ahead))) + geom_point() + geom_line() + 
+  theme(axis.text.x  = element_text(angle=90, vjust=0.5, size=16)) + facet_wrap(~Species)
+```
+
+Reproducing Figure 4 based on meta information data set.
+```{r}
+ggplot(subset(metainfo, Species %in% c("Chinook", "Chum", "Pink", "Coho", "Sockeye")), aes(x=training.acf)) + geom_histogram() + facet_wrap(~Species)
+```
 
 
 
