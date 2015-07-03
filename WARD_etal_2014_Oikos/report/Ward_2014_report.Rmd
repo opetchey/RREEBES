@@ -777,40 +777,42 @@ Prepare data for visualization by re-ordering factor levels. For some of the mod
 models_selected <- subset(prediction_ASE, model_type %in% c("GAM (gam)", "nnetTs.11 (nnetTs)", "AR - no drift (rwf)", "Local regression (locfit)", "ARIMA 1.0.1 (arima)","Exp smooth (freq=1) (ets)" , "ARIMA 0.0.1 (arima)", "ARIMA 1.1.0 (arima)", "MARSSdrift", "SMAP v2", "Simplex v2" , "randomForest v2", "simple regression"))
 models_selected$model_type <- factor(models_selected$model_type)
 models_selected$model_type <- factor(models_selected$model_type,levels(models_selected$model_type)[c(13,7,3,6,4,8,9,1,5,2,11,10,12)])
-
+models_selected$data_dist <- ifelse(models_selected$model_type %in% c("GAM (gam)", "nnetTs.11 (nnetTs)", "AR - no drift (rwf)", "Local regression (locfit)", "ARIMA 1.0.1 (arima)","Exp smooth (freq=1) (ets)" , "ARIMA 0.0.1 (arima)", "ARIMA 1.1.0 (arima)", "MARSSdrift", "simple regression"), "parametric", "non-parametric")
 
 ```
 
-Figure 1: Visualize overall forecasting performance using the 13 models specified in the caption. The plot in the manuscript shows only 12 models!
+Figure 1: Visualize overall forecasting performance using the 13 models specified in the caption. The plot in the manuscript shows only 12 models! Currently it is hard to determine the exact grouping used (e.g. Salmon, Marine fish productivity) because there is no corresponding label. Nevetheless, the plots quite look as in the paper!
+
 ```{r}
 #ggplot(subset(models_selected, step_ahead >3), aes(x=log(ASE))) + geom_histogram() + scale_y_log10() + scale_x_log10() + facet_wrap(~model_type)
 
-mean_ASE <- ddply(models_selected, .(Database, model_type, step_ahead), summarize, mean_log_ASE = log(mean(ASE, na.rm = T)))
+mean_ASE <- ddply(models_selected, .(Database, model_type, data_dist, step_ahead), summarize, mean_log_ASE = log(mean(ASE, na.rm = T)))
        
-ggplot(data=subset(mean_ASE, step_ahead<5 & mean_log_ASE<60), aes(x=model_type,y=mean_log_ASE, group=step_ahead, linetype=as.factor(step_ahead))) + geom_point() + geom_line() + 
-  theme(axis.text.x  = element_text(angle=90, vjust=0.5, size=16)) + scale_linetype_manual(values=c("solid", "dashed", "dotted", "solid")) + facet_wrap(~Database)
+ggplot(data=subset(mean_ASE, step_ahead<5 & mean_log_ASE<60 & (Database == "salmon" | Database == "RAMlegacy.recperssb")), aes(x=model_type,y=mean_log_ASE, group=step_ahead, linetype=as.factor(step_ahead), size=as.factor(step_ahead), shape=data_dist)) + geom_point(size=2) + geom_line() + 
+  theme(axis.text.x  = element_text(angle=90, vjust=0.5, size=16)) + scale_linetype_manual(values=c("solid", "dashed", "dotted", "solid")) + 
+  scale_size_manual(values=c(0.8,0.8,0.8,0.4))  + scale_shape_manual(values=c(2,1)) + facet_wrap(~Database)
+
+# mean_ASE_salmon_all <- ddply(subset(models_selected, Species %in% c("Chinook", "Chum", "Pink", "Coho", "Sockeye")), .(model_type, step_ahead), summarize, mean_log_ASE = log(mean(ASE, na.rm = T)))
+# 
+# ggplot(data=subset(mean_ASE_salmon_all, step_ahead<5), aes(x=model_type,y=mean_log_ASE, group=as.factor(step_ahead), linetype=as.factor(step_ahead), size=as.factor(step_ahead))) + geom_point() + geom_line() + theme(axis.text.x  = element_text(angle=90, vjust=0.5, size=16)) + scale_size_manual(values=c(0.8,0.8,0.8,0.4)) + scale_linetype_manual(values=c("solid", "dashed", "dotted", "solid")) 
 
 ```
 
 Figure 2: Plot MASE for the different species of salmon separately. No "Coho" in the current dataset, hence no plot produced. 
 ```{r}
-mean_ASE_salmon_all <- ddply(subset(models_selected, Species %in% c("Chinook", "Chum", "Pink", "Coho", "Sockeye")), .(model_type, step_ahead), summarize, mean_log_ASE = log(mean(ASE, na.rm = T)))
-
-ggplot(data=subset(mean_ASE_salmon_all, step_ahead<5), aes(x=model_type,y=mean_log_ASE, group=as.factor(step_ahead), linetype=as.factor(step_ahead))) + geom_point() + geom_line() + theme(axis.text.x  = element_text(angle=90, vjust=0.5, size=16)) + scale_linetype_manual(values=c("solid", "dashed", "dotted", "solid"))
-
-
-mean_ASE_salmon <- ddply(subset(models_selected, Species %in% c("Chinook", "Chum", "Pink", "Coho", "Sockeye")), .(Species, model_type, step_ahead), summarize, mean_log_ASE = log(mean(ASE, na.rm = T)))
+mean_ASE_salmon <- ddply(subset(models_selected, Species %in% c("Chinook", "Chum", "Pink", "Coho", "Sockeye")), .(Species, model_type, data_dist, step_ahead), summarize, mean_log_ASE = log(mean(ASE, na.rm = T)))
 mean_ASE_salmon$Species <- factor(mean_ASE_salmon$Species ,levels(as.factor(mean_ASE_salmon$Species))[c(3,2,4,5,1)])
 
-ggplot(data=subset(mean_ASE_salmon, step_ahead<5), aes(x=model_type,y=mean_log_ASE, group=as.factor(step_ahead), linetype=as.factor(step_ahead))) + geom_point() + geom_line() + theme(axis.text.x  = element_text(angle=90, vjust=0.5, size=16)) + facet_wrap(~Species) + scale_linetype_manual(values=c("solid", "dashed", "dotted", "solid"))
+ggplot(data=subset(mean_ASE_salmon, step_ahead<5), aes(x=model_type,y=mean_log_ASE, group=as.factor(step_ahead), linetype=as.factor(step_ahead), size=as.factor(step_ahead), shape=data_dist)) + geom_point(size=2) + geom_point() + geom_line() + theme(axis.text.x  = element_text(angle=90, vjust=0.5, size=16)) + facet_wrap(~Species) + scale_linetype_manual(values=c("solid", "dashed", "dotted", "solid")) + scale_size_manual(values=c(0.8,0.8,0.8,0.4)) + scale_shape_manual(values=c(2,1))
 
 ```
 
 Reproducing Figure 4 based on meta information data set.
 ```{r}
-ggplot(subset(metainfo, Species %in% c("Chinook", "Chum", "Pink", "Coho", "Sockeye")), aes(x=training.acf)) + geom_histogram() + facet_wrap(~Species)
-unique(metainfo$Database)
+ggplot(subset(metainfo, Database %in% c("salmon" , "RAMlegacy.recperssb")), aes(x=training.acf)) + geom_histogram() + facet_wrap(~Database) + geom_vline(xintercept = 0, linetype="dashed", size=2)
 ```
+
+
 
 
 
