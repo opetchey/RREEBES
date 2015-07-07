@@ -12,9 +12,8 @@
 
 [Scheffer, M., Carpenter, S., Foley, J. a, Folke, C. & Walker, B. (2001) Catastrophic shifts in ecosystems. Nature, 413, 591–6.] (http://www.nature.com/nature/journal/v413/n6856/full/413591a0.html) At least reproduce / use the minimal mathematical model in Box 1, to recreate something like figure 3.
 
-# Papers with reproduction underway
 
-[Lagrue, C., Poulin, R. & Cohen, J.E. (2014) Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry. Proceedings of the National Academy of Sciences of the United States of America, 112, 1791–1796.](http://www.pnas.org/content/112/6/1791)
+# Papers with reproduction underway
 
 [Ward, E.J., Holmes, E.E., Thorson, J.T. & Collen, B. (2014) Complexity is costly: A meta-analysis of parametric and non-parametric methods for short-term population forecasting. Oikos, 123, 652–661.](http://onlinelibrary.wiley.com/doi/10.1111/j.1600-0706.2014.00916.x/abstract)
 
@@ -27,8 +26,11 @@
 
 [Schmitz, O. (1997) Press pertubations and the predictability of ecological interactions in a food web. Ecology, 78, 55–69.] (http://www.esajournals.org/doi/abs/10.1890/0012-9658(1997)078%5B0055:PPATPO%5D2.0.CO;2) Data not available.
 
+
 # Papers below are at least mostly done.
 
 [Benincà, E., Huisman, J., Heerkloss, R., Jöhnk, K.D., Branco, P., Nes, E.H. Van, Scheffer, M. & Ellner, S.P. (1989) Chaos in a long-term experiment with a plankton community. , 1–35.](http://www.nature.com/nature/journal/v451/n7180/abs/nature06512.html). Reproduction published [here] (http://opetchey.github.io/RREEBES/Beninca_2008_Nature/report.html).
 
 [Hiltunen, T., Hairston, N.G., Hooker, G., Jones, L.E. & Ellner, S.P. (2014) A newly discovered role of evolution in previously published consumer-resource dynamics. Ecology letters, 17, 915–23.](http://onlinelibrary.wiley.com/doi/10.1111/ele.12291/abstract)  Data is available and Jason Griffiths has a reproduction already.
+
+[Lagrue, C., Poulin, R. & Cohen, J.E. (2014) Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry. Proceedings of the National Academy of Sciences of the United States of America, 112, 1791–1796.](http://www.pnas.org/content/112/6/1791)
