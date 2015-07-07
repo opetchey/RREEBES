@@ -33,4 +33,4 @@
 
 [Hiltunen, T., Hairston, N.G., Hooker, G., Jones, L.E. & Ellner, S.P. (2014) A newly discovered role of evolution in previously published consumer-resource dynamics. Ecology letters, 17, 915–23.](http://onlinelibrary.wiley.com/doi/10.1111/ele.12291/abstract)  Data is available and Jason Griffiths has a reproduction already.
 
-[Lagrue, C., Poulin, R. & Cohen, J.E. (2014) Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry. Proceedings of the National Academy of Sciences of the United States of America, 112, 1791–1796.](http://www.pnas.org/content/112/6/1791)
+[Lagrue, C., Poulin, R. & Cohen, J.E. (2014) Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry. Proceedings of the National Academy of Sciences of the United States of America, 112, 1791–1796.](http://www.pnas.org/content/112/6/1791) Reproduction available [here] (http://opetchey.github.io/RREEBES/Lagrue_etal_2014_PNAS/Lagrue_report.html).
