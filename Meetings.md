@@ -324,7 +324,11 @@ Present: Owen, Thomas, Aurelie, Marco, Gian Marco, Alejandra, Vanessa.
 
 ## 23.6
 
+Independent work, no formal meeting.
+
 ## 30.6
+
+Independent work, no formal meeting.
 
 ## 7.7
 
