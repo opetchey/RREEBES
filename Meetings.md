@@ -331,6 +331,32 @@ Independent work, no formal meeting.
 Independent work, no formal meeting.
 
 ## 7.7
+(Minutes by Thomas)
+
+### Attendance
+* Owen, Mikael, Frank, Thomas, Marco, Ale
+
+### General points (Owen)
+* How to proceed with the publication of data?
+	* Use a server located at the University of Zurich. The data remains centrally available for us (no local copies on everyone's computers), but is not publicly accessible.
+	* The rules of how to deal with (specific) data sets have to be included in the Wiki.
+
+### Progress
+* LAGRUE et al. (Marco, Ale)
+	* 99% done.
+	* Moved to 'finished papers'.
+	* Could be reproduced rather easily.
+	* Some questions remained open and some doubts were raised. Maybe, these will be answered or better understood when we have all read the paper...
+* WARD et al. (Mikael, Frank)
+	* (Almost) Done.
+* MORALES-CASTILLA et al. (Thomas)
+	* The data to immediately reproduce their analyses is still not there. We (Thomas, Vanessa, Gian Marco) would have to go deep into the reference papers to a) see which species feed upon which, and b) get information about the species'/guilds' traits.
+	* Once Vanessa and Gian Maro are back, we will discuss whether we will do this - or whether we go with another paper whose data is easy to obtain to immediately start working.
+	* A summary is written soon that will a) show how far we proceeded and b) provide our impression of the paper and the attempt to reproduce it.
+
+### Others
+* Frank introduced [Project Jupyter](https://jupyter.org), a online platform to share **and** interactively modify code.
+	
 
 ## 14.7
 
