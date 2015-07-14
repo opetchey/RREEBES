@@ -360,6 +360,22 @@ Independent work, no formal meeting.
 
 ## 14.7
 
+*No new papers in the repository
+
+*Issues
+Make the wiki entry: what is meant by reproducible research; what we mean and in what context; you can add blogs on what this means – reproducible analysis.
+Look at how Ropensci might help us – will help on the Data Carpentry course
+Morales-Castilla – Thomas, Vanessa and Gian Marco will continue to work on it. 
+
+*Start reproduction of:
+Hooper et al. – Ale and Aurelie will start working on this. Maybe Marco and Dennis could join in the future 
+Hekstra et al – Frank and Owen will start this (Mikael can join later)
+So these two papers were moved to “papers currently being reproduced”
+
+*Ward et al. 
+Frank did a presentation of a nice partial reproduction they have been working on with Aurelie and Mikael. Next meeting to discuss more: take a look at the calendar and check when most people will be present
+
+
 ## 21.7
 
 ## 28.7
