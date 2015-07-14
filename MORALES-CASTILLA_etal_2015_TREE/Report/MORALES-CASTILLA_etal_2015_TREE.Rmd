@@ -175,7 +175,7 @@ dd.05.a              <- subset(dd.05, Cuba=="x")
 n.species.fish.Cuba       <- length(subset(dd.05, Cuba=="x")$Cuba)
 
 # Trophic data for the Cuban food web
-dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Morales-Castilla_etal_2015_TREE/MORALES-CASTILLA_etal_2015_TREE/Data/Coral%20reef%20data/857470.item.2%20-%20Trophic%20data%20for%20Cuba.csv",
+dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Morales-Castilla_etal_2015_TREE/MORALES-CASTILLA_etal_2015_TREE/Data/Coral%20reef%20data/857470.item.2%20-%20Trophic%20data%20for%20Cuba_sorted.csv",
              cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 dd.06 <- read.csv(text = dd)
 # Guilds in Cuban food web.
@@ -269,13 +269,17 @@ dd.06.a <- expand.grid(dd.06$Guild.Description, dd.06$Guild.Description)
 f <- graph.data.frame(dd.06.a, directed=F, vertices=NULL)
 # Now, remove inraspecific trophic interactions - there is no cannibalism. 
 dd.06.b <- dd.06.a[which(dd.06.a[,1]!=dd.06.a[,2]),]
+g <- dd.06.a[which(dd.06.a[,1]==dd.06.a[,2]),]
+length(g[,1])
+# Should equal the number of potential links, 53.130.
+length(dd.06.b[,1])
 ```
 
 ```{r, fig.width=10, fig.height=10}
 # Now, plot the graph.
 plot.igraph(f, 
      layout=layout.circle, 
-     main="Serengeti food web (no information)",
+     main="Cuban coral reef food web (no information)",
      vertex.size=8, 
      vertex.color=adjustcolor("#A6B07E", alpha.f=0.6),
      vertex.label.cex=0.5,
@@ -294,10 +298,6 @@ plot.igraph(f,
 ```
 
 ### The food web accounting trophic identity.
-
-
-
-### 
 
 
 
