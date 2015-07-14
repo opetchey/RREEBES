@@ -1,4 +1,4 @@
-https://knb.ecoinformatics.org/#view/doi:10.5063/AA/nceas.984.7
+Data is available for download here: https://knb.ecoinformatics.org/#view/doi:10.5063/AA/nceas.984.7
 
 
 Data on Productivity called ProdBoot.csv: table for meta-analysis 
