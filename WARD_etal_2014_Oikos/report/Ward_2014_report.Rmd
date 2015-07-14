@@ -1,5 +1,5 @@
 ---
-title: "Reproduce anaylses of Ward et al (2014): Complexity is costly"
+title: "Reproduce analyses of Ward et al (2014): Complexity is costly"
 author: "Aurélie Garnier, Frank Pennekamp, Mikael Pontarp"
 date: "1 Jun 2015"
 output:
@@ -33,7 +33,7 @@ library(reshape2)
 #devtools::install_github("James-Thorson/NLTS")
 
 # libraries need for prediction
-#install.packages(c("MARSS", "NLTS", "mgcv", "np", "locfit", "forecast", "kernlab", "tsDyn", "ltsa", "timsac", "randomForest"))
+#install.packages(c("MARSS", "NTLS", "mgcv", "np", "locfit", "forecast", "kernlab", "tsDyn", "ltsa", "timsac", "randomForest"))
 library(tsDyn)
 library(MARSS)
 library(mgcv)
@@ -774,7 +774,7 @@ MARSS failed on a couple of time series (IDs: 430, 514, 515, 590, 1234) which we
 
 Prepare data for visualization by re-ordering factor levels. For some of the models it is not entirely clear which of the different specifications was taken.
 ```{r}
-load("/Volumes/Work MAC backup/Ward_et_al_results.RData")
+load("/Users/frank/Documents/Postdoc/Projects/RREEBES/WARD_etal_2014_Oikos/results/Ward_et_al_results.RData")
 models_selected <- subset(prediction_ASE, model_type %in% c("GAM (gam)", "nnetTs.11 (nnetTs)", "AR - no drift (rwf)", "Local regression (locfit)", "ARIMA 1.0.1 (arima)","Exp smooth (freq=1) (ets)" , "ARIMA 0.0.1 (arima)", "ARIMA 1.1.0 (arima)", "MARSSdrift", "SMAP v2", "Simplex v2" , "randomForest v2", "simple regression"))
 models_selected$model_type <- factor(models_selected$model_type)
 models_selected$model_type <- factor(models_selected$model_type,levels(models_selected$model_type)[c(13,7,3,6,4,8,9,1,5,2,11,10,12)])
