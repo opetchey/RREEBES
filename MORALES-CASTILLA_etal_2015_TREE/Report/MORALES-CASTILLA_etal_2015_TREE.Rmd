@@ -272,7 +272,7 @@ dd.06.b <- dd.06.a[which(dd.06.a[,1]!=dd.06.a[,2]),]
 g <- dd.06.a[which(dd.06.a[,1]==dd.06.a[,2]),]
 length(g[,1])
 # Should equal the number of potential links, 53.130.
-length(dd.06.b[,1])
+length(g[,1])^2-length(g[,1])
 ```
 
 ```{r, fig.width=10, fig.height=10}
