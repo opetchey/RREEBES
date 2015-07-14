@@ -1,0 +1,18 @@
+---
+title: "Reproduce analyses of Hooper et al. 2012"
+author: "Alejandra, Aurelie, Marco et al."
+starting date: "14th July 2015"
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+# Introduction
+
+
+This is an attempt to reproduce the anaylses presented in the paper *A global synthesis reveals biodiversity loss as a major
+driver of ecosystem change by Hooper et al. 2012 ([http://jarrettbyrnes.info/pdfs/Hooper_et_al_2012_Nature.pdf]). 
+
+* From the article summary:
