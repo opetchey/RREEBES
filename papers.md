@@ -6,18 +6,17 @@
 
 [Yampolsky, Lev Y., Tobias M. M. Schaer, and Dieter Ebert. “Adaptive Phenotypic Plasticity and Local Adaptation for Temperature Tolerance in Freshwater Zooplankton.” Proceedings of the Royal Society of London B: Biological Sciences 281, no. 1776 (February 7, 2014): 20132744.] (http://rspb.royalsocietypublishing.org/content/281/1776/20132744) Data available on Dryad.
 
-[Hooper DU, Adair EC, Cardinale BJ, Byrnes JEK, Hungate BA, et al. 2012. A global synthesis reveals biodiversity loss as a major driver of ecosystem change. Nature 486:105–8] (http://jarrettbyrnes.info/pdfs/Hooper_et_al_2012_Nature.pdf). Database is available at the National Center for Ecological Analysis and Synthesis: (http://knb.ecoinformatics.org/knb/metacat/nceas.984/nceas). 
-
-[Hekstra, D.R. & Leibler, S. (2012) Contingency and statistical laws in replicate microbial closed ecosystems. Cell, 149, 1164–1173.] (http://www.sciencedirect.com/science/article/pii/S0092867412005156). Data available by request, but cannot be put in public domain.
-
 [Scheffer, M., Carpenter, S., Foley, J. a, Folke, C. & Walker, B. (2001) Catastrophic shifts in ecosystems. Nature, 413, 591–6.] (http://www.nature.com/nature/journal/v413/n6856/full/413591a0.html) At least reproduce / use the minimal mathematical model in Box 1, to recreate something like figure 3.
 
 
 # Papers with reproduction underway
 
-[Ward, E.J., Holmes, E.E., Thorson, J.T. & Collen, B. (2014) Complexity is costly: A meta-analysis of parametric and non-parametric methods for short-term population forecasting. Oikos, 123, 652–661.](http://onlinelibrary.wiley.com/doi/10.1111/j.1600-0706.2014.00916.x/abstract)
 
-[Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araujo (2015) Inferring biotic interactions from proxies. TREE xx 1-10](http://www.sciencedirect.com/science/article/pii/S0169534715000774) TMM: Would be interesting to reproduce this study to get an idea about the removed interactions (the forbidden ones) - and the ones that are still in, but false. Maybe one could also apply this to a smaller food web and test for the accuracy of this approach. Because the authors do not provide any test for accuracy... :( Food webs available, checking for trait data.
+[Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araujo (2015) Inferring biotic interactions from proxies. TREE xx 1-10](http://www.sciencedirect.com/science/article/pii/S0169534715000774) TMM: Would be interesting to reproduce this study to get an idea about the removed interactions (the forbidden ones) - and the ones that are still in, but false. Maybe one could also apply this to a smaller food web and test for the accuracy of this approach. Because the authors do not provide any test for accuracy... :( Food webs available, checking for trait data. Thomas, GM, Vanessa.
+
+[Hooper DU, Adair EC, Cardinale BJ, Byrnes JEK, Hungate BA, et al. 2012. A global synthesis reveals biodiversity loss as a major driver of ecosystem change. Nature 486:105–8] (http://jarrettbyrnes.info/pdfs/Hooper_et_al_2012_Nature.pdf). Database is available at the National Center for Ecological Analysis and Synthesis: (http://knb.ecoinformatics.org/knb/metacat/nceas.984/nceas). Ale, Aurélie (Marco? Dennis?)
+
+[Hekstra, D.R. & Leibler, S. (2012) Contingency and statistical laws in replicate microbial closed ecosystems. Cell, 149, 1164–1173.] (http://www.sciencedirect.com/science/article/pii/S0092867412005156). Data available by request, but cannot be put in public domain.(Owen, Frank, Mikael?.)
 
 
 # Papers without appropriate data
@@ -34,3 +33,5 @@
 [Hiltunen, T., Hairston, N.G., Hooker, G., Jones, L.E. & Ellner, S.P. (2014) A newly discovered role of evolution in previously published consumer-resource dynamics. Ecology letters, 17, 915–23.](http://onlinelibrary.wiley.com/doi/10.1111/ele.12291/abstract)  Data is available and Jason Griffiths has a reproduction already.
 
 [Lagrue, C., Poulin, R. & Cohen, J.E. (2014) Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry. Proceedings of the National Academy of Sciences of the United States of America, 112, 1791–1796.](http://www.pnas.org/content/112/6/1791) Reproduction available [here] (http://opetchey.github.io/RREEBES/Lagrue_etal_2014_PNAS/Lagrue_report.html).
+
+[Ward, E.J., Holmes, E.E., Thorson, J.T. & Collen, B. (2014) Complexity is costly: A meta-analysis of parametric and non-parametric methods for short-term population forecasting. Oikos, 123, 652–661.](http://onlinelibrary.wiley.com/doi/10.1111/j.1600-0706.2014.00916.x/abstract)
