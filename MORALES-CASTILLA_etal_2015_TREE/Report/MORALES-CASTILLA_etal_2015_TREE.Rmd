@@ -5,9 +5,12 @@ date: "June 16, 2015"
 output: html_document
 ---
 
-## Introduction
+## Info
 
-This is the reproduction of the analyses presented in the article *Inferring biotic interactions from proxies* by Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Ara??jo (2015, TREE). The article can be found [here](http://www.sciencedirect.com/science/article/pii/S0169534715000774).
+This is what ought to be the reproduction of the analyses presented in the article *Inferring biotic interactions from proxies* by Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Ara??jo (2015, TREE). The article can be found [here](http://www.sciencedirect.com/science/article/pii/S0169534715000774). Unfortuntely, reproducing thier analyses requires to go deep into two other studies, one about the Serengeti food web ([Baskerville et al. (2011, PLoS Computational Biology)](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002321)), and one about three Caribean coral reefs ([Roopnarine & Hertog (2013, Dataset Papers in Ecology)](http://www.hindawi.com/journals/dpis/2013/857470/abs/)).
+
+
+## About
 
 
 
@@ -60,8 +63,7 @@ n.links.species.Serengeti <- n.species.Serengeti^2-n.species.Serengeti
 * There are **175 species** in the Serengeti food web. This results in **25760 potential links** ($n^2-n$).
 
 
-
-The cuban coral reef food web.
+The Cuban coral reef food web (Morales-Castila et al. only focused on this one).
 ```{r}
 dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Morales-Castilla_etal_2015_TREE/MORALES-CASTILLA_etal_2015_TREE/Data/Coral%20reef%20data/857470.item.4%20-%20Guild%20key%2C%20all%20data%20sets.csv",
              cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
@@ -169,7 +171,6 @@ plot.igraph(g,
      vertex.label.color="#7D1D3F",
      vertex.frame.color="white")
 ```
-
 
 
 ## Cuban coral reef food web
