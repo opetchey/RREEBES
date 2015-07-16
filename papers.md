@@ -11,6 +11,8 @@
 [Tessa B. Francis, Mark D. Scheuerell, Richard D. Brodeur, Phillip S. Levin, James J. Ruzicka, Nick Tolimieri and William T. Peterson (2012) Climate shifts the interaction web of a marine plankton community](http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2486.2012.02702.x/abstract).     
 The paper uses multivariate autoregressive models (introduced in "Quantifying effects of abiotic and biotic drivers on community dynamics with multivariate autoregressive (MAR) models", http://www.esajournals.org/doi/full/10.1890/13-0996.1), which maybe an interesting approach for our BEEP data. We need to check data availability, however, there are other potentially interesting papers using the approach, if we cannot get the data of this one.
 
+[Chih‐hao Hsieh, Christian Anderson, and George Sugihara (2008): Extending Nonlinear Analysis to Short Ecological Time Series](http://www.jstor.org/stable/full/10.1086/524202)
+
 
 # Papers with reproduction underway
 
