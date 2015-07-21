@@ -1,1 +1,43 @@
-https://knb.ecoinformatics.org/#view/doi:10.5063/AA/nceas.984.7
+Data is available for download here: https://knb.ecoinformatics.org/#view/doi:10.5063/AA/nceas.984.7
+
+
+Data on Productivity called ProdBoot.csv: table for meta-analysis 
+
+Data on Decomposition called DecompBoot: much less papers were used for this meta-analysis. Table for meta analysis
+
+Columns in tables: 
+
+Citation: meta-analysis reference
+nobs: number of observations for log response ratio (ln.RR)
+bio: biomass type. AG = aboveground biomass. BG = belowground biomass. mixed = a combination of AG, BG, and/or total biomass. total = total (AG+BG) biomass.
+factor: meta-analysis factor analyzed. Acid = acification. CO2 = elevated CO2. Drought = reduced water treatments. HBV = herbivory. invasion = plant invasion. N = nitrogen additions. NCO2 = N by CO2. Ozone = elevated ozone. P = phosphorous additions. UV = elevated ultraviolet radiation. warming = warming treatments. NP = N and P additions.
+ln.RR: log response ratio.
+CI.max = If CI.type = symm, this is the value that was added and subtracted from the mean ln.RR to generate the 95% CI. If CI.type = symm, this is the larger of the two values that were added and subtracted from the mean to generate the 95% CI.
+CI.L = lower 95% confidence interval value.
+CI.U = upper 95% confidence interval value.
+CI.type = asymetrical (a) or symmetrical (symm).
+Err.orig = type of error reported in meta-analysis. CI = 95% confidence interval. SD = standard deviation. SE = standard error.
+Err.orig.num = value of error type reported in meta-analysis (only for SD and SE). No value (NA) is entered in this column if Err.orig = CI.
+
+
+Figures 1 and 2: R code and data in same fowlder
+Also an R code in each meta-analysis fowlder for analysis
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
