@@ -1,0 +1,46 @@
+---
+title: "Morales-Castilla et al. (2015, TREE) Inferring biotic interactions from proxies."
+author: "Vanessa, Gian-Marco, Thomas"
+date: "June 16, 2015"
+output: html_document
+---
+
+# Introduction
+
+This is the reproduction of the analyses presented in the article *Inferring biotic interactions from proxies* by Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araújo (2015, TREE). The article can be found [here](http://www.sciencedirect.com/science/article/pii/S0169534715000774).
+
+
+
+
+# Load data
+
+Clear R environment and load libraries.
+```{r}
+# Clear workspace.
+rm(list=ls())
+
+# Load libraries.
+library(igraph)
+library(RCurl)
+```
+
+Load the data from GitHub straight into R.
+```{r}
+# Species in the Serengeti food web.
+dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES-CASTILLA_etal_2015_TREE/Data/Serengeti%20data/journal.pcbi.1002321.s004.CSV",
+             cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+dd.01 <- read.csv(text = dd)
+# Feeding links in the Serengeti food web.
+dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES-CASTILLA_etal_2015_TREE/Data/Serengeti%20data/journal.pcbi.1002321.s005.CSV",
+             cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+dd.02 <- read.csv(text = dd)
+# Consensus partition.
+dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES-CASTILLA_etal_2015_TREE/Data/Serengeti%20data/journal.pcbi.1002321.s006.CSV",
+             cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+dd.03 <- read.csv(text = dd)
+# Link densities between groups in the consensus partition.
+dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES-CASTILLA_etal_2015_TREE/Data/Serengeti%20data/journal.pcbi.1002321.s007.CSV",
+             cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+dd.04 <- read.csv(text = dd)
+```
+
