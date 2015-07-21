@@ -1,0 +1,45 @@
+---
+title: "Hekstra reproduction"
+author: "Owen"
+date: "21 July 2015"
+output: html_document
+---
+
+This paper concerns whether population dynamics have a common statistical structure, in the same way that the frequency distribution of earthquake strengths has a characteristic strucutre. Important for this is understanding the role of historical contingency, and this is addressed in the paper also.
+
+The data analysed comes from closed ecosystems containing E.coli, Chlamy., and Tetrahymena. Abundances were estimated via selective plane microscopy, allowing accurate and non-invasive estimates for months with high temporal resolution. The closed ecosystems were 3ml in volume held in fluorimetric cuvettes. Organisms in the ecosystes have been observed to persiste for over 1000 days.
+
+Through time, the ecosystems developed spatial heterogeneity and phenotypic changes, such as large Tetrahymena (that may have beeb able to consume algae) and filamentous E.coli and colonies that may have been resistant to consumption by Tetrahymena. Replicates differed from each other in the development of this complexity.
+
+There were over 50 replicates distributed across temporal blocks. Observations of density were made over ~100 days, every day to every eight weeks.
+
+# Reproduce figure 2E and Figure 3
+
+"Population dynamics in our replicate CESs under constant light and temperature. Shown are the mean ±bootstrap standard deviation over ecosystems with at least weekly measurements (n = 24), as well as data for two replicates (circles and triangles, respectively). Green (A, right axis): C. reinhardtii; red (B): E. coli; and blue (C): T. thermophila."
+
+The figures shows a common trend across replicates, but with considerable fluctuations around this trend.
+
+# Reproduce analyses of correlation matrix, ecomodes, etc
+
+Though there are large fluctuations, differing among replicates, the correlation structure may be common across replicates. 
+
+Be sure to understand the "surprising" correspondence of the ecomodes and the eigen values of the interaction matrix.
+
+# Analysis of growth rate fluctuations (Figure S3)
+
+# Analysis of Hurst exponent
+
+# Taylor law analysis
+
+# Effect of difference in gas seal quality among replicates
+
+
+# Conclusions
+
+"establish two simple statistical results describing the nature of random fluctuations around the average dynamics"
+
+1: "the variations of the three species were corre- lated. Well-defined ecomodes that describe these correlations emerged and stabilized after an initial period of about 3 weeks. The existence of these ecomodes reflects the fact that fluctua- tions of the three species’ densities around the replicate-average dynamics are coupled through ecological interactions that are common to all replicates."
+
+2: "despite the large complexity of biological phenomena observed in individual ecosystems, it was, remarkably, possible to describe the resulting fluctuations in population dynamics by simple quantitative laws. Specifically, local population dynamics displayed power-law behavior close to a geometric random walk around the average dynamics. Underlying these random walks is a single dominant ecomode, along which density fluctuations do not revert to the mean."
+
+"recently observed extreme repeatability of temporal dynamics and spatial patterns in similar experiments involving long-term single-species dynamics (Frentz et al., 2010) shows that the number of interacting components, the nature of their interactions, or the details of starting or external conditions may play a crucial role (cf. Jiang et al., 2011)."
