@@ -5,6 +5,8 @@ date: "21 July 2015"
 output: html_document
 ---
 
+# Introduction
+
 This paper concerns whether population dynamics have a common statistical structure, in the same way that the frequency distribution of earthquake strengths has a characteristic strucutre. Important for this is understanding the role of historical contingency, and this is addressed in the paper also.
 
 The data analysed comes from closed ecosystems containing E.coli, Chlamy., and Tetrahymena. Abundances were estimated via selective plane microscopy, allowing accurate and non-invasive estimates for months with high temporal resolution. The closed ecosystems were 3ml in volume held in fluorimetric cuvettes. Organisms in the ecosystes have been observed to persiste for over 1000 days.
@@ -12,6 +14,19 @@ The data analysed comes from closed ecosystems containing E.coli, Chlamy., and T
 Through time, the ecosystems developed spatial heterogeneity and phenotypic changes, such as large Tetrahymena (that may have beeb able to consume algae) and filamentous E.coli and colonies that may have been resistant to consumption by Tetrahymena. Replicates differed from each other in the development of this complexity.
 
 There were over 50 replicates distributed across temporal blocks. Observations of density were made over ~100 days, every day to every eight weeks.
+
+# The data
+
+The authors will provide the data to Owen, but have not given permission to make it public. Owen will put it on his group server, access to which is controlled by University of Zurich administrative systems (not by Owen directly).
+
+In order to minimise the chance of us leaking the data, please follow these rules:
+- Do not make a copy of the data. Absolutely. Do. Not.
+- From within R, read the data from the group server. This will require you to be connected to it. If you're off site, you will need to VPN in.
+- Do not perform any save() or write() operations in R. (We may amend this if analyses are intensive and we need to save intermediate steps. However, these should be stored on the server, and not on local machines.)
+
+This is obviously a bit of hassle compared to if we could make the data public, but we cannot, so must adhere to this practice.
+
+These rules / guidelines are provided and discussed in the wiki.
 
 # Reproduce figure 2E and Figure 3
 
