@@ -814,6 +814,30 @@ ggplot(subset(metainfo, Database %in% c("salmon" , "RAMlegacy.recperssb")), aes(
 ```
 
 
+Trying to reproduce Figure 3 about biological covariates:
+```{r}
+library(dplyr)
+
+# rename IDs in meta information dataset to match data available
+
+# number of fish ts
+metainfo$ID_old<- as.factor(metainfo$ID)
+metainfo$ID_new <- as.numeric(metainfo$ID_old)
+metainfo$ID <- metainfo$ID_new
+
+mean_ASE_GAM <- prediction_ASE %>% 
+  filter(model_type == "GAM (gam)" & step_ahead %in% 1:3) %>%
+  group_by(ID) %>%
+  summarize(mean_ASE = mean(ASE)) 
+
+covariates <- unique(metainfo[, c(1:3, 8:24)])
+
+pred_covar <- merge(mean_ASE_GAM, covariates, by=c("ID"))
+
+fish_age <- pred_covar %>% filter(Database %in% c("RAMlegacy.recperssb"))
+ggplot(data=fish_age[complete.cases(fish_age$maxAge),], aes(x=maxAge, y=log(mean_ASE))) + stat_smooth(method="lm", se=F) + geom_point()
+
+```
 
 
 
