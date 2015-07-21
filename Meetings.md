@@ -229,27 +229,168 @@ Vanessa knows about a tutorial on Github at the beginning of June.
 Thomas would like to add a paper to reproduce.
 
 We split into groups, reading the papers and looking for the data.
-Mikael Frank Aurelie work on Ward et al.
-Thomas Vanessa and Gian Marco work on Graham et al.
-Marco and Alejandra work on Lagrue et al.
-
+Mikael Frank Aurelie work on Ward et al.    
+Thomas Vanessa and Gian Marco work on Graham et al.     
+Marco and Alejandra work on Lagrue et al.     
 
 
 ## 2.6
 
+(Minutes by Frank)
+
+###Any suggested papers added to the repository?
+
+New papers added by Alejandra, Marco and Thomas
+
+###Any outstanding issues?
+
+Some conflicts resulted from multiple additions of new papers (2 issues); 
+Owen resolved the two issues demonstrating how to fix the file causing the conflict.   
+NB: being a collaborator you can send a pull request (via github) and then merge it yourself.
+
+2 sections added to organize "potential papers to reproduce": 
+* papers in progress
+* papers where reproduction failed because of unavailable data etc.
+
+###Any progress on focal paper since last week?
+
+Ward et al. -> raw data, processed data and scripts provided by Eric Ward; does not work out of the box 
+because only subset of data available; opens question how to proceed with papers that have high 
+degree of reproducibility from the start.
+
+Graham et al. -> data not made public yet, hence no reproduction possible. Will be stated as a matter of fact in the repo. 
+
+Lagrue et al. -> Marco & Alejandra reproduced two first figures of paper
+
+
+
+
 ## 9.6
+(Minutes by Aurelie)
+
+###New papers added
+* Hekstra. But the data could NOT be public. Find a solution to do not show the data (cf. Issue 81)
+* Hooper *et al.*. Meta-analysis paper on biodiversity loss as a driver of environmental changes.
+	* integrative study
+	* deal with big data (200 papers)
+	* **high priority** for RREEBES
+
+###On going papers
+* Lagrue. 
+	* Three figures reproduced, and on going tables (maybe not exactly the same format)
+	* it is a goof example for learning R
+* Ward.
+	* Code provided by the author.
+	* Keep on familiarising with the script also provided.
+* Graham.
+	* CANCELLED because data can not made available to public.
+* Vanessa, GM and Thomas focusing now on TREE paper
+* Beninca. 
+	* Owen fixing the last figures: fig.3 (parameters are not the same), fig.2 (some differences in the slope and pattern), and tab.1 (OK).
+
+###General information
+* Publishing the reproduction: using the GitHub webpage instead of RPubs.
+* Getting data on desktop: (cf issue 77). possibilities:
+	* cloning repository
+	* reading from GitHub online and "save as"
+	* using the URL of the "raw" script available online
+* Finished paper: give a short presentation to the class/group of the methods used.
+* Management of the repository: 
+	* each paper must has a new branch (and we work on this specific branch until the paper is finished).
+	* can work directly on the master branch to update the minutes or new papers.
+* Possibility to use a saved back up:
+	1. On the local repository, 
+	2. in the commit history,
+	3. select the last commit that you want to keep,
+	4. on the parameter option, prefer to click on "revert this commit" 
 
 ## 16.6
 
+(Minutes by Marco)
+
+Present: Owen, Thomas, Aurelie, Marco, Gian Marco, Alejandra, Vanessa.
+
+### Progress
+
+* Lagrue: to be finished in 1-2-hour work time.
+* Ward: ongoing.
+* Morales-Castilla: foodweb data available. Trait-based criteria used to remove redundant links are obscure.
+
+### Minutes
+
+* No new papers added to the ‘to-reproduce’ list.
+* What to do once a reproduced paper is done: publish it on GitHug Pages, but wait until most of the group members are present before giving a wrap-up presentation.
+* Owen gave a presentation about the newly-implemented RREEBES “wiki” section. There is already a page explaining how to publish a report using GitHub Pages.
+
 ## 23.6
+
+Independent work, no formal meeting.
 
 ## 30.6
 
+Independent work, no formal meeting.
+
 ## 7.7
+(Minutes by Thomas)
+
+### Attendance
+* Owen, Mikael, Frank, Thomas, Marco, Ale
+
+### General points (Owen)
+* How to proceed with the publication of data?
+	* Use a server located at the University of Zurich. The data remains centrally available for us (no local copies on everyone's computers), but is not publicly accessible.
+	* The rules of how to deal with (specific) data sets have to be included in the Wiki.
+
+### Progress
+* LAGRUE et al. (Marco, Ale)
+	* 99% done.
+	* Moved to 'finished papers'.
+	* Could be reproduced rather easily.
+	* Some questions remained open and some doubts were raised. Maybe, these will be answered or better understood when we have all read the paper...
+* WARD et al. (Mikael, Frank)
+	* (Almost) Done.
+* MORALES-CASTILLA et al. (Thomas)
+	* The data to immediately reproduce their analyses is still not there. We (Thomas, Vanessa, Gian Marco) would have to go deep into the reference papers to a) see which species feed upon which, and b) get information about the species'/guilds' traits.
+	* Once Vanessa and Gian Maro are back, we will discuss whether we will do this - or whether we go with another paper whose data is easy to obtain to immediately start working.
+	* A summary is written soon that will a) show how far we proceeded and b) provide our impression of the paper and the attempt to reproduce it.
+
+### Others
+* Frank introduced [Project Jupyter](https://jupyter.org), a online platform to share **and** interactively modify code.
+	
 
 ## 14.7
 
+*No new papers in the repository
+
+*Issues
+Make the wiki entry: what is meant by reproducible research; what we mean and in what context; you can add blogs on what this means – reproducible analysis.
+Look at how Ropensci might help us – will help on the Data Carpentry course
+Morales-Castilla – Thomas, Vanessa and Gian Marco will continue to work on it. 
+
+*Start reproduction of:
+Hooper et al. – Ale and Aurelie will start working on this. Maybe Marco and Dennis could join in the future 
+Hekstra et al – Frank and Owen will start this (Mikael can join later)
+So these two papers were moved to “papers currently being reproduced”
+
+*Ward et al. 
+Frank did a presentation of a nice partial reproduction they have been working on with Aurelie and Mikael. Next meeting to discuss more: take a look at the calendar and check when most people will be present
+
+
 ## 21.7
+
+Minutes by Mikael, REEBES 2015-07-21
+
+New papers
+Frank presented Tessa et al 2012 and AR models as a potential reproduction. Frank also presented Chih.hao et al 2008 as a potentially interesting paper to reproduce. 
+
+Papers on the way 
+The group reproducing Morales-Castilla et al 2015 has had some problems with the structure of data but they are working on the data to get in shape. The reproduction my possibly be terminated.  
+
+Hooper et al 2012 is on its way to be reproduced, meta-analysis data has been downloaded. 
+
+No progress on Hekstra et al 2012
+
+Individual work continued 
 
 ## 28.7
 
