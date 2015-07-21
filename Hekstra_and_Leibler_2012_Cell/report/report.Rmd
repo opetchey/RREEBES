@@ -43,3 +43,7 @@ Be sure to understand the "surprising" correspondence of the ecomodes and the ei
 2: "despite the large complexity of biological phenomena observed in individual ecosystems, it was, remarkably, possible to describe the resulting fluctuations in population dynamics by simple quantitative laws. Specifically, local population dynamics displayed power-law behavior close to a geometric random walk around the average dynamics. Underlying these random walks is a single dominant ecomode, along which density fluctuations do not revert to the mean."
 
 "recently observed extreme repeatability of temporal dynamics and spatial patterns in similar experiments involving long-term single-species dynamics (Frentz et al., 2010) shows that the number of interacting components, the nature of their interactions, or the details of starting or external conditions may play a crucial role (cf. Jiang et al., 2011)."
+
+# Ideas
+
+Need to think about what the analyses above assume about linearity of interactions / relationship among species. A non-linear approach (e.g., multispecies GAM) might give interesting insight.
