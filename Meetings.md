@@ -378,6 +378,20 @@ Frank did a presentation of a nice partial reproduction they have been working o
 
 ## 21.7
 
+Minutes by Mikael, REEBES 2015-07-21
+
+New papers
+Frank presented Tessa et al 2012 and AR models as a potential reproduction. Frank also presented Chih.hao et al 2008 as a potentially interesting paper to reproduce. 
+
+Papers on the way 
+The group reproducing Morales-Castilla et al 2015 has had some problems with the structure of data but they are working on the data to get in shape. The reproduction my possibly be terminated.  
+
+Hooper et al 2012 is on its way to be reproduced, meta-analysis data has been downloaded. 
+
+No progress on Hekstra et al 2012
+
+Individual work continued 
+
 ## 28.7
 
 ## 4.8
