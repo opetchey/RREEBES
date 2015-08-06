@@ -11,10 +11,9 @@
 [Tessa B. Francis, Mark D. Scheuerell, Richard D. Brodeur, Phillip S. Levin, James J. Ruzicka, Nick Tolimieri and William T. Peterson (2012) Climate shifts the interaction web of a marine plankton community](http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2486.2012.02702.x/abstract).     
 The paper uses multivariate autoregressive models (introduced in "Quantifying effects of abiotic and biotic drivers on community dynamics with multivariate autoregressive (MAR) models", http://www.esajournals.org/doi/full/10.1890/13-0996.1), which maybe an interesting approach for our BEEP data. We need to check data availability, however, there are other potentially interesting papers using the approach, if we cannot get the data of this one.
 
-[Chih‐hao Hsieh, Christian Anderson, and George Sugihara (2008): Extending Nonlinear Analysis to Short Ecological Time Series](http://www.jstor.org/stable/full/10.1086/524202)
+[Chih‐hao Hsieh, Christian Anderson, and George Sugihara (2008): Extending Nonlinear Analysis to Short Ecological Time Series](http://www.jstor.org/stable/full/10.1086/524202c)
 
-
-Wilfried Thuillera, Cécile Alberta,  Miguel B. Araújob,  Pam M. Berryc,  Mar Cabezad,  Antoine Guisane, Thomas Hicklerf, 1, Guy F. Midgleyg, James Patersonc, Frank M. Schurrh,  Martin T. Sykesf,  Niklaus E. Zimmermanni, Predicting global change impacts on plant species’ distributions: Future challenges, Perspectives in Plant Ecology, Evolution and Systematics 9 (2008) 137–152 (http://www.sciencedirect.com/science/article/pii/S1433831907000376#)
+[Gernster et al 2014, [EDITOR'S CHOICE: REVIEW: Effects of land use on plant diversity - A global meta-analysis, Journal of applied ecology, vol:51 iss:6 pg:1690 -1700] (http://onlinelibrary.wiley.com/doi/10.1111/1365-2664.12329/epdf)
 
 
 # Papers with reproduction underway
