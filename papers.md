@@ -13,7 +13,7 @@ The paper uses multivariate autoregressive models (introduced in "Quantifying ef
 
 [Chih‐hao Hsieh, Christian Anderson, and George Sugihara (2008): Extending Nonlinear Analysis to Short Ecological Time Series](http://www.jstor.org/stable/full/10.1086/524202c)
 
-[Gernster et al 2014, [EDITOR'S CHOICE: REVIEW: Effects of land use on plant diversity - A global meta-analysis, Journal of applied ecology, vol:51 iss:6 pg:1690 -1700] (http://onlinelibrary.wiley.com/doi/10.1111/1365-2664.12329/epdf)
+Gernster et al 2014, [EDITOR'S CHOICE: REVIEW: Effects of land use on plant diversity - A global meta-analysis, Journal of applied ecology, vol:51 iss:6 pg:1690 -1700] (http://onlinelibrary.wiley.com/doi/10.1111/1365-2664.12329/epdf)
 
 
 # Papers with reproduction underway
