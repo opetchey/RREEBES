@@ -402,10 +402,10 @@ Minutes by Frank
 
 No new faces
 
-*New papers added?*
+#New papers added?       
 Alejandra suggested a global meta-analysis by Gernster et al. 2014
 
-*Progress on reproductions*    
+#Progress on reproductions*    
 
 Hoekstra: No progress, except that Owen set up the repository; still waiting for the data    
 
@@ -414,7 +414,7 @@ Otherwise, Alejandra started to get a feeling for the data and started reproduci
 
 Morales-Castilla paper: GM and Thomas had some issues syncing repos and still work on getting the data into shape -> species description, trophic links etc     
 
-*Best practives*     
+#Best practives
 
 Thomas suggested to discuss best archiving practices. Possiblity of a best practice document about data archiving:
 we will look at available articles, focus on user experience rather than logic. Some information can be found here:
