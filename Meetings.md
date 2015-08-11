@@ -398,6 +398,32 @@ Individual work continued
 
 ## 11.8
 
+Minutes by Frank
+
+No new faces
+
+*New papers added?*
+Alejandra suggested a global meta-analysis by Gernster et al. 2014
+
+*Progress on reproductions*    
+
+Hoekstra: No progress, except that Owen set up the repository; still waiting for the data    
+
+Hooper:  Ale had issues with Github links -> data was not read properly, but issues could be solved when data is read from raw format page
+Otherwise, Alejandra started to get a feeling for the data and started reproducing table 1; some R code to reproduce figures was provided by the authors     
+
+Morales-Castilla paper: GM and Thomas had some issues syncing repos and still work on getting the data into shape -> species description, trophic links etc     
+
+*Best practives*     
+
+Thomas suggested to discuss best archiving practices. Possiblity of a best practice document about data archiving:
+we will look at available articles, focus on user experience rather than logic. Some information can be found here:
+(Blog psot on Methods in Ecology and Evolution blog)[https://methodsblog.wordpress.com/2015/03/26/open_data_and_reproducibility/]
+
+(‘OpenData and Reproducibility Workshop: the Good Scientist in the Open Science era’)[http://www.britishecologicalsociety.org/events/current_future_meetings/past-bes-symposia/mee-anniversary-symp/#sthash.px0yaMbb.dpuf]
+
+White EP, Baldridge E, Brym ZT, Locey KJ, McGlinn DJ, Supp SR.  2013.  Nine simple ways to make it easier to (re)use your data. Ideas in Ecology and Evolution. 6(2):1-10.
+
 ## 18.8
 
 ## 25.8
