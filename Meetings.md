@@ -428,7 +428,7 @@ Some information can be found here:
 
 [‘OpenData and Reproducibility Workshop: the Good Scientist in the Open Science era’](http://www.britishecologicalsociety.org/events/current_future_meetings/past-bes-symposia/mee-anniversary-symp/#sthash.px0yaMbb.dpuf)
 
-White EP, Baldridge E, Brym ZT, Locey KJ, McGlinn DJ, Supp SR.  2013.  Nine simple ways to make it easier to (re)use your data. Ideas in Ecology and Evolution. 6(2):1-10.
+[White EP, Baldridge E, Brym ZT, Locey KJ, McGlinn DJ, Supp SR.  2013.  Nine simple ways to make it easier to (re)use your data. Ideas in Ecology and Evolution. 6(2):1-10.](http://library.queensu.ca/ojs/index.php/IEE/article/view/4608)
 
 ## 18.8
 
