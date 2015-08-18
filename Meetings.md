@@ -394,7 +394,11 @@ Individual work continued
 
 ## 28.7
 
+No meeting.
+
 ## 4.8
+
+No meeting.
 
 ## 11.8
 
