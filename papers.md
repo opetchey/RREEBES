@@ -15,6 +15,9 @@ The paper uses multivariate autoregressive models (introduced in "Quantifying ef
 
 Gernster et al 2014, [EDITOR'S CHOICE: REVIEW: Effects of land use on plant diversity - A global meta-analysis, Journal of applied ecology, vol:51 iss:6 pg:1690 -1700] (http://onlinelibrary.wiley.com/doi/10.1111/1365-2664.12329/epdf)
 
+[HAWKES, Christine V. & KEITT, Timiothy H. (2015, EcolLet): Resilience vs. historical contingency in microbial responses to environmental change.](http://onlinelibrary.wiley.com/doi/10.1111/ele.12451/full)
+TMM: How do historical patterns of environmental variation influence the resilience of competitively structured communities to a change in the environmet? Is the community resilient (i.e., returning to its pre-perturbed state) or is its performance highly contingent on the past environment (i.e., approaching a different state)? To answer these questions, Hawkes & Keitt employ a simulation model including physiological, community and evolutionary mechanisms.
+
 
 # Papers with reproduction underway
 
