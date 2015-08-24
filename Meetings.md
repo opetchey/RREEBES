@@ -432,6 +432,23 @@ Some information can be found here:
 
 ## 18.8
 
+Minutes by Vanessa
+
+###Attendance
+* Owen, Frank, Thomas, Karthik and Vanessa
+
+###New people
+* Karthik Ram was present in the meeting and gave a brief introduction about his work.
+
+###Progress updates
+* Moriles-Castilla et al. 2015: Gian Marco and Thomas have been trying to organize the data and put it in R. 
+* Hooper et al. 2012: no members of this reproduction were present in the meeting
+* Hekstra & Leibler 2012: Owen in contact with the authors, waiting for the data.
+
+Discussion with Karthik about why we could not reproduce some papers.
+
+Individual work continued.
+
 ## 25.8
 
 ## 1.9
