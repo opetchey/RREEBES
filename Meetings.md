@@ -16,6 +16,8 @@ What to attempt this week (refer to closing note from last week)?
 
 What to attempt next week (to be refered to next week)?
 
+Meetings in 2016 are not yet listed, but will be same time place and frequency as during 2015.
+
 ## 3.3
 
 (Minutes by Mikael.)
