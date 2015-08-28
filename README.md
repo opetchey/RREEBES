@@ -3,7 +3,7 @@
 ## Aims
 
 -   Reproduce the figures, tables, statistical methods, and numerical
-    modelling of selected published papers.
+    modelling of selected published papers (examples [here](http://opetchey.github.io/RREEBES/).
 
 -   Learn, collaborate, and create about science.
 
