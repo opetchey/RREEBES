@@ -1,12 +1,12 @@
 ---
-title: Yampolsky et al. (2015) Adaptive phenotypic plasticity and local adaptation
+title: Yampolsky et al. (2014) Adaptive phenotypic plasticity and local adaptation
   for temperature tolerance in freshwater zooplankton
 author: "Tad Dallas"
 output:
-  html_document:
-    toc: yes
   pdf_document:
     fig_caption: yes
+    toc: yes
+  html_document:
     toc: yes
 ---
 
@@ -122,7 +122,7 @@ glmTimm <- getFig1(data, aht, plotIt=FALSE)
 glmTimmTable <- matrix(unlist(summary(glmTimm)), ncol=5)
 rownames(glmTimmTable) <- c("AHT_warmest", "AccT", "Acct * AHT_warmest", "Residuals")
 colnames(glmTimmTable) <- c('df', 'SS', 'MS', 'F', 'p-value')
-print(xtable(glmTimmTable), floating.placement='!', type='html')
+print(xtable(glmTimmTable), floating.placement='!', type='latex')
 ```
 
 
@@ -211,7 +211,7 @@ getTable3 <- function(data, type='html'){
         comment = FALSE, digits = 2, type=type)
   }
 
-getTable3(data)
+getTable3(data, type='latex')
 ```
 
 \newpage
@@ -334,10 +334,10 @@ getTable4 <- function(data, aht, type='html'){
   glmH576Table <- matrix(unlist(summary(glmH576)), ncol=5)
   rownames(glmH576Table) <- c("AHT_warmest", "AccT", "Acct * AHT_warmest", "Residuals")
   colnames(glmH576Table) <- c('df', 'SS', 'MS', 'F', 'p-value')
-  print(xtable(glmH576Table), floating.placement='!', comment=FALSE, type='html')  
+  print(xtable(glmH576Table), floating.placement='!', comment=FALSE, type=type)  
 }
 
-getTable4(data, aht)
+getTable4(data, aht, type='latex')
 ```
 
 
