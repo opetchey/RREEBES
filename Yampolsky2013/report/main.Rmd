@@ -3,10 +3,10 @@ title: Yampolsky et al. (2015) Adaptive phenotypic plasticity and local adaptati
   for temperature tolerance in freshwater zooplankton
 author: "Tad Dallas"
 output:
-  pdf_document:
-    toc: yes
-    fig_caption: yes
   html_document:
+    toc: yes
+  pdf_document:
+    fig_caption: yes
     toc: yes
 ---
 
@@ -122,7 +122,7 @@ glmTimm <- getFig1(data, aht, plotIt=FALSE)
 glmTimmTable <- matrix(unlist(summary(glmTimm)), ncol=5)
 rownames(glmTimmTable) <- c("AHT_warmest", "AccT", "Acct * AHT_warmest", "Residuals")
 colnames(glmTimmTable) <- c('df', 'SS', 'MS', 'F', 'p-value')
-print(xtable(glmTimmTable), floating.placement='!' )
+print(xtable(glmTimmTable), floating.placement='!', type='html')
 ```
 
 
@@ -187,7 +187,7 @@ getFig2(data, color = prettyColors, xpd=FALSE, ylim=c(3,5.5))
 
 
 ```{r eval=TRUE, echo=TRUE, results='asis', message=FALSE}
-getTable3 <- function(data){
+getTable3 <- function(data, type='html'){
   require(xtable)
   datS <- data[[3]][which(data[[3]]$Experiment == 'Short-term feeding'),]
   datL <- data[[3]][which(data[[3]]$Experiment == 'Long-term feeding'),]
@@ -208,7 +208,7 @@ getTable3 <- function(data){
                                   "long-term food manipulation treatment")
   
   print(xtable(glmTable), floating.placement='!', 
-        comment = FALSE, digits = 2)
+        comment = FALSE, digits = 2, type=type)
   }
 
 getTable3(data)
@@ -317,12 +317,6 @@ getFig3 <- function(data, aht, plotIt=TRUE, ...){
 
 getFig3(data, aht)
 
-  
-  
-
-
-
-
 ```
 
 
@@ -333,14 +327,14 @@ getFig3(data, aht)
 Wrong. 
 
 ```{r eval=TRUE, echo=TRUE, results='asis', message=FALSE}
-getTable4 <- function(data, aht){
+getTable4 <- function(data, aht, type='html'){
   require(xtable)
   raw <- getFig3(data, aht, plotIt=FALSE)
   glmH576 <- aov(glm(log(raw[['h576']][,1]) ~ rep(aht,2) * raw[['AccT']]))
   glmH576Table <- matrix(unlist(summary(glmH576)), ncol=5)
   rownames(glmH576Table) <- c("AHT_warmest", "AccT", "Acct * AHT_warmest", "Residuals")
   colnames(glmH576Table) <- c('df', 'SS', 'MS', 'F', 'p-value')
-  print(xtable(glmH576Table), floating.placement='!', comment=FALSE)  
+  print(xtable(glmH576Table), floating.placement='!', comment=FALSE, type='html')  
 }
 
 getTable4(data, aht)
