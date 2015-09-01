@@ -4,8 +4,6 @@
 
 [Tina Toni, David Welch, Natalja Strelkowa, Andreas Ipsen, Michael P.H. Stumpf (2009) Approximate Bayesian computation scheme for parameter inference and model selection in dynamical systems. Journal of the Royal Society Interface, 6, 187-202.] (http://rsif.royalsocietypublishing.org/content/6/31/187) Propose to reproduce ABC on Lotka Volterra equations. No data needed
 
-
-
 [Scheffer, M., Carpenter, S., Foley, J. a, Folke, C. & Walker, B. (2001) Catastrophic shifts in ecosystems. Nature, 413, 591–6.] (http://www.nature.com/nature/journal/v413/n6856/full/413591a0.html) At least reproduce / use the minimal mathematical model in Box 1, to recreate something like figure 3.
 
 [Tessa B. Francis, Mark D. Scheuerell, Richard D. Brodeur, Phillip S. Levin, James J. Ruzicka, Nick Tolimieri and William T. Peterson (2012) Climate shifts the interaction web of a marine plankton community](http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2486.2012.02702.x/abstract).     
@@ -18,6 +16,7 @@ Gernster et al 2014, [EDITOR'S CHOICE: REVIEW: Effects of land use on plant dive
 [HAWKES, Christine V. & KEITT, Timothy H. (2015, EcolLet): Resilience vs. historical contingency in microbial responses to environmental change.](http://onlinelibrary.wiley.com/doi/10.1111/ele.12451/full)
 TMM: How do historical patterns of environmental variation influence the resilience of competitively structured communities to a change in the environmet? Is the community resilient (i.e., returning to its pre-perturbed state) or is its performance highly contingent on the past environment (i.e., approaching a different state)? To answer these questions, Hawkes & Keitt employ a simulation model including physiological, community and evolutionary mechanisms.
 
+One of Lutz Becks et al's papers.
 
 # Papers with reproduction underway
 
