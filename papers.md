@@ -22,7 +22,7 @@ One of Lutz Becks et al's papers.
 TMM: Construction and analysis of food webs based on the cascade (larger species consume smaller ones; no trphic cycles) or niche model. These food webs are much closer to real food webs due to the way they were constructed and differ substantially from random matrix interaction networks. **Note**: Challenging approach/analysis.
 
 [DAI, L, KOROLEV, K.S. & GORE, J. (2015, PNAS): Relation between stability and resilience determines the performance of early warning signals under different drivers.](http://www.pnas.org/content/112/32/10056.short)
-TMM: How do early warning signals perform when two environmental changes act simultaniously? . **Note**: Challenging approach/analysis. Have to check for teh availability of yeast populations data...!
+TMM: How do early warning signals perform when two environmental changes act simultaniously? . **Note**: Challenging approach/analysis. Have to check for the availability of yeast populations data...!
 
 # Papers with reproduction underway
 
