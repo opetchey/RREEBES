@@ -13,12 +13,19 @@ output:
 
 This report is the reproduction of the analyses shown in [Ward, E.J., Holmes, E.E., Thorson, J.T. & Collen, B. (2014) Complexity is costly: A meta-analysis of parametric and non-parametric methods for short-term population forecasting. Oikos, 123, 652–661](http://onlinelibrary.wiley.com/doi/10.1111/j.1600-0706.2014.00916.x/abstract).
 
-Eric Ward kindly provided a subset of the raw data, processed data as well as the R scripts used for model fitting; they can be found in the respective folders. His original repository can be found [here](https://github.com/eric-ward/complexity-costly). Because the data originates from a collaborative project, not all data is freely available yet; however, the data provided by Eric allows to reproduce the analyses on the fish time-series.
+Eric Ward kindly provided a subset of the raw data, processed data as well as the R scripts used for model fitting; they can be found in the respective folders. His original repository can be found [here](https://github.com/eric-ward/complexity-costly). Because the data originates from a collaborative project, not all data is freely available yet; however, the data provided by Eric allows to reproduce the analyses on the fish time-series shown in the paper.
 
 # Data processing 
 
 ```{r, setup, eval=t, echo=T, warning=F}
 rm(list=ls())
+
+# run package installations (may require additional packages depending on your R setup)
+#library(devtools)
+#devtools::install_github("James-Thorson/NLTS")
+
+# libraries need for prediction
+#install.packages(c("MARSS", "NTLS", "mgcv", "np", "locfit", "forecast", "kernlab", "tsDyn", "ltsa", "timsac", "randomForest"))
 
 # libraries for data management
 library(tidyr)
@@ -29,11 +36,7 @@ library(ggplot2)
 library(RCurl)
 library(reshape2)
 
-#library(devtools)
-#devtools::install_github("James-Thorson/NLTS")
-
-# libraries need for prediction
-#install.packages(c("MARSS", "NTLS", "mgcv", "np", "locfit", "forecast", "kernlab", "tsDyn", "ltsa", "timsac", "randomForest"))
+# libraries used for forecasting population dynamics
 library(tsDyn)
 library(MARSS)
 library(mgcv)
@@ -41,16 +44,13 @@ library(np)
 library(locfit)
 library(forecast)
 library(kernlab)
-
 library(ltsa)
 library(timsac)
 library(randomForest)
 library(NLTS)
-
-
 ```
 
-Read time series data:
+Read time series data provided from repository:
 
 ```{r}
 ts <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/WARD_etal_2014_Oikos/WARD_etal_2014_Oikos/processed%20data/masterDat%20052015.csv"), header=T, stringsAsFactors=F)
@@ -62,20 +62,25 @@ head(ts)
 
 # number of fish ts
 length(unique(ts$ID))
+length(unique(metainfo$ID))
+
+
 ts$ID_old <- as.factor(ts$ID)
 ts$ID_new <- as.numeric(ts$ID_old)
 ts$ID <- ts$ID_new
 
 ```
 
-Explore some time series visually to get an idea of the variability. Year-Mean(Year) and Value - Mean(Value) are plotted to easily compare time series.
+Explore some time series visually to get an idea of the variability. Figure does not appear in the paper. Time series were centered to easily plot them simultaneousl [e.g. Year-Mean(Year) and Value - Mean(Value)].
 
 ```{r, warning=FALSE, fig.width=10}
 set.seed(12345678)
 ggplot(data=subset(ts, ID %in% sample(ts$ID,size=15)), aes(x=Year-mean(Year), y=Value-mean(Value))) + geom_line() + facet_wrap(ID~Species,ncol=5,nrow=3, scales="free")
 ```
 
-Run the script to get forecasts based on the training data.
+The following script was provided but required some adjusting to run on the available data. Running the script will produce forecasts based on the training data (all data points except the five last data points). This script takes considerable time to run as it loops over each time series and fits the 49 different model parameterizations. An object containing the output of the full run can be found here: https://www.dropbox.com/s/p1j16tgzlrwrr7m/Ward_et_al_results.RData?dl=0
+
+MARSS failed on a couple of time series (IDs: 430, 514, 515, 590, 1234) which were hence excluded.
 
 ```{r, eval=F}
 # Load in the data. This dataset only contains the 
@@ -765,16 +770,11 @@ prediction_ASE <- ddply(.data=prediction, c("ID_new","model_type"), get.ASE)
 #save.image("/Volumes/Work MAC backup/Ward_et_al_results.RData")
 ```
 
-MARSS failed on a couple of time series (IDs: 430, 514, 515, 590, 1234) which were hence excluded.
-
-```{r}
-# only load dplyr package after model fitting due to clashes with tsDyn package
-#library(dplyr)
-```
-
 Prepare data for visualization by re-ordering factor levels. For some of the models it is not entirely clear which of the different specifications was taken.
 ```{r}
-load("/Users/frank/Dropbox/RREEBES/Ward_et_al_2014/Ward_et_al_results.RData")
+# load object with script output
+load("/Users/Frank/Documents/Github projects/RREEBES/WARD_etal_2014_Oikos/report/Ward_et_al_results.RData")
+
 models_selected <- subset(prediction_ASE, model_type %in% c("GAM (gam)", "nnetTs.11 (nnetTs)", "AR - no drift (rwf)", "Local regression (locfit)", "ARIMA 1.0.1 (arima)","Exp smooth (freq=1) (ets)" , "ARIMA 0.0.1 (arima)", "ARIMA 1.1.0 (arima)", "MARSSdrift", "SMAP v2", "Simplex v2" , "randomForest v2", "simple regression"))
 models_selected$model_type <- factor(models_selected$model_type)
 models_selected$model_type <- factor(models_selected$model_type,levels(models_selected$model_type)[c(13,7,3,6,4,8,9,1,5,2,11,10,12)])
@@ -782,11 +782,11 @@ models_selected$data_dist <- ifelse(models_selected$model_type %in% c("GAM (gam)
 
 ```
 
-Figure 1: Visualize overall forecasting performance using the 13 models specified in the caption. The plot in the manuscript shows only 12 models! Currently it is hard to determine the exact grouping used (e.g. Salmon, Marine fish productivity) because there is no corresponding label. Nevetheless, the plots quite look as in the paper!
+# Figures
+
+Figure 1: Visualize overall forecasting performance using the 13 models specified in the caption. The plot in the manuscript shows only 12 models! Currently it is hard to determine the exact grouping used (e.g. Salmon, Marine fish productivity) because there is no corresponding label shipped with the data. Nevetheless, the plots quite look as Figure 1 in the paper!
 
 ```{r, fig.width=15, fig.height=10}
-#ggplot(subset(models_selected, step_ahead >3), aes(x=log(ASE))) + geom_histogram() + scale_y_log10() + scale_x_log10() + facet_wrap(~model_type)
-
 mean_ASE <- ddply(models_selected, .(Database, model_type, data_dist, step_ahead), summarize, mean_log_ASE = log(mean(ASE, na.rm = T)))
        
 ggplot(data=subset(mean_ASE, step_ahead<5 & mean_log_ASE<60 & (Database == "salmon" | Database == "RAMlegacy.recperssb")), aes(x=model_type,y=mean_log_ASE, group=step_ahead, linetype=as.factor(step_ahead), size=as.factor(step_ahead), shape=data_dist)) + geom_point(size=2) + geom_line() + 
@@ -799,7 +799,7 @@ ggplot(data=subset(mean_ASE, step_ahead<5 & mean_log_ASE<60 & (Database == "salm
 
 ```
 
-Figure 2: Plot MASE for the different species of salmon separately. No "Coho" in the current dataset, hence no plot produced. 
+Figure 2: Plot MASE for the different species of salmon separately. No "Coho" in the current dataset, hence no plot produced. Nevertheless, plots pretty similar to what was shown in the paper.
 ```{r, fig.width=15, fig.height=12}
 mean_ASE_salmon <- ddply(subset(models_selected, Species %in% c("Chinook", "Chum", "Pink", "Coho", "Sockeye")), .(Species, model_type, data_dist, step_ahead), summarize, mean_log_ASE = log(mean(ASE, na.rm = T)))
 mean_ASE_salmon$Species <- factor(mean_ASE_salmon$Species ,levels(as.factor(mean_ASE_salmon$Species))[c(3,2,4,5,1)])
@@ -808,14 +808,9 @@ ggplot(data=subset(mean_ASE_salmon, step_ahead<5), aes(x=model_type,y=mean_log_A
 
 ```
 
-Reproducing Figure 4 based on meta information data set.
-```{r, fig.width=15, fig.height=10}
-ggplot(subset(metainfo, Database %in% c("salmon" , "RAMlegacy.recperssb")), aes(x=training.acf)) + geom_histogram() + facet_wrap(~Database) + geom_vline(xintercept = 0, linetype="dashed", size=2)
-```
-
-
-Trying to reproduce Figure 3 about biological covariates:
+Trying to reproduce Figure 3 about biological covariates. Does not really work yet. Description of the analysis varies from what is show in Figure 3.
 ```{r}
+# only load dplyr package after model fitting due to clashes with tsDyn package
 library(dplyr)
 
 # rename IDs in meta information dataset to match data available
@@ -825,19 +820,34 @@ metainfo$ID_old<- as.factor(metainfo$ID)
 metainfo$ID_new <- as.numeric(metainfo$ID_old)
 metainfo$ID <- metainfo$ID_new
 
+# the absolute scaled error (ASE) statistic from the GAM model, averaged over forecasts of 1 to 3 time steps
 mean_ASE_GAM <- prediction_ASE %>% 
   filter(model_type == "GAM (gam)" & step_ahead %in% 1:3) %>%
-  group_by(ID) %>%
-  summarize(mean_ASE = mean(ASE)) 
+  group_by(ID_old) %>%
+  summarize(mean_ASE = mean(ASE))
 
 covariates <- unique(metainfo[, c(1:3, 8:24)])
 
-pred_covar <- merge(mean_ASE_GAM, covariates, by=c("ID"))
+pred_covar <- merge(mean_ASE_GAM, covariates, by=c("ID_old"))
 
 fish_age <- pred_covar %>% filter(Database %in% c("RAMlegacy.recperssb"))
-ggplot(data=fish_age[complete.cases(fish_age$maxAge),], aes(x=maxAge, y=log(mean_ASE))) + stat_smooth(method="lm", se=F) + geom_point()
+
+#The expected improvement in ASE is calculated as the ASE statistic divided by the ASE statistic at the mean of each covariate (e.g. mean trophic level of 2.5 for birds), 100 * ASEt / ASEmean(x).
+
+lm(log(mean_ASE) ~ maxAge, data=fish_age)
+
+ggplot(data=fish_age[complete.cases(fish_age$maxAge),], aes(x=maxAge, y=log(mean_ASE))) + stat_smooth(method="lm") + geom_point() + geom_vline(xintercept=mean(fish_age$maxAge, na.rm=T))
+
+length(fish_age[!is.na(fish_age$maxAge)==TRUE, ]$maxAge)
 
 ```
+
+Trying to reproduce Figure 4 based on meta information data set. This is pretty approximate, but ok as it was not the main target of the reproduction.
+```{r, fig.width=15, fig.height=10}
+ggplot(subset(metainfo, Database %in% c("salmon" , "RAMlegacy.recperssb")), aes(x=training.acf)) + geom_histogram() + facet_wrap(~Database) + geom_vline(xintercept = 0, linetype="dashed", size=2)
+```
+
+
 
 
 
