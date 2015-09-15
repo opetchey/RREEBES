@@ -461,7 +461,11 @@ No meeting.
 
 ## 8.9
 
+Minutes to come, from Aurélie.
+
 ## 15.9
+
+No meeting.
 
 ## 22.9
 
