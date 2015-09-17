@@ -509,57 +509,45 @@ ts <- as.ts(final$y, frequency = 0.3)
 
 Create dataset with zeros removed for this table (note that this is probably not how Beninca et al did this):
 ```{r}
-final_nozeros <- final
-final_nozeros$y <- ifelse(final_nozeros$y!=0, final_nozeros$y, NA)
-# make it wide format
-#
-final_long <- final_nozeros[final_nozeros$variable!="Cyclopoids" & final_nozeros$variable!="Filamentous.diatoms",c("Day.number","variable","stand.y")]
 
-final_wide <- spread(as.data.frame(final_long), variable, stand.y)
+final_nozeros <- final[final$value!=0,]
+
+#
+#final_long <- final_nozeros[final_nozeros$variable!="Cyclopoids" & final_nozeros$variable!="Filamentous.diatoms",c("Day.number","variable","stand.y")]
+
+final_wide <- spread(as.data.frame(final_nozeros[,c("Day.number","variable","stand.y")]), variable, stand.y)
+final_wide <- select(final_wide, - Day.number)
 # we also removed data on Cyclopoids, not used in the table
 ```
 
 Calculate correlation coefficients:
 ```{r}
-cor.coefs <- cor(final_wide[,c(-1)])
+cor.coefs <- cor(final_wide, use="pairwise.complete.obs")
 ```
 
 Only keep the upper triangle of the cor.pvals matrix:
 ```{r}
-for(i in 1:10){
-  for(j in 1:10){
-  cor.coefs[i,j] <- ifelse(i<j, cor.coefs[i,j], NA)
-}}
+#for(i in 1:10){
+#  for(j in 1:10){
+#  cor.coefs[i,j] <- ifelse(i<j, cor.coefs[i,j], NA)
+#}}
 ```
 
 Get p-vals too:
 ```{r}
-# https://stat.ethz.ch/pipermail/r-help/2005-July/076050.html
-pn <- function(X){crossprod(!is.na(X))}
-cor.prob <- function(X){
-# Correlations Below Main Diagonal
-# Significance Tests with Pairwise Deletion
-# Above Main Diagonal
-# Believe part of this came from Bill Venables
-pair.SampSize <- pn(X)
-above1 <- row(pair.SampSize) < col(pair.SampSize)
-pair.df <- pair.SampSize[above1] - 2
-R <- cor(X, use="pair")
-above2 <- row(R) < col(R)
-r2 <- R[above2]^2
-Fstat <- (r2 * pair.df)/(1 - r2)
-R[above2] <- 1 - pf(Fstat, 1, pair.df)
-R
-}
-cor.pvals <- cor.prob(final_wide[,c(-1)])
+cor.pvals <- matrix(NA, length(final_wide[1,]), length(final_wide[1,]))
+for(i in 1:length(final_wide[1,]))
+  for(j in 1:length(final_wide[1,]))
+    cor.pvals[i,j] <- cor.test(final_wide[,i], final_wide[,j])$p.value
+#plot(final_wide[,2], final_wide[,3])
 ```
 
 Only keep the upper triangle of the cor.pvals matrix:
 ```{r}
-for(i in 1:10){
-  for(j in 1:10){
-  cor.pvals[i,j] <- ifelse(i<j, cor.pvals[i,j], NA)
-}}
+#for(i in 1:10){
+#  for(j in 1:10){
+#  cor.pvals[i,j] <- ifelse(i<j, cor.pvals[i,j], NA)
+#}}
 ```
 
 
@@ -573,26 +561,29 @@ cor.stars <- ifelse(cor.pvals<0.0001, "***",
 
 ```{r}
 cor.cp <- cor.coefs
-for(i in 1:10){
-  for(j in 1:10){
+for(i in 1:length(final_wide[1,])){
+  for(j in 1:length(final_wide[1,])){
   cor.cp[i,j] <- paste(round(cor.coefs[i,j],3), cor.stars[i,j])
 }}
 ```
 
-Remove NAs:
 ```{r}
-for(i in 1:10){
-  for(j in 1:10){
-  cor.cp[i,j] <- ifelse(cor.cp[i,j]=="NA NA", "", cor.cp[i,j])
-}}
-for(i in 1:10){
-  for(j in 1:10){
-  cor.cp[i,j] <- ifelse(i==j, "1", cor.cp[i,j])
-}}
 
-colnames(cor.cp) <- c("Calanoid.copepods  ","Rotifers  ","Protozoa  ","Nanophytoplankton  ","Picophytoplankton  ",
-"Ostracods  ","Harpacticoid.copepods  ","Bacteria  ","Nitrogen  ","Phosphorus  ")
-rownames(cor.cp)<-colnames(cor.cp)
+oo <- c(10, 9, 8, 11, 12, 6, 5, 3, 4, 2)
+
+cor.cp <- cor.cp[oo,oo]
+
+
+for(i in 1:length(cor.cp[1,]))
+  for(j in 1:i)
+  cor.cp[i,j] <- ""
+
+#sn <- c("Bacteria", "Harps", "Ostr", "N", "P", "Picophyt", "Nanophyt", "Rotifers", "Protozoa", "Calanoids")
+sn <- substr(rownames(cor.cp), 1, 4)
+sn[4:5] <- c("N", "P")
+dimnames(cor.cp) <- list(sn, sn)
+
+
 ```
 
 Make it a table:
@@ -606,7 +597,6 @@ table1b
 # differs from the one published by Beninca et al.!
 ```
 
--->
 
 # Predictability (Figure 2)
 
