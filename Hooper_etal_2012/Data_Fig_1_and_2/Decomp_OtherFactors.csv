@@ -1,0 +1,6 @@
+group,est,lower,upper,diffpt,xval
+Elevated CO  (101),-0.02,-0.041,0.01,1,128
+Added N (520),-0.023,-0.046,0,1,118
+Eutrophication (6),0.25,-0.18,0.66,0,138
+Plant Invasion (62),0.729,0.677,0.782,0,148
+Acidifcation ,-0.83,NA,-0.52,1,108
