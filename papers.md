@@ -24,6 +24,9 @@ TMM: Construction and analysis of food webs based on the cascade (larger species
 [DAI, L, KOROLEV, K.S. & GORE, J. (2015, PNAS): Relation between stability and resilience determines the performance of early warning signals under different drivers.](http://www.pnas.org/content/112/32/10056.short)
 TMM: How do early warning signals perform when two environmental changes act simultaniously? . **Note**: Challenging approach/analysis. Have to check for the availability of yeast populations data...!
 
+[Huisman, J. & Weissing, F.J. (2001) Fundamental unpredictability in multispecies competition. The American naturalist, 157, 488–494.](http://www.jstor.org/stable/10.1086/319929?seq=1) Added by Owen.
+
+
 # Papers with reproduction underway
 
 
