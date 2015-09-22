@@ -1,5 +1,5 @@
 ---
-title: "Reproduce analyses of Ward et al (2014): Complexity is costly"
+title: 'Reproduce analyses of Ward et al (2014): Complexity is costly'
 author: "Aurélie Garnier, Frank Pennekamp, Mikael Pontarp"
 date: "1 Jun 2015"
 output:
@@ -17,7 +17,7 @@ Eric Ward kindly provided a subset of the raw data, processed data as well as th
 
 # Data processing 
 
-```{r, setup, eval=t, echo=T, warning=F}
+```{r, setup, eval=t, echo=F, warning=F}
 rm(list=ls())
 
 # run package installations (may require additional packages depending on your R setup)
@@ -62,8 +62,6 @@ head(ts)
 
 # number of fish ts
 length(unique(ts$ID))
-length(unique(metainfo$ID))
-
 
 ts$ID_old <- as.factor(ts$ID)
 ts$ID_new <- as.numeric(ts$ID_old)
@@ -78,11 +76,15 @@ set.seed(12345678)
 ggplot(data=subset(ts, ID %in% sample(ts$ID,size=15)), aes(x=Year-mean(Year), y=Value-mean(Value))) + geom_line() + facet_wrap(ID~Species,ncol=5,nrow=3, scales="free")
 ```
 
-The following script was provided but required some adjusting to run on the available data. Running the script will produce forecasts based on the training data (all data points except the five last data points). This script takes considerable time to run as it loops over each time series and fits the 49 different model parameterizations. An object containing the output of the full run can be found here: https://www.dropbox.com/s/p1j16tgzlrwrr7m/Ward_et_al_results.RData?dl=0
+# Results
+
+## Time series forecasting
+
+The forecasting script was provided but required some adjusting to run on the available data. It is not shown here for its length. Running the script will produce forecasts based on the training data (all data points except the five last data points). This script takes considerable time to run as it loops over each time series and fits the 49 different model parameterizations. An object containing the output of the full run can be found here: https://www.dropbox.com/s/p1j16tgzlrwrr7m/Ward_et_al_results.RData?dl=0
 
 MARSS failed on a couple of time series (IDs: 430, 514, 515, 590, 1234) which were hence excluded.
 
-```{r, eval=F}
+```{r, eval=F, echo=F}
 # Load in the data. This dataset only contains the 
 set.seed(12345678)
 
@@ -743,6 +745,8 @@ dat <- cbind(dat,predicted)
 prediction <- gather(dat, model_type, Value_predicted,  11:(MODELS+10))
 ```
 
+## Calculation of mean absolute scaled error
+
 Implementation of the absolute scaled error (ASE) for a single time-series. The absolute error is scaled by the mean absolute
 error within the training data to account for the different variability per time series. ASE is calculated for the different forecasting methods.
 
@@ -770,8 +774,10 @@ prediction_ASE <- ddply(.data=prediction, c("ID_new","model_type"), get.ASE)
 #save.image("/Volumes/Work MAC backup/Ward_et_al_results.RData")
 ```
 
+# Figures
+
 Prepare data for visualization by re-ordering factor levels. For some of the models it is not entirely clear which of the different specifications was taken.
-```{r}
+```{r, echo=F}
 # load object with script output
 load("/Users/Frank/Documents/Github projects/RREEBES/WARD_etal_2014_Oikos/report/Ward_et_al_results.RData")
 
@@ -782,9 +788,9 @@ models_selected$data_dist <- ifelse(models_selected$model_type %in% c("GAM (gam)
 
 ```
 
-# Figures
+## Reproducing Figure 1
 
-Figure 1: Visualize overall forecasting performance using the 13 models specified in the caption. The plot in the manuscript shows only 12 models! Currently it is hard to determine the exact grouping used (e.g. Salmon, Marine fish productivity) because there is no corresponding label shipped with the data. Nevetheless, the plots quite look as Figure 1 in the paper!
+Visualize overall forecasting performance using the 13 models specified in the caption. The plot in the manuscript shows only 12 models! Currently it is hard to determine the exact grouping used (e.g. salmon, marine fish productivity) because there is no corresponding label shipped with the data. Nevertheless, the plots pretty much look like Figure 1 from the paper!
 
 ```{r, fig.width=15, fig.height=10}
 mean_ASE <- ddply(models_selected, .(Database, model_type, data_dist, step_ahead), summarize, mean_log_ASE = log(mean(ASE, na.rm = T)))
@@ -799,7 +805,10 @@ ggplot(data=subset(mean_ASE, step_ahead<5 & mean_log_ASE<60 & (Database == "salm
 
 ```
 
-Figure 2: Plot MASE for the different species of salmon separately. No "Coho" in the current dataset, hence no plot produced. Nevertheless, plots pretty similar to what was shown in the paper.
+## Reproducing Figure 2
+
+Plot MASE for the different species of salmon separately. No "Coho" in the current dataset, hence no plot produced. Nevertheless, plots pretty similar to what was shown in the paper.
+
 ```{r, fig.width=15, fig.height=12}
 mean_ASE_salmon <- ddply(subset(models_selected, Species %in% c("Chinook", "Chum", "Pink", "Coho", "Sockeye")), .(Species, model_type, data_dist, step_ahead), summarize, mean_log_ASE = log(mean(ASE, na.rm = T)))
 mean_ASE_salmon$Species <- factor(mean_ASE_salmon$Species ,levels(as.factor(mean_ASE_salmon$Species))[c(3,2,4,5,1)])
@@ -808,8 +817,9 @@ ggplot(data=subset(mean_ASE_salmon, step_ahead<5), aes(x=model_type,y=mean_log_A
 
 ```
 
-Trying to reproduce Figure 3 about biological covariates. Does not really work yet. Description of the analysis varies from what is show in Figure 3.
-```{r}
+## No reproduction of Figure 3 
+
+```{r, echo=F, eval=F}
 # only load dplyr package after model fitting due to clashes with tsDyn package
 library(dplyr)
 
@@ -842,7 +852,9 @@ length(fish_age[!is.na(fish_age$maxAge)==TRUE, ]$maxAge)
 
 ```
 
-Trying to reproduce Figure 4 based on meta information data set. This is pretty approximate, but ok as it was not the main target of the reproduction.
+## Partial reproduction of Figure 4
+
+Based on meta information data set. This is pretty approximate, but ok as it was not the main target of the reproduction.
 ```{r, fig.width=15, fig.height=10}
 ggplot(subset(metainfo, Database %in% c("salmon" , "RAMlegacy.recperssb")), aes(x=training.acf)) + geom_histogram() + facet_wrap(~Database) + geom_vline(xintercept = 0, linetype="dashed", size=2)
 ```
