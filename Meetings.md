@@ -469,6 +469,21 @@ No meeting.
 
 ## 22.9
 
+Minutes by Frank
+
+Attendance: Vanessa, Frank
+
+### New papers
+Huisman & Weissing 2001 added by Owen
+
+### Issues
+* Frank briefly outlined Tad's suggestion about publishing reproductions on ReScience
+* Owen did some trials and aims to publish the Beninca reproduction; however, ReScience probably only suitable as outlet for some reproductions as some effort needed to format our html reports 
+
+### Progress
+Ward et al. reproduction finalized and put on gh-pages branch
+
+
 ## 29.9
 
 ## 6.10
