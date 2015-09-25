@@ -724,7 +724,7 @@ Not exactly the same at Figure 3 in the Nature report. Qualitatively the same, e
 
 Compare graphically with original LEs
 ```{r}
-original.LEs <- read.csv(text=getURL(paste0(repo,"data/original_direct_LEs.csv")), skip=0, header=T)
+original.LEs <- read.csv(text=getURL(paste0(repo,"/data/original_direct_LEs.csv")), skip=0, header=T)
 LEs
 
 both_LEs <- full_join(original.LEs, LEs)

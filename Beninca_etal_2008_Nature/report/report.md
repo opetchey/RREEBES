@@ -24,13 +24,69 @@ The data are available as an Excel file supplement to [an Ecology Letters public
 
 In the code below, the data and any other files are read from github, which means there must be a connection to github.
 
+# R session info
+
+
+```r
+rm(list=ls())
+devtools::session_info()
+```
+
+```
+## Session info --------------------------------------------------------------
+```
+
+```
+##  setting  value                       
+##  version  R version 3.2.1 (2015-06-18)
+##  system   x86_64, darwin13.4.0        
+##  ui       X11                         
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  tz       Europe/Zurich
+```
+
+```
+## Packages ------------------------------------------------------------------
+```
+
+```
+##  package   * version date       source                            
+##  curl        0.9.2   2015-08-08 CRAN (R 3.2.0)                    
+##  devtools    1.8.0   2015-05-09 CRAN (R 3.2.0)                    
+##  digest      0.6.8   2014-12-31 CRAN (R 3.2.0)                    
+##  evaluate    0.7.2   2015-08-13 CRAN (R 3.2.0)                    
+##  formatR     1.2     2015-04-21 CRAN (R 3.2.0)                    
+##  git2r       0.11.0  2015-08-12 CRAN (R 3.2.1)                    
+##  htmltools   0.2.6   2014-09-08 CRAN (R 3.2.0)                    
+##  knitr       1.11    2015-08-14 CRAN (R 3.2.1)                    
+##  magrittr    1.5     2014-11-22 CRAN (R 3.2.0)                    
+##  memoise     0.2.1   2014-04-22 CRAN (R 3.2.0)                    
+##  Rcpp        0.12.0  2015-07-25 CRAN (R 3.2.0)                    
+##  rmarkdown   0.5.3.4 2015-07-21 Github (rstudio/rmarkdown@7de9384)
+##  rversions   1.0.2   2015-07-13 CRAN (R 3.2.0)                    
+##  stringi     0.5-5   2015-06-29 CRAN (R 3.2.0)                    
+##  stringr     1.0.0   2015-04-30 CRAN (R 3.2.0)                    
+##  xml2        0.1.1   2015-06-02 CRAN (R 3.2.0)                    
+##  yaml        2.1.13  2014-06-12 CRAN (R 3.2.0)
+```
+
+# Repository to read data from
+
+The datasets for this reproduction are read from this github repository:
+
+```r
+repo <- "https://raw.githubusercontent.com/opetchey/RREEBES/Beninca_development/Beninca_etal_2008_Nature"
+```
+
+
+
 # First get the raw data into R and tidy it.
 
 All required libraries:
 
 
 ```r
-rm(list=ls())
 library(tidyr)
 library(dplyr)
 library(lubridate)
@@ -44,7 +100,7 @@ library(reshape2)
 library(mgcv)
 library(repmis)
 
-spp.abund <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/species_abundances_original.csv"), skip=7, header=T)
+spp.abund <- read.csv(text=getURL(paste0(repo,"/data/species_abundances_original.csv")), skip=7, header=T)
 
 spp.abund <- select(spp.abund, -X, -X.1)
 spp.abund <- spp.abund[-804:-920,]
@@ -160,7 +216,7 @@ str(spp.abund)
 Bring in the nutrient data:
 
 ```r
-nuts <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Beninca_etal_2008_Nature/data/nutrients_original.csv"), skip=7, header=T)
+nuts <- read.csv(text=getURL(paste0(repo,"/data/nutrients_original.csv")), skip=7, header=T)
 #nuts <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/nutrients_original.csv", skip=7, header=T)
 
 nuts <- select(nuts, -X, -X.1)
@@ -207,7 +263,7 @@ ggplot(all.data, aes(x=Day.number, y=value)) + geom_line() +
   facet_wrap(~variable, scales="free_y")
 ```
 
-![](report_files/figure-html/unnamed-chunk-13-1.png) 
+![](report_files/figure-html/unnamed-chunk-14-1.png) 
 
 Now we add a column that gives the variable types, same as in figure 1b through 1g.
 First make a lookup table giving species type:
@@ -263,7 +319,7 @@ g1 <- qplot(as.numeric(Day.number), value, col=variable, data=all.data) +
 g1
 ```
 
-![](report_files/figure-html/unnamed-chunk-18-1.png) 
+![](report_files/figure-html/unnamed-chunk-19-1.png) 
 Looks reasonably good.
 
 Now a version that approximates the "gap", by removing data above it:
@@ -282,7 +338,7 @@ g1 <- qplot(as.numeric(Day.number), value, col=variable, data=an2) +
 g1
 ```
 
-![](report_files/figure-html/unnamed-chunk-19-1.png) 
+![](report_files/figure-html/unnamed-chunk-20-1.png) 
 Difficult it look like the data go off the top of the graph in ggplot.
 
 Try logarithmic y-axes:
@@ -295,7 +351,7 @@ g1 <- qplot(as.numeric(Day.number), log10(value+0.00001), col=variable, data=all
 g1
 ```
 
-![](report_files/figure-html/unnamed-chunk-20-1.png) 
+![](report_files/figure-html/unnamed-chunk-21-1.png) 
 
 End of html comment
 -->
@@ -304,14 +360,15 @@ The graph with abundances fourth root transformed, as this is the transformation
 
 
 ```r
-g1 <- qplot(as.numeric(Day.number), value^0.25, col=variable, data=all.data) +
+g1 <- ggplot(aes(x=as.numeric(Day.number), y=value^0.25, col=variable), data=all.data) +
+  xlab("Time (days)") + ylab("Abundance value ^ 0.25") +
   facet_wrap(~Type, ncol=2, scales="free_y") +
-  geom_point() + geom_line() +
+  geom_line() +
   scale_colour_manual(values = species.colour.mapping)
 g1
 ```
 
-![](report_files/figure-html/unnamed-chunk-21-1.png) 
+![](report_files/figure-html/unnamed-chunk-22-1.png) 
 
 # Data transformation
 
@@ -361,9 +418,7 @@ Check this against the data direct from Steve:
 
 
 ```r
-#from.steve <- read.csv("~/Dropbox (Dept of Geography)/RREEBES/Beninca_etal_2008_Nature/data/direct from Steve/interp_short_allsystem_newnames.csv")
-
-from.steve <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Beninca_development/Beninca_etal_2008_Nature/data/direct_from_Steve/interp_short_allsystem_newnames.csv"), header=T)
+from.steve <- read.csv(text=getURL(paste0(repo,"/data/direct_from_Steve/interp_short_allsystem_newnames.csv")), header=T)
 
 from.steve <- gather(from.steve, Species, Abundance, 2:13)
 
@@ -377,7 +432,7 @@ g2 <- geom_line(data=from.steve, aes(x=Day.number, y=value), col="red")
 g1 + g2
 ```
 
-![](report_files/figure-html/unnamed-chunk-24-1.png) 
+![](report_files/figure-html/unnamed-chunk-25-1.png) 
 
 Looks very good.
 
@@ -556,7 +611,7 @@ g1 + g2
 ## Warning: Removed 17 rows containing missing values (geom_point).
 ```
 
-![](report_files/figure-html/unnamed-chunk-32-1.png) 
+![](report_files/figure-html/unnamed-chunk-33-1.png) 
 
 Fourth root transformed with trend:
 
@@ -570,7 +625,7 @@ g2 <- geom_line(data=filter(final, variable==soi), aes(x=Day.number, y=trend), s
 g1 + g2
 ```
 
-![](report_files/figure-html/unnamed-chunk-33-1.png) 
+![](report_files/figure-html/unnamed-chunk-34-1.png) 
 
 Detrended and normalised:
 
@@ -583,7 +638,7 @@ g1 <- ggplot(filter(final, variable==soi), aes(x=Day.number, y=y)) +
 g1
 ```
 
-![](report_files/figure-html/unnamed-chunk-34-1.png) 
+![](report_files/figure-html/unnamed-chunk-35-1.png) 
 
 ## Compare the data made above to published data
 
@@ -671,7 +726,7 @@ The graph isn't produced here, as there is a mismatch in days abundances were in
 ## Warning: Removed 283 rows containing missing values (geom_path).
 ```
 
-![](report_files/figure-html/unnamed-chunk-35-1.png) 
+![](report_files/figure-html/unnamed-chunk-36-1.png) 
 
 ```
 ## Warning: Removed 654 rows containing missing values (geom_point).
@@ -721,7 +776,7 @@ The graph isn't produced here, as there is a mismatch in days abundances were in
 ## Warning: Removed 753 rows containing missing values (geom_point).
 ```
 
-![](report_files/figure-html/unnamed-chunk-35-2.png) 
+![](report_files/figure-html/unnamed-chunk-36-2.png) 
 
 Looks OK, but suggests / shows that that data in the ELE supplement were standardised after removal of the zeros, whereas we don't do any zero removal (this is the same as in Ellner's code.)
 
@@ -736,11 +791,11 @@ Looks OK, but suggests / shows that that data in the ELE supplement were standar
 spectra <- final %>% group_by(variable) %>% do(spectra = spectrum(ts(data=.$y, end=2650.15, deltat=3.35), log='no', method="pgram", detrend=F, plot=F))
 spec <- spectra %>% do(data.frame(spec = .$spec[[2]], freq = .$spec[[1]], group = .[[1]]))
 
-ggplot(spec, aes(y=spec, x=1/freq, group=group)) + geom_line() + facet_wrap(~group) +
-coord_cartesian(ylim=c(0,40), xlim=c(0,240))
+ggplot(spec, aes(y=spec, x=1/freq, group=group)) + geom_line() + facet_wrap(~group, scales="free_y") + scale_x_log10() + 
+coord_cartesian(ylim=c(0,40), xlim=c(10,240))
 ```
 
-![](report_files/figure-html/unnamed-chunk-36-1.png) 
+![](report_files/figure-html/unnamed-chunk-37-1.png) 
 
 ```r
 freq.est <- spec %>% group_by(group) %>% mutate(max_spec = max(spec), freq = freq)
@@ -760,12 +815,11 @@ freq.est$freq <- 1/freq.est$freq
 wspectra <- final %>% group_by(variable) %>% do(spectra = pwelch(ts(data=.$y, end=2650.15, deltat=3.35), window=5, method="pgram", plot=F))
 wspec <- wspectra %>% do(data.frame(spec = .$spec[[2]], freq = .$spec[[1]], group = .[[1]]))
 
-ggplot(wspec, aes(y=spec, x=1/freq, group=group)) + geom_line() + facet_wrap(~group) +
-coord_cartesian(ylim=c(0.1,100), xlim=c(0,240))+
-scale_y_continuous(trans="log")
+ggplot(wspec, aes(y=spec, x=1/freq, group=group)) + geom_line() + facet_wrap(~group, scales="free_y") + scale_x_log10() +
+coord_cartesian(ylim=c(0.01,100), xlim=c(10,240)) + scale_y_log10()
 ```
 
-![](report_files/figure-html/unnamed-chunk-36-2.png) 
+![](report_files/figure-html/unnamed-chunk-37-2.png) 
 
 ```r
 freq.est <- wspec %>% group_by(group) %>% mutate(max_spec = max(spec), freq = freq)
@@ -859,6 +913,7 @@ for(i in 1:length(final_wide[1,])){
 ```r
 oo <- c(10, 9, 8, 11, 12, 6, 5, 3, 4, 2)
 
+cor.coefs <- cor.coefs[oo,oo]
 cor.cp <- cor.cp[oo,oo]
 
 
@@ -876,166 +931,53 @@ Make it a table:
 
 ```r
 library(knitr)
-table1b <- kable(cor.cp, format="html", col.names = colnames(cor.cp), align="c",
+table1b <- kable(cor.cp, format="markdown", col.names = colnames(cor.cp), align="c",
                 caption="Table 1.'Correlations between the species in the food web. Table entries show the product–moment correlation coefficients, after transformation of the data to stationary time series (see Methods). Significance tests were corrected for multiple hypothesis testing by calculation of adjusted P values using the false discovery rate.' Significant correlations are indicated as follows: *: P<0.05; **: P<0.01; ***: P<0.001. 'The correlation between calanoid copepods and protozoa could not be calculated, because their time series did not overlap. Filamentous diatoms and cyclopoid copepods were not included in the correlation analysis, because their time series contained too many zeros.' (Beninca et al. 2008)")
 
 table1b
 ```
 
-<table>
-<caption>Table 1.'Correlations between the species in the food web. Table entries show the product–moment correlation coefficients, after transformation of the data to stationary time series (see Methods). Significance tests were corrected for multiple hypothesis testing by calculation of adjusted P values using the false discovery rate.' Significant correlations are indicated as follows: *: P<0.05; **: P<0.01; ***: P<0.001. 'The correlation between calanoid copepods and protozoa could not be calculated, because their time series did not overlap. Filamentous diatoms and cyclopoid copepods were not included in the correlation analysis, because their time series contained too many zeros.' (Beninca et al. 2008)</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">   </th>
-   <th style="text-align:center;"> Bact </th>
-   <th style="text-align:center;"> Harp </th>
-   <th style="text-align:center;"> Ostr </th>
-   <th style="text-align:center;"> N </th>
-   <th style="text-align:center;"> P </th>
-   <th style="text-align:center;"> Pico </th>
-   <th style="text-align:center;"> Nano </th>
-   <th style="text-align:center;"> Roti </th>
-   <th style="text-align:center;"> Prot </th>
-   <th style="text-align:center;"> Cala </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Bact </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> 0.03 </td>
-   <td style="text-align:center;"> -0.24 *** </td>
-   <td style="text-align:center;"> 0.05 </td>
-   <td style="text-align:center;"> 0.18 *** </td>
-   <td style="text-align:center;"> 0.03 </td>
-   <td style="text-align:center;"> -0.17 *** </td>
-   <td style="text-align:center;"> 0.3 *** </td>
-   <td style="text-align:center;"> -0.17 * </td>
-   <td style="text-align:center;"> 0.22 *** </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Harp </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> 0.21 *** </td>
-   <td style="text-align:center;"> -0.11 * </td>
-   <td style="text-align:center;"> 0.03 </td>
-   <td style="text-align:center;"> -0.09 </td>
-   <td style="text-align:center;"> -0.06 </td>
-   <td style="text-align:center;"> -0.05 </td>
-   <td style="text-align:center;"> 0.14 </td>
-   <td style="text-align:center;"> 0.01 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Ostr </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> -0.16 ** </td>
-   <td style="text-align:center;"> -0.06 </td>
-   <td style="text-align:center;"> -0.06 </td>
-   <td style="text-align:center;"> 0 </td>
-   <td style="text-align:center;"> -0.05 </td>
-   <td style="text-align:center;"> 0.18 * </td>
-   <td style="text-align:center;"> 0.04 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> N </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> 0.08 * </td>
-   <td style="text-align:center;"> 0 </td>
-   <td style="text-align:center;"> -0.02 </td>
-   <td style="text-align:center;"> -0.04 </td>
-   <td style="text-align:center;"> 0.03 </td>
-   <td style="text-align:center;"> 0.04 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> P </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> -0.04 </td>
-   <td style="text-align:center;"> 0.03 </td>
-   <td style="text-align:center;"> 0.1 * </td>
-   <td style="text-align:center;"> -0.02 </td>
-   <td style="text-align:center;"> -0.08 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Pico </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> -0.17 *** </td>
-   <td style="text-align:center;"> -0.03 </td>
-   <td style="text-align:center;"> -0.21 * </td>
-   <td style="text-align:center;"> 0.28 *** </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Nano </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> -0.19 *** </td>
-   <td style="text-align:center;"> 0.13 </td>
-   <td style="text-align:center;"> -0.14 * </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Roti </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> -0.02 </td>
-   <td style="text-align:center;"> -0.1 * </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Prot </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;"> NA NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Cala </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-   <td style="text-align:center;">  </td>
-  </tr>
-</tbody>
-</table>
+
+
+|     | Bact | Harp |   Ostr    |    N     |    P     | Pico  |   Nano    |   Roti    |  Prot   |   Cala   |
+|:----|:----:|:----:|:---------:|:--------:|:--------:|:-----:|:---------:|:---------:|:-------:|:--------:|
+|Bact |      | 0.03 | -0.24 *** |   0.05   | 0.18 *** | 0.03  | -0.17 *** |  0.3 ***  | -0.17 * | 0.22 *** |
+|Harp |      |      | 0.21 ***  | -0.11 *  |   0.03   | -0.09 |   -0.06   |   -0.05   |  0.14   |   0.01   |
+|Ostr |      |      |           | -0.16 ** |  -0.06   | -0.06 |     0     |   -0.05   | 0.18 *  |   0.04   |
+|N    |      |      |           |          |  0.08 *  |   0   |   -0.02   |   -0.04   |  0.03   |   0.04   |
+|P    |      |      |           |          |          | -0.04 |   0.03    |   0.1 *   |  -0.02  |  -0.08   |
+|Pico |      |      |           |          |          |       | -0.17 *** |   -0.03   | -0.21 * | 0.28 *** |
+|Nano |      |      |           |          |          |       |           | -0.19 *** |  0.13   | -0.14 *  |
+|Roti |      |      |           |          |          |       |           |           |  -0.02  |  -0.1 *  |
+|Prot |      |      |           |          |          |       |           |           |         |  NA NA   |
+|Cala |      |      |           |          |          |       |           |           |         |          |
+
+Compare correlations in table 1 of the original article with those calculated here:
 
 ```r
-# differs from the one published by Beninca et al.!
+original.cors <- read.csv(text=getURL(paste0(repo,"/data/table1_original_article.csv")), skip=0, header=T, row.names = 1)
+
+original.cors <- as.matrix(original.cors)
+
+qplot(x=as.vector(original.cors), y=as.vector(cor.coefs), ylim = c(-0.4,0.4), xlim=c(-0.4, 0.4),
+      xlab="Correlations in original article", ylab="Correlations calculated in this reproduction") + geom_abline(intercept=0,slope=1)
 ```
+
+```
+## Warning: Removed 56 rows containing missing values (geom_point).
+```
+
+![](report_files/figure-html/unnamed-chunk-47-1.png) 
+
+```r
+max(as.vector(original.cors) - as.vector(cor.coefs), na.rm=T)
+```
+
+```
+## [1] 0.07159979
+```
+
+
 
 
 # Predictability (Figure 2)
@@ -1159,9 +1101,52 @@ g1 <- ggplot(diverg, aes(x=days, y=Difference)) + geom_point() + facet_wrap(~Spe
 g1
 ```
 
-![](report_files/figure-html/unnamed-chunk-51-1.png) 
+![](report_files/figure-html/unnamed-chunk-53-1.png) 
 
 Not exactly the same at Figure 3 in the Nature report. Qualitatively the same, except for where the time-delayed embedding failed.
+
+Compare graphically with original LEs
+
+```r
+original.LEs <- read.csv(text=getURL(paste0(repo,"/data/original_direct_LEs.csv")), skip=0, header=T)
+LEs
+```
+
+```
+## Source: local data frame [9 x 4]
+## 
+##                              Species         le days Difference
+## 1                  Calanoid.copepods 0.06266820   20       -0.5
+## 2                           Rotifers 0.08589790   20       -0.5
+## 3                  Nanophytoplankton 0.05906277   20       -0.5
+## 4                  Picophytoplankton 0.02056202   20       -0.5
+## 5                          Ostracods 0.04794706   20       -0.5
+## 6                      Harpacticoids 0.03566045   20       -0.5
+## 7                           Bacteria 0.05259508   20       -0.5
+## 8 Total.dissolved.inorganic.nitrogen 0.06755933   20       -0.5
+## 9        Soluble.reactive.phosphorus 0.06181828   20       -0.5
+```
+
+```r
+both_LEs <- full_join(original.LEs, LEs)
+```
+
+```
+## Joining by: "Species"
+```
+
+```
+## Warning in outer_join_impl(x, y, by$x, by$y): joining factors with
+## different levels, coercing to character vector
+```
+
+```r
+ggplot(both_LEs, aes(x=LE, y=le)) + geom_point() + xlim(0.02, 0.09) + ylim(0.02, 0.09) + geom_abline(intercept=0, slope=1) +
+  xlab("Lyapunov exponent from original article") + ylab("Reproduced Lyapunov exponent")
+```
+
+![](report_files/figure-html/unnamed-chunk-54-1.png) 
+
 
 
 # Lyapunov exponents by indirect method
@@ -1198,7 +1183,7 @@ Load and run the functions, or read in from data file (default option, for which
 
 ```r
 # read script lines from website
-script <- getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Beninca_development/Beninca_etal_2008_Nature/report/functions/indirect_method_functions.R", ssl.verifypeer = FALSE)
+script <- getURL(paste0(repo,"/report/functions/indirect_method_functions.R"), ssl.verifypeer = FALSE)
 
 # parase lines and evealuate in the global environement
 eval(parse(text = script))
@@ -1208,11 +1193,11 @@ eval(parse(text = script))
 #save(LE, file="~/Desktop/GLE_estimate.Rdata")
 
 ## load the already saved data from github (this can take some time depending on the internet connection)
-source_data("https://github.com/opetchey/RREEBES/raw/Beninca_development/Beninca_etal_2008_Nature/data/GLE_estimate.Rdata?raw=True")
+source_data(paste0(repo, "/data/GLE_estimate.Rdata?raw=True"))
 ```
 
 ```
-## Downloading data from: https://github.com/opetchey/RREEBES/raw/Beninca_development/Beninca_etal_2008_Nature/data/GLE_estimate.Rdata?raw=True 
+## Downloading data from: https://raw.githubusercontent.com/opetchey/RREEBES/Beninca_development/Beninca_etal_2008_Nature/data/GLE_estimate.Rdata?raw=True 
 ## 
 ## SHA-1 hash of the downloaded data file is:
 ## f77a72a8058fbe3a5ec7752abeeaa78e3fffa368
@@ -1288,7 +1273,7 @@ for(soi in all.species){
 }
 ```
 
-![](report_files/figure-html/unnamed-chunk-57-1.png) 
+![](report_files/figure-html/unnamed-chunk-60-1.png) 
 -->
 
 Now for the predictions at t+2 from predictions at t+1
@@ -1326,11 +1311,11 @@ And plot our version of figure 2:
 
 
 ```r
-ggplot(cors.long, aes(x=Prediction_distance, y=Correlation)) +
+ggplot(cors.long, aes(x=Prediction_distance*3.75, y=Correlation)) + xlab("Prediction time (days)") +
   geom_point() +
   facet_wrap(~Variable, scales="free_y" )
 ```
 
-![](report_files/figure-html/unnamed-chunk-60-1.png) 
+![](report_files/figure-html/unnamed-chunk-63-1.png) 
 
 First pass working. Need to double check everything. Quite different patterns from in figure 2 of the nature paper. There is relatively little information in the paper or supplement about how figure 2 data was produced, so difficult to pin down the difference without asking authors.
