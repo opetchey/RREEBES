@@ -68,10 +68,54 @@ img {
 </div>
 
 
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
 <p>This paper concerns whether population dynamics have a common statistical structure, in the same way that the frequency distribution of earthquake strengths has a characteristic strucutre. Important for this is understanding the role of historical contingency, and this is addressed in the paper also.</p>
 <p>The data analysed comes from closed ecosystems containing E.coli, Chlamy., and Tetrahymena. Abundances were estimated via selective plane microscopy, allowing accurate and non-invasive estimates for months with high temporal resolution. The closed ecosystems were 3ml in volume held in fluorimetric cuvettes. Organisms in the ecosystes have been observed to persiste for over 1000 days.</p>
 <p>Through time, the ecosystems developed spatial heterogeneity and phenotypic changes, such as large Tetrahymena (that may have beeb able to consume algae) and filamentous E.coli and colonies that may have been resistant to consumption by Tetrahymena. Replicates differed from each other in the development of this complexity.</p>
 <p>There were over 50 replicates distributed across temporal blocks. Observations of density were made over ~100 days, every day to every eight weeks.</p>
+</div>
+<div id="the-data" class="section level1">
+<h1>The data</h1>
+<p>The authors will provide the data to Owen, but have not given permission to make it public. Owen will put it on his group server, access to which is controlled by University of Zurich administrative systems (not by Owen directly).</p>
+<p>In order to minimise the chance of us leaking the data, please follow these rules: - Do not make a copy of the data. Absolutely. Do. Not. - From within R, read the data from the group server. This will require you to be connected to it. If you’re off site, you will need to VPN in. - Do not perform any save() or write() operations in R. (We may amend this if analyses are intensive and we need to save intermediate steps. However, these should be stored on the server, and not on local machines.)</p>
+<p>This is obviously a bit of hassle compared to if we could make the data public, but we cannot, so must adhere to this practice.</p>
+<p>These rules / guidelines are provided and discussed in the wiki.</p>
+</div>
+<div id="text-from-hekstra" class="section level1">
+<h1>Text from Hekstra:</h1>
+<blockquote>
+<p>Basis Curated_workspace_20091115.mat in Matlab/Work on “SecondBackup” (LeiblerLab).</p>
+<p>Organization for variables: G_S: Group of ecosystems (A-F) and Species (Algae, Bacteria, Ciliates) The first experiment consisted of what is called group F. The second experiment of groups A-E, with A measured twice per week, B once per week, etc.</p>
+<p>Within each table, the entries are organized as follows</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left">| —- system 1 —- | | —- system 2 —- | | —- system 3 —- | …</td>
+</tr>
+<tr class="even">
+<td align="left">time CPF NF time CPF NF time CPF NF …</td>
+</tr>
+<tr class="odd">
+<td align="left">… … … … … … … … … …</td>
+</tr>
+</tbody>
+</table>
+<p>With each row a measurement day; CPF = counts per frame; NF: number of frames. Density = CPF * calibration factor. Calibration factors convert counts per frame to cells per mL (not necessary for most analysis): coeff_A = 10^3.92; coeff_B = 10^5.15; coeff_C = 10^4.36;</p>
+<p>Total counts: CPF * NF, used for estimation of measurement error (see below).(Note to self: For F_B, I removed the columns tracking alga-related fluorescence “leakage” &gt; into the red channel to conform to the format of the other data sets.</p>
+<p>Ecosystems excluded because of excessive leakage (&gt;0.1 mg/day) [Bootstrap_sigma_20090714_2.m]: Group A: 7, 9 Group B: 2, 8, 9<br />Group C: 2, 6 Group D: 10 Group E: 5, 10 Group F: none.</p>
+<p>For some analysis, replicate 4 of set F was excluded (this ecosystem was used for a number of other experiments after day 70).</p>
+<p>Grouping of ecosystems with approximately the same (sub) measurement schedule. Group A, rows (measurement days) 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 21, 23, 25, 26 Group B rows 2-15. Group F: rows: 4, 11, 18, 25, 31, 37, 42, 46, 50, 54, 58, 59, 59, 60. (time point 59 was duplicated for this analysis)</p>
+<p>Calculated Escape Rates Motivation: the counts of individuals are not entirely independent between time points as cells often spend a few seconds within the observation volume. A correction is &gt; thus necessary with respect to Poisson counting statistics.</p>
+<p>Probability that object (identified as A, B or C, respectively) is not observed in the next frame (at 1 Hz): p_e_A = 0.237; p_e_B = 0.3; p_e_C = 0.9;</p>
+<p>Correlation times are defined as 1/p_e. The number of independent counts goes as N*p_e. The error model is described in my thesis as well ( <a href="https://dspace.rockefeller.edu/bitstream/10209/413/1/DoekeHekstraFinalThesis.pdf" class="uri">https://dspace.rockefeller.edu/bitstream/10209/413/1/DoekeHekstraFinalThesis.pdf</a> ).</p>
+<p>Other • Figure 4: to determine correspondence of eigenvectors between time points, I worked backwards in time, using the dot products of (normalized) eigenvectors as a measure of their similarity. • Treatment of zero counts: as 0.5 counts over the total number of frames.</p>
+</blockquote>
+</div>
+<div id="import-and-tidy-the-data" class="section level1">
+<h1>Import and tidy the data</h1>
+<pre class="r"><code>revised &lt;- read.csv(&quot;/Volumes/Petchey/Gr_Petchey/6 Secure data/Hekstra_and_Leibler_2012_Cell/revised.csv&quot;, header=FALSE, blank.lines.skip=T)</code></pre>
+</div>
 <div id="reproduce-figure-2e-and-figure-3" class="section level1">
 <h1>Reproduce figure 2E and Figure 3</h1>
 <p>“Population dynamics in our replicate CESs under constant light and temperature. Shown are the mean ±bootstrap standard deviation over ecosystems with at least weekly measurements (n = 24), as well as data for two replicates (circles and triangles, respectively). Green (A, right axis): C. reinhardtii; red (B): E. coli; and blue (C): T. thermophila.”</p>
@@ -100,6 +144,10 @@ img {
 <p>1: “the variations of the three species were corre- lated. Well-defined ecomodes that describe these correlations emerged and stabilized after an initial period of about 3 weeks. The existence of these ecomodes reflects the fact that fluctua- tions of the three species’ densities around the replicate-average dynamics are coupled through ecological interactions that are common to all replicates.”</p>
 <p>2: “despite the large complexity of biological phenomena observed in individual ecosystems, it was, remarkably, possible to describe the resulting fluctuations in population dynamics by simple quantitative laws. Specifically, local population dynamics displayed power-law behavior close to a geometric random walk around the average dynamics. Underlying these random walks is a single dominant ecomode, along which density fluctuations do not revert to the mean.”</p>
 <p>“recently observed extreme repeatability of temporal dynamics and spatial patterns in similar experiments involving long-term single-species dynamics (Frentz et al., 2010) shows that the number of interacting components, the nature of their interactions, or the details of starting or external conditions may play a crucial role (cf. Jiang et al., 2011).”</p>
+</div>
+<div id="ideas" class="section level1">
+<h1>Ideas</h1>
+<p>Need to think about what the analyses above assume about linearity of interactions / relationship among species. A non-linear approach (e.g., multispecies GAM) might give interesting insight.</p>
 </div>
 
 

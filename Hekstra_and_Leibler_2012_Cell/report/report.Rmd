@@ -28,6 +28,75 @@ This is obviously a bit of hassle compared to if we could make the data public, 
 
 These rules / guidelines are provided and discussed in the wiki.
 
+# Text from Hekstra:
+
+> Basis
+> Curated_workspace_20091115.mat in Matlab/Work on "SecondBackup" (LeiblerLab).
+> 
+> Organization for variables:
+> G_S: Group of ecosystems (A-F) and Species (Algae, Bacteria, Ciliates) 
+> The first experiment consisted of what is called group F.
+> The second experiment of groups A-E, with A measured twice per week, B once per week, etc.
+> 
+> Within each table, the entries are organized as follows
+> 
+> -------------------------------------------------------------------------------------------------------
+> | ---- system 1 ---- | 	| ---- system 2 ---- | 	| ---- system 3 ---- | 	...
+> time	CPF  	NF 	time	CPF  	NF 	time	CPF  	NF 	...
+> ...	...	...	...	...	...	...	...	...	...
+> -------------------------------------------------------------------------------------------------------
+> 
+> With each row a measurement day; CPF = counts per frame; NF: number of frames.
+> Density = CPF * calibration factor.
+> Calibration factors convert counts per frame to cells per mL (not necessary for most analysis): 
+> coeff_A = 10^3.92;  coeff_B = 10^5.15;  coeff_C = 10^4.36;
+> 
+> Total counts: CPF * NF, used for estimation of measurement error (see below).(Note to self: For F_B, I removed the columns tracking alga-related fluorescence "leakage" > into the red channel to conform to the format of the other data sets.
+> 
+> Ecosystems excluded because of excessive leakage (>0.1 mg/day) [Bootstrap_sigma_20090714_2.m]:
+> Group A:  	7, 9
+> Group B:	2, 8, 9  
+> Group C:	2, 6
+> Group D:	10
+> Group E:	5, 10
+> Group F: 	none.
+> 
+> For some analysis, replicate 4 of set F was excluded (this ecosystem was used for a number of other experiments after day 70).
+> 
+> 
+> Grouping of ecosystems with approximately the same (sub) measurement schedule.
+> Group A, rows (measurement days) 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 21, 23, 25, 26
+> Group B rows 2-15.
+> Group F: rows: 4, 11, 18, 25, 31, 37, 42, 46, 50, 54, 58, 59, 59, 60. (time point 59 was duplicated for this analysis)
+> 
+> Calculated Escape Rates
+> Motivation: the counts of individuals are not entirely independent between time points as cells often spend a few seconds within the observation volume. A correction is > thus necessary with respect to Poisson counting statistics.
+> 
+> Probability that object (identified as A, B or C, respectively) is not observed in the next frame (at 1 Hz):
+> p_e_A   = 0.237;    p_e_B   = 0.3;      p_e_C   = 0.9;         
+> 
+> Correlation times are defined as 1/p_e. The number of independent counts goes as N*p_e. The error model is described in my thesis as well (
+> https://dspace.rockefeller.edu/bitstream/10209/413/1/DoekeHekstraFinalThesis.pdf ).
+> 
+> 
+Other
+> •	Figure 4: to determine correspondence of eigenvectors between time points, I worked backwards in time, using the dot products of (normalized) eigenvectors as a measure of their similarity.
+> •	Treatment of zero counts: as 0.5 counts over the total number of frames.
+
+
+# Import and tidy the data
+
+
+
+```{r}
+revised <- read.csv("/Volumes/Petchey/Gr_Petchey/6 Secure data/Hekstra_and_Leibler_2012_Cell/revised.csv", header=FALSE, blank.lines.skip=T)
+## lots of tidying required
+```
+
+
+
+
+
 # Reproduce figure 2E and Figure 3
 
 "Population dynamics in our replicate CESs under constant light and temperature. Shown are the mean ±bootstrap standard deviation over ecosystems with at least weekly measurements (n = 24), as well as data for two replicates (circles and triangles, respectively). Green (A, right axis): C. reinhardtii; red (B): E. coli; and blue (C): T. thermophila."
