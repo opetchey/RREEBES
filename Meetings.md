@@ -1,6 +1,6 @@
 # Meetings in 2015
 
-Meetings 10.45 to 12.00 Zurich time, location is variable.
+Meetings 14.00 to 15.00 Zurich time, location 34-J-52.
 
 Assign person to take meeting minutes.
 
@@ -15,6 +15,8 @@ Any progress on focal paper since last week?
 What to attempt this week (refer to closing note from last week)?
 
 What to attempt next week (to be refered to next week)?
+
+Meetings in 2016 are not yet listed, but will be same time place and frequency as during 2015.
 
 ## 3.3
 
@@ -394,21 +396,93 @@ Individual work continued
 
 ## 28.7
 
+No meeting.
+
 ## 4.8
+
+No meeting.
 
 ## 11.8
 
+Minutes by Frank
+
+No new faces
+
+#New papers added?       
+Alejandra suggested a global meta-analysis by Gernster et al. 2014
+
+#Progress on reproductions     
+
+Hoekstra: No progress, except that Owen set up the repository; still waiting for the data    
+
+Hooper:  Ale had issues with Github links -> data was not read properly, but issues could be solved when data is read from raw format page
+Otherwise, Alejandra started to get a feeling for the data and started reproducing table 1; some R code to reproduce figures was provided by the authors     
+
+Morales-Castilla paper: GM and Thomas had some issues syncing repos and still work on getting the data into shape -> species description, trophic links etc     
+
+#Best practices
+
+Thomas suggested to discuss best archiving practices. Possiblity of a best practice document about data archiving:
+we will look at available articles, focus on user experience rather than logic.      
+
+Some information can be found here:    
+[Blog post on Methods in Ecology and Evolution blog](https://methodsblog.wordpress.com/2015/03/26/open_data_and_reproducibility/)
+
+[‘OpenData and Reproducibility Workshop: the Good Scientist in the Open Science era’](http://www.britishecologicalsociety.org/events/current_future_meetings/past-bes-symposia/mee-anniversary-symp/#sthash.px0yaMbb.dpuf)
+
+[White EP, Baldridge E, Brym ZT, Locey KJ, McGlinn DJ, Supp SR.  2013.  Nine simple ways to make it easier to (re)use your data. Ideas in Ecology and Evolution. 6(2):1-10.](http://library.queensu.ca/ojs/index.php/IEE/article/view/4608)
+
 ## 18.8
+
+Minutes by Vanessa
+
+###Attendance
+* Owen, Frank, Thomas, Karthik and Vanessa
+
+###New people
+* Karthik Ram was present in the meeting and gave a brief introduction about his work.
+
+###Progress updates
+* Moriles-Castilla et al. 2015: Gian Marco and Thomas have been trying to organize the data and put it in R. 
+* Hooper et al. 2012: no members of this reproduction were present in the meeting
+* Hekstra & Leibler 2012: Owen in contact with the authors, waiting for the data.
+
+Discussion with Karthik about why we could not reproduce some papers.
+
+Individual work continued.
 
 ## 25.8
 
+No meeting.
+
 ## 1.9
+
+No meeting.
 
 ## 8.9
 
+Minutes to come, from Aurélie.
+
 ## 15.9
 
+No meeting.
+
 ## 22.9
+
+Minutes by Frank
+
+Attendance: Vanessa, Frank
+
+### New papers
+Huisman & Weissing 2001 added by Owen
+
+### Issues
+* Frank briefly outlined Tad's suggestion about publishing reproductions on ReScience
+* Owen did some trials and aims to publish the Beninca reproduction; however, ReScience probably only suitable as outlet for some reproductions as some effort needed to format our html reports 
+
+### Progress
+Ward et al. reproduction finalized and put on gh-pages branch
+
 
 ## 29.9
 

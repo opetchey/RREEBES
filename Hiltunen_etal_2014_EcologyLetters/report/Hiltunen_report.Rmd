@@ -1,5 +1,5 @@
 ---
-title: "Reproduce anaylses of Hiltunen et al. (2014)"
+title: "Reproduce anaylses of Hiltunen et al. (2014) A newly discovered role of evolution in previously published consumer–resource dynamics"
 author: "Jason Griffiths"
 date: "04-04-2015"
 output:
@@ -13,17 +13,24 @@ output:
 
 Here we will reproduce the time series anaylses presented in the paper *A newly discovered role of evolution in previously published consumer-resource dynamics*, by Tepo Hiltunen and others. The manuscript can be found on ([the paper on the Ecology Letters website](http://onlinelibrary.wiley.com/doi/10.1111/ele.12291/abstract?deniedAccessCustomisedMessage=&userIsAuthenticated=false)). 
 
+The Authors of this paper developed a statistical method to probe for a transition from classical to eco-evolutionary cycles in consumer-resource cycles.
+
+Classic ecological consumer-resource models often produce cyclical dynamics, where the consumerabundance lags behind the resource by ¼ of the period.There are however few published examples of experimental systems showing this pattern.
+
+In this study, the authors reveal that many observed and published consumer-resource dynamics show instead patterns indicating eco-evolutionary dynamics.Theoretically, if prey evolve along a trade-off between defence and competitive ability, two-species consumer-resource cycles become longer and antiphase(half-period lag, so consumer maxima coincide with minima of the resource species). Such antiphase patterns of eco-evolutionary cycles take time to emerge, as prey must evolve to a defended state.The authors applied thir analysis to 21 two-species consumer-resource time series, published between 1934 and 1997.They aimed to statistically identify a transition from ecological dynamics at initial point of experiment (¼ lag as ), to eco-evolutionary cycles.
+
+ # The data
 
 The time series data sets analysed are provided in the [the Supplement to the paper](http://onlinelibrary.wiley.com/doi/10.1111/ele.12291/suppinfo). The data contains a set of 12 predator-prey time series. Each predator-prey time series is in a seperate Excel spreadsheet. Each data file details the timing of predator and prey obserations, the abundance of each observed, the start and end time of the predator prey oscilations and the dilution of medium in the system. A script detailing the data transfromation and smoothing methods are also provided in the supplementary materials.
 
-Although all data sets are analysed in this study, the Amoeba-bacteia predator-prey data set of Tsuchiya et al. (1972) was the focus of the figures in the manuscript.THerefore we also use this data set to perform the reproductio
+Although all data sets are analysed in this study, the Amoeba-bacteia
+predator-prey data set of Tsuchiya et al. (1972) was the focus of the
+figures in the manuscript. Therefore we also use this data set to perform the reproduction
 
 We thank and aknowledge Steve ellner for help in the reproduction of this work.
 
 
-
-
-# First get the raw data into R and tidy it.
+# First get the raw data into R and clean it.
 
 ```{r}
 rm(list=ls())
@@ -83,7 +90,7 @@ pred1=pred1[pred1$predX>start_cut,];
 pred1=pred1[pred1$predX<end_cut,];
 ```
 
-Plot the original data after its rescaled
+# Plot the time series (rescaled)
 
 ```{r}
 xmin=max(min(pred1$predX,na.rm=T),min(prey1$preyX,na.rm=T)); xmax=min(max(pred1$predX,na.rm=T),max(prey1$preyX,na.rm=T)); 
@@ -95,6 +102,8 @@ lines(prey1, type='b',col = "green3",lwd=2,ylim=yrange,xlim=c(min(prey_all[,1]),
 lines(pred1, type='b',col = "red",,lwd=2,ylim=yrange,xlim=c(min(prey_all[,1]), 1),pch=16)
 title(paste("Original data"),cex.main=1.5)
 ```
+
+# Transform and smooth the data
 
 Transform scaled abundance data (log)
 
@@ -128,6 +137,8 @@ smooth_pred2=predict(smooth_pred,px.pred)$y;
 smooth_prey2=predict(smooth_prey,px.prey)$y; 
 ```
 
+# Plot transformed & smoothed time series
+
 Plot data on log scale, with smooths (figure 1a)
 
 ```{r}
@@ -141,9 +152,11 @@ lines(pred1, type='p',col = "red",lwd=3,xlim=c(min(prey_all[,1]), 1))
 title("Smoothed population abundances")
 ```
 
-Examine the phase plane:plot the spline smoothed predictions in time series and phase plane.
+# Phase plane plot
 
-Evidence of a transition from a classic �-period lag predator-prey cycles to eco-evolutionary cycles can be seen in a phase-plane plot of predator against prey densities (Figs 2). The dynamics transition from producing roughly oval limit cycles to antiphase dynamics
+Examine the phase plane plot the spline smoothed predictions in time series and phase plane.
+
+Evidence of a transition from a classic ¼-period lag predator-prey cycles to eco-evolutionary cycles can be seen in a phase-plane plot of predator against prey densities (Figs 2). The dynamics transition from producing roughly oval limit cycles to antiphase dynamics
 where th pattern approaches a straight line with negative slope.
 
 This transition can be quantified by measuring how oval the dynamices are over a given window of time. As the phase plane pattern transitions from an oval to a straight line, the ratio between the orthogonal long and short axes of an ellipse increases. This value is known as eccentricity.
@@ -167,7 +180,7 @@ pp.dat$window[1] <- 50
 
 ```
 
-Quantify the changing shape of the trajectories path in the phase plane. 
+# Quantify the changing shape of the trajectories path in the phase plane. 
 
 Measures of Eigenvalue ratios (circles) from principal components analysis of moving windows of the data in shows the decreasing ratio between second and first eigenvalue. This measures the ration between the min and max diameter of an oval (min:max). Thus this measure of Inverse eccentricity measures the ovalness of the phase plane trajectory. Lower values are less circular and more like a straight line
 
@@ -189,16 +202,17 @@ lines(1:length(ratio.comp),preds,type="l")
 
 ```
 
+# Calculate the Evoluionary Dynamic index (EDI)
+
 Calculate an index of the strength of this change in ellipticalness. Hiltunen et al. call this the Evoluionary Dynamic index (EDI).
 
 ```{r}
 EDI <- diff(c(preds[1],preds[length(ratio.comp)]))
 ```
 
-To do...
+# To do...
 
-a Implement the significance test. This uses a bootsrapping of residuals methodology
-
-b Simulation based figures could be produced
-
-c Produce Figure 3 
+1. Implement the significance test. This uses a bootsrapping of residuals methodology
+2. Simulation based figures could be produced
+3.Produce Figure 3 
+4. Convert to tidy data format.
