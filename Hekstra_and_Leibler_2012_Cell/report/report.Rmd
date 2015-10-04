@@ -88,9 +88,30 @@ Other
 
 
 
+Read the data and tidy:
 ```{r}
+library(tidyr)
+library(dplyr)
+
 revised <- read.csv("/Volumes/Petchey/Gr_Petchey/6 Secure data/Hekstra_and_Leibler_2012_Cell/revised.csv", header=FALSE, blank.lines.skip=T)
-## lots of tidying required
+
+var_names <- c("Group-Species",
+               paste(rep(c("Time", "CPF", "NF"), 10),
+                     rep(1:10, each=3), sep="-"))
+colnames(revised) <- var_names
+
+#now need to do stack the data
+dd <- select(revised, 1:4)
+dd$Ecosystem <- 1
+names(dd) <- c("Group-Species", "Time", "CPF", "NF", "Ecosystem")
+for(i in 2:10) {
+  sub_data <- select(revised, 1, (3*(i-1)+2:4))
+  sub_data$Ecosystem <- i
+  names(sub_data) <- c("Group-Species", "Time", "CPF", "NF", "Ecosystem")
+  dd <- rbind(dd, sub_data)
+}
+
+
 ```
 
 
