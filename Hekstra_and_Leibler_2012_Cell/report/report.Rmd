@@ -92,28 +92,50 @@ Read the data and tidy:
 ```{r}
 library(tidyr)
 library(dplyr)
+library(stringr)
+library(ggplot2)
 
 revised <- read.csv("/Volumes/Petchey/Gr_Petchey/6 Secure data/Hekstra_and_Leibler_2012_Cell/revised.csv", header=FALSE, blank.lines.skip=T)
 
-var_names <- c("Group-Species",
+## Create variable names
+var_names <- c("Block_Species",
                paste(rep(c("Time", "CPF", "NF"), 10),
                      rep(1:10, each=3), sep="-"))
 colnames(revised) <- var_names
 
-#now need to do stack the data
+## Remove empty rows
+revised <- filter(revised, Block_Species!="")
+
+
+## Stack the data
 dd <- select(revised, 1:4)
 dd$Ecosystem <- 1
-names(dd) <- c("Group-Species", "Time", "CPF", "NF", "Ecosystem")
+names(dd) <- c("Block_Species", "Time", "CPF", "NF", "Replicate")
 for(i in 2:10) {
   sub_data <- select(revised, 1, (3*(i-1)+2:4))
-  sub_data$Ecosystem <- i
-  names(sub_data) <- c("Group-Species", "Time", "CPF", "NF", "Ecosystem")
+  sub_data$Replicate <- i
+  names(sub_data) <- c("Block_Species", "Time", "CPF", "NF", "Replicate")
   dd <- rbind(dd, sub_data)
 }
 
+## Split the Group_Species data
+dd <- separate(dd, Block_Species, c("Block", "Species"), sep="_")
 
+## Full species name
+dd$Species <- ifelse(dd$Species=="A", "Algae",
+                     ifelse(dd$Species=="B", "Bacteria", "Ciliate"))
+
+str(dd)
 ```
 
+
+Try a preliminary graph:
+
+```{r}
+ggplot(dd, aes(x=Time, y=log10(CPF), col=as.factor(Replicate))) +
+  facet_grid(Species~Block, scales="free_y") +
+  geom_point() + geom_line()
+```
 
 
 
