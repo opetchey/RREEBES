@@ -34,7 +34,7 @@ TMM: How do early warning signals perform when two environmental changes act sim
 
 [Hooper DU, Adair EC, Cardinale BJ, Byrnes JEK, Hungate BA, et al. 2012. A global synthesis reveals biodiversity loss as a major driver of ecosystem change. Nature 486:105–8] (http://jarrettbyrnes.info/pdfs/Hooper_et_al_2012_Nature.pdf). Database is available at the National Center for Ecological Analysis and Synthesis: (http://knb.ecoinformatics.org/knb/metacat/nceas.984/nceas). Ale, Aurélie (Marco? Dennis?)
 
-[Hekstra, D.R. & Leibler, S. (2012) Contingency and statistical laws in replicate microbial closed ecosystems. Cell, 149, 1164–1173.] (http://www.sciencedirect.com/science/article/pii/S0092867412005156). Data available by request, but cannot be put in public domain.(Owen, Frank, Mikael?.)
+[Hekstra, D.R. & Leibler, S. (2012) Contingency and statistical laws in replicate microbial closed ecosystems. Cell, 149, 1164–1173.] (http://www.sciencedirect.com/science/article/pii/S0092867412005156). Reproduction underway (Owen, Frank.)
 
 [Yampolsky, Lev Y., Tobias M. M. Schaer, and Dieter Ebert. “Adaptive Phenotypic Plasticity and Local Adaptation for Temperature Tolerance in Freshwater Zooplankton.” Proceedings of the Royal Society of London B: Biological Sciences 281, no. 1776 (February 7, 2014): 20132744.] (http://rspb.royalsocietypublishing.org/content/281/1776/20132744) (Tad Dallas)
 
