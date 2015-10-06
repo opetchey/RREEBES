@@ -34,7 +34,7 @@ library("bipartite")
 ## Basic parameters
 Species richness (S), connectance (C), number of food webs to be generated, number of links (L), and complexity (K).
 ```{r}
-S = 500     # set species richness
+S = 50     # set species richness
 C = 0.1    # set connectance, L/S^2
 N = 10    # set the number of replicate webs to make
 L = S^2*C  # calculate number of links from S and C
@@ -178,14 +178,14 @@ Plot.matrix <- function(web, title=" ", point.cex=0.2, trait.cex=1,
 ## Plot adjancency matrices
 This is what the adjacency matrix (displaying who eats whom) looks like for 9 food webs.
 ```{r}
-# par(mar=c(2,2,2,2))
-# layout(matrix(1:9, 3, 3), respect=T)
-# for(i in 1:9){
-#     Plot.matrix(Cascade.based.webs[[i]])
-#     box()
-# }  
-layout(matrix(1:1, 1, 1), respect=T)
-Plot.matrix(Cascade.based.webs[[1]])
+par(mar=c(2,2,2,2))
+layout(matrix(1:9, 3, 3), respect=T)
+for(i in 1:9){
+    Plot.matrix(Cascade.based.webs[[i]])
+    box()
+}  
+# layout(matrix(1:1, 1, 1), respect=T)
+# Plot.matrix(Cascade.based.webs[[1]])
 ```
 
 
@@ -222,20 +222,24 @@ plot.igraph(g1,
 ```
 
 ```{r}
-# par(mar=c(2,2,2,2))
-# layout(matrix(1:9, 3, 3), respect=T)
-# for(i in 1:9){
-# g1 <- graph.adjacency(Cascade.based.webs[[i]])
-# # plot.igraph(g1, 
-# #      layout=layout.circle, 
-# #      main="Experimental food web (no information)",
-# #      vertex.size=15, 
-# #      vertex.color=adjustcolor("#A6B07E", alpha.f=0.6),
-# #      vertex.label.cex=0.7,
-# #      vertex.label.family = "sans",
-# #      edge.width=2, 
-# #      vertex.label.color="#7D1D3F",
-# #      vertex.frame.color="white")
+par(mar=c(2,2,2,2))
+layout(matrix(1:9, 3, 3), respect=T)
+for(i in 1:9){
+g1 <- graph.adjacency(Cascade.based.webs[[i]])
+plot.igraph(g1, 
+     layout=layout.fruchterman.reingold,
+     main="",
+     vertex.color=adjustcolor("#3C787E", alpha.f=0.4),
+     vertex.size=3, 
+     vertex.label.cex=0.5,
+     vertex.label.family = "sans",
+     vertex.label.color="#C7EF00",
+#      vertex.label.color="#7D1D3F",
+     vertex.frame.color="#FFFFFF",
+     edge.color=adjustcolor("#666666", alpha.f=0.7),
+     edge.width=0.5, 
+     edge.arrow.size=0.2, 
+     edge.arrow.width=0.05)
 # plot.igraph(g1, 
 # #      layout=layout.reingold.tilford(g1, flip.y=FALSE),
 #      layout=layout.circle,
@@ -250,7 +254,7 @@ plot.igraph(g1,
 #      edge.width=1, 
 #      edge.arrow.size=0.5, 
 #      edge.arrow.width=0.3)
-# }
+}
 ```  
   
   
