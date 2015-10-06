@@ -1,3 +1,3 @@
 # Reproduction of Hekstra & Leibler 2012 Cell
 
-Reproduction ready to go when we receive the data.
+Reproduction in progress, and at stage of cleaning and tidying the data.
