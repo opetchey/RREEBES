@@ -95,6 +95,8 @@ library(dplyr)
 library(stringr)
 library(ggplot2)
 
+library(boot)
+
 revised <- read.csv("/Volumes/Petchey/Gr_Petchey/6 Secure data/Hekstra_and_Leibler_2012_Cell/revised.csv", header=FALSE, blank.lines.skip=T)
 
 ## Create variable names
@@ -137,10 +139,84 @@ ggplot(dd, aes(x=Time, y=log10(CPF), col=as.factor(Replicate))) +
   geom_point() + geom_line()
 ```
 
+```{r, housekeeping}
+# NaN in CPF column replaced by NAs
+dd$CPF <- ifelse(is.nan(dd$CPF), NA,  dd$CPF)
+
+# > Calibration factors convert counts per frame to cells per mL (not necessary for most analysis): 
+# > coeff_A = 10^3.92;  coeff_B = 10^5.15;  coeff_C = 10^4.36;
+
+#Density = CPF * calibration factor.
+dd <- dd %>% mutate(coef = ifelse(Species == "Algae", 10^3.92,
+                            ifelse(Species == "Bacteria", 10^5.1, 10^4.36)),
+                            density = CPF * coef)
 
 
+# Ecosystems to be excluded because of excessive leakage (>0.1 mg/day) 
+# > Group A:    7, 9
+# > Group B:  2, 8, 9  
+# > Group C:	2, 6
+# > Group D:	10
+# > Group E:	5, 10
+
+dd_clean <- subset(dd, !((Block == "A" & Replicate %in% c(7,9)) |
+            (Block == "B" & Replicate %in% c(2,8,9)) |
+            (Block == "C" & Replicate %in% c(2,6) ) |
+            (Block == "D" & Replicate %in% c(10) )|
+            (Block == "E" & Replicate %in% c(5,10) )))
+
+
+```
 
 # Reproduce figure 2E and Figure 3
+
+```{r}
+
+# calculate bootstrap sd of mean
+dd_clean$Time_bin <- ceiling(dd_clean$Time)
+dd_clean$split_var <- paste0(dd_clean$Species, "_", dd_clean$Time_bin)
+
+species_time <- split(dd_clean, dd_clean$split_var)
+unique(species_time)
+mean_boot <- function(x, d) {
+  return(mean(x[d], na.rm=T))
+}
+
+botstrapped_sds <- lapply(1:length(species_time), function(x) 
+  sd(boot(species_time[[x]]$density, mean_boot, R=1000)$t))
+
+combi <- lapply(1:length(species_time), function(x) 
+  unique(paste0(species_time[[x]]$Species, "_", species_time[[x]]$Time_bin)))
+
+# merge sd into df
+sd_df <- data.frame(split_var=as.character(unlist(combi)), 
+                    boot_sd=unlist(botstrapped_sds), stringsAsFactors=F)
+
+
+# merge back to original data
+dd_clean <- dd_clean[order(dd_clean$split_var),]
+dd_clean$boot_sd <- rep(unlist(botstrapped_sds), lapply(1:length(species_time), function(x) nrow(species_time[[x]])))
+
+
+# crunch data into mean
+mean_densities <- dd_clean %>% filter(!(Block != "F" & Species == "Bacteria")) %>% group_by(Species, Time_bin) %>% summarize(mean_density = mean(density, na.rm=T))
+mean_densities$split_var <- paste0(mean_densities$Species, "_", mean_densities$Time_bin)
+
+# join with sd data
+mean_densities <- merge(mean_densities, sd_df, by=c("split_var"))
+
+ggplot() + 
+  stat_smooth(data=mean_densities, aes(y=mean_density+1, x=Time_bin, group=Species, colour=Species), method="loess", se=F)+ 
+scale_colour_manual(values = c("green","red","blue")) +
+  geom_ribbon(data=mean_densities,aes(x=Time_bin, ymin=mean_density-boot_sd, ymax=mean_density+boot_sd, group=Species, fill=Species),  alpha=0.2) +
+  scale_y_log10() +
+  scale_fill_manual(values = c("green","red","blue"))
+
+
+```
+
+
+
 
 "Population dynamics in our replicate CESs under constant light and temperature. Shown are the mean ±bootstrap standard deviation over ecosystems with at least weekly measurements (n = 24), as well as data for two replicates (circles and triangles, respectively). Green (A, right axis): C. reinhardtii; red (B): E. coli; and blue (C): T. thermophila."
 
