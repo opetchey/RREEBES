@@ -1,5 +1,6 @@
 Data is available for download here: https://knb.ecoinformatics.org/#view/doi:10.5063/AA/nceas.984.7
 
+Supplementary material http://www.nature.com/nature/journal/v486/n7401/extref/nature11118-s1.pdf
 
 Data on Productivity called ProdBoot.csv: table for meta-analysis 
 
