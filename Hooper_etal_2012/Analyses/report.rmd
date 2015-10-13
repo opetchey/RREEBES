@@ -24,3 +24,522 @@ IDENTITY OF SPECIES LOSS: The identity of species lost also had a large effect o
 * From authors
 
 Many experiments have shown that species loss can alter key processes important to the productivity and sustainability of Earth's ecosystems. However, it is unclear how these effects compare to the direct effects of other forms of environmental change that are both driving diversity loss and altering ecosystem function. We used a suite of meta-analyses of published data to show that the impacts of species loss on productivity and decomposition - two processes important in all ecosystems are of comparable magnitude to impacts of many other global environmental changes. These analyses were published by Hooper et al. in Nature in 2012 (online release date: May 2, 2012, DOI: 10.1038/nature11118). This archive contains the data and statistical details for the two sets of analyses found in that paper. In the first, we performed a broad meta-analysis to compare effects of changing species richness on primary production and decomposition, as derived from a database on biodiversity-ecosystem functioning (BEF) experiments, with effects of major environmental changes as derived from already published meta-analyses. For both biodiversity and environmental effects, we use log response ratios for effect sizes. This analysis allows a broad comparison across many experiments, but in so doing, compares effects of species richness with those of other environmental changes in different experiments performed by different researchers in different ecosystems. Therefore, we undertook a second analysis focusing on the relative magnitude of effects of species richness and environmental change in experiments that factorially manipulated both. For this, we used a much smaller subset of experiments from the BEF database, and only analyzed primary production as the response variable. Here we include the data and any processing steps, including R-code and description, that were used in our analyses. In experiments, intermediate levels of species loss (21-40%) reduced plant production by 5-10%, comparable to previously documented impacts of ultra-violet radiation and climate warming. Higher levels of extinction (41-60%) had impacts rivaling those of ozone, acidification, elevated CO2, and nutrient pollution. At intermediate levels, species loss generally had equal or greater impacts on decomposition than did elevated CO2 and nitrogen addition. The identity of species lost also had a large impact on changes in productivity and decomposition, generating a wide range of plausible outcomes for extinction. Despite need for more studies on interactive effects of diversity loss and environmental changes, our analyses clearly show that the ecosystem consequences of local species loss are as quantitatively significant as direct effects of several global change stressors that have mobilized major international concern and remediation efforts.
+
+# Figures: Data Files content
+For figure 1: Changes in primary production as a function of per cent local species lost. 
+In this figure, authors show the effects of species loss on primary production. 
+
+(PowerCoeffs_Prod_min): 308 included experiments(Y) - they say 379 -  , with information on Maximum and minimum level of richness, Maximum likelihood estimates a and b from a linearized version of the power function ln(Yi/Y1) = a + b*ln(S) where Yi is the value of Y at richness S, and Y1 is the mean monoculture value of Y at S = 1. 
+
+(Prod_OtherFactors): Information on global change factors, log response ratio (EFFECT SIZE??), lower and upper 95% confidence interval value, LRR for diversity (?),  level of diversity loss where diversity LRR is approximately equal to the LRR for each global change factor. 
+
+For figure 2: Changes in decomposition as a function of percent of local species lost. 
+In this figure authors show the effect of a) detrital consumer diversity and b) plant litter diversity in decomposition 
+
+- in these files: different dataset, same information
+
+
+
+
+# Reproduce Figure 1 and 2
+
+ *Clear R and load data
+```{r}
+#clear R
+rm(list=ls())
+library(plyr)
+library(RCurl)
+
+
+powInfo <- read.csv(file.choose(), check.names=FALSE) 
+head(powInfo)
+prod.other <- read.csv(file.choose(), check.names=FALSE)
+head(prod.other)
+powInfoCons <- read.csv(file.choose(), check.names=FALSE)
+powInfoLitt <- read.csv(file.choose(), check.names=FALSE)
+head(powInfoCons)
+head(powInfoLitt)
+decomp.other <- read.csv(file.choose(), check.names=FALSE)
+head(decomp.other)
+powInfo<-subset(powInfo,powInfo$FinalT=="Y")
+powInfoCons<-subset(powInfoCons,powInfoCons$FinalT=="Y")
+powInfoLitt<-subset(powInfoLitt,powInfoLitt$FinalT=="Y")
+```
+
+*Problem with the Github links
+```{r}
+#Load data files
+#	file.choose()
+#Productivity data
+#Diversity
+powInfo <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/PowerCoeffs_Prod_min.csv"), check.names=FALSE) 
+head(powInfo)
+#Other effects
+prod.other <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/Prod_OtherFactors.csv"), check.names=FALSE)
+head(prod.other)
+
+#Decomposition data
+# consumer and litter diversity
+powInfoCons <- read.csv(text=getURL("https://github.com/opetchey/RREEBES/raw/master/Hooper_etal_2012/Data_Fig_1_and_2/PowerCoeffs_ConsumDivDecomp_min.csv"), check.names=FALSE)
+powInfoLitt <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/PowerCoeffs_LitterDivDecomp_min.csv"), check.names=FALSE)
+head(powInfoCons)
+head(powInfoLitt)
+#Other effects
+decomp.other <- read.csv(text=getURL("https://github.com/opetchey/RREEBES/blob/master/Hooper_etal_2012/Data_Fig_1_and_2/Decomp_OtherFactors.csv"), check.names=FALSE)
+head(decomp.other)
+
+#Subset to get needed data - final times only (Y)
+powInfo<-subset(powInfo,powInfo$FinalT=="Y")
+powInfoCons<-subset(powInfoCons,powInfoCons$FinalT=="Y")
+powInfoLitt<-subset(powInfoLitt,powInfoLitt$FinalT=="Y")
+```
+
+
+*GENERATE CURVE DATA FOR ALL THREE PANELS
+```{r}
+# PRODUCTIVITY METAMETA: generate curve data at step = 0.05 (5%) ending at smallest proportion remaining 
+#	value in the data (0.03)
+extCurve<-with(powInfo, {
+  ddply(data.frame(Remaining=seq(0.03,.99,0.05)), .(Remaining), 
+        
+        function(adf){
+          rem<-adf$Remaining[1]
+          YMax<-exp(powa+powb*log(Smax))
+          Y_rem<-exp(powa+powb*log(rem*Smax))
+          
+          lrr<-log(Y_rem/YMax)
+          rr<-(Y_rem/YMax)
+          
+          #Exclude exp after reached its min % rem spp; exclude if %rem < exp.min%rem
+          excludeIdx<-which(rem<Smin/Smax)
+          lrr[excludeIdx] <- NA
+          rr[excludeIdx] <- NA
+          
+          return( c(MeanLRR = mean(lrr, na.rm=T), sdLRR=sd(lrr, na.rm=T),
+                    ext=1-adf$Remaining,nobs=length(na.exclude(lrr)),MeanRR=mean(rr,na.rm=T)))
+          
+        })
+  
+})
+#get rid of weird duplicates
+extCurve<-extCurve[which(!duplicated(extCurve[,1])),]
+
+# CONSUMER DIVERSITY DECOMPOSITION METAMETA: generate curve at step 0.05
+#	0.014 (0.2)is min (smin/smax)
+extCurveCons<-with(powInfoCons, {
+  ddply(data.frame(Remaining=seq(0.02,.99,0.05)), .(Remaining), 
+        
+        function(adf){
+          rem<-adf$Remaining[1]
+          YMax<-exp(powa+powb*log(Smax))
+          Y_rem<-exp(powa+powb*log(rem*Smax))
+          
+          lrr<-log(Y_rem/YMax)
+          rr<-(Y_rem/YMax)
+          
+          #Exclude exp after reached its min % rem spp; exclude if %rem < exp.min%rem
+          excludeIdx<-which(rem<Smin/Smax)
+          lrr[excludeIdx] <- NA
+          rr[excludeIdx] <- NA
+          
+          return( c(MeanLRR = mean(lrr, na.rm=T), sdLRR=sd(lrr, na.rm=T),
+                    ext=1-adf$Remaining,nobs=length(na.exclude(lrr)),MeanRR=mean(rr,na.rm=T)))	
+          
+        })
+})
+#get rid of weird duplicates
+extCurveCons<-extCurveCons[which(!duplicated(extCurveCons[,1])),]
+
+# PRODUCER DIVERSITY DECOMPOSITION METAMETA: generate curve at step 0.05
+#	0.04 is min (smin/smax)
+extCurveLitt<-with(powInfoLitt, {
+  ddply(data.frame(Remaining=seq(0.04,.99,0.05)), .(Remaining),
+        
+        function(adf){
+          #browser()
+          rem<-adf$Remaining[1]
+          YMax<-exp(powa+powb*log(Smax))
+          Y_rem<-exp(powa+powb*log(rem*Smax))
+          
+          lrr<-log(Y_rem/YMax)
+          rr<-(Y_rem/YMax)
+          
+          #Exclude exp after reached its min % rem spp; exclude if %rem < exp.min%rem
+          excludeIdx<-which(rem<Smin/Smax)
+          lrr[excludeIdx] <- NA
+          rr[excludeIdx] <- NA
+          
+          return( c(MeanLRR = mean(lrr, na.rm=T), sdLRR=sd(lrr, na.rm=T),
+                    ext=1-adf$Remaining,nobs=length(na.exclude(lrr)),MeanRR=mean(rr,na.rm=T)))
+          
+        })
+})
+#get rid of weird duplicates
+extCurveLitt<-extCurveLitt[which(!duplicated(extCurveLitt[,1])),]
+
+#Convert SD to CI
+#PRODUCTIVITY 
+err<-extCurve
+err$CItemp=numeric(nrow(extCurve))
+err$CI.lo=numeric(nrow(extCurve))
+err$CI.up=numeric(nrow(extCurve))
+i=which(extCurve$nobs>0)
+err<-within(err, {
+  CItemp[i] <- qt(0.025, nobs[i]-1, lower.tail=F)*sdLRR[i]/sqrt(nobs[i])
+  CI.lo[i]<-MeanLRR[i]-CItemp[i]
+  CI.up[i]<-MeanLRR[i]+CItemp[i]
+})
+#CONSUMER DIV-DECOMP
+errCons<-extCurveCons
+errCons$CItemp=numeric(nrow(extCurveCons))
+errCons$CI.lo=numeric(nrow(extCurveCons))
+errCons$CI.up=numeric(nrow(extCurveCons))
+i=which(extCurveCons$nobs>0)
+errCons<-within(errCons, {
+  CItemp[i] <- qt(0.025, nobs[i]-1, lower.tail=F)*sdLRR[i]/sqrt(nobs[i])
+  CI.lo[i]<-MeanLRR[i]-CItemp[i]
+  CI.up[i]<-MeanLRR[i]+CItemp[i]
+})
+#LITTER DIV-DECOMP
+errLitt<-extCurveLitt
+errLitt$CItemp=numeric(nrow(extCurveLitt))
+errLitt$CI.lo=numeric(nrow(extCurveLitt))
+errLitt$CI.up=numeric(nrow(extCurveLitt))
+i=which(extCurveLitt$nobs>0)
+errLitt<-within(errLitt, {
+  CItemp[i] <- qt(0.025, nobs[i]-1, lower.tail=F)*sdLRR[i]/sqrt(nobs[i])
+  CI.lo[i]<-MeanLRR[i]-CItemp[i]
+  CI.up[i]<-MeanLRR[i]+CItemp[i]
+})
+
+
+#subset to get rid of MeanLRR=NA values
+err<-na.exclude(err)
+errCons<-na.exclude(errCons)
+errLitt<-na.exclude(errLitt)
+
+#Convert to percentages instead of proportions
+#PRODUCTIVITY
+err$percent<-err$ext*100
+#CONSUMER & LITTER DIV-DECOMP
+errCons$percent<-errCons$ext*100
+errLitt$percent<-errLitt$ext*100
+
+#output curve data (if desired)
+#	write.table(err,"clipboard-768",sep="\t",row.names=FALSE,col.names=FALSE)
+#	write.table(errCons,"clipboard-768",sep="\t",row.names=FALSE,col.names=FALSE)
+#	write.table(errLitt,"clipboard-768",sep="\t",row.names=FALSE,col.names=FALSE)
+
+
+```
+
+
+*Make Fig 1: productivity
+```{r}
+#As a pdf 
+pdf("Fig1.pdf", 
+    width=3.50393701, height=3.1, pointsize=7)
+
+par(omi=c(0,0,0,0)) #outer margin area in inches (oma = in number of lines, outer margin area)
+
+#Set up graphical region to expect one plot
+par(mfrow=c(1,1),xpd=NA)  #xpd=NA allows text and graphics outside of figure margins
+#Draw figure
+par(mai=c(.7, .52, .3, .88)) #bottom, left, top and right 
+cols <- c("MeanLRR")
+matplot(err$percent, err[, cols], type="n", lwd=2, 
+        xlim=c(0,150), xaxt="n",
+        ylim=c(-.9,1), yaxt="n",
+        xlab="",cex.axis=0.85,bty="n", 
+        ylab="",tcl=0.5,cex.axis=0.9)
+#left axis
+axis(2,pos=-5,tcl=0.5,cex.axis=.9,at=c(1.0,.8,.6,.4,.2,0,-.2,-.4,-.6,-.8),las=1)
+#right axis
+axis(4,ylim=c(-1,1),pos=155,tcl=0.5,at=c(1.0,.8,.6,.4,.2,0,-.2,-.4,-.6,-.8),lab=F)
+#2 x axes
+axis(1,xlim=c(0,150),pos=-0.99,tcl=0.5,at=c(0,20,40,60,80,100),cex.axis=.9)
+axis(1,xlim=c(105,148),pos=-0.99,tcl=0.5,at=c(105,109,113,117,121,125,129,133,137,141,145,149),
+     cex.axis=.9,lab=F)
+text(x=-40,y=0,
+     "Change in productivity caused by species loss", 
+     srt=90,cex=1)
+text(x=-32,y=0.015,
+     expression(paste("(log response ratio, ln[",Y[S],"/",Y[Smax],"])")),
+     srt=90,cex=1)
+text(x=211,y=0,
+     "Change in productivity caused by environmental change",
+     srt=90,cex=1)
+text(x=219,y=0.03,
+     expression(paste("(log response ratio,ln[",Y[expt],"/",Y[control],"])")),
+     srt=90,cex=1)
+text(x=50,y=-1.3,"Percent of species lost",cex=1)
+text(x=128,y=-1.17,"Other env.",cex=1)
+text(x=128,y=-1.3,"changes (by size)",cex=1)
+#Shaded CI
+i.for<-order(err$percent)
+i.back<-order(err$percent,decreasing=TRUE)
+x.polygon<-c(err$percent[i.for], err$percent[i.back])
+y.polygon<-c(err$CI.lo[i.for],err$CI.up[i.back])
+polygon(x.polygon,y.polygon,col="#A9A9A9",border=NA)
+#add curve
+matplot(err$percent, err[, cols], type="l", lwd=1, bty="l", 
+        col=colors()[(555)], add=TRUE)
+#positive curve
+matplot(err$percent, err$MeanLRR*-1, type="l", lwd=.25, bty="l", lty=1, 
+        col=colors()[(555)], add=TRUE)
+#add zero line
+segments(x0=-3,y0=0,x1=152,y1=0,col="black")
+#Negative factor effect lines & text
+segments(x0=55.5,y0=-0.148854,x1=147,y1=-0.148854,col=colors()[(332)],lty=3) #Elevated Ozone
+text(x=142,y=-0.148854,expression(paste(O[3])),col=colors()[(555)],pos=4,cex=.8)
+segments(x0=92.5,y0=-0.616186139,x1=154,y1=-0.616186139,col=colors()[(332)],lty=3) #Drought
+text(x=153,y=-0.616186139,"Drought",col=colors()[(555)],pos=4,cex=.8)
+segments(x0=38,y0=-0.082,x1=154,y1=-0.082,col=colors()[(332)],lty=3) #UV
+text(x=153,y=-0.08,"UV",col=colors()[(555)],pos=4,cex=.8)
+segments(x0=63,y0=-0.186,x1=154,y1=-0.186,col=colors()[(332)],lty=3) #acidification
+text(x=153,y=-0.186,"Acidification",col=colors()[(555)],pos=4,cex=.8)
+#plot negative effects and 95% CIs
+neg<-subset(prod.other,prod.other$diffpt==1)
+matplot(neg$xval, neg$est,pch = 16, cex=1, col=colors()[(555)], add=TRUE)
+#add CIs
+arrows(neg$xval,neg$est,neg$xval,neg$upper,length=0.03,angle=90)
+arrows(neg$xval,neg$est,neg$xval,neg$lower,length=0.03,angle=90)
+#Positive factor effect lines & text
+segments(x0=45,y0=0.116003676,x1=154,y1=0.116003676,col=colors()[(332)],lty=3) #Warming
+text(x=153,y=0.116003676,"Warming",col=colors()[(566)],pos=4,cex=.8)
+segments(x0=64,y0=0.2173625,x1=154,y1=0.2173625,col=colors()[(332)],lty=3) #+CO2
+text(x=153,y=0.20,expression(paste(CO[2])),col=colors()[(566)],pos=4,cex=.8)
+segments(x0=66,y0=0.238733,x1=83,y1=0.238733,col=colors()[(332)],lty=3) #+P
+segments(x0=120,y0=0.238733,x1=155,y1=0.238733,col=colors()[(332)],lty=3) #+P
+text(x=78,y=0.255,"Nutrients (P)",col=colors()[(566)],pos=4,cex=.8)
+segments(x0=72.5,y0=0.3097557,x1=154,y1=0.3097557,col=colors()[(332)],lty=3) #+N
+text(x=153,y=0.29,"Nutrients (N)",col=colors()[(566)],pos=4,cex=.8)
+segments(x0=110,y0=0.6941074,x1=154,y1=0.6941074,col=colors()[(332)],lty=3) #+N, +CO2
+text(x=153,y=0.6941074,expression(paste("Multiple (N, ",CO[2],")")),col=colors()[(566)],pos=4,cex=.8)
+segments(x0=110,y0=0.9639032,x1=154,y1=0.9639032,col=colors()[(332)],lty=3) #+N, +P
+text(x=153,y=0.9639032,"Multiple (N, P)",col=colors()[(566)],pos=4,cex=.8)
+segments(x0=88.5,y0=0.5136153,x1=155,y1=0.5136153,col=colors()[(332)],lty=3) #Inv spp
+text(x=153,y=0.5136153,"Inv. species",col=colors()[(566)],pos=4,cex=.8)
+segments(x0=77,y0=0.351,x1=154,y1=0.351,col=colors()[(332)],lty=3) #Ca
+text(x=153,y=0.36,"Nutrients (Ca)",col=colors()[(566)],pos=4,cex=.8)
+#plot positive effects and 95% CIs
+pos<-subset(prod.other,prod.other$diffpt==0)
+matplot(pos$xval, pos$est,pch = 16, cex=1, col= colors()[(566)], add=TRUE)
+#add CIs
+arrows(pos$xval,pos$est,pos$xval,pos$upper,length=0.03,angle=90)
+arrows(pos$xval,pos$est,pos$xval,pos$lower,length=0.03,angle=90)
+
+# close PNG device
+dev.off()
+
+```
+
+
+*Make Fig 2: decomposition
+```{r}
+# as a pdf file
+
+pdf("Fig2.pdf", 
+    width=3.50393701, height=5, pointsize=7)
+#89mm = 3.50393701; one column
+
+par(omi=c(0,0,0,0)) #outer margin area in inches (oma = in number of lines, outer margin area)
+
+#Set up graphical region to expect two stacked plots
+par(mfrow=c(2,1),xpd=NA)  #xpd=NA allows text and graphics outside of figure margins
+
+###################
+#make CONSUMER plot - Part A 
+par(mai=c(.5, .52, .3, .88)) #bottom, left, top and right 
+cols <- c("MeanLRR")
+matplot(errCons$percent, errCons[, cols], type="n", xlim=c(0,150),lwd=2, 
+        ylim=c(-1.3,0.8), yaxt="n",xaxt="n",
+        xlab="",cex.axis=0.85,bty="n", 
+        ylab="",tcl=0.5)
+#left axis
+axis(2,ylim=c(0,1.2),pos=-5,tcl=0.5,cex.axis=.9,at=c(.8,.6,.4,.2,0,-.2,-.4,-.6,-.8,-1),las=1)
+axis(2,ylim=c(0,1.2),pos=-5,tcl=0.5,cex.axis=.9,lab=F,at=c(-1.1,-1.3))
+#fake axis break
+segments(x0=-5,y0=-1,x1=-5,y1=-1.03,col="black") 
+segments(x0=-7,y0=-1.04,x1=-3,y1=-1.02,col="black") 
+segments(x0=-5,y0=-1.07,x1=-5,y1=-1.1,col="black") 
+segments(x0=-7,y0=-1.08,x1=-3,y1=-1.06,col="black") 
+#right axis
+axis(4,ylim=c(0,1.2),pos=155,tcl=0.5,lab=F,at=c(.8,.6,.4,.2,0,-.2,-.4,-.6,-.8,-1),las=1)
+axis(4,ylim=c(0,1.2),pos=155,tcl=0.5,cex.axis=.9,lab=F,at=c(-1.1,-1.3))
+#fake axis break
+segments(x0=155,y0=-1,x1=155,y1=-1.03,col="black") 
+segments(x0=153,y0=-1.04,x1=157,y1=-1.02,col="black") 
+segments(x0=155,y0=-1.07,x1=155,y1=-1.1,col="black") 
+segments(x0=153,y0=-1.08,x1=157,y1=-1.06,col="black") 
+text(x=-21,y=-1.3,"-1.8",cex=0.9)
+#x axis
+axis(1,xlim=c(0,150),pos=-1.4,tcl=0.5,at=c(0,20,40,60,80,100),cex.axis=.9)
+axis(1,xlim=c(105,148),pos=-1.4,tcl=0.5,at=c(108,118,128,138,148),
+     cex.axis=.9,lab=F)
+#Shaded CI
+i.for<-order(errCons$percent)
+i.back<-order(errCons$percent,decreasing=TRUE)
+x.polygon<-c(errCons$percent[i.for], errCons$percent[i.back])
+y.polygon<-c(errCons$CI.lo[i.for],errCons$CI.up[i.back])
+polygon(x.polygon,y.polygon,col="#A9A9A9",border=NA)
+#add curves
+matplot(errCons$percent, errCons[, cols], type="l", lwd=1, bty="l", 
+        col=colors()[(555)], add=TRUE)
+#abs value curve
+matplot(errCons$percent, errCons$MeanLRR*-1, type="l", lwd=.25, bty="l", 
+        col=colors()[(555)], add=TRUE)
+#add zero line 
+segments(x0=-3,y0=0,x1=155,y1=0,col="black") 
+#Negative factor effect lines & text
+segments(x0=21,y0=-0.020202707,x1=154,y1=-0.020202707,col=colors()[(343)],lty=3) #+CO2
+text(x=153,y=-.001,expression(paste(CO[2])),col=colors()[(555)],pos=4,cex=.9)
+segments(x0=22,y0=-0.02325821,x1=154,y1=-0.02325821,col=colors()[(343)],lty=3) #+N
+text(x=153,y=-0.08,"Nutrients (N)",col=colors()[(555)],pos=4,cex=.9)
+segments(x0=110,y0=-0.830,x1=154,y1=-0.830,col=colors()[(343)],lty=3) #Acidification
+text(x=153,y=-0.830,"Acidification",col=colors()[(555)],pos=4,cex=.9)
+#plot negative effects and 95% CIs
+neg<-subset(decomp.other,decomp.other$diffpt==1)
+matplot(neg$xval, neg$est,pch = 16, cex=1, col=colors()[(555)], add=TRUE)#all but acidification
+#add CIs acidification lower & upper = -1.6	-0.52
+arrows(neg$xval,neg$est,neg$xval,neg$upper,length=0.03,angle=90)
+arrows(neg$xval,neg$est,neg$xval,neg$lower,length=0.03,angle=90)
+#lower acidification CI by hand (fake break)
+segments(x0=108,y0=-.83,x1=108,y1=-1.03,col="black") 
+segments(x0=110,y0=-1.02,x1=106,y1=-1.04,col="black") 
+segments(x0=108,y0=-1.07,x1=108,y1=-1.1,col="black") 
+segments(x0=110,y0=-1.06,x1=106,y1=-1.08,col="black") 
+segments(x0=107,y0=-1.1,x1=109,y1=-1.1,col="black") 
+#Positive factor effect lines & text
+segments(x0=77,y0=0.25,x1=154,y1=0.25,col=colors()[(343)],lty=3) #Eutrophication
+text(x=153,y=0.25,"Multiple (aquatic)",col=colors()[(566)],pos=4,cex=.9)
+segments(x0=110,y0=0.7294916,x1=154,y1=0.7294916,col=colors()[(343)],lty=3) #invasion
+text(x=153,y=0.7294916,"Inv. species",col=colors()[(566)],pos=4,cex=.9)
+#plot positive effects and 95% CIs
+pos<-subset(decomp.other,decomp.other$diffpt==0)
+matplot(pos$xval, pos$est,pch = 16, cex=1, col= colors()[(566)], add=TRUE)
+#add CIs
+arrows(pos$xval,pos$est,pos$xval,pos$upper,length=0.03,angle=90)
+arrows(pos$xval,pos$est,pos$xval,pos$lower,length=0.03,angle=90)
+#add additional text
+thestring<-"a"
+text(x=0,y=1.1,labels=bquote(bold(.(thestring))))
+text(x=-40,y=-2,"Change in decomposition caused by species loss", srt=90)
+text(x=-32,y=-2,expression(paste("(log response ratio, ln[",Y[S],"/",Y[Smax],"])"))
+     ,srt=90)
+text(x=211,y=-2,"Change in decomposition caused by environmental change",
+     srt=90)
+text(x=219,y=-2,expression(paste("(log response ratio, ln[",Y[expt],"/",Y[control],"])")),
+     srt=90)
+
+################
+#make LITTER plot - Part B
+par(mai=c(.5, .52, .3, .88)) #bottom, left, top and right 
+cols <- c("MeanLRR")
+matplot(errLitt$percent, errLitt[, cols], type="n", xlim=c(0,150),lwd=2, 
+        ylim=c(-1.3,0.8), yaxt="n",xaxt="n",
+        xlab="",cex.axis=0.9,bty="n", 
+        ylab="",tcl=0.5)
+#left axis
+axis(2,ylim=c(0,1.2),pos=-5,tcl=0.5,cex.axis=.9,at=c(.8,.6,.4,.2,0,-.2,-.4,-.6,-.8,-1),las=1)
+axis(2,ylim=c(0,1.2),pos=-5,tcl=0.5,cex.axis=.9,lab=F,at=c(-1.1,-1.3))
+#fake axis break
+segments(x0=-5,y0=-1,x1=-5,y1=-1.03,col="black") 
+segments(x0=-7,y0=-1.04,x1=-3,y1=-1.02,col="black") 
+segments(x0=-5,y0=-1.07,x1=-5,y1=-1.1,col="black") 
+segments(x0=-7,y0=-1.08,x1=-3,y1=-1.06,col="black") 
+#right axis
+axis(4,ylim=c(0,1.2),pos=155,tcl=0.5,lab=F,at=c(.8,.6,.4,.2,0,-.2,-.4,-.6,-.8,-1))
+axis(4,ylim=c(0,1.2),pos=155,tcl=0.5,cex.axis=.9,lab=F,at=c(-1.1,-1.3))
+#fake axis break
+segments(x0=155,y0=-1,x1=155,y1=-1.03,col="black") 
+segments(x0=153,y0=-1.04,x1=157,y1=-1.03,col="black") 
+segments(x0=155,y0=-1.07,x1=155,y1=-1.1,col="black") 
+segments(x0=153,y0=-1.08,x1=157,y1=-1.06,col="black") 
+text(x=-21,y=-1.3,"-1.8",cex=0.9)
+#x axis
+axis(1,xlim=c(0,150),pos=-1.4,tcl=0.5,at=c(0,20,40,60,80,100),cex.axis=.9)
+axis(1,xlim=c(105,148),pos=-1.4,tcl=0.5,at=c(108,118,128,138,148),
+     cex.axis=.9,lab=F)
+text(x=55,y=-1.8,"Percent of species lost",cex=.9)
+text(x=130,y=-1.65,"Other env.",cex=.9)
+text(x=130,y=-1.8,"changes (by size)",cex=.9)
+#Shaded CI
+i.for<-order(errLitt$percent)
+i.back<-order(errLitt$percent,decreasing=TRUE)
+x.polygon<-c(errLitt$percent[i.for], errLitt$percent[i.back])
+y.polygon<-c(errLitt$CI.lo[i.for],errLitt$CI.up[i.back])
+polygon(x.polygon,y.polygon,col="#A9A9A9",border=NA)
+#add curves
+matplot(errLitt$percent, errLitt[, cols], type="l", lwd=1, bty="l", 
+        col=colors()[(566)], add=TRUE)
+#abs value curve
+matplot(errLitt$percent, -1*errLitt$MeanLRR, type="l", lwd=.25, bty="l", 
+        col=colors()[(566)], add=TRUE)
+#add red portions of lines
+segments(x0=84.2127565,y0=0,x1=86,y1=-0.097003093,col=colors()[(555)],lwd=1) 
+segments(x0=84.2127565,y0=0,x1=86,y1=0.097003093,col=colors()[(555)],lwd=.25) 
+#add zero line 
+segments(x0=-3,y0=0,x1=155,y1=0,col="black") #zero line
+#Negative factor effect lines & text
+segments(x0=53,y0=-0.020202707,x1=154,y1=-0.020202707,col=colors()[(343)],lty=3) #+CO2
+text(x=153,y=-.0009,expression(paste(CO[2])),col=colors()[(555)],pos=4,cex=.9)
+segments(x0=56,y0=-0.02325821,x1=154,y1=-0.02325821,col=colors()[(343)],lty=3) #+N
+text(x=153,y=-0.085,"Nutrients (N)",col=colors()[(555)],pos=4,cex=.9)
+segments(x0=110,y0=-0.830,x1=154,y1=-0.830,col=colors()[(343)],lty=3) #Acidification
+text(x=153,y=-0.830,"Acidification",col=colors()[(555)],pos=4,cex=.9)
+#plot negative effects and 95% CIs
+neg<-subset(decomp.other,decomp.other$diffpt==1)
+matplot(neg$xval, neg$est,pch = 16, cex=1, col=colors()[(555)], add=TRUE)#all but acidification
+#add CIs acidification lower & upper = -1.6	-0.52
+arrows(neg$xval,neg$est,neg$xval,neg$upper,length=0.03,angle=90)
+arrows(neg$xval,neg$est,neg$xval,neg$lower,length=0.03,angle=90)
+#lower acidification CI by hand (fake break)
+segments(x0=108,y0=-.83,x1=108,y1=-1.03,col="black") 
+segments(x0=110,y0=-1.02,x1=106,y1=-1.04,col="black") 
+segments(x0=108,y0=-1.07,x1=108,y1=-1.1,col="black") 
+segments(x0=110,y0=-1.06,x1=106,y1=-1.08,col="black") 
+segments(x0=107,y0=-1.1,x1=109,y1=-1.1,col="black") 
+#Positive factor effect lines & text
+segments(x0=110,y0=0.25,x1=154,y1=0.25,col=colors()[(343)],lty=3) #Eutrophication
+text(x=153,y=0.25,"Multiple (aquatic)",col=colors()[(566)],pos=4,cex=.9)
+segments(x0=110,y0=0.7294916,x1=154,y1=0.7294916,col=colors()[(343)],lty=3) #invasion
+text(x=153,y=0.7294916,"Inv. species",col=colors()[(566)],pos=4,cex=.9)
+#plot positive effects and 95% CIs
+pos<-subset(decomp.other,decomp.other$diffpt==0)
+matplot(pos$xval, pos$est,pch = 16, cex=1, col= colors()[(566)], add=TRUE)
+#add CIs
+arrows(pos$xval,pos$est,pos$xval,pos$upper,length=0.03,angle=90)
+arrows(pos$xval,pos$est,pos$xval,pos$lower,length=0.03,angle=90)
+#add additional text
+thestring<-"b"
+text(x=0,y=1.1,labels=bquote(bold(.(thestring))))#"b",cex=1.1,font.main=3)
+
+# close PDF device
+dev.off()
+
+```
+# Table 1: 
+Effects of species richness and environmental changes on primary productivity for the broad meta-analysis and factorial diversity crossed with environment experiments. 
+
+In this table, authors show the effect sizes (and confidence intervals) for a loss of primary producers diversity of 50% on the primary productivity. They also include for comparison the effect of the avergae monoculture and the best monoculture - they explain methods how they calculated the LRRs for this. /// include
+
+They also include for comparison, the effect of global change drivers, alone or combined. 
+
+Negative values mean a decline in productivity rates. 
+
+They did this analysis for a broad meta-analysis with 192 publicacions on a variety of ecosystems 9first part of the table). Then they complement this with a summary of 16 experiments that simultaneously manipulated plant species richess in factorial combination with some other environmental change (factorial experiments in second part of the table). 
+
+Bold values: indicate boostrapped mean LRRs and confidence intervals
+
+* Data for table 1
+
+(ProdBoot): Provides information on the 192 used papers; number of observations in each paper; biomass type (if it was aboveground, belowground, mixed or total; factor which is the global change driver analysed in that paper, log response ratio as an effect size, confidence intervals, type of of error reported in the original (SD, SE), NO ERROR IS REPORTED WHEN IN THE ORIGINAL PAPER THE ERROR WAS CI
+
+
+
+# Reproducing Table 1: 
+
+
+
+
