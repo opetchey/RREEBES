@@ -96,7 +96,7 @@ library(stringr)
 library(ggplot2)
 
 library(boot)
-
+library(Hmisc)
 revised <- read.csv("/Volumes/Petchey/Gr_Petchey/6 Secure data/Hekstra_and_Leibler_2012_Cell/revised.csv", header=FALSE, blank.lines.skip=T)
 
 ## Create variable names
@@ -173,11 +173,13 @@ dd_clean <- subset(dd, !((Block == "A" & Replicate %in% c(7,9)) |
 ```{r}
 
 # calculate bootstrap sd of mean
-dd_clean$Time_bin <- ceiling(dd_clean$Time)
+#dd_clean$Time_bin <- ceiling(dd_clean$Time)
+
+
+dd_clean$Time_bin <- as.numeric(cut2(dd_clean$Time, g=25))
 dd_clean$split_var <- paste0(dd_clean$Species, "_", dd_clean$Time_bin)
 
 species_time <- split(dd_clean, dd_clean$split_var)
-unique(species_time)
 mean_boot <- function(x, d) {
   return(mean(x[d], na.rm=T))
 }
@@ -199,18 +201,26 @@ dd_clean$boot_sd <- rep(unlist(botstrapped_sds), lapply(1:length(species_time), 
 
 
 # crunch data into mean
-mean_densities <- dd_clean %>% filter(!(Block != "F" & Species == "Bacteria")) %>% group_by(Species, Time_bin) %>% summarize(mean_density = mean(density, na.rm=T))
+mean_densities <- dd_clean %>% group_by(Species, Time_bin) %>% dplyr::summarize(mean_density = mean(density, na.rm=T))
 mean_densities$split_var <- paste0(mean_densities$Species, "_", mean_densities$Time_bin)
 
 # join with sd data
 mean_densities <- merge(mean_densities, sd_df, by=c("split_var"))
 
 ggplot() + 
-  stat_smooth(data=mean_densities, aes(y=mean_density+1, x=Time_bin, group=Species, colour=Species), method="loess", se=F)+ 
+geom_line(data=subset(mean_densities, Time_bin > 4), aes(y=mean_density+1, x=Time_bin, group=Species, colour=Species), size=1) +
 scale_colour_manual(values = c("green","red","blue")) +
-  geom_ribbon(data=mean_densities,aes(x=Time_bin, ymin=mean_density-boot_sd, ymax=mean_density+boot_sd, group=Species, fill=Species),  alpha=0.2) +
-  scale_y_log10() +
-  scale_fill_manual(values = c("green","red","blue"))
+geom_ribbon(data=subset(mean_densities, Time_bin > 4),
+            aes(x=Time_bin, ymin=mean_density-boot_sd, ymax=mean_density+boot_sd, group=Species, fill=Species),  alpha=0.2) +
+scale_y_log10() +
+geom_line(data=subset(dd_clean, Replicate %in% 3:4 & Block == "A"), 
+          aes(y=density+1, x=Time_bin, group=interaction(Species, Replicate, Block), colour=Species))+ 
+  geom_point(data=subset(dd_clean, Replicate %in% 3:4 & Block == "A"), 
+             aes(y=density+1, x=Time_bin, group=interaction(Species, Replicate, Block), colour=Species)) +
+  scale_fill_manual(values = c("green","red","blue")) +
+  theme(legend.position="bottom") +
+  facet_grid(Species~., scales="free")
+  
 
 
 ```
