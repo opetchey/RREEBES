@@ -488,6 +488,28 @@ Ward et al. reproduction finalized and put on gh-pages branch
 
 ## 6.10
 
+Minutes by Vanessa
+
+###Attendance
+* Owen, Frank, Thomas, Mikael, Gian Marco, Aurèlie, Alessandra and two guests, Sebastian Diehl and Åke Bärnnström 
+
+###Progress updates
+* Thomas, Gian Marco and Vanessa (Morales-Castilla et al): not all data available, data in bad format
+* Alejandra and Aurèlie (Hooper et al): no progress on the last weeks, R code already available, trying to understand it. Is it a reproduction if the code provided by the authors is used?
+* Tad (Yampolsky et al): no update
+* Owen, Frank and Mikael (Hekstra et al): data available only on our server on the hekstra branch, not on github for everyone. Original data not in R friendly format, now it is tidy.
+
+###Discussion
+* What is the use of the reproductions we do? 
+
+* Which languages are suitable for reproductions? Is Matlab a suitable language? 
+
+* ReSience Journal
+
+* Manual on how to store your data originated from the experience with REEBBES?
+
+* Knowledge network for biocomplexity, a data repository
+
 ## 13.10
 
 ## 20.10
