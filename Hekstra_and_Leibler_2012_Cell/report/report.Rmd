@@ -212,14 +212,18 @@ geom_line(data=subset(mean_densities, Time_bin > 4), aes(y=mean_density+1, x=Tim
 scale_colour_manual(values = c("green","red","blue")) +
 geom_ribbon(data=subset(mean_densities, Time_bin > 4),
             aes(x=Time_bin, ymin=mean_density-boot_sd, ymax=mean_density+boot_sd, group=Species, fill=Species),  alpha=0.2) +
-scale_y_log10() +
 geom_line(data=subset(dd_clean, Replicate %in% 3:4 & Block == "A"), 
           aes(y=density+1, x=Time_bin, group=interaction(Species, Replicate, Block), colour=Species))+ 
   geom_point(data=subset(dd_clean, Replicate %in% 3:4 & Block == "A"), 
-             aes(y=density+1, x=Time_bin, group=interaction(Species, Replicate, Block), colour=Species)) +
+             aes(y=density+1, x=Time_bin, group=interaction(Species, Replicate, Block), colour=Species, shape=as.factor(Replicate))) +
   scale_fill_manual(values = c("green","red","blue")) +
   theme(legend.position="bottom") +
-  facet_grid(Species~., scales="free")
+  facet_grid(Species~., scales="free") +
+  guides(shape=F) +
+  scale_y_log10() +
+  xlab("days")+
+  ylab("Density (cells per ml)") +
+  scale_x_discrete(labels=seq(0,100))
   
 
 
