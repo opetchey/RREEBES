@@ -1,0 +1,8 @@
+Entry	Unique identifier for each observation (row) in the Cardinale dataset.
+Study	Unique identifier for each study summarized in the Cardinale dataset.
+Expt	Unique identifier for each experiment included in the Cardinale dataset.
+Smax	Maximum level of richness included in the study.
+powa	Maximum likelihood estimates of a from a linearized version of the power function ln(Yi/Y1) = a + b*ln(S) where Yi is the value of Y at richness S, and Y1 is the mean monoculture value of Y at S = 1. 
+powb	Maximum likelihood estimates of b from a linearized version of the power function ln(Yi/Y1) = a + b*ln(S) where Yi is the value of Y at richness S, and Y1 is the mean monoculture value of Y at S = 1. 
+Smin	Minimum level of richness included in the study.
+FinalT  Is data in this row from the final time point included in the study? Yes (Y) or no (N).

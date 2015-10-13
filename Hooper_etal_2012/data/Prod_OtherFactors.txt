@@ -1,0 +1,6 @@
+group	global change factor
+est	log response ratio (LRR)
+lower	lower 95% confidence interval value
+upper	upper95% confidence interval value
+diffpt	1= negative LRR; 0=positive LRR
+xval	level of diversity loss where diversity LRR is approximately equal to the LRR for each global change factor

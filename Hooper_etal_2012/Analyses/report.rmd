@@ -50,20 +50,22 @@ rm(list=ls())
 library(plyr)
 library(RCurl)
 
-
-powInfo <- read.csv(file.choose(), check.names=FALSE) 
-head(powInfo)
-prod.other <- read.csv(file.choose(), check.names=FALSE)
-head(prod.other)
-powInfoCons <- read.csv(file.choose(), check.names=FALSE)
-powInfoLitt <- read.csv(file.choose(), check.names=FALSE)
-head(powInfoCons)
-head(powInfoLitt)
-decomp.other <- read.csv(file.choose(), check.names=FALSE)
-head(decomp.other)
-powInfo<-subset(powInfo,powInfo$FinalT=="Y")
-powInfoCons<-subset(powInfoCons,powInfoCons$FinalT=="Y")
-powInfoLitt<-subset(powInfoLitt,powInfoLitt$FinalT=="Y")
+# ## if data downloaded in the desktop
+# path_data <- getwd()
+# 
+# powInfo <- read.csv(paste0(path_data,"/data/","PowerCoeffs_Prod_min.csv"), check.names=FALSE) 
+# head(powInfo)
+# prod.other <- read.csv(paste0(path_data,"/data/","Prod_OtherFactors.csv"), check.names=FALSE)
+# head(prod.other)
+# powInfoCons <- read.csv(paste0(path_data,"/data/","PowerCoeffs_ConsumDivDecomp_min.csv"), check.names=FALSE)
+# powInfoLitt <- read.csv(paste0(path_data,"/data/","PowerCoeffs_LitterDivDecomp_min.csv"), check.names=FALSE)
+# head(powInfoCons)
+# head(powInfoLitt)
+# decomp.other <- read.csv(paste0(path_data,"/data/","Decomp_OtherFactors.csv"), check.names=FALSE)
+# head(decomp.other)
+# powInfo<-subset(powInfo,powInfo$FinalT=="Y")
+# powInfoCons<-subset(powInfoCons,powInfoCons$FinalT=="Y")
+# powInfoLitt<-subset(powInfoLitt,powInfoLitt$FinalT=="Y")
 ```
 
 *Problem with the Github links
@@ -80,12 +82,12 @@ head(prod.other)
 
 #Decomposition data
 # consumer and litter diversity
-powInfoCons <- read.csv(text=getURL("https://github.com/opetchey/RREEBES/raw/master/Hooper_etal_2012/Data_Fig_1_and_2/PowerCoeffs_ConsumDivDecomp_min.csv"), check.names=FALSE)
+powInfoCons <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Hooper_et_al_2012/Hooper_etal_2012/data/PowerCoeffs_ConsumDivDecomp_min.csv"), check.names=FALSE)
 powInfoLitt <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/PowerCoeffs_LitterDivDecomp_min.csv"), check.names=FALSE)
 head(powInfoCons)
 head(powInfoLitt)
 #Other effects
-decomp.other <- read.csv(text=getURL("https://github.com/opetchey/RREEBES/blob/master/Hooper_etal_2012/Data_Fig_1_and_2/Decomp_OtherFactors.csv"), check.names=FALSE)
+decomp.other <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Hooper_et_al_2012/Hooper_etal_2012/data/Decomp_OtherFactors.csv"), check.names=FALSE)
 head(decomp.other)
 
 #Subset to get needed data - final times only (Y)
@@ -333,7 +335,7 @@ arrows(pos$xval,pos$est,pos$xval,pos$lower,length=0.03,angle=90)
 dev.off()
 
 ```
-
+![Figure:figure 1.](Fig1.pdf)
 
 *Make Fig 2: decomposition
 ```{r}
@@ -539,6 +541,9 @@ Bold values: indicate boostrapped mean LRRs and confidence intervals
 
 
 # Reproducing Table 1: 
+```{r table}
+# NS <- powInfoCons[which(powInfoCons$FinalT=="Y"),]
+```
 
 
 
