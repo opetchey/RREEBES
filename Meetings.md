@@ -511,6 +511,15 @@ Minutes by Vanessa
 * Knowledge network for biocomplexity, a data repository
 
 ## 13.10
+Minutes by Aurélie
+
+###Attendance
+* Frank, Gian Marco, Vanessa and Alejandra
+
+###Progress updates
+* Morales-Castilla et al: move it to "inappropriate data" section 
+* Allesina et al: move it to "on-going papers" section. Progress on the set up, basic parameters, functions, making foodwebs, plot adjancency matrices, who eats whom and bivariate distribution Z.
+* Hooper et al: no progress since last week.
 
 ## 20.10
 
