@@ -523,7 +523,19 @@ Minutes by Aurélie
 
 ## 20.10
 
+Aurelie and Owen chat about improvements to the Beninca ReScience submission.
+
 ## 27.10
+
+Gian Marco, Owen, Aurelie, Alejandra
+
+Hooper reproduction: some decisions about what will not be reporoduced (e.g., a table). This is fine, but that a element won't be reproduced, and the reason for this decision should be documented in the reproduction. Hooper gave the code to make the figures, but we'll make them again using a different method.
+
+Allesina reproduction: still looking at the paper, to understand methods and what will be useful to reproduce.
+
+Hekstra & Leibler: no progress since last week. (at stage of reproducing the first figures.)
+
+Please look at the Beninca ReScience submission for next week.
 
 ## 3.11
 
