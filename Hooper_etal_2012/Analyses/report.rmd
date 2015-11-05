@@ -44,7 +44,7 @@ In this figure authors show the effect of a) detrital consumer diversity and b) 
 # Reproduce Figure 1 and 2
 
  *Clear R and load data
-```{r}
+```{r_clean_environment}
 #clear R
 rm(list=ls())
 library(plyr)
@@ -69,7 +69,7 @@ library(RCurl)
 ```
 
 *Problem with the Github links
-```{r}
+```{r_load_datasets}
 #Load data files
 #	file.choose()
 #Productivity data
@@ -98,7 +98,7 @@ powInfoLitt<-subset(powInfoLitt,powInfoLitt$FinalT=="Y")
 
 
 *GENERATE CURVE DATA FOR ALL THREE PANELS
-```{r}
+```{r_curve_data}
 # PRODUCTIVITY METAMETA: generate curve data at step = 0.05 (5%) ending at smallest proportion remaining 
 #	value in the data (0.03)
 extCurve<-with(powInfo, {
@@ -237,7 +237,7 @@ errLitt$percent<-errLitt$ext*100
 
 
 *Make Fig 1: productivity
-```{r}
+```{r_fig1_productivity}
 #As a pdf 
 #pdf("Fig1.pdf", 
 #    width=3.50393701, height=3.1, pointsize=7)
@@ -338,7 +338,7 @@ arrows(pos$xval,pos$est,pos$xval,pos$lower,length=0.03,angle=90)
 ![Figure:figure 1.](Fig1.pdf)
 
 *Make Fig 2: decomposition
-```{r}
+```{r_fig2_decomposition}
 # as a pdf file
 
 pdf("Fig2.pdf", 
