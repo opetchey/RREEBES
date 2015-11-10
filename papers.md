@@ -29,6 +29,7 @@ TMM: How do early warning signals perform when two environmental changes act sim
 
 # Papers with reproduction underway
 
+[Ito, H.C and Dieckmann, U. A New Mechanism for Recurrent Adaptive Radiations (2007), AmNat 170, E96-E111](http://www.iiasa.ac.at/~dieckman/reprints/ItoDieckmann2007.pdf) TMM: A faster population-based appraoch to simulate adapteive radiations(Mikael).
 
 [Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araujo (2015) Inferring biotic interactions from proxies. TREE xx 1-10](http://www.sciencedirect.com/science/article/pii/S0169534715000774) TMM: Would be interesting to reproduce this study to get an idea about the removed interactions (the forbidden ones) - and the ones that are still in, but false. Maybe one could also apply this to a smaller food web and test for the accuracy of this approach. Because the authors do not provide any test for accuracy... :( Food webs available, checking for trait data. Thomas, GM, Vanessa.
 
