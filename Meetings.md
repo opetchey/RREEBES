@@ -540,6 +540,17 @@ Please look at the Beninca ReScience submission for next week.
 ## 3.11
 
 ## 10.11
+Minutes by Vanessa
+
+###Attendance
+* Owen, Frank, Aurèlie, Alejandra, Vanessa, Thomas, Pablo and Mikael 
+
+###Progress updates
+* Owen and Frank (Hekstra et al): no progress since last week
+* Owen (Beninca et al): discuss the final version of the reproduction next week  
+* Aurèlie and Alejandra (Hooper et al): testing a new package to reproduce the meta-analyses instead of using the R code sent by the authors
+* Vanessa, Thomas and Gian Marco (Allesina et al): no progress since last week
+* Mikael: will start the reproduction of the paper Ito and Dieckmann 2007
 
 ## 17.11
 
