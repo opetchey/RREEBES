@@ -263,7 +263,9 @@ plot.igraph(g1,
   
   
 ## Bivariate distribution Z
-Now, one needs to construct the bivariate distribution based on size 
+Now, one needs to construct the bivariate distribution based on size ratios. For this purpose, Allesina et al. were using the data set provided by [Brose et al. (2005, Ecology)](http://www.esajournals.org/doi/pdf/10.1890/05-0379).
+
+
 ```{r}  
 x     <- seq(-3,3, by=0.05)
 y     <- seq(-3,3, by=0.05)
@@ -285,9 +287,16 @@ for (i in 1:length(x)) {
   }
 }
 
- 
 ```    
-  
+
+
+
+```{r}
+
+```
+
+
+
   
   
   
