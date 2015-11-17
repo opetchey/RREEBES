@@ -18,9 +18,6 @@ TMM: How do historical patterns of environmental variation influence the resilie
 
 One of Lutz Becks et al's papers.
 
-[ALLESINA, S., GRILLI, J., BARABAS, G., TANG, S., ALJADEFF, J. & MARITAN, A. (2015, NatComm): Predicting the stability of large structured food webs.](http://www.nature.com/ncomms/2015/150722/ncomms8842/full/ncomms8842.html?WT.ec_id=NCOMMS-20150729&spMailingID=49200939&spUserID=ODkwMTM2NjQyNgS2&spJobID=723804686&spReportId=NzIzODA0Njg2S0)
-TMM: Construction and analysis of food webs based on the cascade (larger species consume smaller ones; no trphic cycles) or niche model. These food webs are much closer to real food webs due to the way they were constructed and differ substantially from random matrix interaction networks. **Note**: Challenging approach/analysis.
-
 [DAI, L, KOROLEV, K.S. & GORE, J. (2015, PNAS): Relation between stability and resilience determines the performance of early warning signals under different drivers.](http://www.pnas.org/content/112/32/10056.short)
 TMM: How do early warning signals perform when two environmental changes act simultaniously? . **Note**: Challenging approach/analysis. Have to check for the availability of yeast populations data...!
 
@@ -31,13 +28,15 @@ TMM: How do early warning signals perform when two environmental changes act sim
 
 [Ito, H.C and Dieckmann, U. A New Mechanism for Recurrent Adaptive Radiations (2007), AmNat 170, E96-E111](http://www.iiasa.ac.at/~dieckman/reprints/ItoDieckmann2007.pdf) TMM: A faster population-based appraoch to simulate adapteive radiations(Mikael).
 
-[Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araujo (2015) Inferring biotic interactions from proxies. TREE xx 1-10](http://www.sciencedirect.com/science/article/pii/S0169534715000774) TMM: Would be interesting to reproduce this study to get an idea about the removed interactions (the forbidden ones) - and the ones that are still in, but false. Maybe one could also apply this to a smaller food web and test for the accuracy of this approach. Because the authors do not provide any test for accuracy... :( Food webs available, checking for trait data. Thomas, GM, Vanessa.
-
 [Hooper DU, Adair EC, Cardinale BJ, Byrnes JEK, Hungate BA, et al. 2012. A global synthesis reveals biodiversity loss as a major driver of ecosystem change. Nature 486:105–8] (http://jarrettbyrnes.info/pdfs/Hooper_et_al_2012_Nature.pdf). Database is available at the National Center for Ecological Analysis and Synthesis: (http://knb.ecoinformatics.org/knb/metacat/nceas.984/nceas). Ale, Aurélie (Marco? Dennis?)
 
 [Hekstra, D.R. & Leibler, S. (2012) Contingency and statistical laws in replicate microbial closed ecosystems. Cell, 149, 1164–1173.] (http://www.sciencedirect.com/science/article/pii/S0092867412005156). Reproduction underway (Owen, Frank.)
 
 [Yampolsky, Lev Y., Tobias M. M. Schaer, and Dieter Ebert. “Adaptive Phenotypic Plasticity and Local Adaptation for Temperature Tolerance in Freshwater Zooplankton.” Proceedings of the Royal Society of London B: Biological Sciences 281, no. 1776 (February 7, 2014): 20132744.] (http://rspb.royalsocietypublishing.org/content/281/1776/20132744) (Tad Dallas)
+
+[ALLESINA, S., GRILLI, J., BARABAS, G., TANG, S., ALJADEFF, J. & MARITAN, A. (2015, NatComm): Predicting the stability of large structured food webs.](http://www.nature.com/ncomms/2015/150722/ncomms8842/full/ncomms8842.html?WT.ec_id=NCOMMS-20150729&spMailingID=49200939&spUserID=ODkwMTM2NjQyNgS2&spJobID=723804686&spReportId=NzIzODA0Njg2S0)
+TMM: Construction and analysis of food webs based on the cascade (larger species consume smaller ones; no trphic cycles) or niche model. These food webs are much closer to real food webs due to the way they were constructed and differ substantially from random matrix interaction networks. **Note**: Challenging approach/analysis.
+
 
 # Papers without appropriate data
 
@@ -55,3 +54,8 @@ TMM: How do early warning signals perform when two environmental changes act sim
 [Lagrue, C., Poulin, R. & Cohen, J.E. (2014) Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry. Proceedings of the National Academy of Sciences of the United States of America, 112, 1791–1796.](http://www.pnas.org/content/112/6/1791) Reproduction available [here] (http://opetchey.github.io/RREEBES/Lagrue_etal_2014_PNAS/Lagrue_report.html).
 
 [Ward, E.J., Holmes, E.E., Thorson, J.T. & Collen, B. (2014) Complexity is costly: A meta-analysis of parametric and non-parametric methods for short-term population forecasting. Oikos, 123, 652–661.](http://onlinelibrary.wiley.com/doi/10.1111/j.1600-0706.2014.00916.x/abstract)
+
+
+# Papers that could not be reproduced or where reproduction was stopped.
+
+[Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araujo (2015) Inferring biotic interactions from proxies. TREE xx 1-10](http://www.sciencedirect.com/science/article/pii/S0169534715000774) TMM: Would be interesting to reproduce this study to get an idea about the removed interactions (the forbidden ones) - and the ones that are still in, but false. Maybe one could also apply this to a smaller food web and test for the accuracy of this approach. Because the authors do not provide any test for accuracy... :( Food webs available, checking for trait data. Thomas, GM, Vanessa. :weary:
