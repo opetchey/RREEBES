@@ -266,11 +266,22 @@ plot.igraph(g1,
 ## Bivariate distribution Z
 Now, one needs to construct the bivariate distribution based on size ratios. For this purpose, Allesina et al. were using the data set provided by [Brose et al. (2005, Ecology)](http://www.esajournals.org/doi/pdf/10.1890/05-0379).
 
-
+This reads in the data.
 ```{r}
-https://raw.githubusercontent.com/opetchey/RREEBES/ALLESINA_etal_2015_NatComm/ALLESINA_etal_2015_NatComm/Data/bodysizes_2008.txt
+dd.temp <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/ALLESINA_etal_2015_NatComm/ALLESINA_etal_2015_NatComm/Data/BodySizes_Brose2005_revised2008.csv",
+             cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+dd.sizes <- read.csv(text = dd.temp)
 ```
 
+These are the categories of this data set.
+```{r}
+print(colnames(dd.sizes))
+```
+
+
+```{r}
+
+```
 
 
 ```{r}  
