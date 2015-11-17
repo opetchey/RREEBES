@@ -312,7 +312,15 @@ ccc <- select(dd_clean, Experiment, Block, Day, Replicate, Time, Species, densit
   group_by(Experiment, Block, Day) %>%
   do(f1(.))
 
-## fix the signs of vectors
+## make the signs of vectors consistent relative to Algae
+str(ccc)
+ccc$L_mult <- ifelse(ccc$vect_L_Algae>0, 1, -1)
+ccc[,c("vect_L_Algae", "vect_L_Bacteria", "vect_L_Ciliate")] <- ccc[,c("vect_L_Algae", "vect_L_Bacteria", "vect_L_Ciliate")]*ccc$L_mult
+ccc$M_mult <- ifelse(ccc$vect_M_Algae>0, 1, -1)
+ccc[,c("vect_M_Algae", "vect_M_Bacteria", "vect_M_Ciliate")] <- ccc[,c("vect_M_Algae", "vect_M_Bacteria", "vect_M_Ciliate")]*ccc$M_mult
+ccc$S_mult <- ifelse(ccc$vect_S_Algae>0, -1, 1)
+ccc[,c("vect_S_Algae", "vect_S_Bacteria", "vect_S_Ciliate")] <- ccc[,c("vect_S_Algae", "vect_S_Bacteria", "vect_S_Ciliate")]*ccc$S_mult
+
 
 
 ccc <- gather(ccc, key=variable, value=value, 4:15)
@@ -333,7 +341,7 @@ ggplot(filter(ccc, quantity=="vect"),
   scale_color_manual(values=c("green","red","purple"))
 ```
 
-Not quite the same. But recall that directions of eigenvectors are arbitrary, so 
+Qualitative patterns reproduced...
 
 
 
