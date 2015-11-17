@@ -32,6 +32,7 @@ library("plyr")
 library("HiveR")
 library("RColorBrewer")
 library("bipartite")
+library("RCurl")
 ```
 
 
@@ -264,6 +265,12 @@ plot.igraph(g1,
   
 ## Bivariate distribution Z
 Now, one needs to construct the bivariate distribution based on size ratios. For this purpose, Allesina et al. were using the data set provided by [Brose et al. (2005, Ecology)](http://www.esajournals.org/doi/pdf/10.1890/05-0379).
+
+
+```{r}
+https://raw.githubusercontent.com/opetchey/RREEBES/ALLESINA_etal_2015_NatComm/ALLESINA_etal_2015_NatComm/Data/bodysizes_2008.txt
+```
+
 
 
 ```{r}  
