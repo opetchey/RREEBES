@@ -127,7 +127,7 @@ dd <- separate(dd, Block_Species, c("Block", "Species"), sep="_")
 dd$Species <- ifelse(dd$Species=="A", "Algae",
                      ifelse(dd$Species=="B", "Bacteria", "Ciliate"))
 
-str(dd)
+#str(dd)
 ```
 
 
