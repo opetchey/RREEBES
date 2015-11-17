@@ -19,7 +19,7 @@ This is what ought to be the reproduction of the analyses presented in the artic
 ### Article text
 
 * The number of potential links for the Cuban coral reef set should read as **53.130**, and *not* 53.361 because $n_{links}=n_{species}^2-n_{species}$. This number is based on the number of links found in the Cuban coral reef ($n_{guilds}=231$).
-* It is irritating that the authors provide the total number of species found in all three coral reefs (265; Cayman, Cuba, Jamaica), instead of providing only the number of guilds found in the Cuban reef (231). The actual analysis is based on the **guilds** and *not* species. Therefore, the number of links in Fig.~1f is 53.130 (see paragraph above).
+* It is irritating that the authors provide the total number of species found in all three coral reefs (265; Cayman, Cuba, Jamaica), instead of providing only the number of guilds found in the Cuban reef (231). The actual analysis is based on the **guilds** and *not* species. Therefore, the number of links in Fig. 1f is 53.130 (see paragraph above).
 
 ###  Data sets
 
@@ -246,18 +246,19 @@ plot.igraph(g,
 
 Once we know about the trophic levels the species/guilds belong to we can use ``layout.reingold.tilford(g, flip.y=FALSE)`` to introduce some hierarchy. For example, if we assign three trophic levels just randomly then the food web can be displayed like this:
 ```{r, fig.width=10, fig.height=10}
-# plot.igraph(g, 
-# #      layout=layout.fruchterman.reingold, 
-#      layout=layout.reingold.tilford(g, flip.y=FALSE),
-#      main="Serengeti food web (no trait information)",
-#      vertex.size=8, 
-#      vertex.color=adjustcolor("#A6B07E", alpha.f=0.6),
-#      vertex.label.cex=0.5,
-#      vertex.label.family = "sans",
-#      edge.width=2, 
-#      vertex.label.color="#7D1D3F",
-#      vertex.frame.color="white")
+plot.igraph(g, 
+#      layout=layout.fruchterman.reingold, 
+     layout=layout.reingold.tilford(g, flip.y=FALSE),
+     main="Serengeti food web (no trait information)",
+     vertex.size=8, 
+     vertex.color=adjustcolor("#A6B07E", alpha.f=0.6),
+     vertex.label.cex=0.5,
+     vertex.label.family = "sans",
+     edge.width=2, 
+     vertex.label.color="#7D1D3F",
+     vertex.frame.color="white")
 ```
+Just to show what is possible with 'igraph'...
 
 
 ## Cuban coral reef food web
@@ -290,15 +291,15 @@ plot.igraph(f,
      vertex.frame.color="white")
 ```
 
-### The food web with all its potential links.
-```{r}
-# If number of prey equals 0 than the species is a primary producer.
-
-
-```
-
 ### The food web accounting trophic identity.
+This is the point where we stopped. Gian Marco put together the information about who eats whome in the food web, that is, which species really preys upon which other species. This has to be synchronized, yet.
 
+
+## General conclusion and comments
+
+* The study is quite hard to reproduce for mainly two reasons:
+  * The way data is provided is not sufficient for reproduction (to put it nicely). Errors, missing information and poor organization stopped us.
+  * We could not figure out how to get from all-links food webs to the more realistic ones given the data that is provided. We had the (possibly wrong) impression that this study is somehow circular in a way that one uses the information about the food web that one wants to reproduce. 
 
 
 
