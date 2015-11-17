@@ -238,9 +238,76 @@ The figures shows a common trend across replicates, but with considerable fluctu
 
 # Reproduce analyses of correlation matrix, ecomodes, etc
 
+## Variability across replicates
+
+The aim here is to characterise across replicate variability in (species log transformed) densities. I.e., is it the case, at a particular point in time, that replicates with high Tetrahymena abundance 
+
+Calculate covariance among species abundances across replicates. E.g,. correlation of abundance of algae in replicate 1 at time 1.
+
+Should be done at "weekly time points", and separately for experiment 1 and 2 (The first experiment consisted of what is called group F.
+The second experiment of groups A-E, with A measured twice per week, B once per week, etc.).
+
+
+```{r}
+dd_clean <- mutate(dd_clean, Experiment=ifelse(Block=="F", 1, 2))
+dd_clean <- arrange(dd_clean, Experiment, Block, Time_bin, Species, Replicate)
+
+xxx <- filter(dd_clean, Experiment==1, Block=="F", Time_bin==2) %>%
+  select(Experiment, Block, Time_bin, Replicate, Time, Species, density) %>%
+  spread(key=Species, value=density)
+
+xxx <- cbind(xxx, log(xxx[,c("Algae", "Bacteria", "Ciliate")]))
+xxx <- xxx[!apply(sapply(xxx[9:11], is.infinite), 1, function(x) any(x)),]
+xxx <- na.omit(xxx)
+pairs(xxx[,9:11])
+eigen(cor(xxx[,9:11]))
+pca1 <- princomp(xxx[,9:11], cor=T)
+biplot(pca1)
+summary(pca1)
+str(pca1)
+pca1$loadings
+```
+
+
+
+```{r}
+str(dd_clean)
+unique(dd_clean$Time_bin)
+qplot(log10(filter(dd_clean, Time_bin==23, Species=="Algae")$density), log10(filter(dd_clean, Time_bin==23, Species=="Bacteria")$density))
+
+
+
+
+```
+
+Should be calculated 
+
+
 Though there are large fluctuations, differing among replicates, the correlation structure may be common across replicates. 
 
 Be sure to understand the "surprising" correspondence of the ecomodes and the eigen values of the interaction matrix.
+
+
+
+```{r}
+library(mvtnorm)
+sigma <- matrix(c(4,2,-2,
+                  2,3,-2,
+                  -2,-2,5), ncol=3)
+sigma
+x <- rmvnorm(n=500, mean=c(1,1,1), sigma=sigma)
+colMeans(x)
+var(x)
+pairs(x)
+
+cor_matrix <- cor(x)
+eigens <- eigen(cor_matrix)
+eigens
+
+
+```
+
+
 
 # Analysis of growth rate fluctuations (Figure S3)
 
