@@ -565,7 +565,7 @@ Minutes by Vanessa
 
 * Progress updates:
 	* Ale (Hooper, 2012): Need/want more data. No answer for now. Is the raw data available? Will it ever be?
-	* Frank/Owen (Hekstra, 2012): "No progress." Wait, Owen has something done! :smiley: This progress involves the making graphs and plots to dispplay species interactions.
+	* Frank/Owen (Hekstra, 2012): "No progress." Wait, Owen has something done!  :smiley:  This progress involves making graphs and plots to dispplay species interactions.
 	* Vanessa/Thomas (Allesina, 2015): Data set from Brose et al. (2005, Ecology) implemented in the code/report. This is needed to construct the community matrix *M* from the adjacency matrix *K* and the bivariate distribution *Z*.
 	*  Mikael (Ito & Dieckmann, 2007): Started working on this.
 	
@@ -576,12 +576,12 @@ Minutes by Vanessa
 	* Owen going through the reproduction/manuscript.
 		* in general, all results are **qualitatively** reproduced rather than quantitatively.
 		* Instead of putting plot next to each other for comparision, Owen correlated the data. 
-		* What hampered one to come up with a quantitatively identical reproduction of reults is discussed in teh discussion.
-		* Outanding issues are investigated with Rescience.
+		* What hampered one to come up with a quantitatively identical reproduction of reults is discussed in the discussion.
+		* Outanding issues are investigated by Rescience.
 		* Comments from Frank abut Fig. 4: This missmatch is striking. How careful should one be with publishing reproductions that do not exactly match the original results? How to deal with criticism? "You're telling us we're wrong?! Well have a look at your code, man!"
 		* Should one go through the code again, very, very carefully? Owen will check it again!
 		* Thomas: Why publishing with Rescience? Frank: To reach more people, gets a DOI...
-	* In general, it is very hard to set up a manuscript in the environment Rescience provides/requires. To get more submission they should make this process easier!
+	* In general, it is very hard to set up a manuscript in the environment Rescience provides/requires. To get more submissions they should make this process easier!
 	
 
 ## 24.11
