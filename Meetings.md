@@ -565,8 +565,8 @@ Minutes by Vanessa
 
 * Progress updates:
 	* Ale (Hooper, 2012): Need/want more data. No answer for now. Is the raw data available? Will it ever be?
-	* Frank/Owen (Hekstra, 2012): "No progress." Wait, Owen has something done! :smiley: This progress involves hwo to make graphs and plots to dispplay species interactions.
-	* Vanessa/Thomas (Allesina, 2015): Data set from Brose et al. (2005, Ecology) implemented in the code. This is needed to construct the community matrix *M* from the adjacency matrix *K* and the bivariate distribution *Z*.
+	* Frank/Owen (Hekstra, 2012): "No progress." Wait, Owen has something done! :smiley: This progress involves the making graphs and plots to dispplay species interactions.
+	* Vanessa/Thomas (Allesina, 2015): Data set from Brose et al. (2005, Ecology) implemented in the code/report. This is needed to construct the community matrix *M* from the adjacency matrix *K* and the bivariate distribution *Z*.
 	*  Mikael (Ito & Dieckmann, 2007): Started working on this.
 	
 * How could Pablo and David contribute?
