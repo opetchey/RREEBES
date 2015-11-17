@@ -236,9 +236,11 @@ geom_line(data=subset(dd_clean, Replicate %in% 3:4 & Block == "A"),
 
 The figures shows a common trend across replicates, but with considerable fluctuations around this trend.
 
-# Reproduce analyses of correlation matrix, ecomodes, etc
 
-## Variability across replicates
+
+# Reproduce analyses of variability in space and time
+
+## Variability across replicates (i.e., in space)
 
 The aim here is to characterise across replicate variability in (species log transformed) densities. I.e., is it the case, at a particular point in time, that replicates with high Tetrahymena abundance 
 
@@ -247,66 +249,108 @@ Calculate covariance among species abundances across replicates. E.g,. correlati
 Should be done at "weekly time points", and separately for experiment 1 and 2 (The first experiment consisted of what is called group F.
 The second experiment of groups A-E, with A measured twice per week, B once per week, etc.).
 
-
 ```{r}
 dd_clean <- mutate(dd_clean, Experiment=ifelse(Block=="F", 1, 2))
-dd_clean <- arrange(dd_clean, Experiment, Block, Time_bin, Species, Replicate)
+dd_clean <- mutate(dd_clean, Day=ceiling(Time))
+dd_clean <- na.omit(dd_clean)
+```
 
+An example of an eigen analysis of one time slice, across replicates:
+
+```{r}
 xxx <- filter(dd_clean, Experiment==1, Block=="F", Time_bin==2) %>%
   select(Experiment, Block, Time_bin, Replicate, Time, Species, density) %>%
+  group_by(Experiment, Block, Time_bin) %>%
   spread(key=Species, value=density)
-
-xxx <- cbind(xxx, log(xxx[,c("Algae", "Bacteria", "Ciliate")]))
-xxx <- xxx[!apply(sapply(xxx[9:11], is.infinite), 1, function(x) any(x)),]
+xxx[,c("Algae", "Bacteria", "Ciliate")] <- log(xxx[,c("Algae", "Bacteria", "Ciliate")])
+xxx <- xxx[!apply(sapply(xxx[,c("Algae", "Bacteria", "Ciliate")], is.infinite), 1, function(x) any(x)),]
 xxx <- na.omit(xxx)
-pairs(xxx[,9:11])
-eigen(cor(xxx[,9:11]))
-pca1 <- princomp(xxx[,9:11], cor=T)
+#pairs(xxx[,c("Algae", "Bacteria", "Ciliate")])
+eig <- eigen(cor(xxx[,c("Algae", "Bacteria", "Ciliate")]))
+unlist(eig)
+eig$values
+pca1 <- princomp(xxx[,c("Algae", "Bacteria", "Ciliate")], cor=T)
 biplot(pca1)
 summary(pca1)
 str(pca1)
 pca1$loadings
 ```
 
-
+Get eigen values and vectors for all time slices for both experiments:
 
 ```{r}
-str(dd_clean)
-unique(dd_clean$Time_bin)
-qplot(log10(filter(dd_clean, Time_bin==23, Species=="Algae")$density), log10(filter(dd_clean, Time_bin==23, Species=="Bacteria")$density))
+
+f1 <- function(xxx) {
+  
+  num_data_required <- 6
+  
+  if(nrow(xxx)>num_data_required) {
+    #print(xxx)
+    xxx[,c("Algae", "Bacteria", "Ciliate")] <- log(xxx[,c("Algae", "Bacteria", "Ciliate")])
+    xxx1 <- xxx[!apply(sapply(xxx[,c("Algae", "Bacteria", "Ciliate")], is.infinite), 1, function(x) any(x)),]
+    xxx1 <- na.omit(xxx1)
+    if(nrow(xxx1)>num_data_required)
+      res <- unlist(eigen(cor(xxx1[,c("Algae", "Bacteria", "Ciliate")])))
+    if(nrow(xxx1)<=num_data_required)
+      res <- rep(NA, 12)
+  }
+  
+  if(nrow(xxx)<=num_data_required)
+    res <- rep(NA, 12)
+  res <- data.frame(val_L_null=res[1], val_M_null=res[2], val_S_null=res[3],
+                    vect_L_Algae=res[4], vect_L_Bacteria=res[5], vect_L_Ciliate=res[6],
+                    vect_M_Algae=res[7], vect_M_Bacteria=res[8], vect_M_Ciliate=res[9],
+                    vect_S_Algae=res[10], vect_S_Bacteria=res[11], vect_S_Ciliate=res[12])
+  
+}
+    
+
+ccc <- select(dd_clean, Experiment, Block, Day, Replicate, Time, Species, density) %>%
+ # filter(Day>0) %>%
+  spread(key=Species, value=density) %>%
+  na.omit(.) %>%
+  group_by(Experiment, Block, Day) %>%
+  do(f1(.))
+
+## fix the signs of vectors
 
 
+ccc <- gather(ccc, key=variable, value=value, 4:15)
+ccc <- separate(ccc, variable, sep="_", into=c("quantity", "component", "species"))
 
 
 ```
 
-Should be calculated 
 
 
-Though there are large fluctuations, differing among replicates, the correlation structure may be common across replicates. 
+Reproduce original article figure 4a-c:
 
+```{r}
+ggplot(filter(ccc, quantity=="vect"),
+       aes(x=Day, y=value, col=species, linetype=interaction(Experiment, Block))) +
+  geom_point() + geom_path() +
+  facet_wrap(~component, nrow=1) +
+  scale_color_manual(values=c("green","red","purple"))
+```
+
+Not quite the same. But recall that directions of eigenvectors are arbitrary, so 
+
+
+
+Reproduce original article figure 4b:
+
+```{r}
+ggplot(filter(ccc, quantity=="val", Day>20),
+       aes(x=Day, y=value, col=component, shape=as.factor(Experiment))) +
+  geom_point(size=2) +
+  scale_color_manual(values=c("black","lightblue","purple"))
+
+```
+
+    
+    
+    
 Be sure to understand the "surprising" correspondence of the ecomodes and the eigen values of the interaction matrix.
-
-
-
-```{r}
-library(mvtnorm)
-sigma <- matrix(c(4,2,-2,
-                  2,3,-2,
-                  -2,-2,5), ncol=3)
-sigma
-x <- rmvnorm(n=500, mean=c(1,1,1), sigma=sigma)
-colMeans(x)
-var(x)
-pairs(x)
-
-cor_matrix <- cor(x)
-eigens <- eigen(cor_matrix)
-eigens
-
-
-```
-
 
 
 # Analysis of growth rate fluctuations (Figure S3)
