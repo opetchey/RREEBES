@@ -553,6 +553,36 @@ Minutes by Vanessa
 * Mikael: will start the reproduction of the paper Ito and Dieckmann 2007
 
 ## 17.11
+(minutes by Thomas)
+
+* present: Owen, Ale, Frank, Aurélie, Vanessa, Frank, Pablo, David, Thomas
+
+* discussing whether, and if 'yes', when to do an introduction to GitHub (only working group-affiliated people, department-wide ?) -> session on **November 25th, 3-4 pm** for Andrea, Pablo and David
+
+* going through open issues
+	* What about the Beninca paper? All people replied or gave feedback/comments?
+	* What about a prioity scale for these issues? "What's most important to close?"
+
+* Progress updates:
+	* Ale (Hooper, 2012): Need/want more data. No answer for now. Is the raw data available? Will it ever be?
+	* Frank/Owen (Hekstra, 2012): "No progress." Wait, Owen has something done! :smiley: This progress involves hwo to make graphs and plots to dispplay species interactions.
+	* Vanessa/Thomas (Allesina, 2015): Data set from Brose et al. (2005, Ecology) implemented in the code. This is needed to construct the community matrix *M* from the adjacency matrix *K* and the bivariate distribution *Z*.
+	*  Mikael (Ito & Dieckmann, 2007): Started working on this.
+	
+* How could Pablo and David contribute?
+
+* Submission of the Beninca et al. (2008, Nature) reproduction.
+	* What is [Rescience](http://rescience.github.io)? 
+	* Owen going through the reproduction/manuscript.
+		* in general, all results are **qualitatively** reproduced rather than quantitatively.
+		* Instead of putting plot next to each other for comparision, Owen correlated the data. 
+		* What hampered one to come up with a quantitatively identical reproduction of reults is discussed in teh discussion.
+		* Outanding issues are investigated with Rescience.
+		* Comments from Frank abut Fig. 4: This missmatch is striking. How careful should one be with publishing reproductions that do not exactly match the original results? How to deal with criticism? "You're telling us we're wrong?! Well have a look at your code, man!"
+		* Should one go through the code again, very, very carefully? Owen will check it again!
+		* Thomas: Why publishing with Rescience? Frank: To reach more people, gets a DOI...
+	* In general, it is very hard to set up a manuscript in the environment Rescience provides/requires. To get more submission they should make this process easier!
+	
 
 ## 24.11
 
