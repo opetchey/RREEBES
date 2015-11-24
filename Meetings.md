@@ -585,6 +585,17 @@ Minutes by Vanessa
 	
 
 ## 24.11
+Minutes by Vanessa
+
+###Attendance
+* Frank, Aurèlie, Pablo, Vanessa, Alejandra and David 
+
+###Progress updates
+* Aurélie and Alejandra (Hooper et al): still waiting for the data from the authors, difficulties of reproducing meta analyses
+* Vanessa, Thomas and Gian Marco (Allesina et al): still working on the Z matrix, Frank suggested using ROpenSci to access ITIS
+* Frank (Hsieh et al): read the paper, started learning a package to perform the forescasts and started simulations in R
+
+* Alejandra suggested creating a list with new packages we learn during the reproductions
 
 ## 1.12
 
