@@ -5,14 +5,117 @@ date: "June 16, 2015"
 output: html_document
 ---
 
-# Introduction
+## Info
 
-This is the reproduction of the analyses presented in the article *Inferring biotic interactions from proxies* by Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araújo (2015, TREE). The article can be found [here](http://www.sciencedirect.com/science/article/pii/S0169534715000774).
-
-
+This is what ought to be the reproduction of the analyses presented in the article *Inferring biotic interactions from proxies* by Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Ara??jo (2015, TREE). The article can be found [here](http://www.sciencedirect.com/science/article/pii/S0169534715000774). Unfortuntely, reproducing thier analyses requires to go deep into two other studies, one about the Serengeti food web ([Baskerville et al. (2011, PLoS Computational Biology)](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002321)), and one about three Caribean coral reefs ([Roopnarine & Hertog (2013, Dataset Papers in Ecology)](http://www.hindawi.com/journals/dpis/2013/857470/abs/)).
 
 
-# Load data
+## About
+
+
+
+## Comments, errors & modifications
+
+### Article text
+
+* The number of potential links for the Cuban coral reef set should read as **53.130**, and *not* 53.361 because $n_{links}=n_{species}^2-n_{species}$. This number is based on the number of links found in the Cuban coral reef ($n_{guilds}=231$).
+* It is irritating that the authors provide the total number of species found in all three coral reefs (265; Cayman, Cuba, Jamaica), instead of providing only the number of guilds found in the Cuban reef (231). The actual analysis is based on the **guilds** and *not* species. Therefore, the number of links in Fig.~1f is 53.130 (see paragraph above).
+
+###  Data sets
+
+* Some guild names have identical names, e.g., guild no. 235 and 236 are both named 'snapper'. I (Thomas) therefore changed the guild names to 'snapper a' and 'snapper b', respectively. I kept the original .csv file untuched and created a new one called '857470.item.2 - Trophic data for Cuba_sorted.csv'. We use this in our analyses. Here is a list of all guilds that have been modified as stated above:
+    * 114, 117, 179 >> Angelfish a, Angelfish b, Angelfish c
+    * 253, 255 >> Barracuda a, Barracuda b
+    * 220, 257 >> Bigeye a, Bigeye b
+    * 124, 125, 126, 158 >> Blenny a, Blenny b, Blenny c, Blenny d
+    * 120, 122, 171, 175 >> Butterflyfish a, Butterflyfish b, Butterflyfish c, Butterflyfish d
+    * 19, 20 >> Carnivorous micro-zooplankton a, Carnivorous micro-zooplankton b
+    * 218, 223 >> Flounder a, Flounder b
+    * 191, 206 >> Goatfish a, Goatfish b
+    * 211, 212 , 246, 254, 260 >> Grouper a, Grouper b, Grouper c, Grouper d, Grouper e
+    * 142, 144, 147, 192, 194, 195, 196, 199 >> Grunt a, Grunt b, Grunt c, Grunt d, Grunt e, Grunt f, Grunt g, Grunt h
+    * 162, 222 >> Jacknife fish a, Jacknife fish b
+    * 22, 23 >> Large omnivorous micro-zooplankton a, Large omnivorous micro-zooplankton b
+    * 239, 248 >> Mackerel a, Mackerel b
+    * 208, 250 >> Margate a, Margate b
+    * 214, 216 >> Moray a, Moray b
+    * 119, 127 >> Parrotfish a, Parrotfish b
+    * 132, 133 >> Pufferfish a, Pufferfish b
+    * 161, 204, 213, 228, 235, 236, 237, 238, 252 >> Snapper a, Snapper b, Snapper c, Snapper d, Snapper e, Snapper f, Snapper g, Snapper h, Snapper i
+    * 140, 141, 143, 146 >> Squirrelfish a, Squirrelfish b, Squirrelfish c, Squirrelfish d
+    * 128, 130 >> Trunkfish a, Trunkfish b
+    * 148, 149, 164, 166 >> Wrasse a, Wrasse b, Wrasse c, Wrasse d
+* In the .xlsx file '857470.item.2' (here used as '857470.item.2 - Trophic data for Cuba.csv') containing the trophic information of the Cuban coral reef some prey guild shave obscure prey names/values/IDs. For example, the prey of a baracuda is named '152153'. This does not make any sense. It seems likely that the authors forgot a comma and this baracuda feeds upon guilds number 152 and 153. I (Thomas) changed the .csv file for this. The file used in our analyses is called '857470.item.2 - Trophic data for Cuba_sorted.csv'. Here is a list of all guilds (number) whose prey items have been modified as stated above:
+    * 253 (Barracuda a)  >> 152153 changed to 152, 153
+    * 174 (Carnivorous fish I)  >> comma inserted after 100
+    * 220 (Bigeye a)  >> comma inserted after 100
+    * 115 (Atlantic spadefish) >> full stop replaced by comma between 20 and 22
+    * 176 (Bass)  >> comma inserted after 100
+    * 257 (Bigeye b)  >> comma inserted after 100
+    * 258 (Blacktip shark)  >> comma inserted after 200
+    * 158 (Blenny d)  >> comma inserted after 100
+    * 125 (Blenny b)  >> comma inserted after 100
+    * 171 (Butterflyfish c)  >> comma inserted after 100
+    * 175 (Butterflyfish d)  >> comma inserted after 100
+    * 122 (Butterflyfish b)  >> comma inserted after 100
+    * 261 (Caribbean reef shark) >> comma inserted after 110, 132, 220, 250, 200
+    * 224 (Coney grouper) >> comma inserted after 100
+    * 123 (Damselfish)  >> comma inserted after 100
+    * 173 (Flamefish)  >> comma inserted after 100
+    * 223 (Flounder b)  >> comma inserted after 100
+    * 191 (Goatfish a)  >> comma inserted after 100
+    * 206 (Goatfish b)  >> comma inserted after 100
+    * 206 (Goatfish b)  >> comma inserted after 100
+    * 212 (Grouper b) >> 207196 replaced by 207, 196
+    * 254 (Grouper d) >> comma inserted after 110
+    * 260 (Grouper e) >> comma inserted after 100
+    * 142 (Grunt a) >> comma inserted after 100
+    * 144 (Grunt b) >> comma inserted after 100
+    * 192 (Grunt d) >> comma inserted after 100
+    * 196 (Grunt g) >> comma inserted after 100
+    * 199 (Grunt h) >> comma inserted after 100
+    * 221 (Hamlet) >> comma inserted after 100
+    * 225 (Hamlets) >> comma inserted after 100
+    * 169 (Hawkfish) >> comma inserted after 100
+    * 232 (Jack) >> comma inserted after 100, 120; dublicates of 71, 72, 73, 74, 75, 79, 92, 93, 94, 95, 96, 97, 99, 98, 100 and 103 deleted
+    * 155 (Hogfish) >> comma inserted after 100
+    * 162 (Jacknife fish a) >> comma inserted after 100
+    * 222 (Jacknife fish b) >> comma inserted after 100
+    * 182 (Jawfish) >> 100103 changed to 100, 103
+    * 239 (Mackerel a) >> comma inserted after 200
+    * 248 (Mackerel b) >> comma inserted after 200
+    * 250 (Margate b) >> comma inserted after 100
+    * 214 (Moray a) >> 142213 changed to 142, 213
+    * 150 (Nurse shark) >> comma inserted after 100
+    * 205 (Palometa) >> comma inserted after 200
+    * 165 (Porkfish) >> comma inserted after 100
+    * 163 (Pufferfish b) >> comma inserted after 100
+    * 217 (Red hind) >> comma inserted after 100
+    * 219 (Scorpionfish) >> comma inserted after 100
+    * 145 (Sharptail eel) >> comma inserted after 100
+    * 198 (Sheepshead) >> comma inserted after 100
+    * 152 (Slender Inshore Squid) >> comma inserted after 100  
+    * 138 (Slippery dick) >> comma inserted after 100 
+    * 235 (Snapper e) >> comma inserted after 100 
+    * 236 (Snapper f) >> comma inserted after 100 
+    * 252 (Snapper i) >> comma inserted after 100 
+    * 168 (Soldierfish) >> comma inserted after 100 
+    * 167 (Spotted drum) >> comma inserted after 100 
+    * 197 (Spotted eagle ray) >> comma inserted after 100 
+    * 140 (Squirrelfish a) >> comma inserted after 100 
+    * 141 (Squirrelfish b) >> comma inserted after 100 
+    * 143 (Squirrelfish c) >> comma inserted after 100 
+    * 156 (Stomatopods II) >> comma inserted after 100 
+    * 164 (Wrasse c) >> comma inserted after 100 
+    * 166 (Wrasse d) >> comma inserted after 100 
+    * 149 (Wrasse b) >> comma inserted after 100 
+    * 180 (Yellowfin mojarra) >> comma inserted after 100 
+* Remaining issues:
+    * 211 (Grouper a) >> 1.09E+20. What is this value?
+    * 204 (Snapper b) >> 1.29E+23. What is this value?
+    * What means a value of '0' in column 'prey'? Guild numeriation starts with '1'...
+
+## Load data
 
 Clear R environment and load libraries.
 ```{r}
@@ -22,9 +125,12 @@ rm(list=ls())
 # Load libraries.
 library(igraph)
 library(RCurl)
+library(readxl)
 ```
 
-Load the data from GitHub straight into R.
+Load the data from GitHub straight into R. This is more convenient for everyone because one does not have to always change the local file path...
+
+### Serengeti food web
 ```{r}
 # Species in the Serengeti food web.
 dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES-CASTILLA_etal_2015_TREE/Data/Serengeti%20data/journal.pcbi.1002321.s004.CSV",
@@ -43,4 +149,161 @@ dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/MORALES
              cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 dd.04 <- read.csv(text = dd)
 ```
+
+Calculate the number of species and the number of potential links one could expect from this.
+```{r}
+# Species only in Cuban food web.
+n.species.Serengeti       <- length(dd.01[,1])
+n.links.species.Serengeti <- n.species.Serengeti^2-n.species.Serengeti
+
+```
+
+Note: There are **175 species** in the Serengeti food web. This results in **25760 potential links** ($n^2-n$).
+
+
+### Cuban coral reef food web (Morales-Castila et al. only focused on this one).
+```{r}
+dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Morales-Castilla_etal_2015_TREE/MORALES-CASTILLA_etal_2015_TREE/Data/Coral%20reef%20data/857470.item.4%20-%20Guild%20key%2C%20all%20data%20sets.csv",
+             cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+dd.05 <- read.csv(text = dd)
+str(dd.05)
+# Only data with species from the Cuban food web.
+# Guilds only in Cuban food web.
+dd.05.a              <- subset(dd.05, Cuba=="x")
+
+# Only the fish pecies in Cuban food web.
+n.species.fish.Cuba       <- length(subset(dd.05, Cuba=="x")$Cuba)
+
+# Trophic data for the Cuban food web
+dd <-  getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Morales-Castilla_etal_2015_TREE/MORALES-CASTILLA_etal_2015_TREE/Data/Coral%20reef%20data/857470.item.2%20-%20Trophic%20data%20for%20Cuba_sorted.csv",
+             cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+dd.06 <- read.csv(text = dd)
+# Guilds in Cuban food web.
+n.guilds.Cuba        <- length(dd.06[,1])
+n.links.guilds.Cuba  <- n.guilds.Cuba^2-n.guilds.Cuba
+```
+
+
+## How to...?
+
+"*The procedure for building the backbone of an interaction network starts with the identification of species more likely to share similar interactions. The concept is similar to that of modules [28], but we avoid this terminology because modules are usually determined a posteriori and can also refer to simple assemblages of species such as linear food chains or apparent competition [29]. Instead, we define interacting groups based on a priori expectations of interactions. The concept is also analogous to that of guilds [30]. Guilds, however, are restricted to species shar- ing similar resources, and thus do not encompass non- consumptive interactions such as competition or niche construction [27]. A flexible definition of interacting groups based on traits, phylogenies, and geographical distribu- tions would enable combination of heterogeneous information.*" (page 4, bottom-right)
+
+"*Interacting groups of species are defined a priori to simplify the removal of forbidden links. The groups were defined based on the trophic hierarchy of the different species within each eco- system (e.g., primary producers, grazers, small and large carnivores). This process of trophic classification of species led to identification of forbidden links and removal of 􏰁30% of all potential direct links in the coral reef, and 􏰁22% in the Serengeti (e.g., herbivores eating predators; Figure 1).*" (page 5, bottom-left)
+
+"*Refinement of the species groupings was achieved by con- sidering the characteristics of the consumer species (e.g., distinguishing small versus large carnivores in the Seren- geti example, or separating invertebrate feeders, omnivo- rous, and carnivorous fish in the coral reef example; Figure 1).*" (page 5, bottom-right)
+
+## Serengeti foob web analysis
+
+Taking all potential links into account the food webs would look like this:
+```{r}
+dd.01.a <- expand.grid(dd.01$code, dd.01$code)
+# Build the graph.
+f <- graph.data.frame(dd.01.a, directed=F, vertices=NULL)
+# Now, remove inraspecific trophic interactions - there is no cannibalism. 
+dd.01.b <- dd.01.a[which(dd.01.a[,1]!=dd.01.a[,2]),]
+```
+  
+```{r, fig.width=10, fig.height=10}  
+# Now, plot the graph.
+plot.igraph(f, 
+     layout=layout.circle, 
+     main="Serengeti food web (no information)",
+     vertex.size=8, 
+     vertex.color=adjustcolor("#A6B07E", alpha.f=0.6),
+     vertex.label.cex=0.5,
+     vertex.label.family = "sans",
+     edge.width=0.2, 
+     edge.color=adjustcolor("#999999", alpha.f=0.3),
+     vertex.label.color="#7D1D3F",
+     vertex.frame.color="white")
+```
+
+This is what the real food web looks like. So far, there is no ordering according to any traits (e.g., nutrition, size...)
+```{r}
+# Build the graph.
+g <- graph.data.frame(dd.02, directed=F, vertices=NULL)
+# Display the food web graph.
+# tkplot(g)
+# plot.igraph(g)
+
+```
+
+
+```{r, fig.width=10, fig.height=10}
+plot.igraph(g, 
+#      layout=layout.fruchterman.reingold, 
+     layout=layout.circle, 
+     main="Serengeti food web (real food web)",
+     vertex.size=8, 
+     vertex.color=adjustcolor("#A6B07E", alpha.f=0.6),
+     vertex.label.cex=0.5,
+     vertex.label.family = "sans",
+     edge.width=0.2, 
+     edge.color=adjustcolor("#333333", alpha.f=0.6),
+     vertex.label.color="#7D1D3F",
+     vertex.frame.color="white")
+```
+
+Once we know about the trophic levels the species/guilds belong to we can use ``layout.reingold.tilford(g, flip.y=FALSE)`` to introduce some hierarchy. For example, if we assign three trophic levels just randomly then the food web can be displayed like this:
+```{r, fig.width=10, fig.height=10}
+# plot.igraph(g, 
+# #      layout=layout.fruchterman.reingold, 
+#      layout=layout.reingold.tilford(g, flip.y=FALSE),
+#      main="Serengeti food web (no trait information)",
+#      vertex.size=8, 
+#      vertex.color=adjustcolor("#A6B07E", alpha.f=0.6),
+#      vertex.label.cex=0.5,
+#      vertex.label.family = "sans",
+#      edge.width=2, 
+#      vertex.label.color="#7D1D3F",
+#      vertex.frame.color="white")
+```
+
+
+## Cuban coral reef food web
+
+### The food web with all its possible links.
+```{r}
+dd.06.a <- expand.grid(dd.06$Guild.Description, dd.06$Guild.Description)
+# Build the graph.
+f <- graph.data.frame(dd.06.a, directed=F, vertices=NULL)
+# Now, remove inraspecific trophic interactions - there is no cannibalism. 
+dd.06.b <- dd.06.a[which(dd.06.a[,1]!=dd.06.a[,2]),]
+g <- dd.06.a[which(dd.06.a[,1]==dd.06.a[,2]),]
+length(g[,1])
+# Should equal the number of potential links, 53.130.
+length(g[,1])^2-length(g[,1])
+```
+
+```{r, fig.width=10, fig.height=10}
+# Now, plot the graph.
+plot.igraph(f, 
+     layout=layout.circle, 
+     main="Cuban coral reef food web (no information)",
+     vertex.size=8, 
+     vertex.color=adjustcolor("#A6B07E", alpha.f=0.6),
+     vertex.label.cex=0.5,
+     vertex.label.family = "sans",
+     edge.width=0.2, 
+     edge.color=adjustcolor("#999999", alpha.f=0.3),
+     vertex.label.color="#7D1D3F",
+     vertex.frame.color="white")
+```
+
+### The food web with all its potential links.
+```{r}
+# If number of prey equals 0 than the species is a primary producer.
+
+
+```
+
+### The food web accounting trophic identity.
+
+
+
+
+
+
+
+
 
