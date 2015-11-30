@@ -23,6 +23,8 @@ TMM: How do early warning signals perform when two environmental changes act sim
 
 [Huisman, J. & Weissing, F.J. (2001) Fundamental unpredictability in multispecies competition. The American naturalist, 157, 488–494.](http://www.jstor.org/stable/10.1086/319929?seq=1) Added by Owen.
 
+[Brennan G. and Collins S. (2015) Growth responses of a green alga to multiple environmental drivers.](http://www.nature.com/nclimate/journal/v5/n9/pdf/nclimate2682.pdf) Data available on [DRYAD](http://datadryad.org/resource/doi:10.5061/dryad.jt1fb) 
+
 
 # Papers with reproduction underway
 
