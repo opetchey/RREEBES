@@ -25,7 +25,7 @@ IDENTITY OF SPECIES LOSS: The identity of species lost also had a large effect o
 
 Many experiments have shown that species loss can alter key processes important to the productivity and sustainability of Earth's ecosystems. However, it is unclear how these effects compare to the direct effects of other forms of environmental change that are both driving diversity loss and altering ecosystem function. We used a suite of meta-analyses of published data to show that the impacts of species loss on productivity and decomposition - two processes important in all ecosystems are of comparable magnitude to impacts of many other global environmental changes. These analyses were published by Hooper et al. in Nature in 2012 (online release date: May 2, 2012, DOI: 10.1038/nature11118). This archive contains the data and statistical details for the two sets of analyses found in that paper. In the first, we performed a broad meta-analysis to compare effects of changing species richness on primary production and decomposition, as derived from a database on biodiversity-ecosystem functioning (BEF) experiments, with effects of major environmental changes as derived from already published meta-analyses. For both biodiversity and environmental effects, we use log response ratios for effect sizes. This analysis allows a broad comparison across many experiments, but in so doing, compares effects of species richness with those of other environmental changes in different experiments performed by different researchers in different ecosystems. Therefore, we undertook a second analysis focusing on the relative magnitude of effects of species richness and environmental change in experiments that factorially manipulated both. For this, we used a much smaller subset of experiments from the BEF database, and only analyzed primary production as the response variable. Here we include the data and any processing steps, including R-code and description, that were used in our analyses. In experiments, intermediate levels of species loss (21-40%) reduced plant production by 5-10%, comparable to previously documented impacts of ultra-violet radiation and climate warming. Higher levels of extinction (41-60%) had impacts rivaling those of ozone, acidification, elevated CO2, and nutrient pollution. At intermediate levels, species loss generally had equal or greater impacts on decomposition than did elevated CO2 and nitrogen addition. The identity of species lost also had a large impact on changes in productivity and decomposition, generating a wide range of plausible outcomes for extinction. Despite need for more studies on interactive effects of diversity loss and environmental changes, our analyses clearly show that the ecosystem consequences of local species loss are as quantitatively significant as direct effects of several global change stressors that have mobilized major international concern and remediation efforts.
 
-# Figures: Data Files content
+# Data Files content
 For figure 1: Changes in primary production as a function of per cent local species lost. 
 In this figure, authors show the effects of species loss on primary production. 
 
@@ -38,10 +38,7 @@ In this figure authors show the effect of a) detrital consumer diversity and b) 
 
 - in these files: different dataset, same information
 
-
-
-
-# Reproduce Figure 1 and 2
+# Loading the data
 
  *Clear R and load data
 ```{r_clean_environment}
@@ -50,55 +47,39 @@ rm(list=ls())
 library(plyr)
 library(RCurl)
 
-# ## if data downloaded in the desktop
-# path_data <- getwd()
-# 
-# powInfo <- read.csv(paste0(path_data,"/data/","PowerCoeffs_Prod_min.csv"), check.names=FALSE) 
-# head(powInfo)
-# prod.other <- read.csv(paste0(path_data,"/data/","Prod_OtherFactors.csv"), check.names=FALSE)
-# head(prod.other)
-# powInfoCons <- read.csv(paste0(path_data,"/data/","PowerCoeffs_ConsumDivDecomp_min.csv"), check.names=FALSE)
-# powInfoLitt <- read.csv(paste0(path_data,"/data/","PowerCoeffs_LitterDivDecomp_min.csv"), check.names=FALSE)
-# head(powInfoCons)
-# head(powInfoLitt)
-# decomp.other <- read.csv(paste0(path_data,"/data/","Decomp_OtherFactors.csv"), check.names=FALSE)
-# head(decomp.other)
-# powInfo<-subset(powInfo,powInfo$FinalT=="Y")
-# powInfoCons<-subset(powInfoCons,powInfoCons$FinalT=="Y")
-# powInfoLitt<-subset(powInfoLitt,powInfoLitt$FinalT=="Y")
-```
+# if data downloaded in the desktop
+path_data <- getwd()
 
-*Problem with the Github links
-```{r_load_datasets}
-#Load data files
-#	file.choose()
-#Productivity data
-#Diversity
+# Power coefficients of the effect of biodiversity loss on productivity
 powInfo <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/PowerCoeffs_Prod_min.csv"), check.names=FALSE) 
 head(powInfo)
-#Other effects
+
+# Effects of environmnetal factors affecting productivity
 prod.other <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/Prod_OtherFactors.csv"), check.names=FALSE)
 head(prod.other)
 
-#Decomposition data
-# consumer and litter diversity
+# Power coefficients of the effect of biodiversity loss (consumers) on decomposition
 powInfoCons <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Hooper_et_al_2012/Hooper_etal_2012/data/PowerCoeffs_ConsumDivDecomp_min.csv"), check.names=FALSE)
-powInfoLitt <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/PowerCoeffs_LitterDivDecomp_min.csv"), check.names=FALSE)
 head(powInfoCons)
+
+# Power coefficients of the effect of biodiversity loss (litter) on decomposition
+powInfoLitt <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/PowerCoeffs_LitterDivDecomp_min.csv"), check.names=FALSE)
 head(powInfoLitt)
-#Other effects
+
+# Effects of environmnetal factors affecting decomposition
 decomp.other <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Hooper_et_al_2012/Hooper_etal_2012/data/Decomp_OtherFactors.csv"), check.names=FALSE)
 head(decomp.other)
 
-#Subset to get needed data - final times only (Y)
+# Select the studies that were included in the meta-analysis 
 powInfo<-subset(powInfo,powInfo$FinalT=="Y")
 powInfoCons<-subset(powInfoCons,powInfoCons$FinalT=="Y")
 powInfoLitt<-subset(powInfoLitt,powInfoLitt$FinalT=="Y")
 ```
 
 
+
 *GENERATE CURVE DATA FOR ALL THREE PANELS
-```{r_curve_data}
+```{r_curve_data_prod_METAMETA}
 # PRODUCTIVITY METAMETA: generate curve data at step = 0.05 (5%) ending at smallest proportion remaining 
 #	value in the data (0.03)
 extCurve<-with(powInfo, {
@@ -125,7 +106,9 @@ extCurve<-with(powInfo, {
 })
 #get rid of weird duplicates
 extCurve<-extCurve[which(!duplicated(extCurve[,1])),]
+```
 
+```{r_curve_data_consumer_div_decomp_METAMETA}
 # CONSUMER DIVERSITY DECOMPOSITION METAMETA: generate curve at step 0.05
 #	0.014 (0.2)is min (smin/smax)
 extCurveCons<-with(powInfoCons, {
@@ -151,7 +134,9 @@ extCurveCons<-with(powInfoCons, {
 })
 #get rid of weird duplicates
 extCurveCons<-extCurveCons[which(!duplicated(extCurveCons[,1])),]
+```
 
+```{r_curve_data_producer_div_decompositions_METAMETA}
 # PRODUCER DIVERSITY DECOMPOSITION METAMETA: generate curve at step 0.05
 #	0.04 is min (smin/smax)
 extCurveLitt<-with(powInfoLitt, {
@@ -178,7 +163,10 @@ extCurveLitt<-with(powInfoLitt, {
 })
 #get rid of weird duplicates
 extCurveLitt<-extCurveLitt[which(!duplicated(extCurveLitt[,1])),]
+```
 
+They homogeneise the standard deviation to confidence interval for the consumer and litter diversity decomposition
+```{r_convert_SD_to_CI}
 #Convert SD to CI
 #PRODUCTIVITY 
 err<-extCurve
@@ -236,16 +224,18 @@ errLitt$percent<-errLitt$ext*100
 ```
 
 
+
 *Make Fig 1: productivity
 ```{r_fig1_productivity}
 #As a pdf 
-#pdf("Fig1.pdf", 
-#    width=3.50393701, height=3.1, pointsize=7)
+pdf("Fig1.pdf", 
+    width=3.50393701, height=3.1, pointsize=7)
 
 par(omi=c(0,0,0,0)) #outer margin area in inches (oma = in number of lines, outer margin area)
 
 #Set up graphical region to expect one plot
 par(mfrow=c(1,1),xpd=NA)  #xpd=NA allows text and graphics outside of figure margins
+
 #Draw figure
 par(mai=c(.7, .52, .3, .88)) #bottom, left, top and right 
 cols <- c("MeanLRR")
@@ -254,7 +244,6 @@ matplot(err$percent, err[, cols], type="n", lwd=2,
         ylim=c(-.9,1), yaxt="n",
         xlab="",cex.axis=0.85,bty="n", 
         ylab="",tcl=0.5,cex.axis=0.9)
-#left axis
 axis(2,pos=-5,tcl=0.5,cex.axis=.9,at=c(1.0,.8,.6,.4,.2,0,-.2,-.4,-.6,-.8),las=1)
 #right axis
 axis(4,ylim=c(-1,1),pos=155,tcl=0.5,at=c(1.0,.8,.6,.4,.2,0,-.2,-.4,-.6,-.8),lab=F)
@@ -332,7 +321,7 @@ arrows(pos$xval,pos$est,pos$xval,pos$upper,length=0.03,angle=90)
 arrows(pos$xval,pos$est,pos$xval,pos$lower,length=0.03,angle=90)
 
 # close PNG device
-#dev.off()
+dev.off()
 
 ```
 ![Figure:figure 1.](Fig1.pdf)
@@ -540,11 +529,13 @@ Bold values: indicate boostrapped mean LRRs and confidence intervals
 
 
 
-# Reproducing Table 1: 
-```{r table}
-# NS <- powInfoCons[which(powInfoCons$FinalT=="Y"),]
-```
+# Reproducing Tables 1 and 2: 
+We looked to the data available and how they were used to recreate these tables. 
+Unfortunately we could get the information from the data provided. 
 
+# Conclusion of the reproduction.
+Meta-analyses are complex to reproduce because the raw data are not directly available (from others papers). 
+However the code provided was well explained and convenient for learning. 
 
 
 
