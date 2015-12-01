@@ -228,8 +228,8 @@ errLitt$percent<-errLitt$ext*100
 *Make Fig 1: productivity
 ```{r_fig1_productivity}
 #As a pdf 
-png("Fig1.png", 
-    width=800, height=600, pointsize=7)
+#png("Fig1.png", 
+#    width=800, height=600, pointsize=7)
 
 par(omi=c(0,0,0,0)) #outer margin area in inches (oma = in number of lines, outer margin area)
 
@@ -321,9 +321,11 @@ arrows(pos$xval,pos$est,pos$xval,pos$upper,length=0.03,angle=90)
 arrows(pos$xval,pos$est,pos$xval,pos$lower,length=0.03,angle=90)
 
 # close PNG device
-dev.off()
+#dev.off()
 
 ```
+
+
 ![Figure:figure 1.](Fig1.pdf)
 
 *Make Fig 2: decomposition
