@@ -228,8 +228,8 @@ errLitt$percent<-errLitt$ext*100
 *Make Fig 1: productivity
 ```{r_fig1_productivity}
 #As a pdf 
-pdf("Fig1.pdf", 
-    width=3.50393701, height=3.1, pointsize=7)
+png("Fig1.png", 
+    width=800, height=600, pointsize=7)
 
 par(omi=c(0,0,0,0)) #outer margin area in inches (oma = in number of lines, outer margin area)
 
@@ -330,8 +330,8 @@ dev.off()
 ```{r_fig2_decomposition}
 # as a pdf file
 
-pdf("Fig2.pdf", 
-    width=3.50393701, height=5, pointsize=7)
+png("Fig2.png", 
+    width=800, height=600, pointsize=7)
 #89mm = 3.50393701; one column
 
 par(omi=c(0,0,0,0)) #outer margin area in inches (oma = in number of lines, outer margin area)
@@ -531,11 +531,11 @@ Bold values: indicate boostrapped mean LRRs and confidence intervals
 
 # Reproducing Tables 1 and 2: 
 We looked to the data available and how they were used to recreate these tables. 
-Unfortunately we could get the information from the data provided. 
+Unfortunately we couldnt get the information from the data provided. 
 
 # Conclusion of the reproduction.
-Meta-analyses are complex to reproduce because the raw data are not directly available (from others papers). 
-However the code provided was well explained and convenient for learning. 
+Meta-analyses are complex to reproduce because the raw data are not directly available (only effect sizes, the rest has to be looked for in other papers and it takes much longer - its like reproducing hundreds of papers at the same time). 
+However the code provided was well explained and convenient for learning. We learned how to integrate data from different sources and the authors provided good tables for explaining the steps they did. 
 
 
 
