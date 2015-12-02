@@ -33,6 +33,8 @@ library("HiveR")
 library("RColorBrewer")
 library("bipartite")
 library("RCurl")
+library("devtools")
+library("eyeball")
 ```
 
 

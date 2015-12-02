@@ -1,0 +1,797 @@
+input,tsn_species,tsn_genus,tsn_family,tsn_order,tsn_class,tsn_phylum,tsn_kingdom,species,genus,family,order,class,phylum,kingdom,log
+Acanthinula aculeata (O  F  M�ller),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Acanthopagrus berda,647906,647861,169180,167640,161061,158852,202423,berda,Acanthopagrus,Sparidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Acari phyto,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Acari pred,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Achnanthes elliptica,591423,590854,3428,590746,2287,2286,630578,ellipticum,Planothidium,Achnanthaceae,Achnanthales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Achnanthes lanceolata,591421,590854,3428,590746,2287,2286,630578,lanceolatum,Planothidium,Achnanthaceae,Achnanthales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Achromadora ruricola,61527,61522,61479,60662,59491,563956,202423,ruricola,Achromadora,Cyatholaimidae,Desmodorida,Adenophorea,Nemata,Animalia,Species found
+Acodontaster conspicuus,0,203331,156977,156973,156862,156857,202423,,Acodontaster,Odontasteridae,Valvatida,Asteroidea,Echinodermata,Animalia,Genus found
+Acrididae,0,0,102195,102160,99208,82696,202423,,,Acrididae,Orthoptera,Insecta,Arthropoda,Animalia,Family found
+Actinaria,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Acupalpus flavicollis,0,111104,109234,109216,99208,82696,202423,,Acupalpus,Carabidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Adamussium colbecki,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Adicella reducta,603602,598369,116547,115095,99208,82696,202423,reducta,Adicella,Leptoceridae,Trichoptera,Insecta,Arthropoda,Animalia,Species found
+Aeschnidae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Aeshna sp,0,101603,101596,101593,99208,82696,202423,,Aeshna,Aeshnidae,Odonata,Insecta,Arthropoda,Animalia,Genus found
+Aeshnidae,0,0,101596,101593,99208,82696,202423,,,Aeshnidae,Odonata,Insecta,Arthropoda,Animalia,Family found
+Agelenidae,0,0,871511,82732,82708,82696,202423,,,Agelenidae,Araneae,Arachnida,Arthropoda,Animalia,Family found
+Agonum thoreyi (Dejean),110364,110242,109234,109216,99208,82696,202423,thoreyi,Agonum,Carabidae,Coleoptera,Insecta,Arthropoda,Animalia,Species found
+Agonum viduum (Panzer),0,110242,109234,109216,99208,82696,202423,,Agonum,Carabidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Agonus cataphractus,167454,167453,167426,166702,161061,158852,202423,cataphractus,Agonus,Agonidae,Scorpaeniformes,Actinopterygii,Chordata,Animalia,Species found
+Agraecina striata (Kulczynski  1882),0,871581,871529,82732,82708,82696,202423,,Agraecina,Liocranidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Agriotes lineatus (L ),113883,113882,113879,109216,99208,82696,202423,lineatus,Agriotes,Elateridae,Coleoptera,Insecta,Arthropoda,Animalia,Species found
+Agriotes sp,0,113882,113879,109216,99208,82696,202423,,Agriotes,Elateridae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Agromyzidae,0,0,143384,118831,99208,82696,202423,,,Agromyzidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Agrotis exclamationis,0,117348,117318,117232,99208,82696,202423,,Agrotis,Noctuidae,Lepidoptera,Insecta,Arthropoda,Animalia,Genus found
+Aleocharinae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Alloxysta victrix,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Ambassis agassizii,645539,167652,553177,167640,161061,158852,202423,agassizii,Ambassis,Chandidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Amphipoda,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Amphora ovalis,4721,4705,590783,590744,2287,2286,630578,ovalis,Amphora,Catenulaceae,Thalassiophysales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Amphora pediculus,0,4705,590783,590744,2287,2286,630578,,Amphora,Catenulaceae,Thalassiophysales,Bacillariophyceae,Bacillariophyta,Chromista,Genus found
+Anabolia nervosa,115962,115956,115933,115095,99208,82696,202423,nervosa,Anabolia,Limnephilidae,Trichoptera,Insecta,Arthropoda,Animalia,Species found
+Anacaena limbata (F ),112881,112878,112811,109216,99208,82696,202423,limbata,Anacaena,Hydrophilidae,Coleoptera,Insecta,Arthropoda,Animalia,Species found
+Ancylus fluviatilis,76581,76580,76568,76437,69459,69458,202423,fluviatilis,Ancylus,Ancylidae,Basommatophora,Gastropoda,Mollusca,Animalia,Species found
+Anelosimus vittatus (C  L  Koch  1836),850870,847862,82740,82732,82708,82696,202423,vittatus,Anelosimus,Theridiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Anguilla reinhardtii,635472,161126,161125,161123,161061,158852,202423,reinhardtii,Anguilla,Anguillidae,Anguilliformes,Actinopterygii,Chordata,Animalia,Species found
+Anguis fragilis,0,209030,174093,173861,173747,158852,202423,,Anguis,Anguidae,Squamata,Reptilia,Chordata,Animalia,Genus found
+Anisoptera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Anisus leucostoma (Millet),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Ankyra judayi,0,5788,5755,9327,5415,5414,202422,,Ankyra,Characiaceae,Sphaeropleales,Chlorophyceae,Chlorophyta,Plantae,Genus found
+Anotylus intricatus (Er ),0,186401,113265,109216,99208,82696,202423,,Anotylus,Staphylinidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Anotylus sp,0,186401,113265,109216,99208,82696,202423,,Anotylus,Staphylinidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Anthocomus coccineus (Schall ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Antistea elegans (Blackwall  1841),874122,871642,871526,82732,82708,82696,202423,elegans,Antistea,Hahniidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Antocha vitripennis,0,119656,118840,118831,99208,82696,202423,,Antocha,Tipulidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Aphelenchoides parietinus,0,64026,64025,63978,63322,563956,202423,,Aphelenchoides,Aphelenchoididae,Aphelenchida,Secernentea,Nemata,Animalia,Genus found
+Aphelocheirus eastivalis,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Aphelopus holomelas,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Aphelopus melaleucus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Aphelopus serratus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Aphidina,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Aphidius ervi,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Aphidoidea,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Aphtona lutescens (Gyll ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Apis mellifera L ,154396,154395,154394,152741,99208,82696,202423,mellifera,Apis,Apidae,Hymenoptera,Insecta,Arthropoda,Animalia,Species found
+Aprostocetus sp,0,153917,153770,152741,99208,82696,202423,,Aprostocetus,Eulophidae,Hymenoptera,Insecta,Arthropoda,Animalia,Genus found
+Aquatic macrophytes,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Arachnida,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Araeoncus humilis (Blackwall  1841),851204,847900,82743,82732,82708,82696,202423,humilis,Araeoncus,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Araneae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Araneidae,0,0,82737,82732,82708,82696,202423,,,Araneidae,Araneae,Arachnida,Arthropoda,Animalia,Family found
+Araneus diadematus Clerck  1757,851395,847901,82737,82732,82708,82696,202423,diadematus,Araneus,Araneidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Araneus sturmi (Hahn  1831),851756,847901,82737,82732,82708,82696,202423,sturmi,Araneus,Araneidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Arctosa leopardus (Sundevall  1833),851960,847908,847731,82732,82708,82696,202423,leopardus,Arctosa,Lycosidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Arctosa sp,0,847908,847731,82732,82708,82696,202423,,Arctosa,Lycosidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Argentina sphyraena,162071,162061,162057,553133,161061,158852,202423,sphyraena,Argentina,Argentinidae,Osmeriformes,Actinopterygii,Chordata,Animalia,Species found
+Argiope bruennichi (Scopoli  1772),852103,82738,82737,82732,82708,82696,202423,bruennichi,Argiope,Araneidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Argyra vestita (Wiedemann  1817),0,137250,136824,118831,99208,82696,202423,,Argyra,Dolichopodidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Armadillidium opacum (Brandt),594396,93249,93248,92120,89787,82696,202423,opacum,Armadillidium,Armadillidiidae,Isopoda,Malacostraca,Arthropoda,Animalia,Species found
+Armadillidium pictum (C  L  Koch),594410,93249,93248,92120,89787,82696,202423,pictum,Armadillidium,Armadillidiidae,Isopoda,Malacostraca,Arthropoda,Animalia,Species found
+Armadillidium vulgare (Latreille),93250,93249,93248,92120,89787,82696,202423,vulgare,Armadillidium,Armadillidiidae,Isopoda,Malacostraca,Arthropoda,Animalia,Species found
+Arrhamphus sclerolepis,165537,165536,553172,553128,161061,158852,202423,sclerolepis,Arrhamphus,Hemiramphidae,Beloniformes,Actinopterygii,Chordata,Animalia,Species found
+Arthrodesmus sp ,0,8276,7256,6994,846525,9417,202422,,Arthrodesmus,Desmidiaceae,Zygnematales,Conjugophyceae,Charophyta,Plantae,Genus found
+Ascidiacea,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Ascomorpha eucadis,0,59167,654076,58343,654070,58239,202423,,Ascomorpha,Gastropodidae,Ploima,Eurotatoria,Rotifera,Animalia,Genus found
+Asellus aquaticus,92662,92658,92657,92120,89787,82696,202423,aquaticus,Asellus,Asellidae,Isopoda,Malacostraca,Arthropoda,Animalia,Species found
+Asellus aquaticus (L ),92662,92658,92657,92120,89787,82696,202423,aquaticus,Asellus,Asellidae,Isopoda,Malacostraca,Arthropoda,Animalia,Species found
+Asellus meridianus,542595,92658,92657,92120,89787,82696,202423,meridionalis,Asellus,Asellidae,Isopoda,Malacostraca,Arthropoda,Animalia,Species found
+Aspilota 1,0,143126,142604,118831,99208,82696,202423,,Neaspilota,Tephritidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Aspilota 2,0,143126,142604,118831,99208,82696,202423,,Neaspilota,Tephritidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Aspilota 3,0,143126,142604,118831,99208,82696,202423,,Neaspilota,Tephritidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Aspilota 5,0,143126,142604,118831,99208,82696,202423,,Neaspilota,Tephritidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Aspilota 6,0,143126,142604,118831,99208,82696,202423,,Neaspilota,Tephritidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Aspilota 7,0,143126,142604,118831,99208,82696,202423,,Neaspilota,Tephritidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Aspitrigla cuculus,692071,167051,166972,166702,161061,158852,202423,cuculus,Chelidonichthys,Triglidae,Scorpaeniformes,Actinopterygii,Chordata,Animalia,Species found
+Asteroida,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Athericidae,0,0,130928,118831,99208,82696,202423,,,Athericidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Athripsodes cinereus,602640,116685,116547,115095,99208,82696,202423,cinereus,Athripsodes,Leptoceridae,Trichoptera,Insecta,Arthropoda,Animalia,Species found
+Atractodes spec,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Awaous acritosus,636985,171883,171746,167640,161061,158852,202423,acritosus,Awaous,Gobiidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Basalys parva,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Bathybiaster loripes,0,156899,156882,156881,156862,156857,202423,,Bathybiaster,Astropectinidae,Paxillosida,Asteroidea,Echinodermata,Animalia,Genus found
+Bathyphantes gracilis (Blackwall  1841),852776,847980,82743,82732,82708,82696,202423,gracilis,Bathyphantes,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Bathyphantes setiger F  O  P -Cambridge  1894,852806,847980,82743,82732,82708,82696,202423,setiger,Bathyphantes,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Bezzia sp ,0,127778,127076,118831,99208,82696,202423,,Bezzia,Ceratopogonidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Bidessus unistriatus (Schrank),728547,112322,111963,109216,99208,82696,202423,unistriatus,Bidessus,Dytiscidae,Coleoptera,Insecta,Arthropoda,Animalia,Species found
+Bivalvia,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Blattodea,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Blennocampinae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Bosmina longirostris,83938,83936,83935,83767,83687,82696,202423,longirostris,Bosmina,Bosminidae,Diplostraca,Branchiopoda,Arthropoda,Animalia,Species found
+Brachycentrus subnubilus,116926,116906,116905,115095,99208,82696,202423,subnubilus,Brachycentrus,Brachycentridae,Trichoptera,Insecta,Arthropoda,Animalia,Species found
+Brachycera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Brachygluta sp,0,690850,113265,109216,99208,82696,202423,,Brachygluta,Staphylinidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Brillia modesta,553077,128477,127917,118831,99208,82696,202423,modesta,Brillia,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Species found
+Bryaxis bulbifer (Reichb ),0,666867,85413,85258,621145,82696,202423,,Comantenna,Aetideidae,Calanoida,Maxillopoda,Arthropoda,Animalia,Genus found
+Bryaxis sp,0,666867,85413,85258,621145,82696,202423,,Comantenna,Aetideidae,Calanoida,Maxillopoda,Arthropoda,Animalia,Genus found
+Brychius elevatus,0,111947,111857,109216,99208,82696,202423,,Brychius,Haliplidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Bryozoa,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Buglossidium luteum,173021,173020,172980,172702,161061,158852,202423,luteum,Buglossidium,Soleidae,Pleuronectiformes,Actinopterygii,Chordata,Animalia,Species found
+Bunaka gyrinoides,637073,636615,172171,167640,161061,158852,202423,gyrinoides,Bunaka,Eleotridae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Caelifera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Caenis sp,0,101478,101467,100502,99208,82696,202423,,Caenis,Caenidae,Ephemeroptera,Insecta,Arthropoda,Animalia,Genus found
+Callionymus lyra,171698,171692,171691,167640,161061,158852,202423,lyra,Callionymus,Callionymidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Calliphoridae,0,0,151495,118831,99208,82696,202423,,,Calliphoridae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Callitula ferrierei Boucek,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Campsicnemus scambus (Fall�n  1823),0,137632,136824,118831,99208,82696,202423,,Campsicnemus,Dolichopodidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Cantharis fulvicollis (F ),0,834303,113837,109216,99208,82696,202423,,Cantharis,Cantharidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Cantharis rufa (L ),834440,834303,113837,109216,99208,82696,202423,rufa,Cantharis,Cantharidae,Coleoptera,Insecta,Arthropoda,Animalia,Species found
+Capreolus capreolus,625063,624956,180693,180692,179913,158852,202423,capreolus,Capreolus,Cervidae,Artiodactyla,Mammalia,Chordata,Animalia,Species found
+Capros aper,166320,166319,166309,166271,161061,158852,202423,aper,Capros,Caproidae,Zeiformes,Actinopterygii,Chordata,Animalia,Species found
+Carabidae,0,0,109234,109216,99208,82696,202423,,,Carabidae,Coleoptera,Insecta,Arthropoda,Animalia,Family found
+Carabus granulatus (L ),109367,109363,109234,109216,99208,82696,202423,granulatus,Carabus,Carabidae,Coleoptera,Insecta,Arthropoda,Animalia,Species found
+Caranx ignobilis,168618,168605,168584,167640,161061,158852,202423,ignobilis,Caranx,Carangidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Cecidomyiidae,0,0,122975,118831,99208,82696,202423,,,Cecidomyiidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Cepaea hortensis (M�ller),77909,77908,77903,76755,69459,69458,202423,hortensis,Cepaea,Helicidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Species found
+Cepola macrophthalma,170281,170280,170279,167640,161061,158852,202423,macrophthalma,Cepola,Cepolidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Cerambycidae,0,0,114497,109216,99208,82696,202423,,,Cerambycidae,Coleoptera,Insecta,Arthropoda,Animalia,Family found
+Ceratopogonidae,0,0,127076,118831,99208,82696,202423,,,Ceratopogonidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Cercyon sternalis (Sharp ),0,113039,112811,109216,99208,82696,202423,,Cercyon,Hydrophilidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Chaetarthria seminulum (Herbst),0,112845,112811,109216,99208,82696,202423,,Chaetarthria,Hydrophilidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Chaetocnema confusa (Bohem ),0,187766,114509,109216,99208,82696,202423,,Chaetocnema,Chrysomelidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Chaoborys punctipennis,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Chartoscirta cincta (Herrich-Sch�ffer),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Chilocorus bipustulatus (L ),186961,114344,114329,109216,99208,82696,202423,bipustulatus,Chilocorus,Coccinellidae,Coleoptera,Insecta,Arthropoda,Animalia,Species found
+Chironomidae,0,0,127917,118831,99208,82696,202423,,,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Chloropidae,0,0,147644,118831,99208,82696,202423,,,Chloropidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Chorthippus montanus (Charpentier),0,657664,102195,102160,99208,82696,202423,,Chorthippus,Acrididae,Orthoptera,Insecta,Arthropoda,Animalia,Genus found
+Chorthippus sp,0,657664,102195,102160,99208,82696,202423,,Chorthippus,Acrididae,Orthoptera,Insecta,Arthropoda,Animalia,Genus found
+Chromulina sp ,0,1717,1715,1714,1448,1447,630578,,Chromulina,Chromulinaceae,Chromalinales,Chrysophyceae,Chrysophyta,Chromista,Genus found
+Chroococcus dispersus,665,654,604,603,602,601,202420,dispersus,Chroococcus,Chroococcaceae,Chroococcales,Cyanophyceae,Cyanophycota,Monera,Species found
+Chroococcus limneticus,656,654,604,603,602,601,202420,limneticus,Chroococcus,Chroococcaceae,Chroococcales,Cyanophyceae,Cyanophycota,Monera,Species found
+Chrysomelidae,0,0,114509,109216,99208,82696,202423,,,Chrysomelidae,Coleoptera,Insecta,Arthropoda,Animalia,Family found
+Chrysopidae,0,0,115081,114999,99208,82696,202423,,,Chrysopidae,Neuroptera,Insecta,Arthropoda,Animalia,Family found
+Chrysops relictus (Meigen),0,131078,130934,118831,99208,82696,202423,,Chrysops,Tabanidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Chrysotoxum sp,0,139928,139621,118831,99208,82696,202423,,Chrysotoxum,Syrphidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Chrysotus cilipes Meigen  1824,0,137325,136824,118831,99208,82696,202423,,Chrysotus,Dolichopodidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Cicadella viridis (L ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Cicadina,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Cicadoidea,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Ciliophora,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Cloeon simile (Eaton),0,100756,100755,100502,99208,82696,202423,,Cloeon,Baetidae,Ephemeroptera,Insecta,Arthropoda,Animalia,Genus found
+Closteriopsis longissimus,0,5926,5810,846592,846520,5414,202422,,Closteriopsis,Oocystaceae,Oocystales,Trebouxiophyceae,Chlorophyta,Plantae,Genus found
+Clubiona juvenis Simon  1878,876496,871898,871518,82732,82708,82696,202423,juvenis,Clubiona,Clubionidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Clubiona phragmitis C  L  Koch  1843,876624,871898,871518,82732,82708,82696,202423,phragmitis,Clubiona,Clubionidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Clubiona sp,0,871898,871518,82732,82708,82696,202423,,Clubiona,Clubionidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Clubiona stagnatilis Kulczynski  1897,876700,871898,871518,82732,82708,82696,202423,stagnatilis,Clubiona,Clubionidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Clubiona subtilis L  Koch  1867,876709,871898,871518,82732,82708,82696,202423,subtilis,Clubiona,Clubionidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Clupea harengus,161722,161721,161700,161694,161061,158852,202423,harengus,Clupea,Clupeidae,Clupeiformes,Actinopterygii,Chordata,Animalia,Species found
+Cocconeis placentula,3596,3577,590788,590746,2287,2286,630578,placentula,Cocconeis,Cocconeidaceae,Achnanthales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Cochlicopa nitens (M  von Gallenstein),76888,76884,76883,76755,69459,69458,202423,nitens,Cochlicopa,Cochlicopidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Species found
+Coenagrion pulchellum (Vander Linden),0,102155,102077,101593,99208,82696,202423,,Coenagrion,Coenagrionidae,Odonata,Insecta,Arthropoda,Animalia,Genus found
+Coenagrion sp,0,102155,102077,101593,99208,82696,202423,,Coenagrion,Coenagrionidae,Odonata,Insecta,Arthropoda,Animalia,Genus found
+Coleoptera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Collembolla,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Colymbetes fusca (L ),0,112379,111963,109216,99208,82696,202423,,Colymbetes,Dytiscidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Conocephalus discolor (Thunbg ),0,102249,102232,102160,99208,82696,202423,,Conocephalus,Tettigoniidae,Orthoptera,Insecta,Arthropoda,Animalia,Genus found
+Conocephalus dorsalis (Latr ),0,102249,102232,102160,99208,82696,202423,,Conocephalus,Tettigoniidae,Orthoptera,Insecta,Arthropoda,Animalia,Genus found
+Conochiloides dossuarius,59413,59412,59411,59295,654070,58239,202423,dossuarius,Conochiloides,Conochilidae,Flosculariaceae,Eurotatoria,Rotifera,Animalia,Species found
+Conochiluides dossuarius,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Conochilus (colonial),0,59417,59411,59295,654070,58239,202423,,Conochilus,Conochilidae,Flosculariaceae,Eurotatoria,Rotifera,Animalia,Genus found
+Conochilus (solitary),0,59417,59411,59295,654070,58239,202423,,Conochilus,Conochilidae,Flosculariaceae,Eurotatoria,Rotifera,Animalia,Genus found
+Cordulegaster boltonii,0,102027,102026,101593,99208,82696,202423,,Cordulegaster,Cordulegastridae,Odonata,Insecta,Arthropoda,Animalia,Genus found
+Corixidae and Notonectidae - incl  Plea,0,0,103364,103359,99208,82696,202423,,,Corixidae,Hemiptera,Insecta,Arthropoda,Animalia,Family found
+Coronella austriaca,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Corynoneura lobata,128567,128563,127917,118831,99208,82696,202423,lobata,Corynoneura,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Species found
+Coslenchus costatus,0,196454,63694,63565,63322,563956,202423,,Coslenchus,Criconematidae,Tylenchida,Secernentea,Nemata,Animalia,Genus found
+Cosmarium sp ,0,7848,7256,6994,846525,9417,202422,,Cosmarium,Desmidiaceae,Zygnematales,Conjugophyceae,Charophyta,Plantae,Genus found
+Craterocephalus stercusmuscarum,630914,630623,165984,165429,161061,158852,202423,stercusmuscarum,Craterocephalus,Atherinidae,Atheriniformes,Actinopterygii,Chordata,Animalia,Species found
+Cricotopus sp ,0,128575,127917,118831,99208,82696,202423,,Cricotopus,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Crinoida,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Crustacea,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Cryptobium fracticorne (Payk ),0,186414,113265,109216,99208,82696,202423,,Cryptobium,Staphylinidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Cryptomonas sp  1,0,10635,10609,10599,10598,10597,630578,,Cryptomonas,Cryptomonadaceae,Cryptomonadales,Cryptophyceae,Cryptophycophyta,Chromista,Genus found
+Cryptomonas sp  2,0,10635,10609,10599,10598,10597,630578,,Cryptomonas,Cryptomonadaceae,Cryptomonadales,Cryptophyceae,Cryptophycophyta,Chromista,Genus found
+Cryptomonas sp  3,0,10635,10609,10599,10598,10597,630578,,Cryptomonas,Cryptomonadaceae,Cryptomonadales,Cryptophyceae,Cryptophycophyta,Chromista,Genus found
+Cryptomonas sp  4,0,10635,10609,10599,10598,10597,630578,,Cryptomonas,Cryptomonadaceae,Cryptomonadales,Cryptophyceae,Cryptophycophyta,Chromista,Genus found
+Ctenophora,0,118845,118840,118831,99208,82696,202423,,Ctenophora,Tipulidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Cuenotaster involutus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Culex sp,0,126455,125930,118831,99208,82696,202423,,Culex,Culicidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Cyanobacteria,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Cyclops varians rubellus,0,88640,88634,88530,621145,82696,202423,,Cyclops,Cyclopidae,Cyclopoida,Maxillopoda,Arthropoda,Animalia,Genus found
+Cyllopus lucasii,656450,95364,656366,93294,89787,82696,202423,lucasii,Cyllopus,Cyllopodidae,Amphipoda,Malacostraca,Arthropoda,Animalia,Species found
+Cymatopleura solea,3262,3256,5330,590740,2287,2286,630578,solea,Cymatopleura,Surirellaceae,Surirellales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Cymbella lanceolata,4836,4795,4704,590753,2287,2286,630578,lanceolata,Cymbella,Cymbellaceae,Cymbellales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Cymbella minuta,591268,590838,4704,590753,2287,2286,630578,minutum,Encyonema,Cymbellaceae,Cymbellales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Cytilus sericeus (F ),0,728018,113997,109216,99208,82696,202423,,Cytilus,Byrrhidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Dactylococcopsis fascicularis,5889,5877,5810,846592,846520,5414,202422,spiralis,Ankistrodesmus,Oocystaceae,Oocystales,Trebouxiophyceae,Chlorophyta,Plantae,Species found
+Daphnia pulex,83874,83873,83872,83767,83687,82696,202423,pulex,Daphnia,Daphniidae,Diplostraca,Branchiopoda,Arthropoda,Animalia,Species found
+Daphnia rosea,83891,83873,83872,83767,83687,82696,202423,rosea,Daphnia,Daphniidae,Diplostraca,Branchiopoda,Arthropoda,Animalia,Species found
+Daption capense,174534,174533,174532,174512,174371,158852,202423,capense,Daption,Procellariidae,Procellariiformes,Aves,Chordata,Animalia,Species found
+Decapoda,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Deladenus saccatus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Delphacidae,0,0,109175,103359,99208,82696,202423,,,Delphacidae,Hemiptera,Insecta,Arthropoda,Animalia,Family found
+Delphacinae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Deltocephalinae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Demetrias imperialis (Germar),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Dendrocerus carpenteri,611221,610695,610669,152741,99208,82696,202423,carpenteri,Dendrocerus,Megaspilidae,Hymenoptera,Insecta,Arthropoda,Animalia,Species found
+Detritus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Diaphanosoma leuchtenbergianum,83839,83837,83834,83767,83687,82696,202423,leuchtenbergianum,Diaphanosoma,Sididae,Diplostraca,Branchiopoda,Arthropoda,Animalia,Species found
+Diapriidae,0,0,154067,152741,99208,82696,202423,,,Diapriidae,Hymenoptera,Insecta,Arthropoda,Animalia,Family found
+Diaptomus oregonensis,85845,85844,85779,85258,621145,82696,202423,oregonensis,Skistodiaptomus,Diaptomidae,Calanoida,Maxillopoda,Arthropoda,Animalia,Species found
+Diatom,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Diatoma vulgare,3219,3214,590787,590750,573593,2286,630578,vulgare,Diatoma,Fragilariaceae,Fragilariales,Fragilariophyceae,Bacillariophyta,Chromista,Species found
+Diatoms,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Diatoms and desmids,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Dicranota sp,0,121027,118840,118831,99208,82696,202423,,Dicranota,Tipulidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Dictyosphaerium pulchellum,6298,6297,6296,5646,5415,5414,202422,pulchellum,Dictyosphaerium,Dictyosphaeriaceae,Chlorococcales,Chlorophyceae,Chlorophyta,Plantae,Species found
+Dinobryon bavaricum,1522,1515,1514,1451,1448,1447,630578,bavaricum,Dinobryon,Dinobryaceae,Ochromonadales,Chrysophyceae,Chrysophyta,Chromista,Species found
+Dinobryon cylindricum,1530,1515,1514,1451,1448,1447,630578,cylindricum,Dinobryon,Dinobryaceae,Ochromonadales,Chrysophyceae,Chrysophyta,Chromista,Species found
+Dinobryon sertularia,1517,1515,1514,1451,1448,1447,630578,sertularia,Dinobryon,Dinobryaceae,Ochromonadales,Chrysophyceae,Chrysophyta,Chromista,Species found
+Dinobryon sociale,1525,1515,1514,1451,1448,1447,630578,sociale,Dinobryon,Dinobryaceae,Ochromonadales,Chrysophyceae,Chrysophyta,Chromista,Species found
+Diplasterias brucei,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Diplocampa assimile (Gyllenhal),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Diploscapter coronatus,0,63336,63324,63323,63322,563956,202423,,Diploscapter,Rhabditidae,Rhabditida,Secernentea,Nemata,Animalia,Genus found
+Dipogon sp,0,500717,500059,500022,18063,846496,202422,,Dipogon,Fabaceae,Fabales,Magnoliopsida,Tracheophyta,Plantae,Genus found
+Diptera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Dipteran (not Chironomidae),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Diptera spp,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Ditylenchus dipsacoideus,0,196461,196460,63565,63322,563956,202423,,Ditylenchus,Anguinidae,Tylenchida,Secernentea,Nemata,Animalia,Genus found
+Dixella sp,0,125854,125809,118831,99208,82696,202423,,Dixella,Dixidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Dolichopus nitidus Fall�n  1823,0,137953,136824,118831,99208,82696,202423,,Dolichopus,Dolichopodidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Dolichopus nubilius Meigen  1924,0,137953,136824,118831,99208,82696,202423,,Dolichopus,Dolichopodidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Dolichovespula sylvestris (Scopoli),0,154258,154249,152741,99208,82696,202423,,Dolichovespula,Vespidae,Hymenoptera,Insecta,Arthropoda,Animalia,Genus found
+Dolomedes fimbriatus (Clerck  1757),878491,181130,181129,82732,82708,82696,202423,fimbriatus,Dolomedes,Pisauridae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Dolomedes sp,0,181130,181129,82732,82708,82696,202423,,Dolomedes,Pisauridae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Dorylaimus stagnalis,62988,62986,62983,62921,59491,563956,202423,stagnalis,Dorylaimus,Dorylaimidae,Dorylaimida,Adenophorea,Nemata,Animalia,Species found
+Dorylaimus stagnalis -,62988,62986,62983,62921,59491,563956,202423,stagnalis,Dorylaimus,Dorylaimidae,Dorylaimida,Adenophorea,Nemata,Animalia,Species found
+Drosophilidae,0,0,146185,118831,99208,82696,202423,,,Drosophilidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Dryops auriculatus (Geoffr ),0,114025,113999,109216,99208,82696,202423,,Dryops,Dryopidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Dryops sp,0,114025,113999,109216,99208,82696,202423,,Dryops,Dryopidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Echinoida,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Edaphus bl�hweissi (Scheerp ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Eiseniella tetraedra,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Elateridae,0,0,113879,109216,99208,82696,202423,,,Elateridae,Coleoptera,Insecta,Arthropoda,Animalia,Family found
+Electrona antarctica,623809,162736,162575,162368,161061,158852,202423,antarctica,Electrona,Myctophidae,Myctophiformes,Actinopterygii,Chordata,Animalia,Species found
+Elmidae,0,0,114093,109216,99208,82696,202423,,,Elmidae,Coleoptera,Insecta,Arthropoda,Animalia,Family found
+Elmis aenea,0,114255,114093,109216,99208,82696,202423,,Elmis,Elmidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Emberiza schoeniclus,179543,179536,178838,178265,174371,158852,202423,schoeniclus,Emberiza,Emberizidae,Passeriformes,Aves,Chordata,Animalia,Species found
+Empididae,0,0,135830,118831,99208,82696,202423,,,Empididae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Enchodelus macrodorus,63040,63039,62983,62921,59491,563956,202423,macrodorus,Enchodelus,Dorylaimidae,Dorylaimida,Adenophorea,Nemata,Animalia,Species found
+Engraulis encrassicolus,0,161827,553173,161694,161061,158852,202423,,Engraulis,Engraulidae,Clupeiformes,Actinopterygii,Chordata,Animalia,Genus found
+Enochrus testaceus (F ),0,112973,112811,109216,99208,82696,202423,,Enochrus,Hydrophilidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Ensifera,0,555703,178028,177993,174371,158852,202423,,Ensifera,Trochilidae,Apodiformes,Aves,Chordata,Animalia,Genus found
+Entomobryomorpha,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Ephemera danica,0,101526,101525,100502,99208,82696,202423,,Ephemera,Ephemeridae,Ephemeroptera,Insecta,Arthropoda,Animalia,Genus found
+Ephemeroptera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Ephydridae,0,0,146893,118831,99208,82696,202423,,,Ephydridae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Episyrphus balteatus (De Geer),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Erichsonius cinerascens (Grav ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Erigone atra Blackwall  1833,856041,848314,82743,82732,82708,82696,202423,atra,Erigone,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Erigone dentipalpis (Wider  1834),856063,848314,82743,82732,82708,82696,202423,dentipalpis,Erigone,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Ero sp,0,848323,847738,82732,82708,82696,202423,,Ero,Mimetidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Erpobdella octoculata,568899,69444,69438,568835,568832,64357,202423,octoculata,Erpobdella,Erpobdellidae,Arhynchobdellida,Clitellata,Annelida,Animalia,Species found
+Ethmolaimus pratensis,61297,61292,61187,60662,59491,563956,202423,pratensis,Ethmolaimus,Chromadoridae,Desmodorida,Adenophorea,Nemata,Animalia,Species found
+Euaesthetus ruficapillus (Boisd ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Eucoilidae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Euconnus hirticollis (Illig ),0,113824,113823,109216,99208,82696,202423,,Euconnus,Scydmaenidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Euconulus alderi (Gray),0,77321,77318,76755,69459,69458,202423,,Euconulus,Helicarionidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Genus found
+Eudorylaimus consobrinus,63050,63044,62983,62921,59491,563956,202423,consobrinus,Eudorylaimus,Dorylaimidae,Dorylaimida,Adenophorea,Nemata,Animalia,Species found
+Eulophus larvarum,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Eumonhystera filiformis,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Eumonhystera similis,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Eumonhystera simplex,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Euphausia superba,95514,95501,95500,95496,89787,82696,202423,superba,Euphausia,Euphausiidae,Euphausiacea,Malacostraca,Arthropoda,Animalia,Species found
+Eupterygini,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Eurythenes gryllus,94292,94291,94224,93294,89787,82696,202423,gryllus,Eurythenes,Lysianassidae,Amphipoda,Malacostraca,Arthropoda,Animalia,Species found
+Eutrigla gurnardus,167044,167043,166972,166702,161061,158852,202423,gurnardus,Eutrigla,Triglidae,Scorpaeniformes,Actinopterygii,Chordata,Animalia,Species found
+Evarcha arcuata (Clerck  1757),879740,872091,871537,82732,82708,82696,202423,arcuata,Evarcha,Salticidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Evarcha sp,0,872091,871537,82732,82708,82696,202423,,Evarcha,Salticidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Falco subbuteo,175654,175598,175593,175262,174371,158852,202423,subbuteo,Falco,Falconidae,Falconiformes,Aves,Chordata,Animalia,Species found
+Fictor fictor,0,64064,64037,64036,63322,563956,202423,,Fictor,Diplogasteridae,Diplogasterida,Secernentea,Nemata,Animalia,Genus found
+Filamentous algae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Filenchus filiformis,0,196450,63591,63565,63322,563956,202423,,Filenchus,Tylenchidae,Tylenchida,Secernentea,Nemata,Animalia,Genus found
+Filinia longispina,0,59425,59424,59295,654070,58239,202423,,Filinia,Filiniidae,Flosculariaceae,Eurotatoria,Rotifera,Animalia,Genus found
+Fish,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Formica sp,0,154211,154193,152741,99208,82696,202423,,Formica,Formicidae,Hymenoptera,Insecta,Arthropoda,Animalia,Genus found
+Formica s str  sp,0,154211,154193,152741,99208,82696,202423,,Formica,Formicidae,Hymenoptera,Insecta,Arthropoda,Animalia,Genus found
+Fragilaria elliptica,0,2932,590787,590750,573593,2286,630578,,Fragilaria,Fragilariaceae,Fragilariales,Fragilariophyceae,Bacillariophyta,Chromista,Genus found
+Fragilaria leptostauron,590961,590855,590787,590750,573593,2286,630578,leptostauron,Staurosirella,Fragilariaceae,Fragilariales,Fragilariophyceae,Bacillariophyta,Chromista,Species found
+Fragilaria vaucheriae,2942,2932,590787,590750,573593,2286,630578,vaucheriae,Fragilaria,Fragilariaceae,Fragilariales,Fragilariophyceae,Bacillariophyta,Chromista,Species found
+Fruit,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Fulgoroidea,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Fulmarus glacialoides,174540,174535,174532,174512,174371,158852,202423,glacialoides,Fulmarus,Procellariidae,Procellariiformes,Aves,Chordata,Animalia,Species found
+Gabrius fermoralis (Hochh ),0,186454,113265,109216,99208,82696,202423,,Gabrius,Staphylinidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Gadiculus argenteus,164772,164771,164701,164665,161061,158852,202423,argenteus,Gadiculus,Gadidae,Gadiformes,Actinopterygii,Chordata,Animalia,Species found
+Gadus morhua,164712,164710,164701,164665,161061,158852,202423,morhua,Gadus,Gadidae,Gadiformes,Actinopterygii,Chordata,Animalia,Species found
+Gaidropsarus vulgaris,164765,164764,164701,164665,161061,158852,202423,vulgaris,Gaidropsarus,Gadidae,Gadiformes,Actinopterygii,Chordata,Animalia,Species found
+Galeorhinus galeus,160181,160179,160529,551500,159785,158852,202423,galeus,Galeorhinus,Triakidae,Carcharhiniformes,Chondrichthyes,Chordata,Animalia,Species found
+Galiteuthis glacialis,556713,205734,82575,82367,82326,69458,202423,glacialis,Galiteuthis,Cranchiidae,Teuthida,Cephalopoda,Mollusca,Animalia,Species found
+Gammarus pulex,206451,93773,93745,93294,89787,82696,202423,pulex,Gammarus,Gammaridae,Amphipoda,Malacostraca,Arthropoda,Animalia,Species found
+Gastropoda,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Gastropus hyptopus,59178,59175,654076,58343,654070,58239,202423,hyptopus,Gastropus,Gastropodidae,Ploima,Eurotatoria,Rotifera,Animalia,Species found
+Gastropus stylifer,59177,59175,654076,58343,654070,58239,202423,stylifer,Gastropus,Gastropodidae,Ploima,Eurotatoria,Rotifera,Animalia,Species found
+Geres filamentosis,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Gerridae and Mesovelidae,0,0,103801,103359,99208,82696,202423,,,Gerridae,Hemiptera,Insecta,Arthropoda,Animalia,Family found
+Gerris sp,0,103829,103801,103359,99208,82696,202423,,Gerris,Gerridae,Hemiptera,Insecta,Arthropoda,Animalia,Genus found
+Giurus margaritacea,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Glenodinium pulvisculus,0,10174,10166,9995,9874,9873,630578,,Glenodinium,Glenodiniaceae,Peridiniales,Dinophyceae,Pyrrophycophyta,Chromista,Genus found
+Glenodinium quadridens,10185,10174,10166,9995,9874,9873,630578,quadridens,Glenodinium,Glenodiniaceae,Peridiniales,Dinophyceae,Pyrrophycophyta,Chromista,Species found
+Gloeocystis sp ,0,6355,6354,5646,5415,5414,202422,,Gloeocystis,Coccomyxaceae,Chlorococcales,Chlorophyceae,Chlorophyta,Plantae,Genus found
+Glossamia aprion,168343,168342,168196,167640,161061,158852,202423,aprion,Glossamia,Apogonidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Glossiphonia heteroclita (L ),69389,69388,69357,69295,568832,64357,202423,heteroclita,Alboglossiphonia,Glossiphoniidae,Rhynchobdellida,Clitellata,Annelida,Animalia,Species found
+Glossogobius species 1,0,171834,171746,167640,161061,158852,202423,,Glossogobius,Gobiidae,Perciformes,Actinopterygii,Chordata,Animalia,Genus found
+Glyptocephalus cynoglossus,172873,172872,172859,172702,161061,158852,202423,cynoglossus,Glyptocephalus,Pleuronectidae,Pleuronectiformes,Actinopterygii,Chordata,Animalia,Species found
+Glyptonotus antarcticus,544483,542156,92636,92120,89787,82696,202423,antarcticus,Glyptonotus,Chaetiliidae,Isopoda,Malacostraca,Arthropoda,Animalia,Species found
+Gnaphosidae,0,0,185556,82732,82708,82696,202423,,,Gnaphosidae,Araneae,Arachnida,Arthropoda,Animalia,Family found
+Gnathonarium dentatum (Wider  1834),857128,848422,82743,82732,82708,82696,202423,dentatum,Gnathonarium,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Gomphonema olivaceum,4971,4911,4910,590753,2287,2286,630578,olivaceum,Gomphonema,Gomphonemataceae,Cymbellales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Gonatus antarcticus,556728,82418,82414,82367,82326,69458,202423,antarcticus,Gonatus,Gonatidae,Teuthida,Cephalopoda,Mollusca,Animalia,Species found
+Gongrosira incrustans,0,9391,6595,6594,5415,5414,202422,,Gongrosira,Chaetophoraceae,Chaetophorales,Chlorophyceae,Chlorophyta,Plantae,Genus found
+Gongylidiellum murcidum Simon  1884,857181,848429,82743,82732,82708,82696,202423,murcidum,Gongylidiellum,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Graptodytes granularis (L ),813066,811138,111963,109216,99208,82696,202423,granularis,Graptodytes,Dytiscidae,Coleoptera,Insecta,Arthropoda,Animalia,Species found
+Gymnophora arcuata,0,139178,138921,118831,99208,82696,202423,,Gymnophora,Phoridae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Gymnoscoelus nicholsi,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Gymnoscopelus braueri,623816,623697,162575,162368,161061,158852,202423,braueri,Gymnoscopelus,Myctophidae,Myctophiformes,Actinopterygii,Chordata,Animalia,Species found
+Gymnoscopelus opisthopterus,623821,623697,162575,162368,161061,158852,202423,opisthopterus,Gymnoscopelus,Myctophidae,Myctophiformes,Actinopterygii,Chordata,Animalia,Species found
+Gyrosigma scalproides,4639,4622,590774,590737,2287,2286,630578,obtusatum,Gyrosigma,Pleurosigmataceae,Naviculales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Haematopota sp,0,131310,130934,118831,99208,82696,202423,,Haematopota,Tabanidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Haemopis sanguisuga (L ),0,69408,568839,568835,568832,64357,202423,,Haemopis,Haemopidae,Arhynchobdellida,Clitellata,Annelida,Animalia,Genus found
+Hahnia pusilla C  L  Koch  1841,880525,872163,871526,82732,82708,82696,202423,pusilla,Hahnia,Hahniidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Hahnia sp,0,872163,871526,82732,82708,82696,202423,,Hahnia,Hahniidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Hahniidae,0,0,871526,82732,82708,82696,202423,,,Hahniidae,Araneae,Arachnida,Arthropoda,Animalia,Family found
+Halesus radiatus,608795,598561,115933,115095,99208,82696,202423,radiatus,Halesus,Limnephilidae,Trichoptera,Insecta,Arthropoda,Animalia,Species found
+Haliclona dancoi,0,47771,573744,47690,47528,46861,202423,,Haliclona,Chalinidae,Haplosclerida,Demospongiae,Porifera,Animalia,Genus found
+Haplothrips sp,0,695086,103357,103348,99208,82696,202423,,Haplothrips,Phlaeothripidae,Thysanoptera,Insecta,Arthropoda,Animalia,Genus found
+Hebridae,0,0,103964,103359,99208,82696,202423,,,Hebridae,Hemiptera,Insecta,Arthropoda,Animalia,Family found
+Hebrus pusillus (Fallen),103975,103965,103964,103359,99208,82696,202423,pusillus,Hebrus,Hebridae,Hemiptera,Insecta,Arthropoda,Animalia,Species found
+Hebrus ruficeps (Thomson),0,103965,103964,103359,99208,82696,202423,,Hebrus,Hebridae,Hemiptera,Insecta,Arthropoda,Animalia,Genus found
+Helicidae,0,0,77903,76755,69459,69458,202423,,,Helicidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Family found
+Helodidae sp,0,0,113924,109216,99208,82696,202423,,,Scirtidae,Coleoptera,Insecta,Arthropoda,Animalia,Family found
+Hemiptera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Hemistenus flavipes (Steph ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Hephaestus tulliensis,650214,168044,650201,167640,161061,158852,202423,tulliensis,Hephaestus,Terapontidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Hercostomus assimilis (Staeger  1842),0,138399,136824,118831,99208,82696,202423,,Hercostomus,Dolichopodidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Herina frondescentiae (L ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Herina germinationis (Rossi),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Herina parva (Loew),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Herring,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Heteroptera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Heterotrissocladius marcidus,128744,128737,127917,118831,99208,82696,202423,marcidus,Heterotrissocladius,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Species found
+Heterotrissocladius sp ,0,128737,127917,118831,99208,82696,202423,,Heterotrissocladius,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Hippoglossoides platessoides,172877,172874,172859,172702,161061,158852,202423,platessoides,Hippoglossoides,Pleuronectidae,Pleuronectiformes,Actinopterygii,Chordata,Animalia,Species found
+Hirudinea,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Holopedium gibberum,83957,83956,83955,83767,83687,82696,202423,gibberum,Holopedium,Holopediidae,Diplostraca,Branchiopoda,Arthropoda,Animalia,Species found
+Homaxinella balfourensis,0,48340,48468,48443,47528,46861,202423,,Homaxinella,Suberitidae,Hadromerida,Demospongiae,Porifera,Animalia,Genus found
+Homoptera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Hybotidae,0,0,136392,118831,99208,82696,202423,,,Hybotidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Hydropsyche sp,0,115453,115398,115095,99208,82696,202423,,Hydropsyche,Hydropsychidae,Trichoptera,Insecta,Arthropoda,Animalia,Genus found
+Hydroptila sp,0,115641,115629,115095,99208,82696,202423,,Hydroptila,Hydroptilidae,Trichoptera,Insecta,Arthropoda,Animalia,Genus found
+Hydrozoa,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Hyla arborea arborea,662424,173498,173497,173423,173420,158852,202423,arborea,Hyla,Hylidae,Anura,Amphibia,Chordata,Animalia,Species found
+Hylaeus sp,0,154346,154345,152741,99208,82696,202423,,Hylaeus,Colletidae,Hymenoptera,Insecta,Arthropoda,Animalia,Genus found
+Hymenoptera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Hypocyphtus discoideus (Er ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Hypostenus latifrons (Er ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Hypostenus sp,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Hypseleotris compressa,637513,172172,172171,167640,161061,158852,202423,compressa,Hypseleotris,Eleotridae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Ichneumonidae,0,0,153360,152741,99208,82696,202423,,,Ichneumonidae,Hymenoptera,Insecta,Arthropoda,Animalia,Family found
+Idiotypa nigriceps,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Ilione albiseta (Scopoli),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Ilione lineata (Fall�n),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Insecta,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Ironus ignavus,61979,61974,61970,61885,59491,563956,202423,ignavus,Ironus,Ironidae,Enoplida,Adenophorea,Nemata,Animalia,Species found
+Ischnura elegans (Vander Linden),0,102078,102077,101593,99208,82696,202423,,Ischnura,Coenagrionidae,Odonata,Insecta,Arthropoda,Animalia,Genus found
+Ismarus dorsiger,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Isopoda,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Jassidae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Jassinae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Kelicottia bostoniensis,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Kelicottia longispina,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Kellicottia sp ,0,58485,58344,58343,654070,58239,202423,,Kellicottia,Brachionidae,Ploima,Eurotatoria,Rotifera,Animalia,Genus found
+Keratella cochlearis,58360,58348,58344,58343,654070,58239,202423,cochlearis,Keratella,Brachionidae,Ploima,Eurotatoria,Rotifera,Animalia,Species found
+Keratella testudo,58389,58348,58344,58343,654070,58239,202423,testudo,Keratella,Brachionidae,Ploima,Eurotatoria,Rotifera,Animalia,Species found
+Kirkpatrickia variolosa,0,48144,48301,47862,47528,46861,202423,,Kirkpatrickia,Hymedesmiidae,Poecilosclerida,Demospongiae,Porifera,Animalia,Genus found
+Kleidotoma psiloides,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Kondakovia longimama,0,555800,82436,82367,82326,69458,202423,,Kondakovia,Onychoteuthidae,Teuthida,Cephalopoda,Mollusca,Animalia,Genus found
+Labidiaster annulatus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Lacerta agilis,0,209054,209051,173861,173747,158852,202423,,Lacerta,Lacertidae,Squamata,Reptilia,Chordata,Animalia,Genus found
+Large terrestrial inverts,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Larinioides cornutus (Clerck  1757),859034,848637,82737,82732,82708,82696,202423,cornutus,Larinioides,Araneidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Larinioides sp,0,848637,82737,82732,82708,82696,202423,,Larinioides,Araneidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Laternula elliptica,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Lates calcarifer,167669,167668,167642,167640,161061,158852,202423,calcarifer,Lates,Centropomidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Lathrobium fovalum (Steph ),0,186461,113265,109216,99208,82696,202423,,Lathrobium,Staphylinidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Lema melanopus (L ),0,187776,114509,109216,99208,82696,202423,,Lema,Chrysomelidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Leognathus equulus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Lepidoptera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Lepidorhombus boscii,172834,172833,172713,172702,161061,158852,202423,boscii,Lepidorhombus,Scophthalmidae,Pleuronectiformes,Actinopterygii,Chordata,Animalia,Species found
+Lepidorhombus whiffiagonis,172835,172833,172713,172702,161061,158852,202423,whiffiagonis,Lepidorhombus,Scophthalmidae,Pleuronectiformes,Actinopterygii,Chordata,Animalia,Species found
+Lepthyphantes tenuis (Blackwall  1852),0,848648,82743,82732,82708,82696,202423,,Lepthyphantes,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Leptoceridae,0,0,116547,115095,99208,82696,202423,,,Leptoceridae,Trichoptera,Insecta,Arthropoda,Animalia,Family found
+Leptodiaptomus siciloides,85843,85838,85779,85258,621145,82696,202423,siciloides,Leptodiaptomus,Diaptomidae,Calanoida,Maxillopoda,Arthropoda,Animalia,Species found
+Lesteva sicula (Er ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Leucoraja  fullonica,0,564037,160845,160806,159785,158852,202423,,Leucoraja,Rajidae,Rajiformes,Chondrichthyes,Chordata,Animalia,Genus found
+Leuctra hippopus,0,102844,102840,102467,99208,82696,202423,,Leuctra,Leuctridae,Plecoptera,Insecta,Arthropoda,Animalia,Genus found
+Leuctra nigra,0,102844,102840,102467,99208,82696,202423,,Leuctra,Leuctridae,Plecoptera,Insecta,Arthropoda,Animalia,Genus found
+Libellula depressa (L ),0,101893,101797,101593,99208,82696,202423,,Libellula,Libellulidae,Odonata,Insecta,Arthropoda,Animalia,Genus found
+Libellula quadrimaculata (L ),101896,101893,101797,101593,99208,82696,202423,quadrimaculata,Libellula,Libellulidae,Odonata,Insecta,Arthropoda,Animalia,Species found
+Libellulidae,0,0,101797,101593,99208,82696,202423,,,Libellulidae,Odonata,Insecta,Arthropoda,Animalia,Family found
+Ligidium hypnorum (Cuvier),0,93233,93224,92120,89787,82696,202423,,Ligidium,Ligiidae,Isopoda,Malacostraca,Arthropoda,Animalia,Genus found
+Limacidae,0,0,77300,76755,69459,69458,202423,,,Limacidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Family found
+Limnephilidae,0,0,115933,115095,99208,82696,202423,,,Limnephilidae,Trichoptera,Insecta,Arthropoda,Animalia,Family found
+Limnephilus sp,0,116069,115933,115095,99208,82696,202423,,Limnephilus,Limnephilidae,Trichoptera,Insecta,Arthropoda,Animalia,Genus found
+Limnia paludicola (Elberg),0,144848,144653,118831,99208,82696,202423,,Limnia,Sciomyzidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Limnius sp,0,114247,114093,109216,99208,82696,202423,,Limnius,Elmidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Limnobaris dolorosa (Goeze  1777),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Limnophila sp,0,33634,32869,31632,18063,846496,202422,,Limnophila,Plantaginaceae,Lamiales,Magnoliopsida,Tracheophyta,Plantae,Genus found
+Limnophora sp,0,150730,150025,118831,99208,82696,202423,,Limnophora,Muscidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Limonia sp,0,119704,118840,118831,99208,82696,202423,,Limonia,Tipulidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Limoniidae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Limosina spec,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Limothrips denticornis (Hal ),695706,695135,103353,103348,99208,82696,202423,denticornis,Limothrips,Thripidae,Thysanoptera,Insecta,Arthropoda,Animalia,Species found
+Linyphiidae,0,0,82743,82732,82708,82696,202423,,,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Family found
+Liocranidae,0,0,871529,82732,82708,82696,202423,,,Liocranidae,Araneae,Arachnida,Arthropoda,Animalia,Family found
+Lithobius piceus (L  Koch),0,553113,555700,553110,154400,82696,202423,,Lithobius,Lithobiidae,Lithobiomorpha,Chilopoda,Arthropoda,Animalia,Genus found
+Lithobius sp,0,553113,555700,553110,154400,82696,202423,,Lithobius,Lithobiidae,Lithobiomorpha,Chilopoda,Arthropoda,Animalia,Genus found
+Locustella naevia,560839,179848,179839,178265,174371,158852,202423,naevia,Locustella,Sylviidae,Passeriformes,Aves,Chordata,Animalia,Species found
+Lophaster gaini,0,157069,157062,157060,156862,156857,202423,,Lophaster,Solasteridae,Spinulosida,Asteroidea,Echinodermata,Animalia,Genus found
+Lophius budegassa,164502,164498,164497,164495,161061,158852,202423,budegassa,Lophius,Lophiidae,Lophiiformes,Actinopterygii,Chordata,Animalia,Species found
+Lophius piscatorius,164501,164498,164497,164495,161061,158852,202423,piscatorius,Lophius,Lophiidae,Lophiiformes,Actinopterygii,Chordata,Animalia,Species found
+Luidiaster gerlachei,0,156972,156949,655994,156862,156857,202423,,Cheiraster,Benthopectinidae,Notomyotida,Asteroidea,Echinodermata,Animalia,Genus found
+Lumbricidae,0,0,69165,68498,568832,64357,202423,,,Lumbricidae,Haplotaxida,Clitellata,Annelida,Animalia,Family found
+Lumbriculidae sp,0,0,68440,68439,568832,64357,202423,,,Lumbriculidae,Lumbriculida,Clitellata,Annelida,Animalia,Family found
+Lutjanus argentimaculatus,168868,168846,168845,167640,161061,158852,202423,argentimaculatus,Lutjanus,Lutjanidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Lycosidae,0,0,847731,82732,82708,82696,202423,,,Lycosidae,Araneae,Arachnida,Arthropoda,Animalia,Family found
+Lymnaea stagnalis (L ),76487,76484,76483,76437,69459,69458,202423,stagnalis,Lymnaea,Lymnaeidae,Basommatophora,Gastropoda,Mollusca,Animalia,Species found
+Lymnea peregra,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Lysasterias perrieri,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Macrobrachium,0,96220,96213,95599,89787,82696,202423,,Macrobrachium,Palaemonidae,Decapoda,Malacostraca,Arthropoda,Animalia,Genus found
+Macropelopia nebulosa,0,128034,127917,118831,99208,82696,202423,,Macropelopia,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Macropolepia sp,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Macroptychaster accrescens,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Malenchus bryophilus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Mallomonas sp  1,0,1598,1597,1451,1448,1447,630578,,Mallomonas,Synuraceae,Ochromonadales,Chrysophyceae,Chrysophyta,Chromista,Genus found
+Mallomonas sp  2,0,1598,1597,1451,1448,1447,630578,,Mallomonas,Synuraceae,Ochromonadales,Chrysophyceae,Chrysophyta,Chromista,Genus found
+Mangora acalypha (Walckenaer  1802),860272,848716,82737,82732,82708,82696,202423,acalypha,Mangora,Araneidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Marpissa radiata (Grube  1859),883110,872450,871537,82732,82708,82696,202423,radiata,Marpissa,Salticidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Marpissa sp,0,872450,871537,82732,82708,82696,202423,,Marpissa,Salticidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Megaselia cf angusta,0,139191,138921,118831,99208,82696,202423,,Megaselia,Phoridae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Megaselia cf pulicaria,0,139191,138921,118831,99208,82696,202423,,Megaselia,Phoridae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Megaselia ruficornis,139472,139191,138921,118831,99208,82696,202423,ruficornis,Megaselia,Phoridae,Diptera,Insecta,Arthropoda,Animalia,Species found
+Meioneta rurestris (C  L  Koch  1836),860897,848759,82743,82732,82708,82696,202423,rurestris,Meioneta,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Melanogrammus aeglefinus,164744,164743,164701,164665,161061,158852,202423,aeglefinus,Melanogrammus,Gadidae,Gadiformes,Actinopterygii,Chordata,Animalia,Species found
+Melanotaenia splendida splendida,630796,165979,165974,165429,161061,158852,202423,splendida,Melanotaenia,Melanotaeniidae,Atheriniformes,Actinopterygii,Chordata,Animalia,Species found
+Meligethes sp,0,835492,114290,109216,99208,82696,202423,,Meligethes,Nitidulidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Melosira varians,2339,2290,2289,590738,590736,2286,630578,varians,Melosira,Melosiraceae,Melosirales,Coscinodiscophyceae,Bacillariophyta,Chromista,Species found
+Merlangius merlangus,164758,164757,164701,164665,161061,158852,202423,merlangus,Merlangius,Gadidae,Gadiformes,Actinopterygii,Chordata,Animalia,Species found
+Merluccius merluccius,164795,164790,164789,164665,161061,158852,202423,merluccius,Merluccius,Merlucciidae,Gadiformes,Actinopterygii,Chordata,Animalia,Species found
+Mesodorylaimus bastiani,63079,63074,62983,62921,59491,563956,202423,bastiani,Mesodorylaimus,Dorylaimidae,Dorylaimida,Adenophorea,Nemata,Animalia,Species found
+Mesodorylaimus centrocercus,0,63074,62983,62921,59491,563956,202423,,Mesodorylaimus,Dorylaimidae,Dorylaimida,Adenophorea,Nemata,Animalia,Genus found
+Microchirus variegatus,173026,173022,172980,172702,161061,158852,202423,variegatus,Microchirus,Soleidae,Pleuronectiformes,Actinopterygii,Chordata,Animalia,Species found
+Microcystis aeruginosa,750,747,604,603,602,601,202420,aeruginosa,Microcystis,Chroococcaceae,Chroococcales,Cyanophyceae,Cyanophycota,Monera,Species found
+Microlinyphia impigra (O  P -Cambridge  1871),861662,848804,82743,82732,82708,82696,202423,impigra,Microlinyphia,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Micromesistius potassou,0,164773,164701,164665,161061,158852,202423,,Micromesistius,Gadidae,Gadiformes,Actinopterygii,Chordata,Animalia,Genus found
+Micrommata virescens (Clerck  1757),883694,872509,871540,82732,82708,82696,202423,virescens,Micrommata,Sparassidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Microphis brachyurus,166533,166532,166443,166361,161061,158852,202423,brachyurus,Microphis,Syngnathidae,Gasterosteiformes,Actinopterygii,Chordata,Animalia,Species found
+Microphysidae,0,0,104409,103359,99208,82696,202423,,,Microphysidae,Hemiptera,Insecta,Arthropoda,Animalia,Family found
+Micropsectra bidentata,0,129890,127917,118831,99208,82696,202423,,Micropsectra,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Micropterus salmoides,168160,168158,168093,167640,161061,158852,202423,salmoides,Micropterus,Centrarchidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Microstomus kitt,172888,172886,172859,172702,161061,158852,202423,kitt,Microstomus,Pleuronectidae,Pleuronectiformes,Actinopterygii,Chordata,Animalia,Species found
+Microtendipes sp,0,129535,127917,118831,99208,82696,202423,,Microtendipes,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Microtus agrestis,632855,180296,180360,180130,179913,158852,202423,agrestis,Microtus,Muridae,Rodentia,Mammalia,Chordata,Animalia,Species found
+Mollusca,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Molva molva,164760,164759,164701,164665,161061,158852,202423,molva,Molva,Gadidae,Gadiformes,Actinopterygii,Chordata,Animalia,Species found
+Mugil cephalus,170335,170334,170333,553132,161061,158852,202423,cephalus,Mugil,Mugilidae,Mugiliformes,Actinopterygii,Chordata,Animalia,Species found
+Muscidae copro,0,0,150025,118831,99208,82696,202423,,,Muscidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Muscidae flor,0,0,150025,118831,99208,82696,202423,,,Muscidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Mycale (Oxymycale) acerata,0,48195,48194,47862,47528,46861,202423,,Mycale,Mycalidae,Poecilosclerida,Demospongiae,Porifera,Animalia,Genus found
+Mycetophilidae,0,0,121636,118831,99208,82696,202423,,,Mycetophilidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Myllaena dubia (Grav ),0,186489,113265,109216,99208,82696,202423,,Myllaena,Staphylinidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Myllaena minuta (Grav ),0,186489,113265,109216,99208,82696,202423,,Myllaena,Staphylinidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Myrmarachne formicaria (De Geer  1778),884121,872548,871537,82732,82708,82696,202423,formicaria,Myrmarachne,Salticidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Mythimna straminea,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Nabidae,0,0,107084,103359,99208,82696,202423,,,Nabidae,Hemiptera,Insecta,Arthropoda,Animalia,Family found
+Naididae sp,0,0,68854,68498,568832,64357,202423,,,Naididae,Haplotaxida,Clitellata,Annelida,Animalia,Family found
+Natrix natrix,700799,174242,174121,173861,173747,158852,202423,natrix,Natrix,Colubridae,Squamata,Reptilia,Chordata,Animalia,Species found
+Navicula gregaria,3860,3649,3648,590737,2287,2286,630578,gregaria,Navicula,Naviculaceae,Naviculales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Navicula lanceolata,3766,3649,3648,590737,2287,2286,630578,lanceolata,Navicula,Naviculaceae,Naviculales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Navicula menisculus,3749,3649,3648,590737,2287,2286,630578,menisculus,Navicula,Naviculaceae,Naviculales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Navicula tripunctata,4048,3649,3648,590737,2287,2286,630578,tripunctata,Navicula,Naviculaceae,Naviculales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Nematalosa erebi,161804,161801,161700,161694,161061,158852,202423,erebi,Nematalosa,Clupeidae,Clupeiformes,Actinopterygii,Chordata,Animalia,Species found
+Nematoda sp,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Nemotelus pantherinus (L   1758),628053,130694,130150,118831,99208,82696,202423,pantherinus,Nemotelus,Stratiomyidae,Diptera,Insecta,Arthropoda,Animalia,Species found
+Nemurella pictetii,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Neoascia sp,0,141096,139621,118831,99208,82696,202423,,Neoascia,Syrphidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Neon valentulus Falconer  1912,884441,872580,871537,82732,82708,82696,202423,valentulus,Neon,Salticidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Neoscona adianta (Walckenaer  1802),862460,848908,82737,82732,82708,82696,202423,adianta,Neoscona,Araneidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Neosiluris ater,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Nestus carbonarius (Gyll ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Nestus mendicus (Er ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Nestus ruralis (Er ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Nestus sp,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Niphargus aquilex,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Nitzschia dissipata,5186,5070,572758,590751,2287,2286,630578,dissipata,Nitzschia,Bacillariaceae,Bacillariales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Nitzschia perminuta,193823,5070,572758,590751,2287,2286,630578,perminuta,Nitzschia,Bacillariaceae,Bacillariales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Nostoc sp ,0,1146,1099,861,602,601,202420,,Nostoc,Nostocaceae,Nostocales,Cyanophyceae,Cyanophycota,Monera,Genus found
+Notasterias armata,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Notesthes robusta,166949,166948,166704,166702,161061,158852,202423,robusta,Notesthes,Scorpaenidae,Scorpaeniformes,Actinopterygii,Chordata,Animalia,Species found
+Notocrangon antarcticus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Notolepis coatsi,644728,162468,162463,553127,161061,158852,202423,coatsi,Notolepis,Paralepididae,Aulopiformes,Actinopterygii,Chordata,Animalia,Species found
+Odacantha melanura (L ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Odonata,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Odontaster meridionalis,0,156978,156977,156973,156862,156857,202423,,Odontaster,Odontasteridae,Valvatida,Asteroidea,Echinodermata,Animalia,Genus found
+Odontaster validus,0,156978,156977,156973,156862,156857,202423,,Odontaster,Odontasteridae,Valvatida,Asteroidea,Echinodermata,Animalia,Genus found
+Oedemera nobilis (Scop ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Oligochaeta,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Oligochaete spp ,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Oocystis sp  1,0,5827,5810,846592,846520,5414,202422,,Oocystis,Oocystaceae,Oocystales,Trebouxiophyceae,Chlorophyta,Plantae,Genus found
+Oocystis sp  2,0,5827,5810,846592,846520,5414,202422,,Oocystis,Oocystaceae,Oocystales,Trebouxiophyceae,Chlorophyta,Plantae,Genus found
+Ootetrastichus sp,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Ophiuroida,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Opilionida,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Orthetrum cancellatum (L ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Orthetrum sp,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Orthocyclops modestus,88756,88755,88634,88530,621145,82696,202423,modestus,Orthocyclops,Cyclopidae,Cyclopoida,Maxillopoda,Arthropoda,Animalia,Species found
+Orthoptera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Orthostigma 1,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Oscillatoria sp ,0,917,862,861,602,601,202420,,Oscillatoria,Oscillatoriaceae,Nostocales,Cyanophyceae,Cyanophycota,Monera,Genus found
+Ostracoda,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Ostracoda sp,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Ostracods,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Otitinae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Oxychilus cellarius (O  F  M�ller),77196,77194,77140,76755,69459,69458,202423,cellarius,Oxychilus,Zonitidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Species found
+Oxyloma elegans (Risso),0,76919,76908,76755,69459,69458,202423,,Oxyloma,Succineidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Genus found
+Oxytelus sp,0,113433,113265,109216,99208,82696,202423,,Oxytelus,Staphylinidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Ozyptila sp,0,872670,871543,82732,82708,82696,202423,,Ozyptila,Thomisidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Pachybrachius sp,0,108090,676868,103359,99208,82696,202423,,Pachybrachius,Rhyparochromidae,Hemiptera,Insecta,Arthropoda,Animalia,Genus found
+Pachygnatha sp,0,849026,847764,82732,82708,82696,202423,,Pachygnatha,Tetragnathidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Paederus riparius (L ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Pagodroma nivea,174614,174613,174532,174512,174371,158852,202423,nivea,Pagodroma,Procellariidae,Procellariiformes,Aves,Chordata,Animalia,Species found
+Paractinolaimus macrolaimus,0,63092,62983,62921,59491,563956,202423,,Paractinolaimus,Dorylaimidae,Dorylaimida,Adenophorea,Nemata,Animalia,Genus found
+Paraleptophlebia submarginata,0,101187,101095,100502,99208,82696,202423,,Paraleptophlebia,Leptophlebiidae,Ephemeroptera,Insecta,Arthropoda,Animalia,Genus found
+Parastenus sp,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Paravespula vulgaris (L ),0,154264,154249,152741,99208,82696,202423,,Paravespula,Vespidae,Hymenoptera,Insecta,Arthropoda,Animalia,Genus found
+Parborlasia corrugatus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Pardosa prativaga (L  Koch  1870),864563,849078,847731,82732,82708,82696,202423,prativaga,Pardosa,Lycosidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Pardosa sp,0,849078,847731,82732,82708,82696,202423,,Pardosa,Lycosidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Pedicia sp,0,121118,118840,118831,99208,82696,202423,,Pedicia,Tipulidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Pediobius foliorum,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Pediobius sp,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Pegomya spec,0,148691,148685,118831,99208,82696,202423,,Pegomya,Anthomyiidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Pelochares versicolor (Waltl),722899,722590,114030,109216,99208,82696,202423,versicolor,Pelochares,Limnichidae,Coleoptera,Insecta,Arthropoda,Animalia,Species found
+Pentaneura sp ,0,128215,127917,118831,99208,82696,202423,,Pentaneura,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Pentapleura spec,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Pentatomidae,0,0,108628,103359,99208,82696,202423,,,Pentatomidae,Hemiptera,Insecta,Arthropoda,Animalia,Family found
+Pericoma trivialis,0,125514,125351,118831,99208,82696,202423,,Pericoma,Psychodidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Peridinium cinctum,10329,10212,10205,9995,9874,9873,630578,cinctum,Peridinium,Peridiniaceae,Peridiniales,Dinophyceae,Pyrrophycophyta,Chromista,Species found
+Peridinium limbatum,10332,10212,10205,9995,9874,9873,630578,limbatum,Peridinium,Peridiniaceae,Peridiniales,Dinophyceae,Pyrrophycophyta,Chromista,Species found
+Peridinium pulsillum,0,10212,10205,9995,9874,9873,630578,,Peridinium,Peridiniaceae,Peridiniales,Dinophyceae,Pyrrophycophyta,Chromista,Genus found
+Peridinium wisconsinense,10336,10212,10205,9995,9874,9873,630578,wisconsinense,Peridinium,Peridiniaceae,Peridiniales,Dinophyceae,Pyrrophycophyta,Chromista,Species found
+Perknaster densus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Perknaster fuscus antarcticus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Pherbellia schoenherri (Fall�n),0,144665,144653,118831,99208,82696,202423,,Pherbellia,Sciomyzidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Pherbina coryleti (Fall�n),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Philaenus spumarius (L ),200139,200138,109172,103359,99208,82696,202423,spumarius,Philaenus,Cercopidae,Hemiptera,Insecta,Arthropoda,Animalia,Species found
+Philodromidae,0,0,871533,82732,82708,82696,202423,,,Philodromidae,Araneae,Arachnida,Arthropoda,Animalia,Family found
+Philodromus sp,0,872790,871533,82732,82708,82696,202423,,Philodromus,Philodromidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Phlaeothripidae,0,0,103357,103348,99208,82696,202423,,,Phlaeothripidae,Thysanoptera,Insecta,Arthropoda,Animalia,Family found
+Phlaeothripidae phyto,0,0,103357,103348,99208,82696,202423,,,Phlaeothripidae,Thysanoptera,Insecta,Arthropoda,Animalia,Family found
+Phlaeothripidae pred,0,0,103357,103348,99208,82696,202423,,,Phlaeothripidae,Thysanoptera,Insecta,Arthropoda,Animalia,Family found
+Phoridae,0,0,138921,118831,99208,82696,202423,,,Phoridae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Phoxinus eos,913993,913982,163342,162846,161061,158852,202423,eos,Chrosomus,Cyprinidae,Cypriniformes,Actinopterygii,Chordata,Animalia,Species found
+Phoxinys neogaeus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Phytodetritus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Pipinculus sp,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Pirata latitans (Blackwall  1841),865411,849140,847731,82732,82708,82696,202423,latitans,Pirata,Lycosidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Pirata piraticus (Clerck  1757),865427,849140,847731,82732,82708,82696,202423,piraticus,Pirata,Lycosidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Pirata piscatorius (Clerck  1757),865430,849140,847731,82732,82708,82696,202423,piscatorius,Pirata,Lycosidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Pirata sp,0,849140,847731,82732,82708,82696,202423,,Pirata,Lycosidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Pirata tenuitarsis Simon  1876,865451,849140,847731,82732,82708,82696,202423,tenuitarsis,Pirata,Lycosidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Pisaura mirabilis (Clerck  1757),887208,872815,181129,82732,82708,82696,202423,mirabilis,Pisaura,Pisauridae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Pisidium sp,0,81400,81388,80384,79118,69458,202423,,Pisidium,Pisidiidae,Veneroida,Bivalvia,Mollusca,Animalia,Genus found
+Planktonic inverts - Cladocera etcﾅ,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Planorbis planorbis (L ),0,76632,76591,76437,69459,69458,202423,,Planorbis,Planorbidae,Basommatophora,Gastropoda,Mollusca,Animalia,Genus found
+Platycheirus sp,0,139712,139621,118831,99208,82696,202423,,Platycheirus,Syrphidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Platystethus nodifrons (Sahlb ),0,186552,113265,109216,99208,82696,202423,,Platystethus,Staphylinidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Platystethus sp,0,186552,113265,109216,99208,82696,202423,,Platystethus,Staphylinidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Plectrocnemia conspersa,568818,568776,117043,115095,99208,82696,202423,conspersa,Plectrocnemia,Polycentropodidae,Trichoptera,Insecta,Arthropoda,Animalia,Species found
+Ploesoma sp ,0,59282,59254,58343,654070,58239,202423,,Ploesoma,Synchaetidae,Ploima,Eurotatoria,Rotifera,Animalia,Genus found
+Poduromorpha,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Pollachius pollachius,164728,164726,164701,164665,161061,158852,202423,pollachius,Pollachius,Gadidae,Gadiformes,Actinopterygii,Chordata,Animalia,Species found
+Pollachius virens,164727,164726,164701,164665,161061,158852,202423,virens,Pollachius,Gadidae,Gadiformes,Actinopterygii,Chordata,Animalia,Species found
+Polyarthra vulgaris,59277,59270,59254,58343,654070,58239,202423,vulgaris,Polyarthra,Synchaetidae,Ploima,Eurotatoria,Rotifera,Animalia,Species found
+Polycentropus flavomaculatus,600799,117044,117043,115095,99208,82696,202423,flavomaculatus,Polycentropus,Polycentropodidae,Trichoptera,Insecta,Arthropoda,Animalia,Species found
+Polychaeta,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Polyhydrus lineatus (F ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Polypedilum albicorne,0,129657,127917,118831,99208,82696,202423,,Polypedilum,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Porania antarctica,0,157143,157137,157060,156862,156857,202423,,Porania,Poraniidae,Spinulosida,Asteroidea,Echinodermata,Animalia,Genus found
+Porcellionidae,0,0,331670,92120,89787,82696,202423,,,Porcellionidae,Isopoda,Malacostraca,Arthropoda,Animalia,Family found
+Porcellium conspersum (C L Koch),596633,593902,331671,92120,89787,82696,202423,conspersum,Porcellium,Trachelipodidae,Isopoda,Malacostraca,Arthropoda,Animalia,Species found
+Porifera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Porrhomma microphthalmum (O  P -Cambridge  1871),865692,849173,82743,82732,82708,82696,202423,microphthalmum,Porrhomma,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Porrhomma oblitum  (O  P -Cambridge  1871),865696,849173,82743,82732,82708,82696,202423,oblitum,Porrhomma,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Potamophylax cinguilatus,0,598567,115933,115095,99208,82696,202423,,Potamophylax,Limnephilidae,Trichoptera,Insecta,Arthropoda,Animalia,Genus found
+Potamophylax latipennis,605670,598567,115933,115095,99208,82696,202423,latipennis,Potamophylax,Limnephilidae,Trichoptera,Insecta,Arthropoda,Animalia,Species found
+Potamopyrgus jenkinsi,0,205005,70493,566851,69459,69458,202423,,Potamopyrgus,Hydrobiidae,Neotaenioglossa,Gastropoda,Mollusca,Animalia,Genus found
+Prionchulus punctatus,0,62932,62922,62921,59491,563956,202423,,Prionchulus,Mononchidae,Dorylaimida,Adenophorea,Nemata,Animalia,Genus found
+Prismatolaimus intermedius,62666,62663,62662,61885,59491,563956,202423,intermedius,Prismatolaimus,Prismatolaimidae,Enoplida,Adenophorea,Nemata,Animalia,Species found
+Procladius sp,0,128277,127917,118831,99208,82696,202423,,Procladius,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Procloeon bifidum (Bengtsson),0,206622,100755,100502,99208,82696,202423,,Procloeon,Baetidae,Ephemeroptera,Insecta,Arthropoda,Animalia,Genus found
+Proctotrupoidea,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Prodiames olivacea,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Prodorylaimus longicaudatoides,0,63098,62983,62921,59491,563956,202423,,Prodorylaimus,Dorylaimidae,Dorylaimida,Adenophorea,Nemata,Animalia,Genus found
+Propylaea quatuordecimpunctata (L ),692579,692197,114329,109216,99208,82696,202423,quatuordecimpunctata,Propylaea,Coccinellidae,Coleoptera,Insecta,Arthropoda,Animalia,Species found
+Protomyctophum bolini,623863,162684,162575,162368,161061,158852,202423,bolini,Protomyctophum,Myctophidae,Myctophiformes,Actinopterygii,Chordata,Animalia,Species found
+Psacadina zernyi (Mayer),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Pseudomopidae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Pseudomugil signifer,165976,165975,165974,165429,161061,158852,202423,signifer,Pseudomugil,Melanotaeniidae,Atheriniformes,Actinopterygii,Chordata,Animalia,Species found
+Psilaster charcoti,0,156894,156882,156881,156862,156857,202423,,Psilaster,Astropectinidae,Paxillosida,Asteroidea,Echinodermata,Animalia,Genus found
+Psychodidae,0,0,125351,118831,99208,82696,202423,,,Psychodidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Psychroteuthis glacialis,556552,555802,82512,82367,82326,69458,202423,glacialis,Psychroteuthis,Psychroteuthidae,Teuthida,Cephalopoda,Mollusca,Animalia,Species found
+Pteraster affinis aculeatus,0,157107,157092,157060,156862,156857,202423,,Pteraster,Pterasteridae,Spinulosida,Asteroidea,Echinodermata,Animalia,Genus found
+Pteromicra leucopeza (?) (Meigen),144748,144737,144653,118831,99208,82696,202423,leucopeza,Pteromicra,Sciomyzidae,Diptera,Insecta,Arthropoda,Animalia,Species found
+Pteronemobius heydenii (Fischer  1853),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Pterostichus minor (Gyllenhal),0,110453,109234,109216,99208,82696,202423,,Pterostichus,Carabidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Pterostichus sp,0,110453,109234,109216,99208,82696,202423,,Pterostichus,Carabidae,Coleoptera,Insecta,Arthropoda,Animalia,Genus found
+Pterostichus strenuus (Panzer),110536,110453,109234,109216,99208,82696,202423,strenuus,Pterostichus,Carabidae,Coleoptera,Insecta,Arthropoda,Animalia,Species found
+Pygoscelis adeliae,174445,174444,174443,174442,174371,158852,202423,adeliae,Pygoscelis,Spheniscidae,Sphenisciformes,Aves,Chordata,Animalia,Species found
+Quadrigula lacustris,5941,5938,5810,846592,846520,5414,202422,lacustris,Quadrigula,Oocystaceae,Oocystales,Trebouxiophyceae,Chlorophyta,Plantae,Species found
+Quadrigula sp  2,0,5938,5810,846592,846520,5414,202422,,Quadrigula,Oocystaceae,Oocystales,Trebouxiophyceae,Chlorophyta,Plantae,Genus found
+Raja clavata,160901,160846,160845,160806,159785,158852,202423,clavata,Raja,Rajidae,Rajiformes,Chondrichthyes,Chordata,Animalia,Species found
+Raja montagui,160883,160846,160845,160806,159785,158852,202423,montagui,Raja,Rajidae,Rajiformes,Chondrichthyes,Chordata,Animalia,Species found
+Raja naevus,564143,564037,160845,160806,159785,158852,202423,naevus,Leucoraja,Rajidae,Rajiformes,Chondrichthyes,Chordata,Animalia,Species found
+Rana sp,0,173434,173433,173423,173420,158852,202423,,Rana,Ranidae,Anura,Amphibia,Chordata,Animalia,Genus found
+Rana temporaria temporaria,173444,173434,173433,173423,173420,158852,202423,temporaria,Rana,Ranidae,Anura,Amphibia,Chordata,Animalia,Species found
+Rediogobius bikolanus,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Rhabdolaimus terrestris,60011,60010,60001,59493,59491,563956,202423,terrestris,Rhabdolaimus,Rhabdolaimidae,Araeolaimida,Adenophorea,Nemata,Animalia,Species found
+Rhagionidae,0,0,130742,118831,99208,82696,202423,,,Rhagionidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Rhinophoridae,0,0,152637,118831,99208,82696,202423,,,Rhinophoridae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Rhoicosphenia curvata,3634,3633,590777,590753,2287,2286,630578,curvata,Rhoicosphenia,Rhoicospheniaceae,Cymbellales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Rhopalum sp,0,768486,709291,152741,99208,82696,202423,,Rhopalum,Crabronidae,Hymenoptera,Insecta,Arthropoda,Animalia,Genus found
+Rhyacophila dorsalis,568792,115097,115096,115095,99208,82696,202423,dorsalis,Rhyacophila,Rhyacophilidae,Trichoptera,Insecta,Arthropoda,Animalia,Species found
+Robertus insignis O  P -Cambridge  1907,866199,849270,82740,82732,82708,82696,202423,insignis,Robertus,Theridiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Robertus sp,0,849270,82740,82732,82708,82696,202423,,Robertus,Theridiidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Rossella nuda,0,659658,47504,659147,659131,46861,202423,,Rossella,Rossellidae,Lyssacinosida,Hexactinellida,Porifera,Animalia,Genus found
+Rossella racovitzae,0,659658,47504,659147,659131,46861,202423,,Rossella,Rossellidae,Lyssacinosida,Hexactinellida,Porifera,Animalia,Genus found
+Salpa thompsoni,655946,159652,159645,159643,159632,158852,202423,thompsoni,Salpa,Salpidae,Salpida,Thaliacea,Chordata,Animalia,Species found
+Saltatoria,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Salticidae,0,0,871537,82732,82708,82696,202423,,,Salticidae,Araneae,Arachnida,Arthropoda,Animalia,Family found
+Sarcophagidae,0,0,151815,118831,99208,82696,202423,,,Sarcophagidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Sardina pilchardus,161813,161812,161700,161694,161061,158852,202423,pilchardus,Sardina,Clupeidae,Clupeiformes,Actinopterygii,Chordata,Animalia,Species found
+Satilatlas britteni (Jackson  1912),866297,849292,82743,82732,82708,82696,202423,britteni,Satilatlas,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Schroederia setigera,5657,5656,5647,5646,5415,5414,202422,setigera,Schroederia,Chlorococcaceae,Chlorococcales,Chlorophyceae,Chlorophyta,Plantae,Species found
+Sciaridae,0,0,122702,118831,99208,82696,202423,,,Sciaridae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Sciocoris cursitans (Fall ),721920,108994,108628,103359,99208,82696,202423,cursitans,Sciocoris,Pentatomidae,Hemiptera,Insecta,Arthropoda,Animalia,Species found
+Sciocoris sp,0,108994,108628,103359,99208,82696,202423,,Sciocoris,Pentatomidae,Hemiptera,Insecta,Arthropoda,Animalia,Genus found
+Scolymasta joubini,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Scolymastra joubini,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Scomber scombrus,172414,172411,172398,167640,161061,158852,202423,scombrus,Scomber,Scombridae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Scyliorhinus canicula,160065,160053,159985,551500,159785,158852,202423,canicula,Scyliorhinus,Scyliorhinidae,Carcharhiniformes,Chondrichthyes,Chordata,Animalia,Species found
+Sediment,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Selenastrum minutum,6256,6249,6097,9327,5415,5414,202422,minutum,Selenastrum,Scenedesmaceae,Sphaeropleales,Chlorophyceae,Chlorophyta,Plantae,Species found
+Sepedon sphegea (Fabricius),0,144898,144653,118831,99208,82696,202423,,Sepedon,Sciomyzidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Sepedon spinipes (Scopoli),0,144898,144653,118831,99208,82696,202423,,Sepedon,Sciomyzidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Sericostoma personatum,604457,598461,116982,115095,99208,82696,202423,personatum,Sericostoma,Sericostomatidae,Trichoptera,Insecta,Arthropoda,Animalia,Species found
+Sialis fuliginosa,0,115002,115001,115000,99208,82696,202423,,Sialis,Sialidae,Megaloptera,Insecta,Arthropoda,Animalia,Genus found
+Sialis lutaria,0,115002,115001,115000,99208,82696,202423,,Sialis,Sialidae,Megaloptera,Insecta,Arthropoda,Animalia,Genus found
+Silometopus elegans (O  P -Cambridge  1873),866973,849355,82743,82732,82708,82696,202423,elegans,Silometopus,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Simuliidae sp,0,0,126640,118831,99208,82696,202423,,,Simuliidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Simulium sp,0,126774,126640,118831,99208,82696,202423,,Simulium,Simuliidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Siphonoperla torrentium,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Sitticus caricis (Westring  1861),889070,873040,871537,82732,82708,82696,202423,caricis,Sitticus,Salticidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Sitticus sp,0,873040,871537,82732,82708,82696,202423,,Sitticus,Salticidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Small terrestrial inverts,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Sminthuridae,0,0,100258,99237,676821,82696,202423,,,Sminthuridae,Collembola,Entognatha,Arthropoda,Animalia,Family found
+Solaster sp ,0,157074,157062,157060,156862,156857,202423,,Solaster,Solasteridae,Spinulosida,Asteroidea,Echinodermata,Animalia,Genus found
+Somatochlora flavomaculata (Van der Linden),0,101947,102020,101593,99208,82696,202423,,Somatochlora,Corduliidae,Odonata,Insecta,Arthropoda,Animalia,Genus found
+Somatochlora sp,0,101947,102020,101593,99208,82696,202423,,Somatochlora,Corduliidae,Odonata,Insecta,Arthropoda,Animalia,Genus found
+Spanioconnus wetterhali (Gyll ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Sphaerocidae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Sphaerocystis schroeteri,9170,9169,9163,9162,5415,5414,202422,schroeteri,Sphaerocystis,Palmellopsidaceae,Tetrasporales,Chlorophyceae,Chlorophyta,Plantae,Species found
+Sprattus sprattus,161789,161788,161700,161694,161061,158852,202423,sprattus,Sprattus,Clupeidae,Clupeiformes,Actinopterygii,Chordata,Animalia,Species found
+Squalus acanthias,160617,160616,160604,160602,159785,158852,202423,acanthias,Squalus,Squalidae,Squaliformes,Chondrichthyes,Chordata,Animalia,Species found
+Stagnicola corvus (Gmelin),0,76534,76483,76437,69459,69458,202423,,Stagnicola,Lymnaeidae,Basommatophora,Gastropoda,Mollusca,Animalia,Genus found
+Stalia boops (Schioedte),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Staphylinidae,0,0,113265,109216,99208,82696,202423,,,Staphylinidae,Coleoptera,Insecta,Arthropoda,Animalia,Family found
+Staphylininae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Staphylinus erythropterus (L ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Stenodema calcaratum (Fallen),0,105584,104419,103359,99208,82696,202423,,Stenodema,Miridae,Hemiptera,Insecta,Arthropoda,Animalia,Genus found
+Sterechinus neumayeri,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Sterna vittata,176920,176885,176802,176445,174371,158852,202423,vittata,Sterna,Laridae,Charadriiformes,Aves,Chordata,Animalia,Species found
+Sternorrhyncha,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Stethophyma grossum (L ),0,657785,102195,102160,99208,82696,202423,,Stethophyma,Acrididae,Orthoptera,Insecta,Arthropoda,Animalia,Genus found
+Stilicus rufipes (Germ ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Stratiomyidae,0,0,130150,118831,99208,82696,202423,,,Stratiomyidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Succinea putris (L ),76948,76933,76908,76755,69459,69458,202423,putris,Succinea,Succineidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Species found
+Surirella ovalis,5348,5331,5330,590740,2287,2286,630578,ovalis,Surirella,Surirellaceae,Surirellales,Bacillariophyceae,Bacillariophyta,Chromista,Species found
+Swammerdamella brevicornis (Meigen  1830),0,125714,125618,118831,99208,82696,202423,,Swammerdamella,Scatopsidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Sympecma fusca (Vander Linden),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Sympetrum sanguineum (M�ller),0,101976,101797,101593,99208,82696,202423,,Sympetrum,Libellulidae,Odonata,Insecta,Arthropoda,Animalia,Genus found
+Sympetrum sp,0,101976,101797,101593,99208,82696,202423,,Sympetrum,Libellulidae,Odonata,Insecta,Arthropoda,Animalia,Genus found
+Sympetrum striolatum (Charpentier),0,101976,101797,101593,99208,82696,202423,,Sympetrum,Libellulidae,Odonata,Insecta,Arthropoda,Animalia,Genus found
+Sympetrum vulgatum (L ),0,101976,101797,101593,99208,82696,202423,,Sympetrum,Libellulidae,Odonata,Insecta,Arthropoda,Animalia,Genus found
+Synchaeta sp ,0,59255,59254,58343,654070,58239,202423,,Synchaeta,Synchaetidae,Ploima,Eurotatoria,Rotifera,Animalia,Genus found
+Synedra sp ,0,3013,590787,590750,573593,2286,630578,,Synedra,Fragilariaceae,Fragilariales,Fragilariophyceae,Bacillariophyta,Chromista,Genus found
+Synorthocladius sp,0,129161,127917,118831,99208,82696,202423,,Synorthocladius,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Tabanus sp,0,131527,130934,118831,99208,82696,202423,,Tabanus,Tabanidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Tachinidae,0,0,152643,118831,99208,82696,202423,,,Tachinidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Tandanus tandanus,640215,639032,164223,163992,161061,158852,202423,tandanus,Tandanus,Plotosidae,Siluriformes,Actinopterygii,Chordata,Animalia,Species found
+Teratocephalus crassidens,59928,59927,59926,59493,59491,563956,202423,crassidens,Euteratocephalus,Teratocephalidae,Araeolaimida,Adenophorea,Nemata,Animalia,Species found
+Terrestrial vegetation,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Tetanocera ferruginea (Fall�n),144926,144918,144653,118831,99208,82696,202423,ferruginea,Tetanocera,Sciomyzidae,Diptera,Insecta,Arthropoda,Animalia,Species found
+Tetartopeus terminatum (Grav ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Tetilla leptoderma,0,48597,48596,659133,47528,46861,202423,,Tetilla,Tetillidae,Spirophorida,Demospongiae,Porifera,Animalia,Genus found
+Tetragnatha extensa (L   1758),868321,849511,847764,82732,82708,82696,202423,extensa,Tetragnatha,Tetragnathidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Tetragnatha pinicola L  Koch  1870,868479,849511,847764,82732,82708,82696,202423,pinicola,Tetragnatha,Tetragnathidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Tetragnatha sp,0,849511,847764,82732,82708,82696,202423,,Tetragnatha,Tetragnathidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Tetragnathidae,0,0,847764,82732,82708,82696,202423,,,Tetragnathidae,Araneae,Arachnida,Arthropoda,Animalia,Family found
+Tetramesa sp,0,154016,154008,152741,99208,82696,202423,,Tetramesa,Eurytomidae,Hymenoptera,Insecta,Arthropoda,Animalia,Genus found
+Tetramorium sp,0,154245,154193,152741,99208,82696,202423,,Tetramorium,Formicidae,Hymenoptera,Insecta,Arthropoda,Animalia,Genus found
+Tetrastichus sp,0,153771,153770,152741,99208,82696,202423,,Tetrastichus,Eulophidae,Hymenoptera,Insecta,Arthropoda,Animalia,Genus found
+Tetrix sp,0,102171,102162,102160,99208,82696,202423,,Tetrix,Tetrigidae,Orthoptera,Insecta,Arthropoda,Animalia,Genus found
+Tetrix subulata (L ),658916,102171,102162,102160,99208,82696,202423,subulata,Tetrix,Tetrigidae,Orthoptera,Insecta,Arthropoda,Animalia,Species found
+Tettigoniidae,0,0,102232,102160,99208,82696,202423,,,Tettigoniidae,Orthoptera,Insecta,Arthropoda,Animalia,Family found
+Teuchophorus calcaratus (Macquart  1827),0,137899,136824,118831,99208,82696,202423,,Teuchophorus,Dolichopodidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Thanatus sp,0,873177,871533,82732,82708,82696,202423,,Thanatus,Philodromidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Thanatus striatus C  L  Koch  1845,890477,873177,871533,82732,82708,82696,202423,striatus,Thanatus,Philodromidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Theodoxus fluviatilis,70178,70177,70159,566852,69459,69458,202423,fluviatilis,Theodoxus,Neritidae,Neritopsina,Gastropoda,Mollusca,Animalia,Species found
+Theridiidae,0,0,82740,82732,82708,82696,202423,,,Theridiidae,Araneae,Arachnida,Arthropoda,Animalia,Family found
+Theridion impressum L  Koch  1881,0,849530,82740,82732,82708,82696,202423,,Theridion,Theridiidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Theridion pictum (Walckenaer  1802),869030,849530,82740,82732,82708,82696,202423,pictum,Theridion,Theridiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Theridion sp,0,849530,82740,82732,82708,82696,202423,,Theridion,Theridiidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Thomisidae,0,0,871543,82732,82708,82696,202423,,,Thomisidae,Araneae,Arachnida,Arthropoda,Animalia,Family found
+Thripidae,0,0,103353,103348,99208,82696,202423,,,Thripidae,Thysanoptera,Insecta,Arthropoda,Animalia,Family found
+Thripomorpha paludicola (Enderlein  1905),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Thripomorpha verralli (Edwards  1934),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Thysanoessa macrura,95581,95571,95500,95496,89787,82696,202423,macrura,Thysanoessa,Euphausiidae,Euphausiacea,Malacostraca,Arthropoda,Animalia,Species found
+Tibellus maritimus (Menge  1875),890922,873205,871533,82732,82708,82696,202423,maritimus,Tibellus,Philodromidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Tibellus sp,0,873205,871533,82732,82708,82696,202423,,Tibellus,Philodromidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Tilapia mariae,169811,169809,169770,167640,161061,158852,202423,mariae,Tilapia,Cichlidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Tinodes waeneri,601421,115350,115334,115095,99208,82696,202423,waeneri,Tinodes,Psychomyiidae,Trichoptera,Insecta,Arthropoda,Animalia,Species found
+Tipula montium,0,119037,118840,118831,99208,82696,202423,,Tipula,Tipulidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Tipula sp,0,119037,118840,118831,99208,82696,202423,,Tipula,Tipulidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Tipulidae,0,0,118840,118831,99208,82696,202423,,,Tipulidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Tipulidae spp,0,0,118840,118831,99208,82696,202423,,,Tipulidae,Diptera,Insecta,Arthropoda,Animalia,Family found
+Toxotes chatareus,169493,169492,169491,167640,161061,158852,202423,chatareus,Toxotes,Toxotidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Trachelipus rathkei (Brandt),684736,593883,331671,92120,89787,82696,202423,rathkii,Trachelipus,Trachelipodidae,Isopoda,Malacostraca,Arthropoda,Animalia,Species found
+Trachelomonas sp ,0,9690,9619,9618,9602,9601,630577,,Trachelomonas,Euglenaceae,Euglenales,Euglenophyceae,Euglenophycota,Protozoa,Genus found
+Trachurus trachurus,168588,168585,168584,167640,161061,158852,202423,trachurus,Trachurus,Carangidae,Perciformes,Actinopterygii,Chordata,Animalia,Species found
+Trichia sericea (Draparnaud),0,77926,566900,76755,69459,69458,202423,,Trichia,Hygromiidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Genus found
+Trichocerca cylindrica,59076,59074,59073,58343,654070,58239,202423,cylindrica,Trichocerca,Trichocercidae,Ploima,Eurotatoria,Rotifera,Animalia,Species found
+Trichocerca multicrinis,59078,59074,59073,58343,654070,58239,202423,multicrinis,Trichocerca,Trichocercidae,Ploima,Eurotatoria,Rotifera,Animalia,Species found
+Trichoniscidae,0,0,331645,92120,89787,82696,202423,,,Trichoniscidae,Isopoda,Malacostraca,Arthropoda,Animalia,Family found
+Trichoptera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Trichopterna thorelli (Westring  1861),0,849582,82743,82732,82708,82696,202423,,Trichopterna,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Tricoptera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Trigonometopus frontalis (Meigen),0,145242,145056,118831,99208,82696,202423,,Trigonometopus,Lauxaniidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Trisopterus esmarkii,164756,164753,164701,164665,161061,158852,202423,esmarkii,Trisopterus,Gadidae,Gadiformes,Actinopterygii,Chordata,Animalia,Species found
+Trisopterus luscus,164755,164753,164701,164665,161061,158852,202423,luscus,Trisopterus,Gadidae,Gadiformes,Actinopterygii,Chordata,Animalia,Species found
+Trisopterus minutus,164754,164753,164701,164665,161061,158852,202423,minutus,Trisopterus,Gadidae,Gadiformes,Actinopterygii,Chordata,Animalia,Species found
+Trissopelopia longimana,128253,128251,127917,118831,99208,82696,202423,longimana,Trissopelopia,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Species found
+Triturus sp,0,208240,173613,173584,173420,158852,202423,,Triturus,Salamandridae,Caudata,Amphibia,Chordata,Animalia,Genus found
+Trochosa sp,0,849587,847731,82732,82708,82696,202423,,Trochosa,Lycosidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Trochosa spinipalpis (F  O  P -Cambridge  1895),869694,849587,847731,82732,82708,82696,202423,spinipalpis,Trochosa,Lycosidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Trogophloeus corticinus (Grav ),0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Tropocyclops prasinus,88743,88742,88634,88530,621145,82696,202423,prasinus,Tropocyclops,Cyclopidae,Cyclopoida,Maxillopoda,Arthropoda,Animalia,Species found
+Trypoxylon attenuatum (Smith),0,768518,709291,152741,99208,82696,202423,,Trypoxylon,Crabronidae,Hymenoptera,Insecta,Arthropoda,Animalia,Genus found
+Trypoxylon clavicerum Lepeletier,0,768518,709291,152741,99208,82696,202423,,Trypoxylon,Crabronidae,Hymenoptera,Insecta,Arthropoda,Animalia,Genus found
+Tubificidae sp,0,0,68585,68498,568832,64357,202423,,,Tubificidae,Haplotaxida,Clitellata,Annelida,Animalia,Family found
+Tylocephalus auriculatum,0,59903,59843,59493,59491,563956,202423,,Tylocephalus,Plectidae,Araeolaimida,Adenophorea,Nemata,Animalia,Genus found
+Typhlocybinae,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Umbra limi,162153,162147,162146,553131,161061,158852,202423,limi,Umbra,Umbridae,Esociformes,Actinopterygii,Chordata,Animalia,Species found
+Unclassified flagellates,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Unclassified microflagellates,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Vallonia costata (O  F  M�ller),76865,76863,76859,76755,69459,69458,202423,costata,Vallonia,Valloniidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Species found
+Vallonia pulchella (O  F  M�ller),76871,76863,76859,76755,69459,69458,202423,pulchella,Vallonia,Valloniidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Species found
+Valvata piscinalis,70348,70346,70345,566849,69459,69458,202423,piscinalis,Valvata,Valvatidae,Heterostropha,Gastropoda,Mollusca,Animalia,Species found
+Valvata sp,0,70346,70345,566849,69459,69458,202423,,Valvata,Valvatidae,Heterostropha,Gastropoda,Mollusca,Animalia,Genus found
+Vertigo antivertigo (Draparnaud),0,76819,76765,76755,69459,69458,202423,,Vertigo,Pupillidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Genus found
+Vertigo moulinsiana (Dupuy),0,76819,76765,76755,69459,69458,202423,,Vertigo,Pupillidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Genus found
+Vertigo pygmaea (Draparnaud),76851,76819,76765,76755,69459,69458,202423,pygmaea,Vertigo,Pupillidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Species found
+Vibillia antarctica,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Vibillia stebbingi,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
+Vulpes vulpes,180604,180603,180594,180539,179913,158852,202423,vulpes,Vulpes,Canidae,Carnivora,Mammalia,Chordata,Animalia,Species found
+Walckenaeria nudipalpis (Westring  1851),870415,849660,82743,82732,82708,82696,202423,nudipalpis,Walckenaeria,Linyphiidae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Wilsonema otophorum,59913,59910,59843,59493,59491,563956,202423,otophorum,Wilsonema,Plectidae,Araeolaimida,Adenophorea,Nemata,Animalia,Species found
+Xiphophorus maculatus,165922,165919,165876,553130,161061,158852,202423,maculatus,Xiphophorus,Poeciliidae,Cyprinodontiformes,Actinopterygii,Chordata,Animalia,Species found
+Xysticus sp,0,873341,871543,82732,82708,82696,202423,,Xysticus,Thomisidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Yoldiella eightsi,0,79280,566928,566853,79118,69458,202423,,Yoldiella,Yoldiidae,Nuculoida,Bivalvia,Mollusca,Animalia,Genus found
+Zavrelimyia barbatipes,0,128259,127917,118831,99208,82696,202423,,Zavrelimyia,Chironomidae,Diptera,Insecta,Arthropoda,Animalia,Genus found
+Zelotes sp,0,185597,185556,82732,82708,82696,202423,,Zelotes,Gnaphosidae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Zeus faber,166287,166286,166278,166271,161061,158852,202423,faber,Zeus,Zeidae,Zeiformes,Actinopterygii,Chordata,Animalia,Species found
+Zonitoides nitidus (O  F  M�ller),77296,77290,77140,76755,69459,69458,202423,nitidus,Zonitoides,Zonitidae,Stylommatophora,Gastropoda,Mollusca,Animalia,Species found
+Zora sp,0,873371,871548,82732,82708,82696,202423,,Zora,Zoridae,Araneae,Arachnida,Arthropoda,Animalia,Genus found
+Zora spinimana (Sundevall  1833),893224,873371,871548,82732,82708,82696,202423,spinimana,Zora,Zoridae,Araneae,Arachnida,Arthropoda,Animalia,Species found
+Zygoptera,0,0,0,0,0,0,0,,,,,,,,The name does not match Species nor Genus nor Family in the database
