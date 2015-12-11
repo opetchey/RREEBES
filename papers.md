@@ -9,8 +9,6 @@
 [Tessa B. Francis, Mark D. Scheuerell, Richard D. Brodeur, Phillip S. Levin, James J. Ruzicka, Nick Tolimieri and William T. Peterson (2012) Climate shifts the interaction web of a marine plankton community](http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2486.2012.02702.x/abstract).     
 The paper uses multivariate autoregressive models (introduced in "Quantifying effects of abiotic and biotic drivers on community dynamics with multivariate autoregressive (MAR) models", http://www.esajournals.org/doi/full/10.1890/13-0996.1), which maybe an interesting approach for our BEEP data. We need to check data availability, however, there are other potentially interesting papers using the approach, if we cannot get the data of this one.
 
-[Chih‐hao Hsieh, Christian Anderson, and George Sugihara (2008): Extending Nonlinear Analysis to Short Ecological Time Series](http://www.jstor.org/stable/full/10.1086/524202c)
-
 Gernster et al 2014, [EDITOR'S CHOICE: REVIEW: Effects of land use on plant diversity - A global meta-analysis, Journal of applied ecology, vol:51 iss:6 pg:1690 -1700] (http://onlinelibrary.wiley.com/doi/10.1111/1365-2664.12329/epdf)
 
 [HAWKES, Christine V. & KEITT, Timothy H. (2015, EcolLet): Resilience vs. historical contingency in microbial responses to environmental change.](http://onlinelibrary.wiley.com/doi/10.1111/ele.12451/full)
@@ -39,6 +37,7 @@ TMM: How do early warning signals perform when two environmental changes act sim
 [ALLESINA, S., GRILLI, J., BARABAS, G., TANG, S., ALJADEFF, J. & MARITAN, A. (2015, NatComm): Predicting the stability of large structured food webs.](http://www.nature.com/ncomms/2015/150722/ncomms8842/full/ncomms8842.html?WT.ec_id=NCOMMS-20150729&spMailingID=49200939&spUserID=ODkwMTM2NjQyNgS2&spJobID=723804686&spReportId=NzIzODA0Njg2S0)
 TMM: Construction and analysis of food webs based on the cascade (larger species consume smaller ones; no trphic cycles) or niche model. These food webs are much closer to real food webs due to the way they were constructed and differ substantially from random matrix interaction networks. **Note**: Challenging approach/analysis.
 
+[Chih‐hao Hsieh, Christian Anderson, and George Sugihara (2008): Extending Nonlinear Analysis to Short Ecological Time Series](http://www.jstor.org/stable/full/10.1086/524202c)
 
 # Papers without appropriate data
 
