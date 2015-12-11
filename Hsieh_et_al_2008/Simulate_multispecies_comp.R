@@ -1,0 +1,42 @@
+# This code implements a multispecies competition model based on the logistic map (https://en.wikipedia.org/wiki/Logistic_map)
+# the equilibrium density depends on the growth rate (steady state at values between 1 and 2, extinction below 1, chaos > 3.7, fluctuations > 3)
+
+# set seed
+set.seed(1352147634)
+
+## Specify the number of species
+S <- 5
+alpha <- 0.01
+
+#growth rate in the eight-mode oscillation regime below the threshold to chaos
+r <- rep(3.57, S)
+
+# play around with growth rates to understand behaviour and steady state
+#r<- runif(5, 1, 2)
+
+# add some process noise on the interaction coefficients
+a <- matrix(runif(S^2, 0.85, 1.15), nrow=S, ncol=S)*alpha
+
+# set diagonal elements to 1
+diag(a) <- 1
+
+# simulate 1000 time steps
+t=seq(1,1000, by=1)
+
+# specify matrix to hold results
+N <- matrix(nrow=S, ncol=length(t))
+
+# set initial conditions randomly
+N[,1] <- runif(S)
+
+# simulate dynamics using the standard logistic map
+for (i in 1:(length(t)-1))  N[,i+1] = (r * N[,i] * (1- a%*%N[,i]))*runif(1,0.95,1.05)
+
+# plot results
+matplot(t,t(N[1:S,]), "l",ylim=c(0,1),col=2:5)
+
+output <- as.data.frame(t(N[1:S,]))
+names(output) <- paste0("species ", 1:S)
+
+write.csv(output, "/Users/Frank/Documents/Github projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv", row.names=F)
+
