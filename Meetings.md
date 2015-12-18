@@ -600,7 +600,28 @@ Minutes by Vanessa
 ## 1.12
 
 ## 8.12
+Minutes by David
+
+###Attendance
+* Owen, Aurélie, Pablo, Frank, Mikael,  Gian Marco, Alejandra, Thomas, Vanessa, David
+
+###Owen Intro
+* Mikael is going to administrate the course, while Owen is on sabbatical
+Looking back at 2015
+* a lot has been done, mostly about what to do, when to stop and what is to learn from reproductions
+* reproduced 4 papers, some attempted and could not be finished
+
+###Progress updates
+* Owen (Hekstra et al): figured out what on earth they were doing. They looked at how microbes grow in enclosed vessels, interested in statistical laws (patterns), explain variation across replicates (look for covariation, pc analysis). Owen will delve a bit further in, but will probably not produce a reproduction of the paper
+* Frank (Hsieh et al): simulation study, package to do non parametric forecasting, Gian-Marco will help with simulation
+* Mikael (Dietmann et al): fast simulation approach, will (hopefully) show some simulation at the beginning of next year
+* Alejandra and Aurélie (Hooper et al): metaanalysis, loss of biodiversity is a major driver of change, no access to raw data (only summary), r-codes were however provided, move onto something new after christmas
+* Vanessa and Thomas  (Allesina et. al): comparing species names with the taxonomy website does not work, Thomas asked for filtered data, got provided probably everything to reproduce the paper, use the script to see if it really works, or reproduce parts of the code
+
+* next RREEBES at 5.1.2016
 
 ## 15.12
+no meeting.
 
 ## 22.12
+no meeting.
