@@ -2,6 +2,7 @@ library(devtools)
 install_github("ha0ye/rEDM")
 
 library(rEDM)
+library(ggplot2)
 
 # work through some of the example data sets
 data(paramecium_didinium)
@@ -43,6 +44,11 @@ plot(five_sp_comp$time[900:1000], five_sp_comp$species.1[900:1000], "l", ylim=c(
 par(new=T)
 plot(five_sp_comp$time[899:999], mod3[[1]]$model_output$pred[899:999], "l", col="red", ylim=c(0,1))
 
+str(mod3)
+lapply(1:10, function(x) mod3[[x]]$stats)
 
 
+data("e120_biodiversity")
+
+ggplot(data=e120_biodiversity, aes(x=Year, y=AbvBioAnnProd)) + geom_point() 
 
