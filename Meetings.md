@@ -625,3 +625,28 @@ no meeting.
 
 ## 22.12
 no meeting.
+
+
+## 05.01.2016
+Minutes by Mikael
+
+## Attendance
+Mikael, Frank, Thomas, Pablo and David
+
+## Introduction by Mikael
+We discussed where we want to take REEBES for the year 2016.
+    
+Mikael suggested that REEBES could be more of journal club were papers and analyses are discussed such that all group members get some insights to all papers. Rather than having each person reading the updates on github or even waiting for the full report to be finished the REBEES meetings can be used more as a presentation and discussion forum. One or two groups could, for example, walk the group through what was done so far in the reproduction and more importantly explain why the analyses were done in the paper.
+ 
+Suggested guidelines for REEBES meetings:  
+- Each group introduces the paper before a reproduction starts such that all know what the paper is about and why it is relevant for REEBES and the Petchey group.
+ 
+- At least ones a month each group walks the others through their reproduction and explain what and why the analysis was done. This forces the reproducers to understand the analyses and circumvents the issue of using available code without understanding what it does.
+ 
+Frank suggested having recurrent recap of the tools that lay at hand (e.g git, github and R) for our reproduction. Similar to the R-lunch such recaps can involve presentations of the tools (by e.g. Frank) and jointly solving problems that the groups might have experienced during resent reproductions. This will help each of us reproduce science in REEBES and make our own science better and reproducible.
+  
+Frank also suggested to have sessions were the group learns more about reproducible science in general. Why is reproducibility important? What facilitates reproducibility? By answering these questions we can change parts of our day to day work towards better reproducibility. 
+
+Thomas suggested having some common template for our reproductions posted on github. In particular it is important to introduce the paper properly and to explain why certain analyses were done. 
+
+
