@@ -17,6 +17,21 @@ plot(paramecium_didinium$time, paramecium_didinium$paramecium, "l")
 par(new=T)
 plot(paramecium_didinium$time, mod[[1]]$model_output$pred, "l", col="blue")
 
+mod <- simplex(paramecium_didinium$paramecium, lib = c(1, 50), pred = c(51,NROW(paramecium_didinium$paramecium)),
+               norm_type = c("L2 norm"), P = 0.5, E = 1:10,
+               tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
+               exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
+plot(mod$E, mod$rho, type="l", xlab = "Embedding dimension (E)", ylab="Forecast skill (rho)")
+
+# now use smap with E dimensions (identified with Simplex)
+smap_out <- s_map(paramecium_didinium$paramecium, lib = c(1, 50), pred = c(51,NROW(paramecium_didinium$paramecium)),
+                  norm_type = c("L2 norm"), E = 3)
+
+# plot theta against forecasting skill
+plot(smap_out$theta, smap_out$rho, type="l", xlab = "Non-linearity", ylab="Forecast skill (rho)")
+
+#########################
+
 data(sockeye_returns)
 plot(sockeye_returns$year, sockeye_returns$Early_Stuart, "l")
 
@@ -28,27 +43,36 @@ plot(sockeye_returns$year, sockeye_returns$Early_Stuart, "l", ylim=c(0,2))
 par(new=T)
 plot(sockeye_returns$year, mod2[[1]]$model_output$pred, "l", col="red", ylim=c(0,2))
 
+########################
+
+
 # now load our simulated time series
 five_sp_comp <- read.csv("/Users/Frank/Documents/Github projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv")
 five_sp_comp$time <- seq(1,1000)
 
 plot(five_sp_comp$time, five_sp_comp$species.1, "l")
 
-mod3 <- simplex(five_sp_comp$species.1, lib = c(1, 499), pred = c(500, NROW(five_sp_comp$species.1)),
+mod3 <- simplex(five_sp_comp$species.1, lib = c(1, 900), pred = c(901, NROW(five_sp_comp$species.1)),
                 norm_type = c("L2 norm"), P = 0.5, E = 1:10,
-                tau = 1, tp = 1, num_neighbors = "e+1", stats_only = F,
+                tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
                 exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
+plot(mod3$E, mod3$rho, type="l", xlab = "Embedding dimension (E)", ylab="Forecast skill (rho)")
 
 # compare data with predictions visually
 plot(five_sp_comp$time[900:1000], five_sp_comp$species.1[900:1000], "l", ylim=c(0,1))
 par(new=T)
 plot(five_sp_comp$time[899:999], mod3[[1]]$model_output$pred[899:999], "l", col="red", ylim=c(0,1))
 
+
+# now use smap with E dimensions (identified with Simplex)
+smap_out <- s_map(five_sp_comp$species.1, lib = c(1, 900), pred = c(901,NROW(five_sp_comp$species.1)),
+                  norm_type = c("L2 norm"), E = 3)
+
+# plot theta against forecasting skill
+plot(smap_out$theta, smap_out$rho, type="l", xlab = "Non-linearity", ylab="Forecast skill (rho)")
+
+
+
+
 str(mod3)
 lapply(1:10, function(x) mod3[[x]]$stats)
-
-
-data("e120_biodiversity")
-
-ggplot(data=e120_biodiversity, aes(x=Year, y=AbvBioAnnProd)) + geom_point() 
-
