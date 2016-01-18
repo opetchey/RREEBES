@@ -649,4 +649,19 @@ Frank also suggested to have sessions were the group learns more about reproduci
 
 Thomas suggested having some common template for our reproductions posted on github. In particular it is important to introduce the paper properly and to explain why certain analyses were done. 
 
+## 12.01.2016
+Minutes by Pablo
+
+## Attendance
+Mikael, Frank, Thomas, Pablo, David, Aurélie, Gian Marco
+
+## Progress update
+We discussed the planning for the  REEBES in 2016. Mikael and Frank let the people know about the ideas of the last meeting.
+We decided to start effectively the reproductions in the next week meeting (19.01), when Mikael will present the reproduction of the paper Ito and Dieckmann 2007. 
+Aurélie, Alejandra and Pablo will present the Hooper et al (2012) paper in the next week or the next. 
+
+
+  
+
+   
 
