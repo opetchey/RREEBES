@@ -1,0 +1,59 @@
+---
+title: "Reproduce analyses of Brennan and Collins 2015"
+author: "Aurelie"
+starting date: 19th January 2016
+output:
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+# Introduction
+This is a reproduction of the meta-analysis presented in the paper *Growth responses of a green alga to multiple environmental drivers*, by Georgina Brennan and Sinead Collins ([the paper on the Nature website](http://www.nature.com/nclimate/journal/v5/n9/full/nclimate2682.html)). Details of the methods are in [the Supplementary Information to the Nature paper](http://www.nature.com/nclimate/journal/v5/n9/extref/nclimate2682-s1.pdf). 
+
+
+# Authors involved in this reproduction
+Lead author was Aurélie Garnier. 
+All contributions are detailed on GitHub in the commit history.
+
+# Goals for this reproduction
+- Learn about Generalized Mixed Models (here, GAM). 
+- Personal interest of multiple environmental drivers (Aurélie).
+
+
+# Known issues
+The known issues/ problems with this reproduction are with the prefix "Brennan" ([here](https://github.com/opetchey/RREEBES/issues)). Please add or solved issues there.
+
+#The data
+The data are available on the [website](http://datadryad.org/resource/doi:10.5061/dryad.jt1fb) as CSV files, with text document referencing the content of the each CSV file. 
+
+- [**DataDryad_mixed_model_290415.csv**](http://datadryad.org/bitstream/handle/10255/dryad.86868/DataDryad_mixed_model_290415.csv?sequence=1).
+Raw data for mixede model analysis, plotting and creating case studies for further analysis. See read me section in r script "mixed_model_DataDryad_290415.r".
+
+- [**All_lines_030515.csv**](http://datadryad.org/bitstream/handle/10255/dryad.86870/All_lines_030515.csv?sequence=1).
+.csv file for plotting case study plot using r script "mixed_model_DataDryad_290415.r".
+
+- [**mixed_model_DataDryad_290415.r**](http://datadryad.org/bitstream/handle/10255/dryad.86871/mixed_model_DataDryad_290415.r?sequence=1).
+R script for mixed model analysis of raw data supplied and plotting.
+
+- [**Simulation.r**](http://datadryad.org/bitstream/handle/10255/dryad.86872/Simulation.R?sequence=1).
+The effect of sampling from a finite number of possible environmental drivers was explored using a simulation written in R.
+
+
+
+
+# Get the raw data into R
+
+# Figure 2
+
+# Figure 3
+
+# Figure S1
+# Figure S2
+# Figure S3
+# Figure S4
+# Figure S6a-b-c-d
+# Figure S7
+
+
