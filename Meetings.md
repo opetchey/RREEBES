@@ -663,7 +663,7 @@ Aurélie, Alejandra and Pablo will present the Hooper et al (2012) paper in the 
 
 
 ## 19.01.2016
-Minutes by Aurélie
+Minutes by Aurélie.
 Attendance: Mikael, Gian Marco, David, Aurélie and Owen (by Skype)
 
 ### Guidelines for RREEBES to Owen 
