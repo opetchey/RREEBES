@@ -598,6 +598,15 @@ Minutes by Vanessa
 * Alejandra suggested creating a list with new packages we learn during the reproductions
 
 ## 1.12
+Minutes by Aurélie.
+Attendance: David, Mikael, Pablo, Gian Marco, Thomas, Ale, Vanessa, and Aurélie
+
+### Progress updates
+* Alesina: problem with the database (composition data and website -> possible errors of entries in the database)
+* Hooper: finishing the report
+* Ye: David involved and learn about the reproduction
+* Ito: Some progress and short presentation planned for January
+
 
 ## 8.12
 Minutes by David
