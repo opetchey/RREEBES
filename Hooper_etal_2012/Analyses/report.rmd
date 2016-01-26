@@ -3,9 +3,9 @@ title: "Reproduce analyses of Hooper et al. 2012"
 author: "Alejandra, Aurelie, Marco et al."
 starting date: 14th July 2015
 output:
-  pdf_document:
-    toc: yes
   html_document:
+    toc: yes
+  pdf_document:
     toc: yes
 ---
 
@@ -38,25 +38,16 @@ In this figure authors show the effect of a) detrital consumer diversity and b) 
 
 - in these files: different dataset, same information
 
-# Loading the data
-
- *Clear R and load data
+# Clear R and load data
 ```{r_clean_environment}
 #clear R
 rm(list=ls())
 library(plyr)
 library(RCurl)
 
-# if data downloaded in the desktop
-path_data <- getwd()
-
 # Power coefficients of the effect of biodiversity loss on productivity
 powInfo <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/PowerCoeffs_Prod_min.csv"), check.names=FALSE) 
 head(powInfo)
-
-# Effects of environmnetal factors affecting productivity
-prod.other <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/Prod_OtherFactors.csv"), check.names=FALSE)
-head(prod.other)
 
 # Power coefficients of the effect of biodiversity loss (consumers) on decomposition
 powInfoCons <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Hooper_et_al_2012/Hooper_etal_2012/data/PowerCoeffs_ConsumDivDecomp_min.csv"), check.names=FALSE)
@@ -66,19 +57,24 @@ head(powInfoCons)
 powInfoLitt <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/PowerCoeffs_LitterDivDecomp_min.csv"), check.names=FALSE)
 head(powInfoLitt)
 
-# Effects of environmnetal factors affecting decomposition
-decomp.other <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Hooper_et_al_2012/Hooper_etal_2012/data/Decomp_OtherFactors.csv"), check.names=FALSE)
-head(decomp.other)
-
 # Select the studies that were included in the meta-analysis 
 powInfo<-subset(powInfo,powInfo$FinalT=="Y")
 powInfoCons<-subset(powInfoCons,powInfoCons$FinalT=="Y")
 powInfoLitt<-subset(powInfoLitt,powInfoLitt$FinalT=="Y")
+
+# Effects of environmnetal factors affecting productivity
+prod.other <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/Prod_OtherFactors.csv"), check.names=FALSE)
+prod.other
+
+# Effects of environmnetal factors affecting decomposition
+decomp.other <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Hooper_et_al_2012/Hooper_etal_2012/data/Decomp_OtherFactors.csv"), check.names=FALSE)
+decomp.other
+
 ```
 
 
 
-*GENERATE CURVE DATA FOR ALL THREE PANELS
+# GENERATE CURVE DATA FOR ALL THREE PANELS
 ```{r_curve_data_prod_METAMETA}
 # PRODUCTIVITY METAMETA: generate curve data at step = 0.05 (5%) ending at smallest proportion remaining 
 #	value in the data (0.03)
@@ -225,11 +221,10 @@ errLitt$percent<-errLitt$ext*100
 
 
 
-*Make Fig 1: productivity
+# Make Fig 1: productivity
 ```{r_fig1_productivity}
-#As a pdf 
-#png("Fig1.png", 
-#    width=800, height=600, pointsize=7)
+#As a png 
+png("Fig1.png", width=800, height=600, pointsize=7)
 
 par(omi=c(0,0,0,0)) #outer margin area in inches (oma = in number of lines, outer margin area)
 
@@ -321,14 +316,13 @@ arrows(pos$xval,pos$est,pos$xval,pos$upper,length=0.03,angle=90)
 arrows(pos$xval,pos$est,pos$xval,pos$lower,length=0.03,angle=90)
 
 # close PNG device
-#dev.off()
+dev.off()
 
 ```
+![Figure 1. Changes in primary production as a function of per cent local species loss.](Fig1.png)
 
 
-![Figure:figure 1.](Fig1.pdf)
-
-*Make Fig 2: decomposition
+# Make Fig 2: decomposition
 ```{r_fig2_decomposition}
 # as a pdf file
 
@@ -512,10 +506,12 @@ text(x=0,y=1.1,labels=bquote(bold(.(thestring))))#"b",cex=1.1,font.main=3)
 dev.off()
 
 ```
-# Table 1: 
+![Figure 2. Changes in decomposition as a functoion of per cent local species loss.](Fig2.png)
+
+# Table 1
 Effects of species richness and environmental changes on primary productivity for the broad meta-analysis and factorial diversity crossed with environment experiments. 
 
-In this table, authors show the effect sizes (and confidence intervals) for a loss of primary producers diversity of 50% on the primary productivity. They also include for comparison the effect of the avergae monoculture and the best monoculture - they explain methods how they calculated the LRRs for this. /// include
+In this table, authors show the effect sizes (and confidence intervals) for a loss of primary producers diversity of 50% on the primary productivity. They also include for comparison the effect of the avergae monoculture and the best monoculture - they explain methods how they calculated the LRRs for this. 
 
 They also include for comparison, the effect of global change drivers, alone or combined. 
 
@@ -525,15 +521,15 @@ They did this analysis for a broad meta-analysis with 192 publicacions on a vari
 
 Bold values: indicate boostrapped mean LRRs and confidence intervals
 
-* Data for table 1
+  *Data for table 1
 
 (ProdBoot): Provides information on the 192 used papers; number of observations in each paper; biomass type (if it was aboveground, belowground, mixed or total; factor which is the global change driver analysed in that paper, log response ratio as an effect size, confidence intervals, type of of error reported in the original (SD, SE), NO ERROR IS REPORTED WHEN IN THE ORIGINAL PAPER THE ERROR WAS CI
-
-
 
 # Reproducing Tables 1 and 2: 
 We looked to the data available and how they were used to recreate these tables. 
 Unfortunately we couldnt get the information from the data provided. 
+
+
 
 # Conclusion of the reproduction.
 Meta-analyses are complex to reproduce because the raw data are not directly available (only effect sizes, the rest has to be looked for in other papers and it takes much longer - its like reproducing hundreds of papers at the same time). 
