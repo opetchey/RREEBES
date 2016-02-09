@@ -21,7 +21,7 @@ TMM: How do early warning signals perform when two environmental changes act sim
 
 [Huisman, J. & Weissing, F.J. (2001) Fundamental unpredictability in multispecies competition. The American naturalist, 157, 488–494.](http://www.jstor.org/stable/10.1086/319929?seq=1) Added by Owen.
 
-[Brennan G. and Collins S. (2015) Growth responses of a green alga to multiple environmental drivers.](http://www.nature.com/nclimate/journal/v5/n9/pdf/nclimate2682.pdf) Data available on [DRYAD](http://datadryad.org/resource/doi:10.5061/dryad.jt1fb) 
+
 
 
 # Papers with reproduction underway
@@ -38,6 +38,8 @@ TMM: How do early warning signals perform when two environmental changes act sim
 TMM: Construction and analysis of food webs based on the cascade (larger species consume smaller ones; no trphic cycles) or niche model. These food webs are much closer to real food webs due to the way they were constructed and differ substantially from random matrix interaction networks. **Note**: Challenging approach/analysis.
 
 [Chih‐hao Hsieh, Christian Anderson, and George Sugihara (2008): Extending Nonlinear Analysis to Short Ecological Time Series](http://www.jstor.org/stable/full/10.1086/524202c)
+
+[Brennan G. and Collins S. (2015) Growth responses of a green alga to multiple environmental drivers.](http://www.nature.com/nclimate/journal/v5/n9/pdf/nclimate2682.pdf) Data available on [DRYAD](http://datadryad.org/resource/doi:10.5061/dryad.jt1fb) (Aurelie)
 
 # Papers without appropriate data
 
