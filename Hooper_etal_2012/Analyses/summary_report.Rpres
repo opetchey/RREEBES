@@ -1,0 +1,159 @@
+summary_report
+========================================================
+author: Alejandra, Aurélie & Pablo
+date: 9th February 2016
+width: 1440
+height: 900
+
+<style>
+.small-code pre code {
+  font-size: 1em;
+}
+</style>
+
+The reproduction
+========================================================
+
+Hooper *et al.* 2012
+
+A gobal synthesis reveals biodiversity loss a major driver of ecosystem change.
+[paper here](http://jarrettbyrnes.info/pdfs/Hooper_et_al_2012_Nature.pdf)
+
+
+
+Our goals
+========================================================
+* How to do a meta-analysis (Ale, Aurélie & Pablo)
+* Introduction to GitHub (Pablo)
+* Understand R script (Ale)
+
+The study
+========================================================
+| Observed variables | Explanatory variables                                                 | Nb studies (observations) |
+|--------------------|-----------------------------------------------------------------------|---------------------------|
+| Productivity       | Species loss                                                          | 62 (379 obs)              |
+| Decomposition      | Detrital consumer diversity                                           | 19 (54 obs)               |
+| Decomposition      | Plant litter diversity                                                | 22 (60 obs)               |
+|                    | Other environmental changes:                                          |                           |
+|                    | nutrients, invasive species, CO2, warming, UV, acidification, drought |                           |
+
+Import the data
+========================================================
+class:small-code
+```{r_clean_environment}
+#clear R
+rm(list=ls())
+library(plyr)
+library(RCurl)
+
+# Power coefficients of the effect of biodiversity loss on productivity
+powInfo <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/PowerCoeffs_Prod_min.csv"), check.names=FALSE) 
+
+# Power coefficients of the effect of biodiversity loss (consumers) on decomposition
+powInfoCons <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Hooper_et_al_2012/Hooper_etal_2012/data/PowerCoeffs_ConsumDivDecomp_min.csv"), check.names=FALSE)
+
+# Power coefficients of the effect of biodiversity loss (litter) on decomposition
+powInfoLitt <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/PowerCoeffs_LitterDivDecomp_min.csv"), check.names=FALSE)
+
+# Select the studies that were included in the meta-analysis 
+powInfo<-subset(powInfo,powInfo$FinalT=="Y")
+powInfoCons<-subset(powInfoCons,powInfoCons$FinalT=="Y")
+powInfoLitt<-subset(powInfoLitt,powInfoLitt$FinalT=="Y")
+
+
+
+# Effects of environmnetal factors affecting productivity
+prod.other <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Hooper_etal_2012/Data_Fig_1_and_2/Prod_OtherFactors.csv"), check.names=FALSE)
+
+# Effects of environmnetal factors affecting decomposition
+decomp.other <- read.csv(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/Hooper_et_al_2012/Hooper_etal_2012/data/Decomp_OtherFactors.csv"), check.names=FALSE)
+
+
+```
+
+ 
+========================================================
+
+Figure 1: Changes in primary production as a function of per cent local species loss.
+
+![Figure1](Fig1.png)
+
+
+
+
+On the left: effects of **species loss** on change in productivity;
+
+On the right: effects of **others environmental changes** on change in productivity
+
+
+========================================================
+class:small-code
+left:40%
+
+Figure 1: Changes in primary production as a function of per cent local species loss.
+
+![Figure1](Fig1.png)
+
+***
+On the left:
+Effects of species loss on change in productivity
+
+!! here we have the raw data to compute the curve
+```{r}
+str(powInfo)
+```
+
+
+========================================================
+class:small-code
+left:40%
+
+
+Figure 1: Changes in primary production as a function of per cent local species loss.
+
+![Figure1](Fig1.png)
+
+***
+On the right:
+Effects of other environmental change on change in productivity
+
+!! here they give only the resutls
+```{r}
+prod.other
+```
+
+Reproduction
+=========================================================
+
+Figure 2: Changes in decomposition as a function of per cent local species loss.
+
+![Figure2](Fig2.png)
+
+
+on the top: effect of **detrital consumer diversity** on decomposition;
+
+on the bottom: effect of **plant litter diversity** on decomposition
+
+
+Reproduction of the tables:
+=========================================================
+
+We did not have the data necessary to reproduce the tables 1 & 2
+
+
+What did we learn
+=========================================================
+## with this study
+- to homogeneise between error sources (SE, SD, CI) (function provided by the author)
+- to integrate data from different sources
+
+## for all reproductions
+- the limit of reproduction when the raw data are not available
+- the danger of provided code/script 
+
+## Comments
+The code provided was well explained and convenient for learning.
+
+Meta-analyses are complex to reproduce because the raw data are not directly available (only effect sizes, the rest has to be looked for in other papers and it would take much longer - its like reproducing hundreds of papers at the same time). 
+
+
