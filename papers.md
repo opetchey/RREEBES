@@ -41,6 +41,9 @@ TMM: Construction and analysis of food webs based on the cascade (larger species
 
 [Brennan G. and Collins S. (2015) Growth responses of a green alga to multiple environmental drivers.](http://www.nature.com/nclimate/journal/v5/n9/pdf/nclimate2682.pdf) Data available on [DRYAD](http://datadryad.org/resource/doi:10.5061/dryad.jt1fb) (Aurelie)
 
+[Xiong, J., Lu, X., Zhou, Z., Chang, Y., Yuan, D., Tian, M., Zhou, Z., Wang, L., Fu, C., Orias, E., Miao, W. (2012) Transcriptome analysis of the model protozoan, Tetrahymena thermophila, using deep RNA Sequencing. PLoS ONE 7, e30630.]  (http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0030630#s4) Data available on [Gene Expression Omnibus] (http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE27971)(Vanessa)
+
+
 # Papers without appropriate data
 
 [Graham, N.A.J., Jennings, S., MacNeil, M.A., Mouillot, D. & Wilson, S.K. (2015) Predicting climate-driven regime shifts versus rebound potential in coral reefs. Nature, 518, 94–97.](http://www.nature.com/nature/journal/v518/n7537/full/nature14140.html)  Authors contacted. Data available on request, but could not be made public, so reproduction here not possible.
