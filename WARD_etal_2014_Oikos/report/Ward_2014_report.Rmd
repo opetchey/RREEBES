@@ -48,6 +48,11 @@ library(ltsa)
 library(timsac)
 library(randomForest)
 library(NLTS)
+
+# WARNING: only load dplyr package after model fitting
+# due to clashes with tsDyn package
+
+
 ```
 
 Read time series data provided from repository:
@@ -85,13 +90,13 @@ The forecasting script was provided but required some adjusting to run on the av
 MARSS failed on a couple of time series (IDs: 430, 514, 515, 590, 1234) which were hence excluded.
 
 ```{r, eval=F, echo=F}
-# Load in the data. This dataset only contains the 
+  # Load in the data. This dataset only contains the 
 set.seed(12345678)
 
 #dat <- subset(ts, ID %in% sample(ts$ID,size=15))
 # dat <- subset(ts, Database %in% c("RAMlegacy.catch","RAMlegacy.ssb","RAMlegacy.recperssb"))
 #dat <- subset(ts, Database %in% c("salmon"))
-dat <- ts[!(ts$ID %in% c(430,514,515,590,1234)),]
+dat <- ts[!(ts$ID %in% c(428, 482, 430,514,515,590,1234)),]
 #dat <- ts
 
 NAHEAD = 5 # number of points ahead to forecast
@@ -110,7 +115,7 @@ model.output = array(list(),c(numRec,MODELS)) # list of model objects
 # SourceURL <- "https://raw.githubusercontent.com/opetchey/RREEBES/WARD_etal_2014_Oikos/WARD_etal_2014_Oikos/code/Fn_simplex_and_smap_2012-05-04.r"
 # source_url(SourceURL)
 
-for(w in setdiff(1:numRec, c(430,514,515,590,1234))){
+for(w in setdiff(1:numRec, c(428, 482, 430,514,515,590,1234))){
   
   print(w)
   
@@ -738,11 +743,17 @@ for(w in setdiff(1:numRec, c(430,514,515,590,1234))){
   
 }
 
+save.image("Temp_image0.Rdata")
+```
+
+
+```{r, eval=F, echo=F}
 predicted <- as.data.frame(predicted)
 names(predicted) <- model.names
 dat <- cbind(dat,predicted)
 
 prediction <- gather(dat, model_type, Value_predicted,  11:(MODELS+10))
+save.image("Temp_image1.Rdata")
 ```
 
 ## Calculation of mean absolute scaled error
@@ -750,7 +761,7 @@ prediction <- gather(dat, model_type, Value_predicted,  11:(MODELS+10))
 Implementation of the absolute scaled error (ASE) for a single time-series. The absolute error is scaled by the mean absolute
 error within the training data to account for the different variability per time series. ASE is calculated for the different forecasting methods.
 
-````{r ASE_function, eval=F}
+```{r, eval=F, echo=F}
 get.ASE <- function(x){
   # x is the data used in ddply for each "ID_new" and "model_type"
   #x <- subset(prediction, ID_new==1 & model_type == "GAM (gam)")
@@ -771,7 +782,7 @@ get.ASE <- function(x){
 
 #out put with ASE estimate
 prediction_ASE <- ddply(.data=prediction, c("ID_new","model_type"), get.ASE)
-#save.image("/Volumes/Work MAC backup/Ward_et_al_results.RData")
+save.image("Ward_et_al_results.RData")
 ```
 
 # Figures
@@ -779,7 +790,7 @@ prediction_ASE <- ddply(.data=prediction, c("ID_new","model_type"), get.ASE)
 Prepare data for visualization by re-ordering factor levels. For some of the models it is not entirely clear which of the different specifications was taken.
 ```{r, echo=F}
 # load object with script output
-load("/Users/Frank/Documents/Github projects/RREEBES/WARD_etal_2014_Oikos/report/Ward_et_al_results.RData")
+load("Ward_et_al_results.RData")
 
 models_selected <- subset(prediction_ASE, model_type %in% c("GAM (gam)", "nnetTs.11 (nnetTs)", "AR - no drift (rwf)", "Local regression (locfit)", "ARIMA 1.0.1 (arima)","Exp smooth (freq=1) (ets)" , "ARIMA 0.0.1 (arima)", "ARIMA 1.1.0 (arima)", "MARSSdrift", "SMAP v2", "Simplex v2" , "randomForest v2", "simple regression"))
 models_selected$model_type <- factor(models_selected$model_type)
