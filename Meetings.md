@@ -678,5 +678,42 @@ Attendance: Mikael, Gian Marco, David, Aurélie and Owen (by Skype)
 ### Guidelines for RREEBES to Owen 
 ### Presentation by Mikael
 Reported to next week (26th January) with the Hooper's presentation
-   
+
+## 9.2.2016
+Minutes by Frank    
+Attendance: Aurélie, Andrea, Frank, Vanessa, Thomas, Owen (by Skype), Colette    
+
+Presentation by Aurélie about the reasons why the Hooper et al. reproduction will not be continued:   
+- main problem is access to the raw data needed for estimating effect sizes with metafor package  
+- authors provided code for some figures that worked well, however, access to code limits motivation to do the cumbersome reproduction yourself   
+- still some lessons learned during the reproduction about data integration and different types of errors one has to deal with during meta-analysis
+- branch will be merged to master and reproduced bits published on the github page
+
+Andrea and Colette will think about papers they want to reproduce (hint: Thomas looks for help on reproducing the Allesina paper on food webs)   
+
+next presentations by Vanessa and Frank   
+
+## 16.2.2016
+Minutes by Frank    
+Attendance: Aurélie, Andrea, Frank, Vanessa, Owen (by Skype), Colette, Mikael
+
+Presentation by Vanessa about her reproduction of Xiong et al.:   
+- transcriptome analysis on Tetrahymena thermophila during three life stages (growth, starvation, conjugation)
+- main goal: learn the methods used by the authors to do transcriptome analysis
+- paper already a couple of years old, so difficulty of getting the proper versions of the software used. However, as it is more about learning the tools, newer versions of software and algorithms will be used and consistency with previous results checked.
+- challenges with data size with consists of multiple gigabyte sized files
+
+Owen has produced an almost final version of the Beninca et al. 2008 reproduction, ready to be submitted to ReScience asap
+
+Owen has added some analysis to the Ward et al. 2014 reproduction due to some recent discussions of the paper in a journal club at Gainesville University:
+- instead of asking what is the best method across all time series, he looked how the error decreases overall by always chosing the best model for a particular time series
+
+Next presentations: Frank, Aurélie and then Colette or Andrea
+
+
+
+
+
+
+
 
