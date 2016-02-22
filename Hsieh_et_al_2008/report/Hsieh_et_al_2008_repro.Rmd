@@ -1,0 +1,114 @@
+---
+title: "Hsieh_et_al_2008_repro"
+output: html_document
+---
+
+# Introduction:
+
+Hsieh et al. 2008, American Naturalist propose a method to detect non-linearity in ecological time series using simplex and S-Map projections. Generally, non-linear time series analysis requires long-time series to detect signals. Their approach combines individual time series of ecologically similar species into one long time series to which simplex and S-Maps can be applied. To illustrate their approach, a five species competition model was used to generate time series and the ability tested to get back the parameter values of the simulation under various levels of noise and lengths of the time series.
+
+The goals for this reproduction are:
+* understanding simplex and S-Maps as forecasting tools using the recently release rEDM package.
+* understand the approach taken to combine several short time series into one long time series to detect non-linearity and mae useful forecasts
+
+# Step 1: Simulate 5 species dynamics:
+
+We simulated the dynamics of the 5 species community as follows:
+
+* a multispecies competition model based on the logistic map
+* all alphas set to 0.05, except for diagonal, which is set to 1
+* growth rate r is 3.57 just below the chaotic regime
+* 15% random uniform noise added to the time series
+* time series of 1000 steps generated for each species
+
+```{r, eval=F}
+# This code implements a multispecies competition model based on the logistic map (https://en.wikipedia.org/wiki/Logistic_map)
+# the equilibrium density depends on the growth rate (steady state at values between 1 and 2, extinction below 1, chaos > 3.7, fluctuations > 3)
+
+# set seed
+set.seed(1352147634)
+
+## Specify the number of species
+S <- 5
+alpha <- 0.01
+
+#growth rate in the eight-mode oscillation regime below the threshold to chaos
+r <- rep(3.57, S)
+
+# play around with growth rates to understand behaviour and steady state
+#r<- runif(5, 1, 2)
+
+# add some process noise on the interaction coefficients
+a <- matrix(runif(S^2, 0.85, 1.15), nrow=S, ncol=S)*alpha
+
+# set diagonal elements to 1
+diag(a) <- 1
+
+# simulate 1000 time steps
+t=seq(1,1000, by=1)
+
+# specify matrix to hold results
+N <- matrix(nrow=S, ncol=length(t))
+
+# set initial conditions randomly
+N[,1] <- runif(S)
+
+# simulate dynamics using the standard logistic map
+for (i in 1:(length(t)-1))  N[,i+1] = (r * N[,i] * (1- a%*%N[,i]))*runif(1,0.95,1.05)
+
+# plot part of the results
+matplot(t,t(N[1:S,]), "l",ylim=c(0,1),col=2:5, xlim=c(100,150))
+
+output <- as.data.frame(t(N[1:S,]))
+names(output) <- paste0("species ", 1:S)
+
+#write.csv(output, "/Users/Frank/Documents/Github projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv", row.names=F)
+
+```
+
+# Step 2: Apply simplex projection from rEDM package to simulated time series
+
+```{r, echo=FALSE}
+
+#load rEDM package
+library(rEDM)
+
+# now load our simulated time series
+five_sp_comp <- read.csv("/Users/Frank/Documents/Github projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv")
+five_sp_comp$time <- seq(1,1000)
+
+plot(five_sp_comp$time, five_sp_comp$species.1, "l", xlim=c(100,200))
+
+mod3 <- simplex(five_sp_comp$species.1, lib = c(1, 900), pred = c(901, NROW(five_sp_comp$species.1)),
+                norm_type = c("L2 norm"), P = 0.5, E = 1:10,
+                tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
+                exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
+
+# check number of embedding dimensions
+plot(mod3$E, mod3$rho, type="l", xlab = "Embedding dimension (E)", ylab="Forecast skill (rho)")
+
+# look at actual forecasting skill (we have to refit the model and set stats_only to FALSE)
+mod3 <- simplex(five_sp_comp$species.1, lib = c(1, 900), pred = c(901, NROW(five_sp_comp$species.1)),
+                norm_type = c("L2 norm"), P = 0.5, E = 1:10,
+                tau = 1, tp = 1, num_neighbors = "e+1", stats_only = F,
+                exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
+
+
+# compare data with predictions visually
+plot(five_sp_comp$time[900:1000], five_sp_comp$species.1[900:1000], "l", ylim=c(0,1), xlim=c(900,1000))
+par(new=T)
+plot(five_sp_comp$time[900:999], mod3[[1]]$model_output$pred[899:998], "l", col="red", ylim=c(0,1), xlim=c(900,1000))
+```
+
+# Step 3: apply s-maps to simulated time series with best embedding dimension as determined by simplex
+
+```{r}
+# now use smap with E dimensions (identified with Simplex)
+smap_out <- s_map(five_sp_comp$species.1, lib = c(1, 900), pred = c(901,NROW(five_sp_comp$species.1)),
+                  norm_type = c("L2 norm"), E = 3)
+
+# plot theta against forecasting skill
+plot(smap_out$theta, smap_out$rho, type="l", xlab = "Non-linearity", ylab="Forecast skill (rho)")
+```
+
+
