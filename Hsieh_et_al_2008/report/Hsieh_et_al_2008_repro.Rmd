@@ -5,20 +5,21 @@ output: html_document
 
 # Introduction:
 
-Hsieh et al. 2008, American Naturalist propose a method to detect non-linearity in ecological time series using simplex and S-Map projections. Generally, non-linear time series analysis requires long-time series to detect signals. Their approach combines individual time series of ecologically similar species into one long time series to which simplex and S-Maps can be applied. To illustrate their approach, a five species competition model was used to generate time series and the ability tested to get back the parameter values of the simulation under various levels of noise and lengths of the time series.
+Hsieh et al. 2008, American Naturalist propose a method to detect non-linearity in ecological time series using the simplex and s-map projections developed by Sugihara and co-workers. Generally, non-linear time series analysis requires long-time series to detect signals. Their approach combines individual time series of ecologically similar species into one long time series to which simplex and s-maps can be applied (termed Dewdrop regression by the authors). To illustrate their approach, a five species competition model was used to generate time series and the ability of the method to get back the original parameter values of the simulation tested under various levels of noise and lengths of the time series.
 
 The goals for this reproduction are:
-* understanding simplex and S-Maps as forecasting tools using the recently release rEDM package.
-* understand the approach taken to combine several short time series into one long time series to detect non-linearity and mae useful forecasts
+* understanding simplex and s-maps as forecasting tools using the recently released rEDM package.
+* understand the approach taken to combine several short time series into one long time series to detect non-linearity and make useful forecasts
 
 # Step 1: Simulate 5 species dynamics:
 
-We simulated the dynamics of the 5 species community as follows:
+First we reproduced the dynamics of the 5 species community as follows:
 
 * a multispecies competition model based on the logistic map
 * all alphas set to 0.05, except for diagonal, which is set to 1
 * growth rate r is 3.57 just below the chaotic regime
-* 15% random uniform noise added to the time series
+* 15% process noise noise was added to the time series
+* additionally, 5% observation noise was added
 * time series of 1000 steps generated for each species
 
 ```{r, eval=F}
@@ -42,7 +43,7 @@ r <- rep(3.57, S)
 a <- matrix(runif(S^2, 0.85, 1.15), nrow=S, ncol=S)*alpha
 
 # set diagonal elements to 1
-diag(a) <- 1
+#diag(a) <- 1
 
 # simulate 1000 time steps
 t=seq(1,1000, by=1)
@@ -61,6 +62,10 @@ matplot(t,t(N[1:S,]), "l",ylim=c(0,1),col=2:5, xlim=c(100,150))
 
 output <- as.data.frame(t(N[1:S,]))
 names(output) <- paste0("species ", 1:S)
+
+plot(output[,1], output[,3])
+
+
 
 #write.csv(output, "/Users/Frank/Documents/Github projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv", row.names=F)
 
