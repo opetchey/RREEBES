@@ -710,6 +710,29 @@ Owen has added some analysis to the Ward et al. 2014 reproduction due to some re
 
 Next presentations: Frank, Aurélie and then Colette or Andrea
 
+## 23.02.2016
+Minutes by Vanessa
+
+###Attendance
+* Frank, Mikael, Vanessa, Wilfredo, Andrea, Colette and Owen (by Skype)
+
+###New people
+* Wilfredo 
+
+###Issues
+* Data archiving paper: to be discussed in the next meeting with no presentation (March or later)
+
+###Progress updates
+* Owen (Beninca et al): code to calculate Lyapunov exponents tested and working well; plots for figure 2 were also enhanced. Manuscript ready to be submitted to ReScience
+
+###Presentation
+Frank presented his work so far in the reproduction of Hsieh et al 2008 paper:
+* Model to generate the time series was implemented with the help of Gian Marco. Model still needs to be improved.
+* Simplex projection from rEDM package
+
+Next week: no meeting (IEU Assembly)
+Next presentations: Aurélie and then Andrea
+
 
 
 
