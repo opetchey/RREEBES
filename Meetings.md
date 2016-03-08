@@ -732,6 +732,16 @@ Frank presented his work so far in the reproduction of Hsieh et al 2008 paper:
 
 Next week: no meeting (IEU Assembly)
 Next presentations: Aurélie and then Andrea
+--------------------------------------------------------
+
+Meeting 08-03-2016
+Minutes by Mikael
+Attendance: Aurelie, Frank, Vanessa, Mikael, Andrea, Wilfredo
+Issues: Now outstanding issues were discussed. 
+Progress updates: Aurelie introduced the paper she is reproducing, Brennan G. and Collins S. (2015) Growth responses of a green alga to multiple environmental drivers. Data available onDRYAD
+Future meetings: Andrea will present here reproduction next week, Dambacher et al 2002 Ecology. 
+Willfredo will present his paper the week after that, Hanks et al 2015, The Annals of Applied Statistics. 
+
 
 
 
