@@ -1,5 +1,8 @@
 # Git resources
 
+#useful paper
+http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004668
+
 ## Interactive tutorial:    
 https://www.codeschool.com/paths/git
 
