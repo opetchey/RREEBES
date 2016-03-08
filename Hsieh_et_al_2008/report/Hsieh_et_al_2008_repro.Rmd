@@ -33,7 +33,7 @@ The following R code implements the simulation model:
 
 ## Specify the number of species
 S <- 5
-alpha <- 0.01
+alpha <- 0.05
 
 #growth rate in the eight-mode oscillation regime below the threshold to chaos
 r <- rep(3.57, S)
@@ -43,8 +43,8 @@ r <- rep(3.57, S)
 #r<- runif(5, 1, 2)
 
 #add some process noise on the interaction coefficients
-a <- matrix(runif(S^2, 0.85, 1.15), nrow=S, ncol=S) * alpha
-#a <- matrix(rep(0.05, S^2), nrow=S, ncol=S)
+#a <- matrix(runif(S^2, 0.85, 1.15), nrow=S, ncol=S) * alpha
+a <- matrix(rep(0.05, S^2), nrow=S, ncol=S)
 
 # set diagonal elements to 1
 #diag(a) <-1
@@ -60,13 +60,13 @@ N <- matrix(nrow=S, ncol=length(t))
 N[,1] <- runif(S)
 
 # simulate dynamics using the standard logistic map
-#for (i in 1:(length(t)-1))  N[,i+1] = (r * N[,i] * (1 - a %*% N[,i])) * runif(1, 0.95,1.05)
+#for (i in 1:(length(t)-1))  N[,i+1] = (r * N[,i] * (1 - a %*% N[,i])) * runif(1, 0.85,1.15)
 
 for (i in 1:(length(t)-1)){
   
   for (j in 1:5){
     
-      N[j,i+1] = (r[j] * N[j,i] * (1 - N[j,i])  - sum(a[-j,j] * N[j, i])) * runif(1,0.95,1.05)
+      N[j, i+1] = (r[j] * N[j,i] * (1 - N[j,i])  - sum(a[-j,j] * N[j, i])) * runif(1,0.85,1.15)
 
   }
   
@@ -92,7 +92,7 @@ Predict last 15 time steps of species 1 based on previous 985 time steps of same
 
 ```{r, echo=FALSE}
 # now load our simulated time series
-five_sp_comp <- read.csv("/Users/Frank/Documents/Github projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv")
+five_sp_comp <- read.csv("/Users/Frank/Documents/Git projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv")
 five_sp_comp$time <- seq(1,1000)
 
 
@@ -100,7 +100,7 @@ five_sp_comp$time <- seq(1,1000)
 library(rEDM)
 
 simplex_mod_stats_sp1_1 <- simplex(five_sp_comp$species.1, lib = c(1, 900), pred = c(901, NROW(five_sp_comp$species.1)),
-                norm_type = c("L2 norm"), P = 0.5, E = 1:10,
+                norm_type = c("L2 norm"), E = 1:10,
                 tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
                 exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
 
@@ -109,7 +109,7 @@ plot(simplex_mod_stats_sp1_1$E, simplex_mod_stats_sp1_1$rho, type="l", xlab = "E
 
 # look at actual forecasting skill (we have to refit the model and set stats_only to FALSE) when predicting species 1 with data from species 1
 simplex_mod_pred_sp1_1 <- simplex(five_sp_comp$species.1, lib = c(1, 985), pred = c(986, NROW(five_sp_comp$species.1)),
-                norm_type = c("L2 norm"), P = 0.5, E = 1:10,
+                norm_type = c("L2 norm"),  E = 1:10,
                 tau = 1, tp = 1, num_neighbors = "e+1", stats_only = F,
                 exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
 
@@ -122,7 +122,7 @@ plot(five_sp_comp$time[985:999], simplex_mod_pred_sp1_1[[1]]$model_output$pred[9
 ```{r}
 # look at actual forecasting skill (we have to refit the model and set stats_only to FALSE) when predicting species 5 with data from species 3
 simplex_mod_stat_sp3_5 <- simplex(five_sp_comp$species.3, lib = c(1, 500), pred = c(501, NROW(five_sp_comp$species.5)),
-                norm_type = c("L2 norm"), P = 0.5, E = 1:10,
+                norm_type = c("L2 norm"), E = 1:10,
                 tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
                 exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
 
