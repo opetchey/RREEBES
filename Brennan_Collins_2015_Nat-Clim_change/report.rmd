@@ -10,7 +10,7 @@ output:
 ---
 
 # Introduction
-This is a reproduction of the meta-analysis presented in the paper *Growth responses of a green alga to multiple environmental drivers*, by Georgina Brennan and Sinead Collins ([the paper on the Nature website](http://www.nature.com/nclimate/journal/v5/n9/full/nclimate2682.html)). Details of the methods are in [the Supplementary Information to the Nature paper](http://www.nature.com/nclimate/journal/v5/n9/extref/nclimate2682-s1.pdf). 
+This is a reproduction of an experiment presented in the paper *Growth responses of a green alga to multiple environmental drivers*, by Georgina Brennan and Sinead Collins ([the paper on the Nature website](http://www.nature.com/nclimate/journal/v5/n9/full/nclimate2682.html)). Details of the methods are in [the Supplementary Information to the Nature paper](http://www.nature.com/nclimate/journal/v5/n9/extref/nclimate2682-s1.pdf). 
 
 
 # Authors involved in this reproduction
@@ -48,6 +48,8 @@ The effect of sampling from a finite number of possible environmental drivers wa
 # Figure 2
 
 # Figure 3
+
+
 
 # Figure S1
 # Figure S2
