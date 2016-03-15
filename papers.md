@@ -43,6 +43,8 @@ TMM: Construction and analysis of food webs based on the cascade (larger species
 
 [Xiong, J., Lu, X., Zhou, Z., Chang, Y., Yuan, D., Tian, M., Zhou, Z., Wang, L., Fu, C., Orias, E., Miao, W. (2012) Transcriptome analysis of the model protozoan, Tetrahymena thermophila, using deep RNA Sequencing. PLoS ONE 7, e30630.]  (http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0030630#s4) Data available on [Gene Expression Omnibus] (http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE27971)(Vanessa)
 
+[Dambacher et al. (2002) Relevance of community structure in assessing indeterminacy of ecological predictions. Ecology 83(5), pp.1372–1385.]  (http://onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B1372:ROCSIA%5D2.0.CO;2/epdf) (Andrea)
+
 
 # Papers without appropriate data
 
