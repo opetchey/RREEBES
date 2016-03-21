@@ -45,6 +45,8 @@ TMM: Construction and analysis of food webs based on the cascade (larger species
 
 [Dambacher et al. (2002) Relevance of community structure in assessing indeterminacy of ecological predictions. Ecology 83(5), pp.1372–1385.]  (http://onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B1372:ROCSIA%5D2.0.CO;2/epdf) (Andrea)
 
+[Hanks et al. (2015) Continuous-time discrete-space models for animal movement. The Annals of Applied Statistics 9(1) 145–165.] (http://arxiv.org/abs/1211.1992) (Data: http://r-forge.r-project.org/projects/ctds/ )(Wilfredo)
+
 
 # Papers without appropriate data
 
