@@ -749,9 +749,28 @@ Willfredo will present his paper the week after that, Hanks et al 2015, The Anna
 
 
 
+## 15.03.2016
+Minutes by Aurelie
+
+###Attendance
+* Mikael, Vanessa, Andrea & Aurelie
+
+###Issues
+* no issues
+
+###Progress updates
+* Vanessa: some progress and problem. The package used in this paper is not maintained anymore. Which version should be use for the reproduction? The newest would be useful for further analyses.
+* Mikael: no new reproduction planned before the baby's venue
+* Wilfredo presents next week
+* Aurelie: no progress so far
+
+###Presentation
+Andrea presented Dambacher's paper.
+Interest for this paper: her predictability review.
 
 
+## 22.03.2016
+no meeting
 
-
-
+## 29.03.2016
 
