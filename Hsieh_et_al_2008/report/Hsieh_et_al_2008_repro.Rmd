@@ -155,7 +155,7 @@ plot(smap_out$theta, smap_out$rho, type="l", xlab = "Non-linearity", ylab="Forec
 
 Next we try to reproduce figure 1 from the publication:
 ```{r}
-plot(five_sp_comp[,3], five_sp_comp[,5])
+ plot(five_sp_comp[,3], five_sp_comp[,5], xlim=c(0,1.1), ylim=c(0,1.1))
 
 
 
