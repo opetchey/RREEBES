@@ -774,3 +774,20 @@ no meeting
 
 ## 29.03.2016
 
+## 05.04.2016
+Minutes by Andrea
+
+###Attendance
+* Andrea & Aurelie, Frank, Wilfredo
+
+###Issues
+* no issues
+
+###Progress updates
+* Frank: some progress and problem with the reproducibility of the paper, contacted the author
+* Aurelie: progress with graphs
+* Andrea: reproduction is ready will upload the scripts for the Dambacher (2002) paper
+
+###Presentation
+* Frank presented “A quick introduction to version control with git and github” and he will put the presentation and notes on the wiki page
+
