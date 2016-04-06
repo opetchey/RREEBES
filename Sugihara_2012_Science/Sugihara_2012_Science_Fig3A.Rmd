@@ -1,0 +1,136 @@
+---
+title: 'Figure 3A, Sugihara et al (2012) Science, 338: 496'
+author: "Owen Petchey"
+date: "5 April 2016"
+output: 
+  html_document: 
+    toc: yes
+---
+
+Causality among variables of a dynamical system can be detected by convergent cross mapping (CCM). Convergent cross mapping is when estimates via cross mapping converge towards being better with increases in the length of times series used in the cross mapping. I.e., if we use a longer time series to make the estimates (predictions) then these estimates will more closely match the observed values. Causally related time series will show CCM, whereas causally unrelated time series will not show convergence.
+
+The following reproduces, approximately, figure 3A in [Sugihara et al (2012) Science, 338: 496.](http://science.sciencemag.org/content/338/6106/496.full), using some of [the supplementary information to the article](http://science.sciencemag.org/content/sci/suppl/2012/09/19/science.1227079.DC1/Sugihara.SM.pdf).
+
+```{r setup}
+rm(list=ls())
+library(ggplot2)
+```
+
+Two functions: The first makes time delayed (embedded) representations of a variable. The second gets the convergence of the cross mapping derived estimates.
+
+```{r}
+Embed <- function(X, dimension=3) {
+  E_X <- matrix(NA, length(X)-dimension, dimension)
+  for(i in 1:dimension)
+    E_X[,i] <- X[(1+i-1):(length(X)-dimension+i-1)]
+  E_X
+}
+
+Get_convergence <- function(X_m, Y_m, dimension=3) {
+  
+  ## Define the vector of time series lengths that convergence will be
+  ## examined over (i.e., the x-axis of figure 3A)
+  Ls <- floor(2^seq(4, 11, 0.5))
+  Ls <- Ls[Ls<(length(X_m)-dimension)]
+  
+  ## storage for the correlations
+  rho <- numeric(length(Ls))
+  
+  ## Embed the potential causative variable
+  ## I.e., create the shadow manifold
+  E_X_m <- Embed(X_m)
+
+  for(j in 1:length(Ls)) {
+    
+    L <- Ls[j]
+    E_X <- E_X_m[1:L,] 
+    X_dists <- as.matrix(dist(E_X, upper=T))
+    
+    ## storage for the estimates of the other variable
+    est_Y <- numeric(length=L-dimension)
+    
+    ## For each time point in the shadow manifold
+    for(i in 1:(L-dimension)) {
+      
+      ## get the time indices for E+1 nearest neighbours (E = embedding dimension)
+      times <- order(X_dists[i,])[1:(dimension+2)][-1]
+      ## and the distances of the nearest neighbours
+      dists <- sort(X_dists[i,])[1:(dimension+2)][-1]
+      ## calculate weighted distances
+      u_i <- exp(-dists / dists[1])
+      u_i <-u_i / sum(u_i)
+      ## weight the corresponding nearest neighbours of the other variable
+      ## to give the estimate
+      est_Y[i] <- sum(u_i * Y_m[times])
+      
+    }
+    
+    ## calculate and store the correlation
+    rho[j] <- cor(Y_m[1:(L-dimension)], est_Y)
+    #plot(Y_m[1:(L-dimension)], est_Y)
+  }
+  data.frame(L=Ls, rho=rho)
+}
+
+```
+
+# Figure 3A, CCM from bidirectional causality
+
+The article uses a simple system of coupled difference equations to create complex dynamics of two variables:
+
+```{r}
+T <- 5000
+
+mm <- data.frame(time=1:T,
+                 X=NA, Y=NA)
+
+mm[1,] <- c(1, 0.1, 0.4)
+
+Next_X <- function(X, Y)
+  X * (3.8 - 3.8 * X - 0.02 * Y)
+
+Next_Y <- function(Y, X)
+  Y * (3.5 - 3.5 * Y - 0.1 * X)
+
+for(i in 2:T) {
+  mm[i,2] <- Next_X(mm[i-1,2],mm[i-1,3])
+  mm[i,3] <- Next_Y(mm[i-1,3],mm[i-1,2])
+}
+
+ggplot(mm, aes(x=time, y=X)) +
+  geom_line() +
+  geom_line(aes(y=Y), col="red") +
+  coord_cartesian(xlim=c(0,50))
+
+```
+
+We then use the function to calculate how well the cross mapped estimates match the observed values, doing this in both directions (variable 1 used to estimate variable 2, and variable 2 used to estimate variable 1). Then plot the graph that will hopefully show convergence.
+
+```{r}
+X_m=mm[,"X"]
+Y_m=mm[,"Y"]
+dimension = 3
+rhos_X_Y <- Get_convergence(X_m, Y_m, dimension = 3)
+rhos_Y_X <- Get_convergence(Y_m, X_m, dimension = 3)
+
+qplot(x=L, y=rho, data=rhos_X_Y) +
+  geom_point(data=rhos_Y_X, aes(x=L, y=rho), col="blue")
+
+```
+
+X has a much stronger causative effect on Y, and hence convergence occurs faster when Y is used to estimate X.
+
+# No causal relationship
+
+For interest, the lack of any convergence when variables are causally unrelated is calculated:
+
+```{r}
+X_m=rnorm(T)
+Y_m=rnorm(T)
+dimension = 3
+rhos_X_Y <- Get_convergence(X_m, Y_m, dimension = 3)
+rhos_Y_X <- Get_convergence(Y_m, X_m, dimension = 3)
+qplot(x=L, y=rho, data=rhos_X_Y) +
+  geom_point(data=rhos_Y_X, aes(x=L, y=rho), col="blue")
+```
+

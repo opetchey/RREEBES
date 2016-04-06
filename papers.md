@@ -69,3 +69,5 @@ TMM: Construction and analysis of food webs based on the cascade (larger species
 # Papers that could not be reproduced or where reproduction was stopped.
 
 [Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araujo (2015) Inferring biotic interactions from proxies. TREE xx 1-10](http://www.sciencedirect.com/science/article/pii/S0169534715000774) TMM: Would be interesting to reproduce this study to get an idea about the removed interactions (the forbidden ones) - and the ones that are still in, but false. Maybe one could also apply this to a smaller food web and test for the accuracy of this approach. Because the authors do not provide any test for accuracy... :( Food webs available, checking for trait data. Thomas, GM, Vanessa. :weary:
+
+[Sugihara, G., May, R., Ye, H., Hsieh, C., Deyle, E., Fogarty, M. & Munch, S. (2012) Detecting causality in complex ecosystems. Science, 338, 496–500.](http://science.sciencemag.org/content/338/6106/496.abstract) Owen made a reproduction of only figure 3A, to help him understand the method.
