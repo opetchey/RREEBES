@@ -120,6 +120,37 @@ qplot(x=L, y=rho, data=rhos_X_Y) +
 
 X has a much stronger causative effect on Y, and hence convergence occurs faster when Y is used to estimate X.
 
+# Check with rEMD package
+
+```{r}
+library(devtools)
+#install_github("ha0ye/rEDM")
+library(rEDM)
+```
+
+```{r}
+X_xmap_Y <- ccm(mm,
+                E=3,
+                lib_column = "X",
+                target_column = "Y",
+                lib_sizes = floor(2^seq(4, 11, 1)),
+                random_libs = TRUE,
+                num_samples = 10)
+Y_xmap_X <- ccm(mm,
+                E=3,
+                lib_column = "Y",
+                target_column = "X",
+                lib_sizes = floor(2^seq(4, 11, 1)),
+                random_libs = TRUE,
+                num_samples = 10)
+qplot(data=X_xmap_Y, x=lib_size, y=rho) +
+  geom_point(data=Y_xmap_X, col="blue") +
+  geom_line(data=rhos_X_Y, aes(x=L, y=rho)) +
+  geom_line(data=rhos_Y_X, aes(x=L, y=rho), col="blue")
+```
+
+
+
 # No causal relationship
 
 For interest, the lack of any convergence when variables are causally unrelated is calculated:
@@ -127,10 +158,36 @@ For interest, the lack of any convergence when variables are causally unrelated 
 ```{r}
 X_m=rnorm(T)
 Y_m=rnorm(T)
+mm_rand <- data.frame(X=X_m, Y=Y_m)
 dimension = 3
-rhos_X_Y <- Get_convergence(X_m, Y_m, dimension = 3)
-rhos_Y_X <- Get_convergence(Y_m, X_m, dimension = 3)
-qplot(x=L, y=rho, data=rhos_X_Y) +
-  geom_point(data=rhos_Y_X, aes(x=L, y=rho), col="blue")
+rhos_X_Y_rand <- Get_convergence(X_m, Y_m, dimension = 3)
+rhos_Y_X_rand <- Get_convergence(Y_m, X_m, dimension = 3)
+qplot(x=L, y=rho, data=rhos_X_Y_rand) +
+  geom_point(data=rhos_Y_X_rand, aes(x=L, y=rho), col="blue")
 ```
+
+```{r}
+X_xmap_Y_rand <- ccm(mm_rand,
+                E=3,
+                lib_column = "X",
+                target_column = "Y",
+                lib_sizes = floor(2^seq(4, 11, 1)),
+                random_libs = TRUE,
+                num_samples = 10)
+Y_xmap_X_rand <- ccm(mm_rand,
+                E=3,
+                lib_column = "Y",
+                target_column = "X",
+                lib_sizes = floor(2^seq(4, 11, 1)),
+                random_libs = TRUE,
+                num_samples = 10)
+qplot(data=X_xmap_Y_rand, x=lib_size, y=rho) +
+  geom_point(data=Y_xmap_X_rand, col="blue") +
+  geom_line(data=rhos_X_Y_rand, aes(x=L, y=rho)) +
+  geom_line(data=rhos_Y_X_rand, aes(x=L, y=rho), col="blue")
+```
+
+
+
+
 
