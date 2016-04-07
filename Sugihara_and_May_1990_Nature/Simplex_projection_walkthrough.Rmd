@@ -113,7 +113,7 @@ for(i in 2:5)
 
 ## What is likely to happen next?
 
-To make the prediction about what happens next (i.e., the value of the pink data point in the first graph), we use what happened just after the similar dynamics occured in the past. In the following graph, the green data points are the values that follow each of closely matching the past dynamics.
+To make the prediction about what happens next (i.e., the value of the pink data point in the first graph), we use what happened just after the similar dynamics occured in the past. In the following graph, the green data points are the values that follow each of the closely matching past dynamics.
 
 ```{r, echo=FALSE}
 ## making the graph
