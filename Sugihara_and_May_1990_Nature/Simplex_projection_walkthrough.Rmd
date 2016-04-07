@@ -23,6 +23,10 @@ Embed <- function(X, dimension=3) {
 
 Simplex projection is an important method for forecasting times series. The aim of this document is to explain how simplex projection work, in terms that are very easy to understand.
 
+This document was created in Rmarkdown [the Rmarkdown version on github](https://github.com/opetchey/RREEBES/tree/master/Sugihara_and_May_1990_Nature).
+
+This document is one from [a collection of reproductions / explanations](http://opetchey.github.io/RREEBES).
+
 ## Why should you care about simplex projection?
 
 One important use of forecasting via simplex projection is distinguishing chaotic time series from ones that are just random noise. This was invented by George Sugihara and Bob May back in 1990, and presented in the article [Sugihara, G. & May, R.M. (1990) Nonlinear forecasting as a way of distinguishing chaos from measurement error in time series. Nature, 344, 734–741.](http://www.nature.com/nature/journal/v344/n6268/abs/344734a0.html)
