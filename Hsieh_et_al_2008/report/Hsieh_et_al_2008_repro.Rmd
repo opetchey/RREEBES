@@ -29,26 +29,16 @@ The following R code implements the simulation model:
 # the equilibrium density depends on the growth rate (steady state at values between 1 and 2, extinction below 1, chaos > 3.7, fluctuations > 3)
 
 # set seed
-#set.seed(14987987)
+set.seed(190981)
 
 ## Specify the number of species
 S <- 5
-alpha <- 0.05
 
 #growth rate in the eight-mode oscillation regime below the threshold to chaos
-r <- rep(3.57, S)
-#r <- runif(S, 0.85, 1.15) * r
+r <- 3.57
 
-# play around with growth rates to understand behaviour and steady state
-#r<- runif(5, 1, 2)
-
-#add some process noise on the interaction coefficients
-#a <- matrix(runif(S^2, 0.85, 1.15), nrow=S, ncol=S) * alpha
-a <- matrix(rep(0.05, S^2), nrow=S, ncol=S)
-
-# set diagonal elements to 1
-#diag(a) <-1
-#diag(a) <- runif(S^2, 0.85, 1.15), nrow=S, ncol=S) * 1
+# specify alphas
+a <- 0.05
 
 # simulate 1000 time steps
 t=seq(1,1000, by=1)
@@ -59,32 +49,64 @@ N <- matrix(nrow=S, ncol=length(t))
 # set initial conditions randomly
 N[,1] <- runif(S)
 
-# simulate dynamics using the standard logistic map
-#for (i in 1:(length(t)-1))  N[,i+1] = (r * N[,i] * (1 - a %*% N[,i])) * runif(1, 0.85,1.15)
-
+# simulate dynamics using the discrete logistic growth model; add process noise at the end
 for (i in 1:(length(t)-1)){
   
   for (j in 1:5){
-    
-      N[j, i+1] = (r[j] * N[j,i] * (1 - N[j,i])  - sum(a[-j,j] * N[j, i])) * runif(1,0.85,1.15)
 
+    N[j,i+1] = (r * N[j,i] * (1- N[j,i]) - a*sum(N[-j,i]) ) * runif(1,0.85,1.15)
   }
-  
 }
-  
 
-# plot part of the results
-print(matplot(t,t(N[1:S,]), "l",ylim=c(0,1),col=2:5, xlim=c(100,150)))
+# add some observation noise to time series
+N <- N * runif(length(N), 0.95, 1.05)
+
+# plot results
+matplot(t,t(N[1:S,]), "l",ylim=c(0,1), xlim=c(0,1000),col=2:5)
+
 
 output <- as.data.frame(t(N[1:S,]))
 names(output) <- paste0("species ", 1:S)
 
-plot(output[,3], output[,5])
+# check for correlation in abundances
+plot(output$`species 1`, output$`species 5`)
 
-
-# write.csv(output, "/Users/Frank/Documents/Github projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv", row.names=F)
+#write.csv(output, "/Users/Frank/Documents/Github projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv", row.names=F)
 
 ```
+
+Next we try to reproduce figure 1 from the publication:
+```{r}
+five_sp_comp <- read.csv("/Users/Frank/Documents/Github projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv")
+five_sp_comp$time <- seq(1,1000)
+
+# fig 1 A
+plot(five_sp_comp[,3], five_sp_comp[,5], xlim=c(0,1.1), ylim=c(0,1.1))
+
+# fit AR(4) model
+ar_mod <-  ar(as.ts(five_sp_comp[,c(3)]), FALSE, 4)
+str(ar_mod)
+
+ar_mod$ar
+
+sp3_ar_prediction <- vector("numeric", 1000)
+# predict species 3 based on species 5
+for (t in 5:1000){
+
+sp3_ar_prediction[t] = ar_mod$ar[1] * five_sp_comp[t-1,3] + ar_mod$ar[2] * five_sp_comp[t-2,3]  + ar_mod$ar[3] * five_sp_comp[t-3,3] + ar_mod$ar[4] * five_sp_comp[t-4,3]
+
+}
+
+sp3_pred <- predict(ar_mod)
+str(sp3_pred)
+plot(sp3_ar_prediction, five_sp_comp[,3])
+par(new=T)
+plot(sp3_pred$pred)
+abline(a=1, b=1)
+```
+
+
+
 
 # Step 2: Apply simplex projection from rEDM package to simulated time series
 
@@ -92,8 +114,7 @@ Predict last 15 time steps of species 1 based on previous 985 time steps of same
 
 ```{r, echo=FALSE}
 # now load our simulated time series
-five_sp_comp <- read.csv("/Users/Frank/Documents/Git projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv")
-five_sp_comp$time <- seq(1,1000)
+
 
 
 #load rEDM package
@@ -153,10 +174,3 @@ smap_out <- s_map(five_sp_comp$species.5, lib = c(1, 900), pred = c(901,NROW(fiv
 plot(smap_out$theta, smap_out$rho, type="l", xlab = "Non-linearity", ylab="Forecast skill (rho)")
 ```
 
-Next we try to reproduce figure 1 from the publication:
-```{r}
- plot(five_sp_comp[,3], five_sp_comp[,5], xlim=c(0,1.1), ylim=c(0,1.1))
-
-
-
-```
