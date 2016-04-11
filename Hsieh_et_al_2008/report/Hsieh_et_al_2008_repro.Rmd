@@ -84,7 +84,7 @@ five_sp_comp$time <- seq(1,1000)
 plot(five_sp_comp[,3], five_sp_comp[,5], xlim=c(0,1.1), ylim=c(0,1.1))
 
 # fit AR(4) model
-ar_mod <-  ar(as.ts(five_sp_comp[,c(3)]), FALSE, 4)
+ar_mod <-  ar(as.ts(five_sp_comp[,c(5)]), FALSE, 4)
 str(ar_mod)
 
 ar_mod$ar
@@ -93,20 +93,13 @@ sp3_ar_prediction <- vector("numeric", 1000)
 # predict species 3 based on species 5
 for (t in 5:1000){
 
-sp3_ar_prediction[t] = ar_mod$ar[1] * five_sp_comp[t-1,3] + ar_mod$ar[2] * five_sp_comp[t-2,3]  + ar_mod$ar[3] * five_sp_comp[t-3,3] + ar_mod$ar[4] * five_sp_comp[t-4,3]
+sp3_ar_prediction[t] = ar_mod$x.mean + ar_mod$ar[1] * five_sp_comp[(t-1),3] + ar_mod$ar[2] * five_sp_comp[(t-2),3]  + ar_mod$ar[3] * five_sp_comp[(t-3),3] + ar_mod$ar[4] * five_sp_comp[(t-4),3]
 
 }
 
-sp3_pred <- predict(ar_mod)
-str(sp3_pred)
 plot(sp3_ar_prediction, five_sp_comp[,3])
-par(new=T)
-plot(sp3_pred$pred)
 abline(a=1, b=1)
 ```
-
-
-
 
 # Step 2: Apply simplex projection from rEDM package to simulated time series
 
@@ -115,29 +108,31 @@ Predict last 15 time steps of species 1 based on previous 985 time steps of same
 ```{r, echo=FALSE}
 # now load our simulated time series
 
-
-
 #load rEDM package
 library(rEDM)
 
-simplex_mod_stats_sp1_1 <- simplex(five_sp_comp$species.1, lib = c(1, 900), pred = c(901, NROW(five_sp_comp$species.1)),
+simplex_mod_stats_sp3_1 <- simplex(five_sp_comp$species.5, lib = c(1, 985), pred = c(986, NROW(five_sp_comp$species.3)),
                 norm_type = c("L2 norm"), E = 1:10,
                 tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
                 exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
 
 # check number of embedding dimensions
-plot(simplex_mod_stats_sp1_1$E, simplex_mod_stats_sp1_1$rho, type="l", xlab = "Embedding dimension (E)", ylab="Forecast skill (rho)")
+plot(simplex_mod_stats_sp3_1$E, simplex_mod_stats_sp3_1$rho, type="l", xlab = "Embedding dimension (E)", ylab="Forecast skill (rho)")
 
 # look at actual forecasting skill (we have to refit the model and set stats_only to FALSE) when predicting species 1 with data from species 1
-simplex_mod_pred_sp1_1 <- simplex(five_sp_comp$species.1, lib = c(1, 985), pred = c(986, NROW(five_sp_comp$species.1)),
+simplex_mod_pred_sp3_2 <- simplex(five_sp_comp$species.5, lib = c(1, 985), pred = c(986, NROW(five_sp_comp$species.3)),
                 norm_type = c("L2 norm"),  E = 1:10,
                 tau = 1, tp = 1, num_neighbors = "e+1", stats_only = F,
                 exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
 
 # compare data with predictions visually
-plot(five_sp_comp$time[985:1000], five_sp_comp$species.1[985:1000], "l", ylim=c(0,1), xlim=c(985,1000))
+plot(five_sp_comp$time, five_sp_comp$species.3, "l", ylim=c(0,1))
 par(new=T)
-plot(five_sp_comp$time[985:999], simplex_mod_pred_sp1_1[[1]]$model_output$pred[984:998], "l", lty = 2, col="red", ylim=c(0,1), xlim=c(985,1000))
+plot(five_sp_comp$time, simplex_mod_pred_sp3_2[[1]]$model_output$pred, "l", lty = 2, col="red", ylim=c(0,1))
+
+
+
+
 ```
 
 ```{r}
@@ -172,5 +167,51 @@ smap_out <- s_map(five_sp_comp$species.5, lib = c(1, 900), pred = c(901,NROW(fiv
 
 # plot theta against forecasting skill
 plot(smap_out$theta, smap_out$rho, type="l", xlab = "Non-linearity", ylab="Forecast skill (rho)")
+
+smap_out <- s_map(five_sp_comp$species.3, lib = c(1, 1000), pred = c(1,NROW(five_sp_comp$species.3)),
+                  norm_type = c("L2 norm"), E = 4)
+
+smap_out
+
+smap_pred <- s_map(five_sp_comp$species.5, lib = c(1, 1000), pred = c(1,NROW(five_sp_comp$species.3)),
+                  norm_type = c("L2 norm"), E = 4, stats_only=F)
+
+
+plot(smap_pred[[1]]$model_output$pred, five_sp_comp$species.3)
+
+
+# predict species 3 based on embeddings in species 5
+n <- NROW(block_data$species.5)
+block_data <- five_sp_comp[,c(6,3,5)]
+block_data$species.5m1 <- c(NA, block_data$species.5[-n])
+block_data$species.5m2 <- c(NA, block_data$species.5m1[-n])
+block_data$species.5m3 <- c(NA, block_data$species.5m2[-n])
+block_data$species.5m4 <- c(NA, block_data$species.5m3[-n])
+block_data$species.5m5 <- c(NA, block_data$species.5m4[-n])
+block_data$species.5m6 <- c(NA, block_data$species.5m5[-n])
+block_data$species.5m7 <- c(NA, block_data$species.5m6[-n])
+block_data$species.5m8 <- c(NA, block_data$species.5m7[-n])
+
+Embed <- function(X, dimension=4) {
+  E_X <- matrix(NA, length(X)-dimension, dimension)
+  for(i in 1:dimension)
+    E_X[,i] <- X[(1+i-1):(length(X)-dimension+i-1)]
+  E_X
+}
+
+embed_sp5 <- Embed(five_sp_comp[,c(5)], dimension=10)
+names(embed_sp5) <- paste0("embed",1:10)
+data.frame(five_sp_comp$species.3, embed_sp5)
+
+block <- block_lnlp(block_data, lib = c(1, 1000), pred = c(1,NROW(block_data)),
+  norm_type = c("L2 norm"), P = 0.5,
+  method = c("s-map"), tp = 1, num_neighbors = "e+1",
+  columns = c(3:11), target_column = c("species.3"), stats_only = F, first_column_time = T)
+
+block
+
+plot(block[[1]]$model_output$obs, block[[1]]$model_output$pred)
+abline(a=0,b=1)
+str(block)
 ```
 
