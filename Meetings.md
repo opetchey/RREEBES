@@ -793,13 +793,20 @@ Minutes by Andrea
 
 ##12.04.2016
 Attending: Frank, Mikael Aurelie, Willfredo
+
 Minutes by Mikael
 - No new faces
+ 
 -No uploaded papers to reproduce
--Mikael suggested to uploading Sisson et al 2007 and Beamount 2010 on ABC and SMC for future reproductions. This reproduction could also be part of a “computational statistics series” that may fit well in REEBES. 
--Frank’s presentation of Git and github is uploaded to SLAK and will stay there for everyone to see and revisit. 
+
+-Mikael suggested to uploading Sisson et al 2007 and Beamount 2010 on ABC and SMC for future reproductions. This reproduction could also be part of a “computational statistics series” that may fit well in RREEBES.
+
+-Frank’s presentation of Git and github is uploaded to SLAK and will stay there for everyone to see and revisit.
+
 -Frank reported on his and Andrea’s reproduction using simplex projection to predict time series dynamics. 
+
 -We decided to read the “Simplex projection walkthrough” published by Owen on github for next week.
+
 Next week we will go through the “Simplex projection walkthrough”.  
 
 
