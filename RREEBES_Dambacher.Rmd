@@ -1,0 +1,137 @@
+---
+title: "Dambacher et al 2002"
+author: "Andrea Tabi"
+date: "18 April 2016"
+output: html_document
+---
+RELEVANCE OF COMMUNITY STRUCTURE IN ASSESSING INDETERMINACY OF ECOLOGICAL PREDICTIONS
+
+Abstract
+
+The community matrix is potentially a powerful tool for community ecology. While it details direct interactions between community members, it can also be used to quantify all indirect effects that occur in a community, and thereby to make predictions regarding population response to experimental treatments or natural disturbances. These predictions are essentially hypotheses of system behavior that can be rigorously evaluated. Use of the community matrix, however, has been hindered by indeterminacy and ambiguity in response predictions. In this study, we reveal a theoretical source of the problem that arises as a consequence of community structure.
+Using a qualitative analysis of the community matrix, we detail the complementary feedback cycles that contribute to the response of a population following a sustained or press perturbation. Complementary feedback is the sum of all direct and indirect effects that can contribute to a response. We develop a ‘‘weighted-predictions matrix’’ that assigns a probability scale to sign determinacy of predicted responses. This matrix is formed by the quotient of the net sum of complementary feedback cycles and the absolute number of complementary feedback cycles.
+A qualitative analysis of system structure provides a theoretical benchmark for under- standing a spectrum of behavior in biological systems, and for framing and prioritizing management interventions for whole communities. This advance clarifies much of the uncertainty and ambiguity found in predicting the behavior of large and complex systems. We validate these tools by analyzing published studies of community response.
+
+
+#Fig.1.
+Community matrix of plankton community (Stone 1990, plankton community model)
+```{r}
+A <- matrix( c(-1, 0.6, 0,0,0, -0.6, -1, 0, 0.1, 0.6, 0,0,-1, 0.2, 0, 0,0,-0.2, -1, 0.5, 0.6, -0.6, 0.2, -0.5, -1), byrow=T, nrow=5)
+A
+```
+
+Inverse community matrix 
+```{r}
+A.inverse <- round(solve(A),2) 
+A.inverse
+
+```
+
+Qualitatively specified community matrix
+
+```{r}
+A0 <- matrix( c(-1,1,0,0,0,-1,-1,0,1,1,0,0,-1,1,0,0,0,-1,-1,1,1,-1,1,-1,-1), byrow=T, nrow=5 )
+A0
+
+```
+
+#Fig.2.
+Adjoint matrix of the negative community matrix
+
+```{r}
+library(RConics)
+ADJ <- adjoint(-A0)
+
+```
+
+Absolute feedback matrix
+
+```{r}
+library(LoopAnalyst)
+TM <- make.T(A0)
+
+```
+
+Weighted prediction matrix
+
+```{r}
+W <- round(ADJ/TM, 2)
+W
+```
+
+#Fig.3.
+Relationship between the quantitative and qualitative response
+
+```{r}
+plot(ADJ, -A.inverse, pch=2, xlab="Complementary feedback", ylab="Quantitative response")
+m <- lm(as.numeric(-A.inverse)~as.numeric(ADJ))
+r2 <- summary(m)$r.squared
+coef(m)
+abline( m )
+mylabel <-bquote(italic(R)^2 == .(format(r2, digits = 3)))
+text(0.5,0.8, mylabel)
+```
+
+#Fig.4.
+Old-field food web (Schmitz, 1997)
+```{r}
+A2 <- matrix( c(-1.13, -1.72, -0.55, -1.25, -4.44,0,
+              0.541, -2.41, 0,0,-0.0058, -0.230,
+              0.124, 0, -0.51, 0, 0, -0.364,
+                0.117, -0.0144, -0.0204, -1.15, -0.0024, -0.12,
+                0.369, -0.0198, -0.0319, -0.011, -4.31, -0.055,
+                0, 0.00781, 0.0109, 0.0003, 0.0002, -0.0373), byrow=T, nrow=6)
+A2
+
+
+A2[A2<0] <- -1
+A2[A2>0] <- 1
+A2
+
+ADJ2 <- round(adjoint(-A2),2)
+ADJ2
+
+TM2 <- make.T(A2)
+TM2
+
+round(abs(ADJ2)/TM2,2)
+```
+
+# Fig.5.
+Danish shallow lakes, Jeppesen 1998
+adjoint of qualitatively specified community matrix
+
+Could not find the original source
+
+The reproduction of this figure is the same as previously
+
+
+# Fig.6.
+
+The reproduction of this figure is the same as previously
+
+
+# Fig.7.
+Lake Saint George deep pelagia, Puccia and Levins, 1995
+```{r}
+Adj.C <- matrix(c(5,3,2,1,1,
+                  -3,3,2,1,1,
+                  2,-2,4,2,2,
+                  -1,1,-2,3,3,
+                  1,-1,2,-3,5), byrow=T, nrow=5)
+Adj.C
+A.Cmodel <- adjoint(Adj.C)
+A.Cmodel
+A.Cmodel[A.Cmodel>0] <- 1
+A.Cmodel[A.Cmodel<0] <- -1
+A.Cmodel
+
+TC <- make.T(A.Cmodel)
+TC
+
+round(abs(Adj.C)/TC,2)
+```
+
+
+
+
