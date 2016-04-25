@@ -28,8 +28,6 @@ TMM: How do early warning signals perform when two environmental changes act sim
 
 [Ito, H.C and Dieckmann, U. A New Mechanism for Recurrent Adaptive Radiations (2007), AmNat 170, E96-E111](http://www.iiasa.ac.at/~dieckman/reprints/ItoDieckmann2007.pdf) TMM: A faster population-based appraoch to simulate adapteive radiations(Mikael).
 
-[Hooper DU, Adair EC, Cardinale BJ, Byrnes JEK, Hungate BA, et al. 2012. A global synthesis reveals biodiversity loss as a major driver of ecosystem change. Nature 486:105–8] (http://jarrettbyrnes.info/pdfs/Hooper_et_al_2012_Nature.pdf). Database is available at the National Center for Ecological Analysis and Synthesis: (http://knb.ecoinformatics.org/knb/metacat/nceas.984/nceas). Ale, Aurélie (Marco? Dennis?)
-
 [Hekstra, D.R. & Leibler, S. (2012) Contingency and statistical laws in replicate microbial closed ecosystems. Cell, 149, 1164–1173.] (http://www.sciencedirect.com/science/article/pii/S0092867412005156). Reproduction underway (Owen, Frank.)
 
 [Yampolsky, Lev Y., Tobias M. M. Schaer, and Dieter Ebert. “Adaptive Phenotypic Plasticity and Local Adaptation for Temperature Tolerance in Freshwater Zooplankton.” Proceedings of the Royal Society of London B: Biological Sciences 281, no. 1776 (February 7, 2014): 20132744.] (http://rspb.royalsocietypublishing.org/content/281/1776/20132744) (Tad Dallas)
@@ -64,6 +62,8 @@ TMM: Construction and analysis of food webs based on the cascade (larger species
 [Lagrue, C., Poulin, R. & Cohen, J.E. (2014) Parasitism alters three power laws of scaling in a metazoan community: Taylor’s law, density-mass allometry, and variance-mass allometry. Proceedings of the National Academy of Sciences of the United States of America, 112, 1791–1796.](http://www.pnas.org/content/112/6/1791) Reproduction available [here] (http://opetchey.github.io/RREEBES/Lagrue_etal_2014_PNAS/Lagrue_report.html).
 
 [Ward, E.J., Holmes, E.E., Thorson, J.T. & Collen, B. (2014) Complexity is costly: A meta-analysis of parametric and non-parametric methods for short-term population forecasting. Oikos, 123, 652–661.](http://onlinelibrary.wiley.com/doi/10.1111/j.1600-0706.2014.00916.x/abstract)
+
+[Hooper DU, Adair EC, Cardinale BJ, Byrnes JEK, Hungate BA, et al. 2012. A global synthesis reveals biodiversity loss as a major driver of ecosystem change. Nature 486:105–8] (http://jarrettbyrnes.info/pdfs/Hooper_et_al_2012_Nature.pdf). Database is available at the National Center for Ecological Analysis and Synthesis: (http://knb.ecoinformatics.org/knb/metacat/nceas.984/nceas). Ale, Aurélie (Marco? Dennis?)
 
 
 # Papers that could not be reproduced or where reproduction was stopped.
