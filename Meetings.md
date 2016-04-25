@@ -810,21 +810,31 @@ Minutes by Mikael
 Next week we will go through the “Simplex projection walkthrough”.  
 
 ##19.04.2016
-Attending:Vanessa, Alejandra, Frank
+###Attendance
+
+Vanessa, Alejandra, Frank
 
 Minutes by Alejandra
 
+###Highlights
+
 - no new faces.
+
 - no uploaded papers, but Mikael will add 2.
-- issues solved: deleted Graham branch / Owen should check the issues concerning Beninca, to see if they can be closed / please all check regularly the issues to see if they can be asssessed and closed. 
+
+- issues solved: deleted Graham branch / Owen should check the issues concerning Beninca, to see if they can be closed / please all check regularly the issues to see if they can be asssessed and closed.
+
 - papers with reproduction underway: please clear it (is it done?=move it). Moved Hooper paper to "done".
+
 - Alejandra will maybe start working with Aurelie in her paper. 
 
-Presentation
+###Presentation
+
 We went through the Simplex projection. Frank went with us through the htlm, explaining different points. 
 We learned: Chaos within some deterministic processes produces patterns. He showed us how to construct the Embeddings with the Embed function. Then how to look at patterns: first you find the embeddings, then you look for those that are similar with a distance matrix.  Then Frank talk about dimentionality, what is it and how it is related to the linearity or not of the series and how this is related to the number of embeddings you need to predict.  
 
-Homework for next meeting
+###Homework for next meeting
+
 Read "Sugihara et al 2012 Fig3A" 
 
 
