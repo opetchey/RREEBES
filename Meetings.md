@@ -773,6 +773,22 @@ Interest for this paper: her predictability review.
 no meeting
 
 ## 29.03.2016
+Minutes by Vanessa
+
+###Attendance
+* Wilfredo, Frank, Mikael, Aurèlie, Alejandra, Marco, Andrea and Vanessa
+
+###Discussion
+* RREEBES new format explained
+* Meeting remains at 15h
+
+###Presentation
+Wilfredo presented the paper Continuous-time discrete-space models for animal movement (Hanks et al 2015)
+* Paper related to seed dispersal on Aldabra atoll is part of Wilfredo’s thesis
+* Wilfredo gave a short intro about his project, in which he has movement data from 31 tortoises for 3 years
+* Reproducing this paper would help Wilfredo understand the method and apply it to his own project
+
+Next week: Frank will give a presentation on GitHub to refresh our knowledge 
 
 ## 05.04.2016
 Minutes by Andrea
@@ -836,6 +852,25 @@ We learned: Chaos within some deterministic processes produces patterns. He show
 ###Homework for next meeting
 
 Read "Sugihara et al 2012 Fig3A" 
+
+##26.04.2016
+No meeting
+
+##03.05.2016
+Minutes by Vanessa
+
+###Attendance
+* Frank, Andrea, Alejandra and Vanessa
+
+###Progress updates
+* Ale: will work with Aurèlie in her reproduction (Brennan and Collins 2015)
+* Andrea: finished and uploaded the Dambacher reproduction
+* Vanessa: slow progress due to problems with a software
+
+###Presentation
+Frank presented the reproduction done by Owen on Sugihara et al 2012 Fig. 3A.
+
+Next week: maybe Owen can give feedback on his submission to ReScience
 
 
 
