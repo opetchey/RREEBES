@@ -1,5 +1,5 @@
 ---
-title: "Dambacher et al 2002"
+title: "Reproduction of Dambacher et al 2002"
 author: "Andrea Tabi"
 date: "18 April 2016"
 output: html_document
@@ -13,21 +13,21 @@ Using a qualitative analysis of the community matrix, we detail the complementar
 A qualitative analysis of system structure provides a theoretical benchmark for under- standing a spectrum of behavior in biological systems, and for framing and prioritizing management interventions for whole communities. This advance clarifies much of the uncertainty and ambiguity found in predicting the behavior of large and complex systems. We validate these tools by analyzing published studies of community response.
 
 
-#Fig.1.
+# Reproducing Fig.1.
 Community matrix of plankton community (Stone 1990, plankton community model)
 ```{r}
 A <- matrix( c(-1, 0.6, 0,0,0, -0.6, -1, 0, 0.1, 0.6, 0,0,-1, 0.2, 0, 0,0,-0.2, -1, 0.5, 0.6, -0.6, 0.2, -0.5, -1), byrow=T, nrow=5)
 A
 ```
 
-Inverse community matrix 
+Inverse community matrix (shows the direct and indirect interaction of effect)
 ```{r}
 A.inverse <- round(solve(A),2) 
 A.inverse
 
 ```
 
-Qualitatively specified community matrix
+Qualitatively specified community matrix (contains only 1, 0, -1 showing only the direction of the interaction)
 
 ```{r}
 A0 <- matrix( c(-1,1,0,0,0,-1,-1,0,1,1,0,0,-1,1,0,0,0,-1,-1,1,1,-1,1,-1,-1), byrow=T, nrow=5 )
@@ -35,8 +35,8 @@ A0
 
 ```
 
-#Fig.2.
-Adjoint matrix of the negative community matrix
+# Reproducing Fig.2.
+Adjoint matrix of the negative community matrix ( inverse(A) = adjoint(A)/det(A) )
 
 ```{r}
 library(RConics)
@@ -44,7 +44,7 @@ ADJ <- adjoint(-A0)
 
 ```
 
-Absolute feedback matrix
+Absolute feedback matrix (permanent of the matrix)
 
 ```{r}
 library(LoopAnalyst)
@@ -52,14 +52,14 @@ TM <- make.T(A0)
 
 ```
 
-Weighted prediction matrix
+Weighted prediction matrix (adjoint matrix elements divided by the matrix permanent)
 
 ```{r}
 W <- round(ADJ/TM, 2)
 W
 ```
 
-#Fig.3.
+# Reproducing Fig.3.
 Relationship between the quantitative and qualitative response
 
 ```{r}
@@ -72,7 +72,7 @@ mylabel <-bquote(italic(R)^2 == .(format(r2, digits = 3)))
 text(0.5,0.8, mylabel)
 ```
 
-#Fig.4.
+# Reproducing Fig.4.
 Old-field food web (Schmitz, 1997)
 ```{r}
 A2 <- matrix( c(-1.13, -1.72, -0.55, -1.25, -4.44,0,
@@ -97,21 +97,20 @@ TM2
 round(abs(ADJ2)/TM2,2)
 ```
 
-# Fig.5.
+# Reproducing Fig.5.
 Danish shallow lakes, Jeppesen 1998
 adjoint of qualitatively specified community matrix
 
-Could not find the original source
 
 The reproduction of this figure is the same as previously
 
 
-# Fig.6.
+# Reproducing Fig.6.
 
 The reproduction of this figure is the same as previously
 
 
-# Fig.7.
+# Reproducing Fig.7.
 Lake Saint George deep pelagia, Puccia and Levins, 1995
 ```{r}
 Adj.C <- matrix(c(5,3,2,1,1,
