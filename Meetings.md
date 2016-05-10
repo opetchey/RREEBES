@@ -1,6 +1,6 @@
 # Meetings in 2015
 
-Meetings 14.00 to 15.00 Zurich time, location 34-J-52.
+Meetings 15.00 to 16.00 Zurich time, location 34-J-52.
 
 Assign person to take meeting minutes.
 
