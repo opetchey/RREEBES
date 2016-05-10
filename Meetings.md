@@ -872,5 +872,26 @@ Frank presented the reproduction done by Owen on Sugihara et al 2012 Fig. 3A.
 
 Next week: maybe Owen can give feedback on his submission to ReScience
 
+##10.05.2016
+Minutes by Aurelie
 
+###Attendance
+* Frank, Andrea, Vanessa and Aurelie
 
+### Highlights
+* Archive minutes older than one year
+* Promote to the institute the RREEBES and might be combined with R-lunch to reproduce paper of the method discussed during the R-lunch
+
+### New paper
+* Connolly *et al.*, 2013. "An improved model to predict the effects of changing biodiversity levels on ecosystem function". The reproduction will be lead by Aurelie (after the on going reproduction).
+
+###Progress updates
+* Vanessa worked on her reproduction but had some troubles running the program.
+
+###Presentation
+No presentation
+
+### Next presentations planning:
+* 17th May: Aurelie & Ale
+* 24th May: Frank & Andrea
+* 31st May: Vanessa
