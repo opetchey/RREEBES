@@ -891,7 +891,22 @@ Minutes by Aurelie
 ###Presentation
 No presentation
 
+## 17.05.2016
+Minutes by GM
+
+###Attendance 
+* Frank, Andrea, Aurelie, Vanessa and GM
+## Highlights
+* Vanessa is still running the example
+* Frank and Andrea need to contact the authors GM will join them in the reproduction
+
+###Presentation of Aurelie
+Predicting the growth rate of Chlamydomonas when environmental drivers occur
+
+some parts where she is still a bit stack on (see online code):
+The need for overlapping and its estimation, 
+The relative fit
+
 ### Next presentations planning:
-* 17th May: Aurelie & Ale
 * 24th May: Frank & Andrea
 * 31st May: Vanessa
