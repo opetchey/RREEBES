@@ -21,7 +21,7 @@ TMM: How do early warning signals perform when two environmental changes act sim
 
 [Huisman, J. & Weissing, F.J. (2001) Fundamental unpredictability in multispecies competition. The American naturalist, 157, 488–494.](http://www.jstor.org/stable/10.1086/319929?seq=1) Added by Owen.
 
-
+[Connolly et al. (2013) An improved model to predict the effects of changing biodiversity levels on ecosystem function. Journal of Ecology 2013, 101, 344–355.](http://onlinelibrary.wiley.com/doi/10.1111/1365-2745.12052/abstract) 
 
 
 # Papers with reproduction underway
@@ -40,8 +40,6 @@ TMM: Construction and analysis of food webs based on the cascade (larger species
 [Brennan G. and Collins S. (2015) Growth responses of a green alga to multiple environmental drivers.](http://www.nature.com/nclimate/journal/v5/n9/pdf/nclimate2682.pdf) Data available on [DRYAD](http://datadryad.org/resource/doi:10.5061/dryad.jt1fb) (Aurelie)
 
 [Xiong, J., Lu, X., Zhou, Z., Chang, Y., Yuan, D., Tian, M., Zhou, Z., Wang, L., Fu, C., Orias, E., Miao, W. (2012) Transcriptome analysis of the model protozoan, Tetrahymena thermophila, using deep RNA Sequencing. PLoS ONE 7, e30630.]  (http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0030630#s4) Data available on [Gene Expression Omnibus] (http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE27971)(Vanessa)
-
-[Dambacher et al. (2002) Relevance of community structure in assessing indeterminacy of ecological predictions. Ecology 83(5), pp.1372–1385.]  (http://onlinelibrary.wiley.com/doi/10.1890/0012-9658%282002%29083%5B1372:ROCSIA%5D2.0.CO;2/epdf) (Andrea)
 
 [Hanks et al. (2015) Continuous-time discrete-space models for animal movement. The Annals of Applied Statistics 9(1) 145–165.] (http://arxiv.org/abs/1211.1992) (Data: http://r-forge.r-project.org/projects/ctds/ )(Wilfredo)
 
