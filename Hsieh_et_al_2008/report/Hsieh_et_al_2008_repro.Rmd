@@ -72,13 +72,13 @@ names(output) <- paste0("species ", 1:S)
 # check for correlation in abundances
 plot(output$`species 1`, output$`species 5`)
 
-write.csv(output, "/Users/Frank/Documents/Git projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv", row.names=F)
+#write.csv(output, "/Users/Frank/Documents/Git projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv", row.names=F)
 
 ```
 
 Next we try to reproduce figure 1 from the publication:
 ```{r}
-five_sp_comp <- read.csv("/Users/Frank/Documents/Github projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data_CA_code.csv")
+five_sp_comp <- read.csv("/Users/Frank/Documents/Git projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data_CA_code.csv")
 names(five_sp_comp) <- c("time", paste0("species.", 1:5))
 #five_sp_comp$time <- seq(1,1000)
 
@@ -103,6 +103,34 @@ plot(sp3_ar_prediction, five_sp_comp[,3])
 abline(a=1, b=1)
 ```
 
+Look at state-space plot of the different species:
+```{r, state-space, eval=F}
+Embed <- function(X, dimension=4) {
+  E_X <- matrix(NA, length(X)-dimension, dimension)
+  for(i in 1:dimension)
+    E_X[,i] <- X[(1+i-1):(length(X)-dimension+i-1)]
+  E_X
+}
+
+for (i in 1:2){
+
+embed_sp5 <- Embed(five_sp_comp[,c(i+1)], dimension=3)
+colnames(embed_sp5) <- paste0("embed",1:3)
+
+library(plot3D)
+
+lines3D(x = embed_sp5[,1],
+       y = embed_sp5[,2],
+       z = embed_sp5[,3], colvar=NULL, col="blue", add=T)
+lines3D(x = embed_sp5[,1],
+       y = embed_sp5[,2],
+       z = embed_sp5[,3], colvar=NULL, col="red", add=T) 
+}
+
+```
+
+
+
 # Step 2: Apply simplex projection from rEDM package to simulated time series
 
 Predict last 15 time steps of species 1 based on previous 985 time steps of same species.
@@ -113,7 +141,7 @@ Predict last 15 time steps of species 1 based on previous 985 time steps of same
 #load rEDM package
 library(rEDM)
 
-simplex_mod_stats_sp5_1 <- simplex(five_sp_comp$species.5, lib = c(1, 500), pred = c(500, NROW(five_sp_comp$species.5)),
+simplex_mod_stats_sp5_1 <- simplex(five_sp_comp$species.5, lib = c(1, 1000), pred = c(1, NROW(five_sp_comp$species.5)),
                 norm_type = c("L2 norm"), E = 1:10,
                 tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
                 exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
@@ -122,7 +150,7 @@ simplex_mod_stats_sp5_1 <- simplex(five_sp_comp$species.5, lib = c(1, 500), pred
 plot(simplex_mod_stats_sp5_1$E, simplex_mod_stats_sp5_1$rho, type="l", xlab = "Embedding dimension (E)", ylab="Forecast skill (rho)")
 
 # look at actual forecasting skill (we have to refit the model and set stats_only to FALSE) when predicting species 1 with data from species 1
-simplex_mod_pred_sp5_2 <- simplex(five_sp_comp$species.5, lib = c(1, 500), pred = c(500, NROW(five_sp_comp$species.5)),
+simplex_mod_pred_sp5_2 <- simplex(five_sp_comp$species.5, lib = c(1, 1000), pred = c(1, NROW(five_sp_comp$species.5)),
                 norm_type = c("L2 norm"),  E = 1:10,
                 tau = 1, tp = 1, num_neighbors = "e+1", stats_only = F,
                 exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
@@ -148,8 +176,8 @@ abline(0,1)
 
 ```{r}
 # now use smap with E dimensions (identified with Simplex)
-smap_out <- s_map(five_sp_comp$species.5, lib = c(1, 500), pred = c(501,NROW(five_sp_comp$species.5)), stats_only = T,
-                  norm_type = c("L2 norm"), E = 3)
+smap_out <- s_map(five_sp_comp$species.5, lib = c(1, 1000), pred = c(1,NROW(five_sp_comp$species.5)), stats_only = T,
+                  norm_type = c("L2 norm"), E = 4)
 smap_out
 
 # plot theta against forecasting skill
@@ -175,10 +203,10 @@ block_data$species.5m1 <- c(NA, block_data$species.5[-n])
 block_data$species.5m2 <- c(NA, block_data$species.5m1[-n])
 block_data$species.5m3 <- c(NA, block_data$species.5m2[-n])
 block_data$species.5m4 <- c(NA, block_data$species.5m3[-n])
-block_data$species.5m5 <- c(NA, block_data$species.5m4[-n])
-block_data$species.5m6 <- c(NA, block_data$species.5m5[-n])
-block_data$species.5m7 <- c(NA, block_data$species.5m6[-n])
-block_data$species.5m8 <- c(NA, block_data$species.5m7[-n])
+#block_data$species.5m5 <- c(NA, block_data$species.5m4[-n])
+# block_data$species.5m6 <- c(NA, block_data$species.5m5[-n])
+# block_data$species.5m7 <- c(NA, block_data$species.5m6[-n])
+# block_data$species.5m8 <- c(NA, block_data$species.5m7[-n])
 
 # Embed <- function(X, dimension=4) {
 #   E_X <- matrix(NA, length(X)-dimension, dimension)
@@ -191,45 +219,116 @@ block_data$species.5m8 <- c(NA, block_data$species.5m7[-n])
 # names(embed_sp5) <- paste0("embed",1:10)
 # data.frame(five_sp_comp$species.3, embed_sp5)
 
-block <- block_lnlp(block_data, lib = c(1, 500), pred = c(500,NROW(block_data)),
+block <- block_lnlp(block_data, lib = c(1, 1000), pred = c(1,NROW(block_data)),
   norm_type = c("L2 norm"), 
-  method = c("s-map"), tp = 1, num_neighbors = "e+1",
-  columns = c(4:7), target_column = c("species.3"), stats_only = F, first_column_time = T)
+  method = c("s-map"), tp = 1, num_neighbors = "0.0001", 
+  columns = c("species.3", "species.5",  "species.5m1", "species.5m2", "species.5m3", "species.5m4"), target_column = c("species.3"), stats_only = F, first_column_time = T)
 
 sp3_observations  <- block[[1]]$model_output$obs
 sp3_predictions  <- block[[1]]$model_output$pred
 
-plot(sp3_observations, sp3_predictions, ylim=c(-1.5,1.5))
+plot(sp3_observations, sp3_predictions)
 abline(a=0,b=1)
-str(block)
+
+```
+
+
+## Figure 1:
+
+```{r}
+par(mfrow=c(1,3))
+plot(five_sp_comp[,3], five_sp_comp[,5], xlab="Species 3",ylab="Species 5",main="Cross-species Correlation")
+
+plot(sp3_ar_prediction, five_sp_comp[,3],xlab="Prediction using Species 5",ylab="Species 3 (true value)",main="Cross-species AR Model")
+abline(a=1, b=1)
+
+plot(sp3_observations, sp3_predictions,xlab="Prediction using Species 5",ylab="Species 3 (true value)",main="Cross-species S-Map")
+abline(a=0,b=1)
+
+par(mfrow=c(1,1))
 ```
 
 
 
+```{r}
 
 
-```{r, state-space}
-Embed <- function(X, dimension=4) {
-  E_X <- matrix(NA, length(X)-dimension, dimension)
-  for(i in 1:dimension)
-    E_X[,i] <- X[(1+i-1):(length(X)-dimension+i-1)]
-  E_X
+lib <- c(1,984)
+pred <- c(985,999)
+shlib <- c(685,700)
+shpred <- c(701,715)
+
+
+corr <- matrix(NA, ncol=8, nrow=5)
+corr_sh  <- matrix(NA, ncol=8, nrow=5)
+corr_com  <- matrix(NA, ncol=8, nrow=5)
+
+win=700  #where to start in the time series
+len=30
+
+compred <- matrix(NA,nrow=5, ncol=2)
+for(i in 1:5) {
+	(1:5)[-i]->j
+	compred[i,1:2]=c(i*1000-win-len/2,i*1000-win)
+	comlib=matrix(c(i*1000-win-1,j*1000-win-len/2,i*1000-win+len/2,j*1000-win+len/2),nrow=5)
 }
 
-for (i in 1:2){
-
-embed_sp5 <- Embed(five_sp_comp[,c(i)], dimension=3)
-colnames(embed_sp5) <- paste0("embed",1:3)
-
-library(plot3D)
-
-lines3D(x = embed_sp5[,1],
-       y = embed_sp5[,2],
-       z = embed_sp5[,3], colvar=NULL, col="blue", add=T)
-lines3D(x = embed_sp5[,1],
-       y = embed_sp5[,2],
-       z = embed_sp5[,3], colvar=NULL, col="red", add=T) 
+for (i in 1:5){
+  simplex_mod_stats_sp <- simplex(five_sp_comp[,i+1], lib = lib, pred = pred,
+                norm_type = c("L2 norm"), E = 1:8,
+                tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
+                exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
+  corr[i,1:8] <- simplex_mod_stats_sp$rho 
 }
+
+
+for (i in 1:5){
+  simplex_mod_stats_sp <- simplex(five_sp_comp[,i+1], lib = shlib, pred = shpred,
+                norm_type = c("L2 norm"), E = 1:8,
+                tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
+                exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
+  corr_sh[i,1:8] <- simplex_mod_stats_sp$rho 
+}
+
+library(reshape2)
+t <- melt(five_sp_comp[,2:6])
+t[1] <- 1:5000
+
+for (i in 1:5){
+  simplex_mod_stats_sp <- simplex(t[,2], lib = comlib, pred = compred[i,],
+                norm_type = c("L2 norm"), E = 1:8,
+                tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
+                exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
+  corr_com[i,1:8] <- simplex_mod_stats_sp$rho 
+}
+
+corr_D <- as.data.frame(t(apply(corr,2,quantile,probs=c(.025,.5,.975))))
+corr_D$type <- "Long time series N=1000" 
+corr_sh_D <-as.data.frame(t(apply(corr_sh,2,quantile,probs=c(.025,.5,.975))))
+corr_sh_D$type <- "Short timeseries N=30" 
+corr_com_D <- as.data.frame(t(apply(corr_com,2,quantile,probs=c(.025,.5,.975))))
+corr_com_D$type <- "Composite timeseries N = 5 * 30" 
+
+corr_D$D <- corr_sh_D$D <- corr_com_D$D <-  1:8
+
+corr_D_full <- rbind(corr_D, rbind(corr_sh_D, corr_com_D))
+
+
 
 ```
+
+## Figure 2:
+
+```{r}
+library(ggplot2)
+
+ggplot() + geom_line(data=corr_D_full, aes(x=D, y=`50%`)) +
+  geom_line(data=corr_D_full, aes(x=D, y=`2.5%`), colour="blue", linetype="dashed") + 
+  geom_line(data=corr_D_full, aes(x=D, y=`97.5%`), colour="blue", linetype="dashed") + facet_grid(.~type) + ylab("Correlation")
+
+
+```
+
+
+
 
