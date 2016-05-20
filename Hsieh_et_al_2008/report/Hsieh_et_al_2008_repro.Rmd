@@ -78,8 +78,9 @@ write.csv(output, "/Users/Frank/Documents/Git projects/RREEBES/Hsieh_et_al_2008/
 
 Next we try to reproduce figure 1 from the publication:
 ```{r}
-five_sp_comp <- read.csv("/Users/Frank/Documents/Git projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data.csv")
-five_sp_comp$time <- seq(1,1000)
+five_sp_comp <- read.csv("/Users/Frank/Documents/Github projects/RREEBES/Hsieh_et_al_2008/data/5sp_comp_sim_data_CA_code.csv")
+names(five_sp_comp) <- c("time", paste0("species.", 1:5))
+#five_sp_comp$time <- seq(1,1000)
 
 # fig 1 A
 plot(five_sp_comp[,3], five_sp_comp[,5], xlim=c(0,1.1), ylim=c(0,1.1))
@@ -168,7 +169,7 @@ abline(0,1)
 
 ```{r}
 # predict species 3 based on embeddings in species 5
-block_data <- five_sp_comp[,c(6,3,5)]
+block_data <- five_sp_comp[,c(1,4,6)]
 n <- NROW(block_data$species.5)
 block_data$species.5m1 <- c(NA, block_data$species.5[-n])
 block_data$species.5m2 <- c(NA, block_data$species.5m1[-n])
@@ -198,7 +199,7 @@ block <- block_lnlp(block_data, lib = c(1, 500), pred = c(500,NROW(block_data)),
 sp3_observations  <- block[[1]]$model_output$obs
 sp3_predictions  <- block[[1]]$model_output$pred
 
-plot(sp3_observations, sp3_predictions)
+plot(sp3_observations, sp3_predictions, ylim=c(-1.5,1.5))
 abline(a=0,b=1)
 str(block)
 ```
