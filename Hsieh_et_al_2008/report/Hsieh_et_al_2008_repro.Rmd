@@ -234,7 +234,7 @@ sp3_predictions  <- block[[1]]$model_output$pred
 par(mfrow=c(1,3))
 plot(five_sp_comp[,3], five_sp_comp[,5], xlab="Species 3",ylab="Species 5",main="Cross-species Correlation")
 
-plot(sp3_ar_prediction, five_sp_comp[,3],xlab="Prediction using Species 5",ylab="Species 3 (true value)",main="Cross-species AR Model")
+plot(sp3_ar_prediction, five_sp_comp[,3],xlab="Prediction using Species 3",ylab="Species 3 (true value)",main="Cross-species AR Model")
 abline(a=1, b=1)
 
 plot(sp3_observations, sp3_predictions,xlab="Prediction using Species 5",ylab="Species 3 (true value)",main="Cross-species S-Map")
