@@ -29,8 +29,8 @@ Minutes by Andrea
 * Vanessa made progress with her reproduction
 
 ###Presentation of Frank & Andrea
-Hsieh et al 2008 reproduction on simplex projection and s-map 
-Explained the theory and the reproduction of Fig 1 and 2
+* Hsieh et al 2008 reproduction on simplex projection and s-map 
+* Explained the theory and the reproduction of Fig 1 and 2
 
 ### Next presentations planning:
 * 31st May: Vanessa
