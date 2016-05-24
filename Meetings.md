@@ -18,6 +18,22 @@ What to attempt next week (to be refered to next week)?
 
 Meeting minutes for 2015 are archived [here](meeting_minutes_2015.md).
 
+## 24.05.2016
+Minutes by Andrea
+
+###Attendance 
+* Frank, Andrea, Aurelie, Vanessa, Ale
+
+## Highlights
+* Aurelie pushed up the new version of the reproduction
+* Vanessa made progress with her reproduction
+
+###Presentation of Frank & Andrea
+Hsieh et al 2008 reproduction on simplex projection and s-map 
+Explained the theory and the reproduction of Fig 1 and 2
+
+### Next presentations planning:
+* 31st May: Vanessa
 
 ## 17.05.2016
 Minutes by GM
