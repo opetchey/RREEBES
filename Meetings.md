@@ -18,13 +18,33 @@ What to attempt next week (to be refered to next week)?
 
 Meeting minutes for 2015 are archived [here](meeting_minutes_2015.md).
 
+## 07.06.2016
+Minutes by Aurelie
+
+###Attendance 
+* Frank, Mikael, Andrea, Aurelie, Ale
+
+### Highlights
+* Mikael is looking for a new reproduction. His interest would be Toni *et al.* and he will team up with Andrea and Frank (as soon as they finish their on-going reproduction)
+* Discussion about "why some reproductions take too much time?" 
+We should consider that a reproduction is not only to learn a new method but it should be enjoyable in order to increase productivity.
+* Discussion about **Methods sessions**. 
+   * about 30-45 minutes, once a months (schedule in the group calendar)
+   * possible topics: statistics, ABC, meta-anlysis, machine learning, etc.
+   * we should advertise these sessions (as well as the RREEBES) to the department... but having a larger group might be dangerous.
+
+### Next presentations planning:
+* 14th June: Vanessa
+* Next week everyone should prepare five methods that they would like to *learn* and five methods that they would be happy to *teach*.
+
+
 ## 24.05.2016
 Minutes by Andrea
 
 ###Attendance 
 * Frank, Andrea, Aurelie, Vanessa, Ale
 
-## Highlights
+### Highlights
 * Aurelie pushed up the new version of the reproduction
 * Vanessa made progress with her reproduction
 
