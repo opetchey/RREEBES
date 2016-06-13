@@ -295,6 +295,7 @@ for (i in 1:5){
                 tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
                 exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
   corr_com[i,1:8] <- simplex_mod_stats_sp$rho 
+  
 }
 
 corr_D <- as.data.frame(t(apply(corr,2,quantile,probs=c(.025,.5,.975))))
@@ -348,61 +349,70 @@ for(i in 1:100) {
 	shlib=matrix(c(x-15,x-1),nrow=1)
 
 	for(j in 1:5) {
-		t=as.vector(unlist(five_sp_comp[-15:14+x,c((2:6)[-j+1])]))
+		t=unlist(five_sp_comp[-15:14+x,c(j+1,(2:6))[]])
 		
-		corr[j,]=  smap_mod_stats_sp <- s_map(five_sp_comp[,j+1], lib = llib, pred = pred,
+		corr[j,]=  s_map(five_sp_comp[,j+1], lib = llib, pred = pred,
                 norm_type = c("L2 norm"), E = 3, theta = theta_list,
                 tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
                 exclusion_radius = NULL, epsilon = NULL, silent = FALSE)$rho
 		corr_list[[i]] <- corr
 	
-		corr_sh[j,]=  smap_mod_stats_sp <- s_map(five_sp_comp[,j+1], lib = shlib, pred = pred,
+		corr_sh[j,]=  s_map(five_sp_comp[,j+1], lib = shlib, pred = pred,
                 norm_type = c("L2 norm"), E = 3, theta = theta_list,
                 tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
                 exclusion_radius = NULL, epsilon = NULL, silent = FALSE)$rho
 		corr_sh_list[[i]] <- corr_sh	
 		
-		corr_com[j,]=  smap_mod_stats_sp <- s_map(length(t), lib = clib, pred = matrix(c(121,149),nrow=1),
-                norm_type = c("L2 norm"), E = 3, theta = theta_list,
-                tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
-                exclusion_radius = NULL, epsilon = NULL, silent = FALSE)$rho
-		corr_com_list[[i]] <- corr_com
+#  		corr_com[j,]=  s_map(t, lib = clib, pred = matrix(c(121,149),nrow=1),
+#                 norm_type = c("L2 norm"), E = 3, theta = theta_list,
+#                 tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
+#                 exclusion_radius = NULL, epsilon = NULL, silent = FALSE)$rho
+# 		corr_com_list[[i]] <- corr_com
 
 		
 	}
 }
 
-
+corr_theta <- corr_sh_theta <- corr_com_theta <- vector("list", 5)
 
 library(dplyr)
 
 for (k in 1:5){
 corr_theta_df <- data.frame(matrix(unlist(lapply(corr_list, `[`,k,)), nrow=100, byrow=T))
 corr_sh_theta_df <- data.frame(matrix(unlist(lapply(corr_sh_list, `[`,k,)), nrow=100, byrow=T))
-corr_com_theta_df <- data.frame(matrix(unlist(lapply(corr_com_list, `[`,k,)), nrow=100, byrow=T))
-}
-t
+#corr_com_theta_df <- data.frame(matrix(unlist(lapply(corr_com_list, `[`,k,)), nrow=100, byrow=T))
 
-
+if (k == 1){
 corr_theta <- as.data.frame(t(apply(corr_theta_df,2,quantile,probs=c(.025,.5,.975))))
-corr_theta$type <- "Long time series N=1000" 
 corr_sh_theta <-as.data.frame(t(apply(corr_sh_theta_df,2,quantile,probs=c(.025,.5,.975))))
+#corr_com_theta <- as.data.frame(t(apply(corr_com_theta_df,2,quantile,probs=c(.025,.5,.975))))
+  
+}
+
+if (k > 1){
+corr_theta <- rbind(corr_theta, as.data.frame(t(apply(corr_theta_df,2,quantile,probs=c(.025,.5,.975)))))
+corr_sh_theta <- rbind(corr_sh_theta, as.data.frame(t(apply(corr_sh_theta_df,2,quantile,probs=c(.025,.5,.975)))))
+#corr_com_theta <- rbind(corr_com_theta, as.data.frame(t(apply(corr_com_theta_df,2,quantile,probs=c(.025,.5,.975)))))
+  
+  
+}
+
+}
+
+corr_theta$theta <- corr_sh_theta$theta <-  theta_list
+corr_theta$type <- "Long time series N=1000" 
 corr_sh_theta$type <- "Short timeseries N=30" 
-corr_com_theta <- as.data.frame(t(apply(corr_com_theta_df,2,quantile,probs=c(.025,.5,.975))))
-corr_com_theta$type <- "Composite timeseries N = 5 * 30" 
+corr_sh_theta$species <- corr_theta$species <- rep(1:5, each=11)
+#corr_com_theta$type <- "Composite timeseries N = 5 * 30" 
 
-corr_theta$theta <- corr_sh_theta$theta <- corr_com_theta$theta <-  theta_list
+corr_theta_full <- rbind(corr_theta, corr_sh_theta)
+#corr_theta_full <- rbind(corr_theta, rbind(corr_sh_theta, corr_com_theta))
 
-corr_theta_full <- rbind(corr_theta, rbind(corr_sh_theta, corr_com_theta))
-
-```
-
-```{r}
 library(ggplot2)
 
-ggplot() + geom_line(data=corr_theta_full, aes(x=theta, y=`50%`)) +
-  geom_line(data=corr_theta_full, aes(x=theta, y=`2.5%`), colour="blue", linetype="dashed") + 
-  geom_line(data=corr_theta_full, aes(x=theta, y=`97.5%`), colour="blue", linetype="dashed") + facet_grid(.~type) + ylab("Correlation") + scale_x_continuous(trans="log10")
+ggplot() + geom_line(data=corr_theta_full, aes(x=theta, y=`50%`, group=species, colour=species)) +
+  geom_line(data=corr_theta_full, aes(x=theta, y=`2.5%`, group=species, colour=species), linetype="dashed") + 
+  geom_line(data=corr_theta_full, aes(x=theta, y=`97.5%`, group=species, colour=species), linetype="dashed") + facet_grid(.~type) + ylab("Correlation") + scale_x_continuous(trans="log10")
 
 
 ```
