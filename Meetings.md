@@ -18,6 +18,19 @@ What to attempt next week (to be refered to next week)?
 
 Meeting minutes for 2015 are archived [here](meeting_minutes_2015.md).
 
+## 14.06.2016
+Minutes by Ale
+
+### Attendance
+Frank, Vanessa, Aurelie, Ale, Andrea, Mikael
+
+### Highlights
+Vanessa presented the progress in her paper. 
+Next week Aurelie (and Ale if she actually gets on board with it) will present her paper. 
+About the "Methods meetings", we wrote down all that we can teach others and we will vote them through an online tool until next week. After that we will start with meetings once a week. 
+If there are more things that we want to learn but that are not in that list, please send it to Ale, so she compiles a file and next week we will decide what to do with that (maybe call people to give talks for us). 
+
+
 ## 07.06.2016
 Minutes by Aurelie
 
