@@ -9,8 +9,6 @@
 [Tessa B. Francis, Mark D. Scheuerell, Richard D. Brodeur, Phillip S. Levin, James J. Ruzicka, Nick Tolimieri and William T. Peterson (2012) Climate shifts the interaction web of a marine plankton community](http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2486.2012.02702.x/abstract).     
 The paper uses multivariate autoregressive models (introduced in "Quantifying effects of abiotic and biotic drivers on community dynamics with multivariate autoregressive (MAR) models", http://www.esajournals.org/doi/full/10.1890/13-0996.1), which maybe an interesting approach for our BEEP data. We need to check data availability, however, there are other potentially interesting papers using the approach, if we cannot get the data of this one.
 
-Gernster et al 2014, [EDITOR'S CHOICE: REVIEW: Effects of land use on plant diversity - A global meta-analysis, Journal of applied ecology, vol:51 iss:6 pg:1690 -1700] (http://onlinelibrary.wiley.com/doi/10.1111/1365-2664.12329/epdf)
-
 [HAWKES, Christine V. & KEITT, Timothy H. (2015, EcolLet): Resilience vs. historical contingency in microbial responses to environmental change.](http://onlinelibrary.wiley.com/doi/10.1111/ele.12451/full)
 TMM: How do historical patterns of environmental variation influence the resilience of competitively structured communities to a change in the environmet? Is the community resilient (i.e., returning to its pre-perturbed state) or is its performance highly contingent on the past environment (i.e., approaching a different state)? To answer these questions, Hawkes & Keitt employ a simulation model including physiological, community and evolutionary mechanisms.
 
