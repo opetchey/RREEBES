@@ -25,7 +25,8 @@ Minutes by Ale
 Frank, Vanessa, Aurelie, Ale, Andrea, Mikael
 
 ### Highlights
-About the "Methods meetings", we wrote down all that we can teach others and we will vote them through an online tool until next week. After that we will start with meetings once a week. 
+About the "Methods meetings", we wrote down all that we can teach others and we will vote them through an online tool until next week. Please vote on this link: http://www.tricider.com/brainstorming/35IUtgcZ1EF
+After that we will start with meetings once a week. 
 If there are more things that we want to learn but that are not in that list, please send it to Ale, so she compiles a file and next week we will decide what to do with that (maybe call people to give talks for us). 
 
 ### Today's presentation
