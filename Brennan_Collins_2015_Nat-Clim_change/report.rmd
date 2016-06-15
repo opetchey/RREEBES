@@ -29,7 +29,7 @@ The known issues/ problems with this reproduction are with the prefix "Brennan" 
 The data are available on the [website](http://datadryad.org/resource/doi:10.5061/dryad.jt1fb) as CSV files, with text document referencing the content of the each CSV file. 
 
 - [**DataDryad_mixed_model_290415.csv**](http://datadryad.org/bitstream/handle/10255/dryad.86868/DataDryad_mixed_model_290415.csv?sequence=1).
-Raw data for mixede model analysis, plotting and creating case studies for further analysis. See read me section in r script "mixed_model_DataDryad_290415.r".
+Raw data for mixed model analysis, plotting and creating case studies for further analysis. See read me section in r script "mixed_model_DataDryad_290415.r".
 
 - [**All_lines_030515.csv**](http://datadryad.org/bitstream/handle/10255/dryad.86870/All_lines_030515.csv?sequence=1).
 .csv file for plotting case study plot using r script "mixed_model_DataDryad_290415.r".
@@ -41,11 +41,157 @@ R script for mixed model analysis of raw data supplied and plotting.
 The effect of sampling from a finite number of possible environmental drivers was explored using a simulation written in R.
 
 
+```{r cleaning_environment}
+rm(list=ls())
+```
 
+```{r packages}
+library(RCurl) # can get URL link
+library(plyr) # function ddply
+library(ggplot2) # plot
+library(lme4)
+```
 
 # Get the raw data into R
+```{r get_data}
+dd <- read.csv(text=getURL("http://datadryad.org/bitstream/handle/10255/dryad.86868/DataDryad_mixed_model_290415.csv?sequence=1"), check.names=FALSE)
+str(dd)
+```
 
 # Figure 2
+
+## Figure 2a
+The figure 2a represents the mean and standard deviation between regimes for each NED.
+```{r Fig2a}
+mean_per_regime <- ddply(.data=dd, .(regime,treatment), summarise, mean=mean(perDay),sd=sd(perDay))
+mean_per_regime <- unique(merge(dd[,c("treatment","NED")], mean_per_regime, by="treatment"))
+str(mean_per_regime)
+
+pd <- position_dodge(width=0.3)
+shape_treatment <- rep(c(1:6), 16)
+lims <- aes(ymin=mean-sd, ymax=mean+sd)
+
+fig2a <- ggplot(data=mean_per_regime, aes(x=NED, y=mean, group=treatment)) +
+  geom_errorbar(lims, position = pd, width=0) +
+  geom_point(aes(shape=treatment), position = pd, size=2) +
+  scale_shape_manual(values=rep(c(1:6),16)) +
+  geom_hline(aes(yintercept=mean_per_regime[which(mean_per_regime$NED==0),"mean"]), linetype=2) +
+  labs(x="Number of environmental drivers", y="Average cell division rate (per day)") +
+  theme_bw()+
+  theme(legend.position="none")
+fig2a  
+```
+
+If problem with position_dodge(), it needs a grouping variable (here, "treatment")
+
+## The need for overlaping and its estimation 
+
+```{r overlap}
+ggplot(data=dd, aes(x=NED, y=overlap)) +
+  geom_jitter(width=0.2)
+```
+
+The need of estimating the overlap of NED between regimes is due to the experimental design. In this study not all possible combination between environmental drivers (which would be 2^8=256 combinations, whereas here 96 combinations were tested). Then, the overlap take into account that some environmental drivers are often involved than others. 
+The estimation of overlap was directly in the data sheet. 
+
+The overlap is the number of times that each drivers involved in a specific regime is involved in other regimes, given the total number of possible combinations and the number of combinations realized.
+
+for example in the combination CO2/Herb. The overlap is 0.166667.
+The driver "CO2" appears 7 times (in 2-way factorial combinations) and "Herb" appears 2 times. If all possible 2 way combinations were done, there should have 28 regimes but only 15 were done in the experiment. 
+((7-1)+(2-1)/28) / 15 = 0.0166667
+
+... but I consistently found a factor of 1/10 between the given overlap and the estimated overlap. It might be a choice from the authors to multiple all the overlap by a factor 10 (which shoud not change the effect)
+
+
+
+## The relative fit
+This measurement is used to estimate as the effect of each regime. 
+
+```{r relative_fit}
+
+ggplot(data=dd, aes(x=NED,y=relative.fit)) + geom_point() +
+  geom_hline(yintercept = mean_per_regime[which(mean_per_regime$NED=="0"),"mean"], colour="red" )+
+  geom_hline(yintercept = 1, colour="blue")
+
+test_relative <- dd
+test_relative$rel_fit <- test_relative$perDay /mean_per_regime[which(mean_per_regime$NED=="0"),"mean"]
+
+ggplot(data=test_relative, aes(relative.fit, rel_fit)) + geom_point() +
+  geom_abline(intercept = 0, slope = 1, colour="red") + 
+  facet_wrap(~NED, nrow = 2)
+```
+
+
+## Fig 2b-c-d
+```{r mean_per_NED}
+mean_per_NED <- ddply(.data=dd, .(NED), summarise, mean=mean(perDay),sd=sd(perDay))
+
+fig2_base <- ggplot(data=mean_per_NED, aes(x=NED, y=mean)) +
+  geom_errorbar(aes(x=NED, ymax=mean+sd, ymin=mean-sd),width=.4) +
+  geom_point(size=2) +
+  geom_hline(aes(yintercept=0), linetype=2) +
+  labs(x="Number of environmental drivers", y="Average cell division rate (per day)") +
+  theme_bw()+
+  theme(legend.position="none")
+fig2_base
+
+```
+
+```{r overall_model}
+mod1 <- lmer(perDay ~ NED + overlap + (1|regime) + (1|replicate), REML=TRUE, data=dd)
+summary(mod1)
+anova(mod1)
+
+mod2<- lmer (perDay ~ NED + overlap + (1|Co2) + (1|Temp) + (1|pH) + (1|P) + (1|Herb) + (1|uv) + (1|ND) + (1|Li) + (1|replicate), dd)
+summary(mod2)
+anova(mod2)
+```
+
+
+```{r get_main_effect}
+# two possibilities to get the main effects
+
+## 1/ using the mean when NED = 1
+main_effect_1 <- ddply(subset(dd, NED==1|NED==0), .(treatment,NED), summarise,
+                       mean=mean(relative.fit),
+                       sd=sd(relative.fit),
+                       var=var(relative.fit))
+
+## 2/ using the estimates of the linear model (possible because two levels of each driver, and one of which is the control)
+mod_main_effect <- lm(relative.fit ~ Temp+Co2+Herb+uv+Li+pH+ND+P, subset(dd, NED==1 | NED==0))
+summary(mod_main_effect)
+
+est_main_effect <- data.frame(coefficients(mod_main_effect))
+est_main_effect$treatment <- gsub("yes","",row.names(est_main_effect))
+row.names(est_main_effect) <- NULL
+names(est_main_effect)[1] <- "estimate"
+
+## predict the value (Intercept + effect) to compare with the "main_effect_1"
+main_effect_2 <- ddply(est_main_effect, .(treatment), summarise, 
+                           pred = est_main_effect[1,1] + estimate)
+
+# --> Both method give the same answer
+```
+
+
+```{r models}
+### comparative model
+# N(exp) is equal to the most dominant individual environmental driver relative to the control (1 - N(obs))
+
+
+### additive model
+# N(exp) is the sum effects of all individuals drivers present in the regime when experienced alone
+
+
+
+### multiplicative model
+# N(exp) is the product for N(obs) for each of the drivers present in the regime when they are experienced alone (at NED=1)
+
+
+
+```
+
+
 
 # Figure 3
 
