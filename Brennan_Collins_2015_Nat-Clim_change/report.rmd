@@ -14,7 +14,7 @@ This is a reproduction of an experiment presented in the paper *Growth responses
 
 
 # Authors involved in this reproduction
-Lead author was Aurélie Garnier. 
+Lead author was Aurélie Garnier. Ale teamed up too!
 All contributions are detailed on GitHub in the commit history.
 
 # Goals for this reproduction
