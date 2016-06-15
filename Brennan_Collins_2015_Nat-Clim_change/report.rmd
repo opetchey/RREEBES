@@ -173,10 +173,47 @@ main_effect_2 <- ddply(est_main_effect, .(treatment), summarise,
 # --> Both method give the same answer
 ```
 
+Script for the prediction data according to hypothesis
+
+```{r create_estimate_data_frame}
+dd_fig2_pred <- dd[,c(2:12)]
+
+##replace NA for estimates
+dd_fig2_pred$Temp <- ifelse(dd_fig2_pred$Temp=="yes",
+                   est_main_effect[which(est_main_effect$treatment=="Temp"),"estimate"],
+                   0)
+dd_fig2_pred$Co2 <- ifelse(dd_fig2_pred$Co2=="yes",
+                   est_main_effect[which(est_main_effect$treatment=="Co2"),"estimate"],
+                   0)
+dd_fig2_pred$Herb <- ifelse(dd_fig2_pred$Herb=="yes",
+                   est_main_effect[which(est_main_effect$treatment=="Herb"),"estimate"],
+                   0)
+dd_fig2_pred$uv <- ifelse(dd_fig2_pred$Herb=="yes",
+                   est_main_effect[which(est_main_effect$treatment=="uv"),"estimate"],
+                   0)
+dd_fig2_pred$Li <- ifelse(dd_fig2_pred$Li=="yes",
+                   est_main_effect[which(est_main_effect$treatment=="Li"),"estimate"],
+                   0)
+dd_fig2_pred$pH <- ifelse(dd_fig2_pred$pH=="yes",
+                   est_main_effect[which(est_main_effect$treatment=="pH"),"estimate"],
+                   0)
+dd_fig2_pred$ND <- ifelse(dd_fig2_pred$ND=="yes",
+                   est_main_effect[which(est_main_effect$treatment=="ND"),"estimate"],
+                   0)
+dd_fig2_pred$P <- ifelse(dd_fig2_pred$P=="yes",
+                   est_main_effect[which(est_main_effect$treatment=="P"),"estimate"],
+                   0)
+
+
+
+```
 
 ```{r models}
 ### comparative model
 # N(exp) is equal to the most dominant individual environmental driver relative to the control (1 - N(obs))
+
+dd_fig2_pred$comparative <- 1 + max(abs(dd_fig2_pred[,c(4:11)]))
+
 
 
 ### additive model
@@ -188,6 +225,12 @@ main_effect_2 <- ddply(est_main_effect, .(treatment), summarise,
 # N(exp) is the product for N(obs) for each of the drivers present in the regime when they are experienced alone (at NED=1)
 
 
+
+```
+
+
+
+# Figure 3
 
 ```
 
