@@ -124,7 +124,9 @@ ggplot(data=test_relative, aes(relative.fit, rel_fit)) + geom_point() +
 
 ## Fig 2b-c-d
 ```{r mean_per_NED}
-mean_per_NED <- ddply(.data=dd, .(NED), summarise, mean=mean(perDay),sd=sd(perDay))
+mean_per_treatment <- ddply
+mean_per_NED <- ddply(.data=dd, .(NED), summarise, 
+                      mean=mean(perDay), sd=sd(perDay))
 
 fig2_base <- ggplot(data=mean_per_NED, aes(x=NED, y=mean)) +
   geom_errorbar(aes(x=NED, ymax=mean+sd, ymin=mean-sd),width=.4) +
@@ -153,12 +155,12 @@ anova(mod2)
 
 ## 1/ using the mean when NED = 1
 main_effect_1 <- ddply(subset(dd, NED==1|NED==0), .(treatment,NED), summarise,
-                       mean=mean(relative.fit),
-                       sd=sd(relative.fit),
-                       var=var(relative.fit))
+                       mean=mean(perDay),
+                       sd=sd(perDay),
+                       var=var(perDay))
 
 ## 2/ using the estimates of the linear model (possible because two levels of each driver, and one of which is the control)
-mod_main_effect <- lm(relative.fit ~ Temp+Co2+Herb+uv+Li+pH+ND+P, subset(dd, NED==1 | NED==0))
+mod_main_effect <- lm(perDay ~ Temp+Co2+Herb+uv+Li+pH+ND+P, subset(dd, NED==1 | NED==0))
 summary(mod_main_effect)
 
 est_main_effect <- data.frame(coefficients(mod_main_effect))
@@ -176,34 +178,34 @@ main_effect_2 <- ddply(est_main_effect, .(treatment), summarise,
 Script for the prediction data according to hypothesis
 
 ```{r create_estimate_data_frame}
-dd_fig2_pred <- dd[,c(2:12)]
+dd_fig2 <- dd[,c(2:12)]
 
 ##replace NA for estimates
-dd_fig2_pred$Temp <- ifelse(dd_fig2_pred$Temp=="yes",
+dd_fig2$Temp <- ifelse(dd_fig2$Temp=="yes",
                    est_main_effect[which(est_main_effect$treatment=="Temp"),"estimate"],
-                   0)
-dd_fig2_pred$Co2 <- ifelse(dd_fig2_pred$Co2=="yes",
+                   NA)
+dd_fig2$Co2 <- ifelse(dd_fig2$Co2=="yes",
                    est_main_effect[which(est_main_effect$treatment=="Co2"),"estimate"],
-                   0)
-dd_fig2_pred$Herb <- ifelse(dd_fig2_pred$Herb=="yes",
+                   NA)
+dd_fig2$Herb <- ifelse(dd_fig2$Herb=="yes",
                    est_main_effect[which(est_main_effect$treatment=="Herb"),"estimate"],
-                   0)
-dd_fig2_pred$uv <- ifelse(dd_fig2_pred$Herb=="yes",
+                   NA)
+dd_fig2$uv <- ifelse(dd_fig2$uv=="yes",
                    est_main_effect[which(est_main_effect$treatment=="uv"),"estimate"],
-                   0)
-dd_fig2_pred$Li <- ifelse(dd_fig2_pred$Li=="yes",
+                   NA)
+dd_fig2$Li <- ifelse(dd_fig2$Li=="yes",
                    est_main_effect[which(est_main_effect$treatment=="Li"),"estimate"],
-                   0)
-dd_fig2_pred$pH <- ifelse(dd_fig2_pred$pH=="yes",
+                   NA)
+dd_fig2$pH <- ifelse(dd_fig2$pH=="yes",
                    est_main_effect[which(est_main_effect$treatment=="pH"),"estimate"],
-                   0)
-dd_fig2_pred$ND <- ifelse(dd_fig2_pred$ND=="yes",
+                   NA)
+dd_fig2$ND <- ifelse(dd_fig2$ND=="yes",
                    est_main_effect[which(est_main_effect$treatment=="ND"),"estimate"],
-                   0)
-dd_fig2_pred$P <- ifelse(dd_fig2_pred$P=="yes",
+                   NA)
+dd_fig2$P <- ifelse(dd_fig2$P=="yes",
                    est_main_effect[which(est_main_effect$treatment=="P"),"estimate"],
-                   0)
-
+                   NA)
+dd_fig2 <- unique(dd_fig2)
 
 
 ```
@@ -211,23 +213,50 @@ dd_fig2_pred$P <- ifelse(dd_fig2_pred$P=="yes",
 ```{r models}
 ### comparative model
 # N(exp) is equal to the most dominant individual environmental driver relative to the control (1 - N(obs))
-
-dd_fig2_pred$comparative <- 1 + max(abs(dd_fig2_pred[,c(4:11)]))
-
-
-
 ### additive model
 # N(exp) is the sum effects of all individuals drivers present in the regime when experienced alone
-
-
-
 ### multiplicative model
 # N(exp) is the product for N(obs) for each of the drivers present in the regime when they are experienced alone (at NED=1)
 
+mean_control <- main_effect_1[which(main_effect_1$NED==0),"mean"]
 
+dd_fig2_pred <- ddply(dd_fig2, .(treatment,regime,NED),  function(df){
+  
+  #df <- unique(subset(dd_fig2, treatment=="Temp"))
+  
+  if(df$NED==0) {
+    comparative=mean_control;
+    additive=mean_control;
+    multiplicative=mean_control;
+  }
+ 
+  if(df$NED!=0) {
+    dom_effect = names(df)[which(abs(df[,c(4:11)])==max(abs(df[,c(4:11)]),na.rm=T) )+3] ;
+    comparative = mean_control + df[,dom_effect];
+    additive = mean_control + sum(df[,c(4:11)], na.rm=TRUE);
+    multiplicative = prod(mean_control+df[,c(4:11)], na.rm=TRUE)
+  }
+  
+  return(data.frame(comparative, additive, multiplicative))
+})
+
+
+mean_pred_per_NED <- ddply(dd_fig2_pred, .(NED), summarise,
+                           mean_comparative = mean(comparative),sd_comparative = sd(comparative),
+                           mean_additive = mean(additive), sd_additive=sd(additive),
+                           mean_multiplicative = mean(multiplicative), sd_multiplicative = sd(multiplicative))
 
 ```
 
+```{r fig2_models}
+
+fig2b_comparative <- fig2_base + geom_point(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, y=mean_comparative), color="red ",shape=2, size=3) + 
+  geom_errorbar(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, ymin=mean_comparative-sd_comparative, ymax=mean_comparative+sd_comparative), color="red")
+
+fig2c_multiplicative <- fig2_base + geom_point(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, y=mean_multiplicative), color="red ")
+fig2d_additive <- fig2_base + geom_point(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, y=mean_additive), color="red ")
+
+```
 
 
 # Figure 3
