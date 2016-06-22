@@ -124,7 +124,6 @@ ggplot(data=test_relative, aes(relative.fit, rel_fit)) + geom_point() +
 
 ## Fig 2b-c-d
 ```{r mean_per_NED}
-mean_per_treatment <- ddply
 mean_per_NED <- ddply(.data=dd, .(NED), summarise, 
                       mean=mean(perDay), sd=sd(perDay))
 
@@ -250,12 +249,14 @@ mean_pred_per_NED <- ddply(dd_fig2_pred, .(NED), summarise,
 
 ```{r fig2_models}
 
-fig2b_comparative <- fig2_base + geom_point(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, y=mean_comparative), color="red ",shape=2, size=3) + 
-  geom_errorbar(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, ymin=mean_comparative-sd_comparative, ymax=mean_comparative+sd_comparative), color="red")
+fig2b_comparative <- fig2_base + geom_point(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, y=mean_comparative), color="red ",shape=2, size=3) + geom_errorbar(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, ymin=mean_comparative-sd_comparative, ymax=mean_comparative+sd_comparative), color="red")
+fig2b_comparative
 
-fig2c_multiplicative <- fig2_base + geom_point(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, y=mean_multiplicative), color="red ")
-fig2d_additive <- fig2_base + geom_point(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, y=mean_additive), color="red ")
+fig2c_multiplicative <- fig2_base + geom_point(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, y=mean_multiplicative), color="red ",shape=2, size=3)+ geom_errorbar(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, ymin=mean_multiplicative-sd_multiplicative, ymax=mean_multiplicative+sd_multiplicative), color="red")
+fig2c_multiplicative
 
+fig2d_additive <- fig2_base + geom_point(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, y=mean_additive), color="red ",shape=2, size=3)+ geom_errorbar(inherit.aes = F, data=mean_pred_per_NED, aes(x=NED, ymin=mean_additive-sd_additive, ymax=mean_additive+sd_additive), color="red")
+fig2d_additive
 ```
 
 
