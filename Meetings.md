@@ -18,6 +18,30 @@ What to attempt next week (to be refered to next week)?
 
 Meeting minutes for 2015 are archived [here](meeting_minutes_2015.md).
 
+# 28.6.2016 (minutes by Frank)
+
+### Attendance: Mikael, Aurelie, Vanessa, Frank, Andrea
+
+## Misc:
+Please put photos for your github account
+
+## Suggested papers?
+No
+
+## Any progress?
+* again discussion when to wrap up a reproduction
+* Mikael, Andrea and Frank going to work on ABC next
+
+## New issues?
+No
+
+## Presentation
+Aurelie presented the reproduction of Brennan et al. 2015, together with Ale
+Main results successfully reproduced, Aurélie explained major obstacles (estimating overlap due to unequal representation of environmental stressors)
+
+
+
+
 ## 14.06.2016
 Minutes by Ale
 
