@@ -1,25 +1,29 @@
 ---
-title: "Hsieh_et_al_2008_repro"
-output: html_document
+title: "Reproduction of Hsieh et al. 2008: Extending non-linear analysis to short ecological time series"
+output: 
+  html_document: 
+    toc: yes
+authors: Frank Pennekamp & Andrea Tabi
 ---
 
 # Introduction:
 
-Hsieh et al. 2008, American Naturalist propose a method to detect non-linearity in ecological time series using the simplex and s-map projections developed by Sugihara and co-workers. Generally, non-linear time series analysis requires long-time series to detect signals. The approach by Hsieh et al. combines individual time series of ecologically similar species into one long time series to which simplex and s-maps can be applied (termed *Dewdrop regression* by the authors). To illustrate their approach, a five species competition model was used to generate time series and the ability of the method to get back the original parameter values of the simulation tested under various levels of noise and lengths of the time series.
+[Hsieh et al. 2008](http://www.jstor.org/stable/10.1086/524202?seq=1#page_scan_tab_contents) propose a method to detect non-linearity in ecological time series using the simplex and s-map projections developed by Sugihara and co-workers. Generally, non-linear time series analysis requires long-time series to detect signals. The approach by Hsieh et al. combines individual time series of ecologically similar species into one long time series to which simplex and s-maps can be applied (termed *Dewdrop regression* by the authors). 
+To illustrate their approach, a five species competition model was used to generate time series and the ability of the method to get back the original parameter values of the simulation tested under various levels of noise and lengths of the time series.
 
 The goals for this reproduction are:
+* set up a simulation model of multi-species competition
 * understanding simplex and s-maps as forecasting tools using the recently released rEDM package.
 * understand the approach taken to combine several short time series into one long time series to detect non-linearity and make useful forecasts
-* set up a simulation model of multi-species competition
 
-# Step 1: Simulate 5 species dynamics:
+# Step 1: Simulate 5 species dynamics (as described in detail in Appendix B):
 
 First we reproduced the dynamics of the 5 species community as follows:
 
 * a multispecies competition model based on the logistic map
 * all alphas set to 0.05
 * growth rate r is 3.57 (just below the chaotic regime)
-* 15% process noise noise was added to the time series (to the alphas)
+* 15% process noise noise was added to the abundance time series at each time step
 * additionally, 5% observation noise was added to the generated time series
 * time series of abundance for 1000 steps generated for each species
 
@@ -62,10 +66,6 @@ for (i in 1:(length(t)-1)){
 # add some observation noise to time series
 N <- N * runif(length(N), 0.95, 1.05)
 
-# plot results
-matplot(t,t(N[1:S,]), "l",ylim=c(0,1), xlim=c(0,100),col=2:5)
-
-
 output <- as.data.frame(t(N[1:S,]))
 names(output) <- paste0("species ", 1:S)
 
@@ -82,7 +82,17 @@ five_sp_comp <- five_sp_comp[,c(6,1:5)]
 
 ```
 
+Plot shows time series for the 5 species competition model.
+
+```{r}
+# plot results
+matplot(t,t(N[1:S,]), "l",ylim=c(0,1), xlim=c(0,100),col=2:5)
+```
+
+
 # Are species dynamically similar? Look at state-space plot of the different species:
+
+One of the assumptions of the method is that composite time series originate from species with similar dynamics. We hence checked that dynamics of two species look similar with a state-space plot using the embeddings of the time series, which is just a sanity check, as the model was setup to simulate species with the same dynamics (same r and alphas) but obscured dynamics due to process and observation noise.
 
 ```{r, state-space, eval=T}
 Embed <- function(X, dimension=4) {
@@ -109,7 +119,10 @@ points3D(x = embed_sp5[,1],
 
 ```
 
-Next we try to reproduce figure 1 from the publication:
+The two species have indeed a similar geometric shape in the state-space plot
+
+Next we try to reproduce figure 1 from the publication. Panel A uses a 4th order AR model fitted to species 5 (to get coefficients) to predict the dynamics of species 5. The following R chunk fits the AR(4) model:
+
 ```{r}
 # fig 1 A
 #plot(five_sp_comp[,3], five_sp_comp[,5], xlim=c(0,1.1), ylim=c(0,1.1))
@@ -119,7 +132,10 @@ ar_mod <-  ar(as.ts(five_sp_comp[,c(5)]), FALSE, 4)
 #str(ar_mod)
 
 ar_mod$ar
+```
 
+Now make predictions for species 3 based on species 5. We use this information later when compiling figure 1.
+```{r}
 sp3_ar_prediction <- vector("numeric", 1000)
 # predict species 3 based on species 5
 for (t in 5:1000){
@@ -135,9 +151,15 @@ sp3_ar_prediction[t] = ar_mod$x.mean + ar_mod$ar[1] * five_sp_comp[(t-1),3] + ar
 
 ## Use rEDM package to make predictions
 
+The following part uses the [rEDM package](https://cran.r-project.org/web/packages/rEDM/index.html) to make predictions with the simplex and s-map projection methods. For quick walkthroughs of simplex projection and the related convergent crossmappings, please have a look to the following RREEBES materials:      
+- http://opetchey.github.io/RREEBES/Sugihara_and_May_1990_Nature/Simplex_projection_walkthrough.html     
+- http://opetchey.github.io/RREEBES/Sugihara_etal_2012_Science/Sugihara_2012_Science_Fig3A.html          
+
+
+
 # Step 2: Apply simplex projection from rEDM package to simulated time series (predicting species 5)
 
-Predict last 15 time steps of species 1 based on previous 985 time steps of same species.
+First, let's predict dynamics of species 5 with information from its own time series. The goal is to predict last 15 time steps of species 1 based on previous 985 time steps of same species. The simplex method is often used to determine the embedding dimension (because it is less prone to overfitting) and use that parameter in a subsequent s-map projection.
 
 ```{r, echo=FALSE}
 # now load our simulated time series
@@ -150,8 +172,6 @@ simplex_mod_stats_sp5_1 <- simplex(five_sp_comp$species.5, lib = c(1, 500), pred
                 tau = 1, tp = 1, num_neighbors = "e+1", stats_only = T,
                 exclusion_radius = NULL, epsilon = NULL, silent = FALSE)
 
-# check number of embedding dimensions
-plot(simplex_mod_stats_sp5_1$E, simplex_mod_stats_sp5_1$rho, type="l", xlab = "Embedding dimension (E)", ylab="Forecast skill (rho)")
 
 # look at actual forecasting skill (we have to refit the model and set stats_only to FALSE) when predicting species 1 with data from species 1
 simplex_mod_pred_sp5_2 <- simplex(five_sp_comp$species.5, lib = c(1, 500), pred = c(501, NROW(five_sp_comp$species.5)),
@@ -164,10 +184,6 @@ sp5_predictions  <- simplex_mod_pred_sp5_2[[3]]$model_output$pred
 
 #head(simplex_mod_pred_sp5_2[[3]]$model_output$time)
 
-# compare data with predictions visually
-plot(five_sp_comp$time, five_sp_comp$species.5, "l", ylim=c(0,1), xlim = c(900,1000), xlab="time step", ylab="abundance species 5")
-par(new=T)
-plot(simplex_mod_pred_sp5_2[[3]]$model_output$time, simplex_mod_pred_sp5_2[[3]]$model_output$pred, "l", lty = 2, col="red", ylim=c(0,1), xlim = c(900,1000), xlab="time step", ylab="abundance species 5")
 
 #plot(sp5_observations, sp5_predictions, "p", lty = 2, col="red", ylim=c(0,1), xlim=c(0,1))
 #abline(0,1)
@@ -175,8 +191,27 @@ plot(simplex_mod_pred_sp5_2[[3]]$model_output$time, simplex_mod_pred_sp5_2[[3]]$
 
 ```
 
+The first let's have a look at the mbedding dimensions. We select the dimension where forecast skill peaks.
+
+```{r}
+plot(simplex_mod_stats_sp5_1$E, simplex_mod_stats_sp5_1$rho, type="l", xlab = "Embedding dimension (E)", ylab="Forecast skill (rho)")
+```
+
+Now let's look at the actual forecasting skill by looking at the overlay of predicted and observed abundances:
+
+```{r}
+# compare data with predictions visually
+plot(five_sp_comp$time, five_sp_comp$species.5, "l", ylim=c(0,1), xlim = c(900,1000), xlab="time step", ylab="abundance species 5")
+par(new=T)
+plot(simplex_mod_pred_sp5_2[[3]]$model_output$time, simplex_mod_pred_sp5_2[[3]]$model_output$pred, "l", lty = 2, col="red", ylim=c(0,1), xlim = c(900,1000), xlab="time step", ylab="abundance species 5")
+
+```
+
+Looks pretty good, the previous plots shows us that we have a correlation coefficient about 0.8 for observed and predicted.
 
 # Step 3: apply s-maps to simulated time series with best embedding dimension as determined by simplex (predicting species 5)
+
+Next we want to use the more sophisticated s-maps, which can also be used to test for non-linearity of time series. As the forecast skill was about the same for dimensions 1 to 4, and in the paper a D of 4 is suggested, we use that as our setting for the call to the smap function. 
 
 ```{r}
 # now use smap with E dimensions (identified with Simplex)
@@ -198,6 +233,11 @@ sp5_predictions  <- smap_pred[[1]]$model_output$pred
 ```
 
 # Step 4: test co-predictability (use library based on species 3 to predict species 5)
+
+The paper proposes that dynamics of dynamically similar species can be predicted by extending the library of training data by pooling data from multiple species. This would be powerful as time series in ecology are often short. Real time series would be needed to scale and normalize to be stitched together, and "seams"" between time series of different species should be excluded. Because the data we deal with is simulated and the logistic map is anyways between 0 and 1, this step is unnecessary for the reproduced example.
+
+To test the co-predictability of dynamics, the block_lnlp function is used. Embeddings need to be constructed in a manual fashion, but both simplex and s-maps can be fitted.
+Importantly, to achieve a good predictive skill, the original time series of the species to be predicted need to be included in the library of training data.
 
 ```{r}
 # predict species 3 based on embeddings in species 5
@@ -227,8 +267,7 @@ sp3_predictions  <- block[[1]]$model_output$pred
 
 ```
 
-
-## assemble Figure 1 from previous chunk:
+We can now  assemble Figure 1 from previous chunks:
 
 ```{r, fig.width=9, fig.height=5}
 par(mfrow=c(1,3))
@@ -243,11 +282,13 @@ abline(a=0,b=1)
 par(mfrow=c(1,1))
 ```
 
-# Code to produce figure 2:
+This looks pretty similar to the figure in the publication! Great.
+
+# Comparing predictive skill between short, long and composite (time series of dynamically similar species combined) time series
+
+First we need to do some house-keeping to select the appropriate datasets to predict and to train the s-maps.
 
 ```{r}
-
-
 lib <- c(1,984)
 pred <- c(985,999)
 shlib <- c(685,700)
@@ -313,7 +354,7 @@ corr_D_full <- rbind(corr_D, rbind(corr_sh_D, corr_com_D))
 
 ```
 
-## Figure 2:
+No we are able to plot the results of Figure 2:
 
 ```{r}
 library(ggplot2)
@@ -325,10 +366,11 @@ ggplot() + geom_line(data=corr_D_full, aes(x=D, y=`50%`)) +
 
 ```
 
+Looks pretty similar to figure 2, with full time series showing the best predictive skill across dimensionality 10, composite time series being pretty similar and only short time series suffering from a strong decay in predictive skill at higher dimensionalities.
 
-## Figure 3:
+Attemps to reproduce Figure 3 was abandoned as the three goals of the reproduction were achieved. 
 
-```{r}
+```{r, eval=F}
 # check the predictions along theta
 
 theta_list <- c(0,exp(0:9*.76753)*.01)
