@@ -18,6 +18,53 @@ What to attempt next week (to be refered to next week)?
 
 Meeting minutes for 2015 are archived [here](meeting_minutes_2015.md).
 
+
+
+# 12.07.2016 (minutes by Ale)
+## Attendance: Frank, Owen, Colette, Vane, Ale
+
+No new people 
+
+No new papers suggested 
+
+## Outstanding issues
+Please put pictures those of you who haven’t (Mikael, Andrea, Gian Marco)
+Outstanding issues: Website
+-	Publish Hooper in the website. 
+-	Dambacher: we checked that all figures are matrixes, so its correctly published. 
+-	Methods meetings: the poll is open again so you can vote.  
+-	Owen published the Simplex projection in Zenodo. He mentions it is easy to do it but there is no going back (you cant remove it later, so when you publish take care that is correct).
+
+## Paper titles
+We went through the papers written in the different sections and found out that several should be removed, dragged to a more suitable section or published asap. Particularly: 
+
+•	Ye, H. et al. 2015: remove it from the list. 
+•	Tina Toni et al. 2009: Andrea, Frank and Mikael are looking at this one. 
+•	Scheffer et al. 2001: Owen is thinking on doing it. If anyone wants to join is welcomed.  
+•	Tessa et al. 2012: We leave it to look at it a bit more.
+•	Hawkes et al. 2015: Thomas proposition, we leave it. 
+•	Dai et al. 2015: Thomas proposition, we leave it. 
+•	Huisman-Weissing 2001: It would be a good exercise that somebody approaches this one. 
+•	Connolly et al. 2013: Andrea needs to define if she wants to publish a report on how she used this one with her data. 
+
+Papers under way: 
+•	Ito et al. 2007: 
+•	Allesina et al 2015: Thomas, Vanessa. We need to put it in the category that is not able to reproduce it. 
+•	Chih-hao et al 2008:  Its basically done and Frank needs to publish the report. 
+•	Brennan –Collins 2015: Aurelie has finished, Ale still needs to work on a figure and then its moved to the last
+
+
+## Progress
+No progress.
+
+## Next week
+Owen will go through the Simplex projection and other models used by the same author.
+
+
+
+
+
+
 # 28.6.2016 (minutes by Frank)
 
 ### Attendance: Mikael, Aurelie, Vanessa, Frank, Andrea
