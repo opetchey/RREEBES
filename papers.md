@@ -1,7 +1,5 @@
 # Papers we might reproduce
 
-[Ye, H., Beamish, R.J., Glaser, S.M., Grant, S.C.H., Hsieh, C., Richards, L.J., Schnute, J.T. & Sugihara, G. (2015) Equation-free mechanistic ecosystem forecasting using empirical dynamic modeling. Proceedings of the National Academy of Sciences, 201417063.](http://www.pnas.org/content/112/13/E1569.long) Data and some code on github.
-
 [Tina Toni, David Welch, Natalja Strelkowa, Andreas Ipsen, Michael P.H. Stumpf (2009) Approximate Bayesian computation scheme for parameter inference and model selection in dynamical systems. Journal of the Royal Society Interface, 6, 187-202.] (http://rsif.royalsocietypublishing.org/content/6/31/187) Propose to reproduce ABC on Lotka Volterra equations. No data needed
 
 [Scheffer, M., Carpenter, S., Foley, J. a, Folke, C. & Walker, B. (2001) Catastrophic shifts in ecosystems. Nature, 413, 591–6.] (http://www.nature.com/nature/journal/v413/n6856/full/413591a0.html) At least reproduce / use the minimal mathematical model in Box 1, to recreate something like figure 3.
@@ -29,9 +27,6 @@ TMM: How do early warning signals perform when two environmental changes act sim
 [Hekstra, D.R. & Leibler, S. (2012) Contingency and statistical laws in replicate microbial closed ecosystems. Cell, 149, 1164–1173.] (http://www.sciencedirect.com/science/article/pii/S0092867412005156). Reproduction underway (Owen, Frank.)
 
 [Yampolsky, Lev Y., Tobias M. M. Schaer, and Dieter Ebert. “Adaptive Phenotypic Plasticity and Local Adaptation for Temperature Tolerance in Freshwater Zooplankton.” Proceedings of the Royal Society of London B: Biological Sciences 281, no. 1776 (February 7, 2014): 20132744.] (http://rspb.royalsocietypublishing.org/content/281/1776/20132744) (Tad Dallas)
-
-[ALLESINA, S., GRILLI, J., BARABAS, G., TANG, S., ALJADEFF, J. & MARITAN, A. (2015, NatComm): Predicting the stability of large structured food webs.](http://www.nature.com/ncomms/2015/150722/ncomms8842/full/ncomms8842.html?WT.ec_id=NCOMMS-20150729&spMailingID=49200939&spUserID=ODkwMTM2NjQyNgS2&spJobID=723804686&spReportId=NzIzODA0Njg2S0)
-TMM: Construction and analysis of food webs based on the cascade (larger species consume smaller ones; no trphic cycles) or niche model. These food webs are much closer to real food webs due to the way they were constructed and differ substantially from random matrix interaction networks. **Note**: Challenging approach/analysis.
 
 [Chih‐hao Hsieh, Christian Anderson, and George Sugihara (2008): Extending Nonlinear Analysis to Short Ecological Time Series](http://www.jstor.org/stable/full/10.1086/524202c)
 
@@ -67,3 +62,6 @@ TMM: Construction and analysis of food webs based on the cascade (larger species
 [Ignacio Morales-Castilla, Miguel G. Matias, Dominique Gravel, and Miguel B. Araujo (2015) Inferring biotic interactions from proxies. TREE xx 1-10](http://www.sciencedirect.com/science/article/pii/S0169534715000774) TMM: Would be interesting to reproduce this study to get an idea about the removed interactions (the forbidden ones) - and the ones that are still in, but false. Maybe one could also apply this to a smaller food web and test for the accuracy of this approach. Because the authors do not provide any test for accuracy... :( Food webs available, checking for trait data. Thomas, GM, Vanessa. :weary:
 
 [Sugihara, G., May, R., Ye, H., Hsieh, C., Deyle, E., Fogarty, M. & Munch, S. (2012) Detecting causality in complex ecosystems. Science, 338, 496–500.](http://science.sciencemag.org/content/338/6106/496.abstract) Owen made a reproduction of only figure 3A, to help him understand the method.
+
+[ALLESINA, S., GRILLI, J., BARABAS, G., TANG, S., ALJADEFF, J. & MARITAN, A. (2015, NatComm): Predicting the stability of large structured food webs.](http://www.nature.com/ncomms/2015/150722/ncomms8842/full/ncomms8842.html?WT.ec_id=NCOMMS-20150729&spMailingID=49200939&spUserID=ODkwMTM2NjQyNgS2&spJobID=723804686&spReportId=NzIzODA0Njg2S0)
+TMM: Construction and analysis of food webs based on the cascade (larger species consume smaller ones; no trphic cycles) or niche model. These food webs are much closer to real food webs due to the way they were constructed and differ substantially from random matrix interaction networks. **Note**: Challenging approach/analysis.
