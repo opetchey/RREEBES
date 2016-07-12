@@ -1,0 +1,376 @@
+---
+title: Partial reproduction of Contingency and Statistical Laws in Replicate Microbial Closed Ecosystems, by Hekstra & Liebler (2012) Cell
+author: "Owen L Petchey"
+date: "12 July 2016"
+output: html_document
+---
+
+# Introduction
+
+[The original paper by Hekstra and Leibler](http://www.sciencedirect.com/science/article/pii/S0092867412005156) concerns whether population dynamics have a common statistical structure, in the same way that the frequency distribution of earthquake strengths has a characteristic strucutre. Important for this is understanding the role of historical contingency, and this is addressed in the paper also.
+
+The data analysed comes from closed ecosystems containing *Escherichia coli*, *Chlamydomonas reinhardtii*, and *Tetrahymena thermophila*. Abundances were estimated via selective plane microscopy, allowing accurate and non-invasive estimates for months with high temporal resolution. The closed ecosystems were 3ml in volume held in fluorimetric cuvettes. Organisms in the ecosystes have been observed to persist for over 1000 days.
+
+Through time, the ecosystems developed spatial heterogeneity and phenotypic changes, such as large *Tetrahymena* (that may have been able to consume algae) and filamentous *E. coli* and colonies that may have been resistant to consumption by *Tetrahymena*. Replicates differed from each other in the development of this complexity.
+
+There were over 50 replicates distributed across temporal blocks. Observations of density were made over ~100 days, every day to every eight weeks.
+
+This R code for this reproduction appears on [the RREEBES repository](https://github.com/opetchey/RREEBES).
+
+# The data
+
+The authors will provide the data to Owen, but have not given permission to make it public. Owen will put it on his group server, access to which is controlled by University of Zurich administrative systems (not by Owen directly).
+
+In order to minimise the chance of us leaking the data, please follow these rules:
+- Do not make a copy of the data. Absolutely. Do. Not.
+- From within R, read the data from the group server. This will require you to be connected to it. If you're off site, you will need to VPN in.
+- Do not perform any save() or write() operations in R. (We may amend this if analyses are intensive and we need to save intermediate steps. However, these should be stored on the server, and not on local machines.)
+
+This is obviously a bit of hassle compared to if we could make the data public, but we cannot, so must adhere to this practice.
+
+These rules / guidelines are provided and discussed in the wiki.
+
+# Text from Hekstra:
+
+> Basis
+> Curated_workspace_20091115.mat in Matlab/Work on "SecondBackup" (LeiblerLab).
+> 
+> Organization for variables:
+> G_S: Group of ecosystems (A-F) and Species (Algae, Bacteria, Ciliates) 
+> The first experiment consisted of what is called group F.
+> The second experiment of groups A-E, with A measured twice per week, B once per week, etc.
+> 
+> Within each table, the entries are organized as follows
+> 
+> -------------------------------------------------------------------------------------------------------
+> | ---- system 1 ---- | 	| ---- system 2 ---- | 	| ---- system 3 ---- | 	...
+> time	CPF  	NF 	time	CPF  	NF 	time	CPF  	NF 	...
+> ...	...	...	...	...	...	...	...	...	...
+> -------------------------------------------------------------------------------------------------------
+> 
+> With each row a measurement day; CPF = counts per frame; NF: number of frames.
+> Density = CPF * calibration factor.
+> Calibration factors convert counts per frame to cells per mL (not necessary for most analysis): 
+> coeff_A = 10^3.92;  coeff_B = 10^5.15;  coeff_C = 10^4.36;
+> 
+> Total counts: CPF * NF, used for estimation of measurement error (see below).(Note to self: For F_B, I removed the columns tracking alga-related fluorescence "leakage" > into the red channel to conform to the format of the other data sets.
+> 
+> Ecosystems excluded because of excessive leakage (>0.1 mg/day) [Bootstrap_sigma_20090714_2.m]:
+> Group A:  	7, 9
+> Group B:	2, 8, 9  
+> Group C:	2, 6
+> Group D:	10
+> Group E:	5, 10
+> Group F: 	none.
+> 
+> For some analysis, replicate 4 of set F was excluded (this ecosystem was used for a number of other experiments after day 70).
+> 
+> 
+> Grouping of ecosystems with approximately the same (sub) measurement schedule.
+> Group A, rows (measurement days) 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 21, 23, 25, 26
+> Group B rows 2-15.
+> Group F: rows: 4, 11, 18, 25, 31, 37, 42, 46, 50, 54, 58, 59, 59, 60. (time point 59 was duplicated for this analysis)
+> 
+> Calculated Escape Rates
+> Motivation: the counts of individuals are not entirely independent between time points as cells often spend a few seconds within the observation volume. A correction is > thus necessary with respect to Poisson counting statistics.
+> 
+> Probability that object (identified as A, B or C, respectively) is not observed in the next frame (at 1 Hz):
+> p_e_A   = 0.237;    p_e_B   = 0.3;      p_e_C   = 0.9;         
+> 
+> Correlation times are defined as 1/p_e. The number of independent counts goes as N*p_e. The error model is described in my thesis as well (
+> https://dspace.rockefeller.edu/bitstream/10209/413/1/DoekeHekstraFinalThesis.pdf ).
+> 
+> 
+Other
+> •	Figure 4: to determine correspondence of eigenvectors between time points, I worked backwards in time, using the dot products of (normalized) eigenvectors as a measure of their similarity.
+> •	Treatment of zero counts: as 0.5 counts over the total number of frames.
+
+
+# Import and tidy the data
+
+Read the data and tidy (here and in many other places in this document code is hidden, but can be viewed on the repository mentioned above.)
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyr)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+
+library(boot)
+library(Hmisc)
+revised <- read.csv("/Volumes/Petchey/Gr_Petchey/6 Secure data/Hekstra_and_Leibler_2012_Cell/revised.csv", header=FALSE, blank.lines.skip=T)
+
+## Create variable names
+var_names <- c("Block_Species",
+               paste(rep(c("Time", "CPF", "NF"), 10),
+                     rep(1:10, each=3), sep="-"))
+colnames(revised) <- var_names
+
+## Remove empty rows
+revised <- filter(revised, Block_Species!="")
+
+
+## Stack the data
+dd <- select(revised, 1:4)
+dd$Ecosystem <- 1
+names(dd) <- c("Block_Species", "Time", "CPF", "NF", "Replicate")
+for(i in 2:10) {
+  sub_data <- select(revised, 1, (3*(i-1)+2:4))
+  sub_data$Replicate <- i
+  names(sub_data) <- c("Block_Species", "Time", "CPF", "NF", "Replicate")
+  dd <- rbind(dd, sub_data)
+}
+
+## Split the Group_Species data
+dd <- separate(dd, Block_Species, c("Block", "Species"), sep="_")
+
+## Full species name
+dd$Species <- ifelse(dd$Species=="A", "Algae",
+                     ifelse(dd$Species=="B", "Bacteria", "Ciliate"))
+
+#str(dd)
+```
+
+
+Show the population dynamics for each species (different rows) in each block (capital letters / column) and replicate (colours).
+
+```{r, warning=FALSE, echo=FALSE}
+ggplot(dd, aes(x=Time, y=log10(CPF), col=as.factor(Replicate))) +
+  facet_grid(Species~Block, scales="free_y") +
+  geom_point() + geom_line()
+```
+
+```{r, housekeeping, echo=FALSE}
+# NaN in CPF column replaced by NAs
+dd$CPF <- ifelse(is.nan(dd$CPF), NA,  dd$CPF)
+
+# > Calibration factors convert counts per frame to cells per mL (not necessary for most analysis): 
+# > coeff_A = 10^3.92;  coeff_B = 10^5.15;  coeff_C = 10^4.36;
+
+#Density = CPF * calibration factor.
+dd <- dd %>% mutate(coef = ifelse(Species == "Algae", 10^3.92,
+                                  ifelse(Species == "Bacteria", 10^5.1, 10^4.36)),
+                    density = CPF * coef)
+
+
+# Ecosystems to be excluded because of excessive leakage (>0.1 mg/day) 
+# > Group A:    7, 9
+# > Group B:  2, 8, 9  
+# > Group C:	2, 6
+# > Group D:	10
+# > Group E:	5, 10
+
+dd_clean <- subset(dd, !((Block == "A" & Replicate %in% c(7,9)) |
+                           (Block == "B" & Replicate %in% c(2,8,9)) |
+                           (Block == "C" & Replicate %in% c(2,6) ) |
+                           (Block == "D" & Replicate %in% c(10) )|
+                           (Block == "E" & Replicate %in% c(5,10) )))
+
+
+```
+
+# Reproduce figure 2E
+
+Figure 2E is the mean and spread of the population dynamics, with a couple of individual replicates shown. There is something a bit wrong with the chosen replicates, in that ther are sometimes multiple measures of density on the same day. Also, there are quantitative difference between the published figure and the reproduced one. The dynamics exhibit a common trend across replicates, but with considerable fluctuations around this trend.
+
+
+```{r, echo=FALSE, warning=FALSE}
+
+# calculate bootstrap sd of mean
+#dd_clean$Time_bin <- ceiling(dd_clean$Time)
+
+
+dd_clean$Time_bin <- as.numeric(cut2(dd_clean$Time, g=25))
+dd_clean$split_var <- paste0(dd_clean$Species, "_", dd_clean$Time_bin)
+
+species_time <- split(dd_clean, dd_clean$split_var)
+mean_boot <- function(x, d) {
+  return(mean(x[d], na.rm=T))
+}
+
+botstrapped_sds <- lapply(1:length(species_time), function(x) 
+  sd(boot(species_time[[x]]$density, mean_boot, R=1000)$t))
+
+combi <- lapply(1:length(species_time), function(x) 
+  unique(paste0(species_time[[x]]$Species, "_", species_time[[x]]$Time_bin)))
+
+# merge sd into df
+sd_df <- data.frame(split_var=as.character(unlist(combi)), 
+                    boot_sd=unlist(botstrapped_sds), stringsAsFactors=F)
+
+
+# merge back to original data
+dd_clean <- dd_clean[order(dd_clean$split_var),]
+dd_clean$boot_sd <- rep(unlist(botstrapped_sds), lapply(1:length(species_time), function(x) nrow(species_time[[x]])))
+
+
+# crunch data into mean
+mean_densities <- dd_clean %>% group_by(Species, Time_bin) %>% dplyr::summarize(mean_density = mean(density, na.rm=T))
+mean_densities$split_var <- paste0(mean_densities$Species, "_", mean_densities$Time_bin)
+
+# join with sd data
+mean_densities <- merge(mean_densities, sd_df, by=c("split_var"))
+
+ggplot() + 
+  geom_line(data=subset(mean_densities, Time_bin > 4),
+            aes(y=mean_density+1, x=Time_bin, group=Species, colour=Species), size=1) +
+  scale_colour_manual(values = c("green","red","blue")) +
+  geom_ribbon(data=subset(mean_densities, Time_bin > 4),
+              aes(x=Time_bin, ymin=mean_density-boot_sd,
+                  ymax=mean_density+boot_sd, group=Species, fill=Species),  alpha=0.2) +
+  geom_line(data=subset(dd_clean, Replicate %in% 3:4 & Block == "A"), 
+            aes(y=density+1, x=Time_bin, group=interaction(Species, Replicate, Block), colour=Species))+ 
+  geom_point(data=subset(dd_clean, Replicate %in% 3:4 & Block == "A"), 
+             aes(y=density+1, x=Time_bin, group=interaction(Species, Replicate, Block),
+                 colour=Species, shape=as.factor(Replicate))) +
+  scale_fill_manual(values = c("green","red","blue")) +
+  theme(legend.position="bottom") +
+  facet_grid(Species~., scales="free") +
+  guides(shape=F) +
+  scale_y_log10() +
+  xlab("days")+
+  ylab("Density (cells per ml)") +
+  scale_x_discrete(labels=seq(0,100))
+
+
+
+```
+
+
+
+
+# Reproduce analyses of variability in space and time
+
+## Variability across replicates (i.e., in space)
+
+The aim here is to characterise across replicate variability in (species log transformed) densities. I.e., is it the case, at a particular point in time, that replicates with high *Tetrahymena* abundance also have high abundance of other the other two species, or high of one and low of the other. Do get this, we calculate covariance among species abundances across replicates. This hould be done at "weekly time points", and separately for experiment 1 and 2 (The first experiment consisted of what is called group F.
+The second experiment of groups A-E, with A measured twice per week, B once per week, etc.).
+
+```{r, echo=FALSE}
+dd_clean <- mutate(dd_clean, Experiment=ifelse(Block=="F", 1, 2))
+dd_clean <- mutate(dd_clean, Day=ceiling(Time))
+dd_clean <- na.omit(dd_clean)
+```
+
+An example of an eigen analysis of one time slice, across replicates:
+
+```{r, echo=FALSE}
+xxx <- filter(dd_clean, Experiment==1, Block=="F", Time_bin==10) %>%
+  select(Experiment, Block, Time_bin, Replicate, Time, Species, density) %>%
+  group_by(Experiment, Block, Time_bin) %>%
+  spread(key=Species, value=density)
+xxx[,c("Algae", "Bacteria", "Ciliate")] <- log(xxx[,c("Algae", "Bacteria", "Ciliate")])
+xxx <- xxx[!apply(sapply(xxx[,c("Algae", "Bacteria", "Ciliate")], is.infinite), 1, function(x) any(x)),]
+xxx <- na.omit(xxx)
+#pairs(xxx[,c("Algae", "Bacteria", "Ciliate")])
+eig <- eigen(cor(xxx[,c("Algae", "Bacteria", "Ciliate")]))
+#unlist(eig)
+#eig$values
+pca1 <- princomp(xxx[,c("Algae", "Bacteria", "Ciliate")], cor=T)
+biplot(pca1)
+summary(pca1)
+#str(pca1)
+pca1$loadings
+```
+
+At about half way through the experiment (time bin = 10), the first PC axis is positively correlated with all species abundances. This is the dominant axes of variation among replicates. No we do find these axes of variation and how they change through time...
+
+## Figure 4A
+
+```{r, echo=FALSE}
+
+f1 <- function(xxx) {
+  
+  num_data_required <- 6
+  
+  if(nrow(xxx)>num_data_required) {
+    #print(xxx)
+    xxx[,c("Algae", "Bacteria", "Ciliate")] <- log(xxx[,c("Algae", "Bacteria", "Ciliate")])
+    xxx1 <- xxx[!apply(sapply(xxx[,c("Algae", "Bacteria", "Ciliate")], is.infinite), 1, function(x) any(x)),]
+    xxx1 <- na.omit(xxx1)
+    if(nrow(xxx1)>num_data_required)
+      res <- unlist(eigen(cor(xxx1[,c("Algae", "Bacteria", "Ciliate")])))
+    if(nrow(xxx1)<=num_data_required)
+      res <- rep(NA, 12)
+  }
+  
+  if(nrow(xxx)<=num_data_required)
+    res <- rep(NA, 12)
+  res <- data.frame(val_L_null=res[1], val_M_null=res[2], val_S_null=res[3],
+                    vect_L_Algae=res[4], vect_L_Bacteria=res[5], vect_L_Ciliate=res[6],
+                    vect_M_Algae=res[7], vect_M_Bacteria=res[8], vect_M_Ciliate=res[9],
+                    vect_S_Algae=res[10], vect_S_Bacteria=res[11], vect_S_Ciliate=res[12])
+  
+}
+
+
+ccc <- select(dd_clean, Experiment, Block, Day, Replicate, Time, Species, density) %>%
+  # filter(Day>0) %>%
+  spread(key=Species, value=density) %>%
+  na.omit(.) %>%
+  group_by(Experiment, Block, Day) %>%
+  do(f1(.))
+
+## make the signs of vectors consistent relative to Algae
+#str(ccc)
+ccc$L_mult <- ifelse(ccc$vect_L_Algae>0, 1, -1)
+ccc[,c("vect_L_Algae", "vect_L_Bacteria", "vect_L_Ciliate")] <- ccc[,c("vect_L_Algae", "vect_L_Bacteria", "vect_L_Ciliate")]*ccc$L_mult
+ccc$M_mult <- ifelse(ccc$vect_M_Algae>0, 1, -1)
+ccc[,c("vect_M_Algae", "vect_M_Bacteria", "vect_M_Ciliate")] <- ccc[,c("vect_M_Algae", "vect_M_Bacteria", "vect_M_Ciliate")]*ccc$M_mult
+ccc$S_mult <- ifelse(ccc$vect_S_Algae>0, -1, 1)
+ccc[,c("vect_S_Algae", "vect_S_Bacteria", "vect_S_Ciliate")] <- ccc[,c("vect_S_Algae", "vect_S_Bacteria", "vect_S_Ciliate")]*ccc$S_mult
+
+
+
+ccc <- gather(ccc, key=variable, value=value, 4:15)
+ccc <- separate(ccc, variable, sep="_", into=c("quantity", "component", "species"))
+
+
+```
+
+
+
+Reproduce original article figure 4a:
+
+```{r, echo=FALSE, warning=FALSE}
+ggplot(filter(ccc, quantity=="vect"),
+       aes(x=Day, y=value, col=species, linetype=interaction(Experiment, Block))) +
+  geom_point() + geom_path() +
+  facet_wrap(~component, nrow=1) +
+  scale_color_manual(values=c("green","red","purple"))
+```
+
+Qualitative patterns reproduced... though quite a bit messier than in the original report.
+
+
+
+Reproduce original article figure 4b:
+
+```{r, echo=FALSE, warning=FALSE}
+ggplot(filter(ccc, quantity=="val", Day>20),
+       aes(x=Day, y=value, col=component, shape=as.factor(Experiment))) +
+  geom_point(size=2) +
+  scale_color_manual(values=c("black","lightblue","purple"))
+
+```
+
+At least the qualitative patterns are reproduced quite nicely.
+
+The remainder of the analysis in the paper are not yet reproduced:
+
+* Analysis of growth rate fluctuations
+
+* Analysis of Hurst exponent
+
+* Taylor law analysis
+
+* Effect of difference in gas seal quality among replicates
+
+
+# Conclusions
+ 
+There is a qualitative match between the reproduced results and those in the original article. Hence, the reproduction supports the conclusion that "despite wide variations of the population dynamics in individual systems around their mean and an increase of vari- ance with time, the variations of the three species were corre- lated. Well-defined ecomodes that describe these correlations emerged and stabilized after an initial period of about 3 weeks. The existence of these ecomodes reflects the fact that fluctua- tions of the three species’ densities around the replicate-average dynamics are coupled through ecological interactions that are common to all replicates." 
+ 
+# Ideas
+
+Could think about what the analyses above assume about linearity of interactions / relationship among species. A non-linear approach (e.g., multispecies GAM) might give interesting insight.
