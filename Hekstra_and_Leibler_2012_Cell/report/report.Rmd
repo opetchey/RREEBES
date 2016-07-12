@@ -1,19 +1,21 @@
 ---
-title: "Hekstra reproduction"
-author: "Owen"
-date: "21 July 2015"
+title: Partial reproduction of Contingency and Statistical Laws in Replicate Microbial Closed Ecosystems, by Hekstra & Liebler (2012) Cell
+author: "Owen L Petchey"
+date: "12 July 2016"
 output: html_document
 ---
 
 # Introduction
 
-This paper concerns whether population dynamics have a common statistical structure, in the same way that the frequency distribution of earthquake strengths has a characteristic strucutre. Important for this is understanding the role of historical contingency, and this is addressed in the paper also.
+[The original paper by Hekstra and Leibler](http://www.sciencedirect.com/science/article/pii/S0092867412005156) concerns whether population dynamics have a common statistical structure, in the same way that the frequency distribution of earthquake strengths has a characteristic strucutre. Important for this is understanding the role of historical contingency, and this is addressed in the paper also.
 
-The data analysed comes from closed ecosystems containing E.coli, Chlamy., and Tetrahymena. Abundances were estimated via selective plane microscopy, allowing accurate and non-invasive estimates for months with high temporal resolution. The closed ecosystems were 3ml in volume held in fluorimetric cuvettes. Organisms in the ecosystes have been observed to persiste for over 1000 days.
+The data analysed comes from closed ecosystems containing *Escherichia coli*, *Chlamydomonas reinhardtii*, and *Tetrahymena thermophila*. Abundances were estimated via selective plane microscopy, allowing accurate and non-invasive estimates for months with high temporal resolution. The closed ecosystems were 3ml in volume held in fluorimetric cuvettes. Organisms in the ecosystes have been observed to persist for over 1000 days.
 
-Through time, the ecosystems developed spatial heterogeneity and phenotypic changes, such as large Tetrahymena (that may have beeb able to consume algae) and filamentous E.coli and colonies that may have been resistant to consumption by Tetrahymena. Replicates differed from each other in the development of this complexity.
+Through time, the ecosystems developed spatial heterogeneity and phenotypic changes, such as large *Tetrahymena* (that may have been able to consume algae) and filamentous *E. coli* and colonies that may have been resistant to consumption by *Tetrahymena*. Replicates differed from each other in the development of this complexity.
 
 There were over 50 replicates distributed across temporal blocks. Observations of density were made over ~100 days, every day to every eight weeks.
+
+This R code for this reproduction appears on [the RREEBES repository](https://github.com/opetchey/RREEBES).
 
 # The data
 
@@ -86,10 +88,9 @@ Other
 
 # Import and tidy the data
 
+Read the data and tidy (here and in many other places in this document code is hidden, but can be viewed on the repository mentioned above.)
 
-
-Read the data and tidy:
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 library(tidyr)
 library(dplyr)
 library(stringr)
@@ -131,15 +132,15 @@ dd$Species <- ifelse(dd$Species=="A", "Algae",
 ```
 
 
-Try a preliminary graph:
+Show the population dynamics for each species (different rows) in each block (capital letters / column) and replicate (colours).
 
-```{r}
+```{r, warning=FALSE, echo=FALSE}
 ggplot(dd, aes(x=Time, y=log10(CPF), col=as.factor(Replicate))) +
   facet_grid(Species~Block, scales="free_y") +
   geom_point() + geom_line()
 ```
 
-```{r, housekeeping}
+```{r, housekeeping, echo=FALSE}
 # NaN in CPF column replaced by NAs
 dd$CPF <- ifelse(is.nan(dd$CPF), NA,  dd$CPF)
 
@@ -148,8 +149,8 @@ dd$CPF <- ifelse(is.nan(dd$CPF), NA,  dd$CPF)
 
 #Density = CPF * calibration factor.
 dd <- dd %>% mutate(coef = ifelse(Species == "Algae", 10^3.92,
-                            ifelse(Species == "Bacteria", 10^5.1, 10^4.36)),
-                            density = CPF * coef)
+                                  ifelse(Species == "Bacteria", 10^5.1, 10^4.36)),
+                    density = CPF * coef)
 
 
 # Ecosystems to be excluded because of excessive leakage (>0.1 mg/day) 
@@ -160,17 +161,20 @@ dd <- dd %>% mutate(coef = ifelse(Species == "Algae", 10^3.92,
 # > Group E:	5, 10
 
 dd_clean <- subset(dd, !((Block == "A" & Replicate %in% c(7,9)) |
-            (Block == "B" & Replicate %in% c(2,8,9)) |
-            (Block == "C" & Replicate %in% c(2,6) ) |
-            (Block == "D" & Replicate %in% c(10) )|
-            (Block == "E" & Replicate %in% c(5,10) )))
+                           (Block == "B" & Replicate %in% c(2,8,9)) |
+                           (Block == "C" & Replicate %in% c(2,6) ) |
+                           (Block == "D" & Replicate %in% c(10) )|
+                           (Block == "E" & Replicate %in% c(5,10) )))
 
 
 ```
 
-# Reproduce figure 2E and Figure 3
+# Reproduce figure 2E
 
-```{r}
+Figure 2E is the mean and spread of the population dynamics, with a couple of individual replicates shown. There is something a bit wrong with the chosen replicates, in that ther are sometimes multiple measures of density on the same day. Also, there are quantitative difference between the published figure and the reproduced one. The dynamics exhibit a common trend across replicates, but with considerable fluctuations around this trend.
+
+
+```{r, echo=FALSE, warning=FALSE}
 
 # calculate bootstrap sd of mean
 #dd_clean$Time_bin <- ceiling(dd_clean$Time)
@@ -208,14 +212,17 @@ mean_densities$split_var <- paste0(mean_densities$Species, "_", mean_densities$T
 mean_densities <- merge(mean_densities, sd_df, by=c("split_var"))
 
 ggplot() + 
-geom_line(data=subset(mean_densities, Time_bin > 4), aes(y=mean_density+1, x=Time_bin, group=Species, colour=Species), size=1) +
-scale_colour_manual(values = c("green","red","blue")) +
-geom_ribbon(data=subset(mean_densities, Time_bin > 4),
-            aes(x=Time_bin, ymin=mean_density-boot_sd, ymax=mean_density+boot_sd, group=Species, fill=Species),  alpha=0.2) +
-geom_line(data=subset(dd_clean, Replicate %in% 3:4 & Block == "A"), 
-          aes(y=density+1, x=Time_bin, group=interaction(Species, Replicate, Block), colour=Species))+ 
+  geom_line(data=subset(mean_densities, Time_bin > 4),
+            aes(y=mean_density+1, x=Time_bin, group=Species, colour=Species), size=1) +
+  scale_colour_manual(values = c("green","red","blue")) +
+  geom_ribbon(data=subset(mean_densities, Time_bin > 4),
+              aes(x=Time_bin, ymin=mean_density-boot_sd,
+                  ymax=mean_density+boot_sd, group=Species, fill=Species),  alpha=0.2) +
+  geom_line(data=subset(dd_clean, Replicate %in% 3:4 & Block == "A"), 
+            aes(y=density+1, x=Time_bin, group=interaction(Species, Replicate, Block), colour=Species))+ 
   geom_point(data=subset(dd_clean, Replicate %in% 3:4 & Block == "A"), 
-             aes(y=density+1, x=Time_bin, group=interaction(Species, Replicate, Block), colour=Species, shape=as.factor(Replicate))) +
+             aes(y=density+1, x=Time_bin, group=interaction(Species, Replicate, Block),
+                 colour=Species, shape=as.factor(Replicate))) +
   scale_fill_manual(values = c("green","red","blue")) +
   theme(legend.position="bottom") +
   facet_grid(Species~., scales="free") +
@@ -224,17 +231,11 @@ geom_line(data=subset(dd_clean, Replicate %in% 3:4 & Block == "A"),
   xlab("days")+
   ylab("Density (cells per ml)") +
   scale_x_discrete(labels=seq(0,100))
-  
+
 
 
 ```
 
-
-
-
-"Population dynamics in our replicate CESs under constant light and temperature. Shown are the mean ±bootstrap standard deviation over ecosystems with at least weekly measurements (n = 24), as well as data for two replicates (circles and triangles, respectively). Green (A, right axis): C. reinhardtii; red (B): E. coli; and blue (C): T. thermophila."
-
-The figures shows a common trend across replicates, but with considerable fluctuations around this trend.
 
 
 
@@ -242,14 +243,10 @@ The figures shows a common trend across replicates, but with considerable fluctu
 
 ## Variability across replicates (i.e., in space)
 
-The aim here is to characterise across replicate variability in (species log transformed) densities. I.e., is it the case, at a particular point in time, that replicates with high Tetrahymena abundance 
-
-Calculate covariance among species abundances across replicates. E.g,. correlation of abundance of algae in replicate 1 at time 1.
-
-Should be done at "weekly time points", and separately for experiment 1 and 2 (The first experiment consisted of what is called group F.
+The aim here is to characterise across replicate variability in (species log transformed) densities. I.e., is it the case, at a particular point in time, that replicates with high *Tetrahymena* abundance also have high abundance of other the other two species, or high of one and low of the other. Do get this, we calculate covariance among species abundances across replicates. This hould be done at "weekly time points", and separately for experiment 1 and 2 (The first experiment consisted of what is called group F.
 The second experiment of groups A-E, with A measured twice per week, B once per week, etc.).
 
-```{r}
+```{r, echo=FALSE}
 dd_clean <- mutate(dd_clean, Experiment=ifelse(Block=="F", 1, 2))
 dd_clean <- mutate(dd_clean, Day=ceiling(Time))
 dd_clean <- na.omit(dd_clean)
@@ -257,8 +254,8 @@ dd_clean <- na.omit(dd_clean)
 
 An example of an eigen analysis of one time slice, across replicates:
 
-```{r}
-xxx <- filter(dd_clean, Experiment==1, Block=="F", Time_bin==2) %>%
+```{r, echo=FALSE}
+xxx <- filter(dd_clean, Experiment==1, Block=="F", Time_bin==10) %>%
   select(Experiment, Block, Time_bin, Replicate, Time, Species, density) %>%
   group_by(Experiment, Block, Time_bin) %>%
   spread(key=Species, value=density)
@@ -267,18 +264,20 @@ xxx <- xxx[!apply(sapply(xxx[,c("Algae", "Bacteria", "Ciliate")], is.infinite), 
 xxx <- na.omit(xxx)
 #pairs(xxx[,c("Algae", "Bacteria", "Ciliate")])
 eig <- eigen(cor(xxx[,c("Algae", "Bacteria", "Ciliate")]))
-unlist(eig)
-eig$values
+#unlist(eig)
+#eig$values
 pca1 <- princomp(xxx[,c("Algae", "Bacteria", "Ciliate")], cor=T)
 biplot(pca1)
 summary(pca1)
-str(pca1)
+#str(pca1)
 pca1$loadings
 ```
 
-Get eigen values and vectors for all time slices for both experiments:
+At about half way through the experiment (time bin = 10), the first PC axis is positively correlated with all species abundances. This is the dominant axes of variation among replicates. No we do find these axes of variation and how they change through time...
 
-```{r}
+## Figure 4A
+
+```{r, echo=FALSE}
 
 f1 <- function(xxx) {
   
@@ -303,17 +302,17 @@ f1 <- function(xxx) {
                     vect_S_Algae=res[10], vect_S_Bacteria=res[11], vect_S_Ciliate=res[12])
   
 }
-    
+
 
 ccc <- select(dd_clean, Experiment, Block, Day, Replicate, Time, Species, density) %>%
- # filter(Day>0) %>%
+  # filter(Day>0) %>%
   spread(key=Species, value=density) %>%
   na.omit(.) %>%
   group_by(Experiment, Block, Day) %>%
   do(f1(.))
 
 ## make the signs of vectors consistent relative to Algae
-str(ccc)
+#str(ccc)
 ccc$L_mult <- ifelse(ccc$vect_L_Algae>0, 1, -1)
 ccc[,c("vect_L_Algae", "vect_L_Bacteria", "vect_L_Ciliate")] <- ccc[,c("vect_L_Algae", "vect_L_Bacteria", "vect_L_Ciliate")]*ccc$L_mult
 ccc$M_mult <- ifelse(ccc$vect_M_Algae>0, 1, -1)
@@ -331,9 +330,9 @@ ccc <- separate(ccc, variable, sep="_", into=c("quantity", "component", "species
 
 
 
-Reproduce original article figure 4a-c:
+Reproduce original article figure 4a:
 
-```{r}
+```{r, echo=FALSE, warning=FALSE}
 ggplot(filter(ccc, quantity=="vect"),
        aes(x=Day, y=value, col=species, linetype=interaction(Experiment, Block))) +
   geom_point() + geom_path() +
@@ -341,13 +340,13 @@ ggplot(filter(ccc, quantity=="vect"),
   scale_color_manual(values=c("green","red","purple"))
 ```
 
-Qualitative patterns reproduced...
+Qualitative patterns reproduced... though quite a bit messier than in the original report.
 
 
 
 Reproduce original article figure 4b:
 
-```{r}
+```{r, echo=FALSE, warning=FALSE}
 ggplot(filter(ccc, quantity=="val", Day>20),
        aes(x=Day, y=value, col=component, shape=as.factor(Experiment))) +
   geom_point(size=2) +
@@ -355,31 +354,23 @@ ggplot(filter(ccc, quantity=="val", Day>20),
 
 ```
 
-    
-    
-    
-Be sure to understand the "surprising" correspondence of the ecomodes and the eigen values of the interaction matrix.
+At least the qualitative patterns are reproduced quite nicely.
 
+The remainder of the analysis in the paper are not yet reproduced:
 
-# Analysis of growth rate fluctuations (Figure S3)
+* Analysis of growth rate fluctuations
 
-# Analysis of Hurst exponent
+* Analysis of Hurst exponent
 
-# Taylor law analysis
+* Taylor law analysis
 
-# Effect of difference in gas seal quality among replicates
+* Effect of difference in gas seal quality among replicates
 
 
 # Conclusions
-
-"establish two simple statistical results describing the nature of random fluctuations around the average dynamics"
-
-1: "the variations of the three species were corre- lated. Well-defined ecomodes that describe these correlations emerged and stabilized after an initial period of about 3 weeks. The existence of these ecomodes reflects the fact that fluctua- tions of the three species’ densities around the replicate-average dynamics are coupled through ecological interactions that are common to all replicates."
-
-2: "despite the large complexity of biological phenomena observed in individual ecosystems, it was, remarkably, possible to describe the resulting fluctuations in population dynamics by simple quantitative laws. Specifically, local population dynamics displayed power-law behavior close to a geometric random walk around the average dynamics. Underlying these random walks is a single dominant ecomode, along which density fluctuations do not revert to the mean."
-
-"recently observed extreme repeatability of temporal dynamics and spatial patterns in similar experiments involving long-term single-species dynamics (Frentz et al., 2010) shows that the number of interacting components, the nature of their interactions, or the details of starting or external conditions may play a crucial role (cf. Jiang et al., 2011)."
-
+ 
+There is a qualitative match between the reproduced results and those in the original article. Hence, the reproduction supports the conclusion that "despite wide variations of the population dynamics in individual systems around their mean and an increase of vari- ance with time, the variations of the three species were corre- lated. Well-defined ecomodes that describe these correlations emerged and stabilized after an initial period of about 3 weeks. The existence of these ecomodes reflects the fact that fluctua- tions of the three species’ densities around the replicate-average dynamics are coupled through ecological interactions that are common to all replicates." 
+ 
 # Ideas
 
-Need to think about what the analyses above assume about linearity of interactions / relationship among species. A non-linear approach (e.g., multispecies GAM) might give interesting insight.
+Could think about what the analyses above assume about linearity of interactions / relationship among species. A non-linear approach (e.g., multispecies GAM) might give interesting insight.
