@@ -1,9 +1,11 @@
 ---
 title: "Simplex projection walkthrough"
 author: "Owen Petchey"
-date: "6 April 2016"
-output: 
-  html_document: 
+date: "5 July 2016"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
     toc: yes
 ---
 
@@ -31,17 +33,17 @@ This document is one from [a collection of reproductions / explanations](http://
 
 One important use of forecasting via simplex projection is distinguishing chaotic time series from ones that are just random noise. This was invented by George Sugihara and Bob May back in 1990, and presented in the article [Sugihara, G. & May, R.M. (1990) Nonlinear forecasting as a way of distinguishing chaos from measurement error in time series. Nature, 344, 734–741.](http://www.nature.com/nature/journal/v344/n6268/abs/344734a0.html)
 
-Simplex projection may be very useful for practical forecasting. A closely related method, S-map projection, can make more skillful forecasts of dynamics than even the correct / true mechanistic model [Perretti, C.T., Munch, S.B. & Sugihara, G. (2013) Model-free forecasting outperforms the correct mechanistic model for simulated and experimental data. Proceedings of the National Academy of Sciences of the United States of America, 110, 5253–5257.]()
+Simplex projection may be very useful for practical forecasting. A closely related method, S-map projection, can make more skillful forecasts of dynamics than even the correct / true mechanistic model ([Perretti, C.T., Munch, S.B. & Sugihara, G. (2013) Model-free forecasting outperforms the correct mechanistic model for simulated and experimental data. Proceedings of the National Academy of Sciences of the United States of America, 110, 5253–5257.](http://www.pnas.org/content/110/13/5253.abstract))
 
 ## Explanation in the published articles
 
-Published explanations are very clear, but require thinking about a time series in an embedded state space, about nearest neighbours in that state space, and about the projection of a simplex.
+Published explanations are very clear, and require thinking about a time series in an embedded state space, about nearest neighbours in that state space, and about the projection of a simplex.
 
 The [Sugihara and May (1990)](http://www.nature.com/nature/journal/v344/n6268/abs/344734a0.html) article states (the following is modified from the original) *The basic idea of simplex forecasting is that even for a chaotic time series, future values may be predicted from the behaviour of similar past values.*
 
-From the supplementary information of another article: *Simplex projection is a nearest-neighbor forecasting algorithm that involves tracking the forward evolution of nearby points in an embedding (a lagged coordinate state space reconstruction).3, 4, 5 Thus, similar past events are used to forecast the future, with the important caveat that the dimensionality of the embedding determines what past events are similar (nearby) to the predictee.* [Hsieh, C., Glaser, S.M., Lucas, A.J. & Sugihara, G. (2005) Distinguishing random environmental fluctuations from ecological catastrophes for the North Pacific Ocean. Nature, 435, 336–340.](http://www.nature.com/nature/journal/v435/n7040/full/nature03553.html)
+From the supplementary information of another article: *Simplex projection is a nearest-neighbor forecasting algorithm that involves tracking the forward evolution of nearby points in an embedding (a lagged coordinate state space reconstruction). Thus, similar past events are used to forecast the future, with the important caveat that the dimensionality of the embedding determines what past events are similar (nearby) to the predictee.* [Hsieh, C., Glaser, S.M., Lucas, A.J. & Sugihara, G. (2005) Distinguishing random environmental fluctuations from ecological catastrophes for the North Pacific Ocean. Nature, 435, 336–340.](http://www.nature.com/nature/journal/v435/n7040/full/nature03553.html)
 
-If you've read that and read the full articles, and others, and still don't have an idea of what is simplex projection, read on. If you want to verify your understanding, read on. If you're all clear about simplex projection, but think others might not be and you want to help them, then you might read on to see an explanation from a different angle.
+If you've read that, the full articles, and others, and still don't have an idea of what is simplex projection, read on. If you want to verify your understanding, read on. If you're all clear about simplex projection, but think others might not be and you want to help them, then you might read on to see an explanation from a different angle.
 
 # Explaining simplex projection
 
