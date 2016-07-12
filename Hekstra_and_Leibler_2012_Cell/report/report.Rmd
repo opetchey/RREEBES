@@ -1,6 +1,6 @@
 ---
 title: Partial reproduction of Contingency and Statistical Laws in Replicate Microbial Closed Ecosystems, by Hekstra & Liebler (2012) Cell
-author: "Owen L Petchey"
+author: "Owen L Petchey and Frank Pennekamp"
 date: "12 July 2016"
 output: html_document
 ---
