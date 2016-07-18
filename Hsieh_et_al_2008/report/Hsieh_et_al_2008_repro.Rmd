@@ -3,7 +3,8 @@ title: "Reproduction of Hsieh et al. 2008: Extending non-linear analysis to shor
 output: 
   html_document: 
     toc: yes
-authors: Frank Pennekamp & Andrea Tabi
+author: Frank Pennekamp & Andrea Tabi
+date: "18-07-2016"
 ---
 
 # Introduction:

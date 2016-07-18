@@ -9,6 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Frank Pennekamp &amp; Andrea Tabi" />
 
 
 <title>Reproduction of Hsieh et al. 2008: Extending non-linear analysis to short ecological time series</title>
@@ -115,6 +116,8 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Reproduction of Hsieh et al. 2008: Extending non-linear analysis to short ecological time series</h1>
+<h4 class="author"><em>Frank Pennekamp &amp; Andrea Tabi</em></h4>
+<h4 class="date"><em>18-07-2016</em></h4>
 
 </div>
 
@@ -310,9 +313,9 @@ block &lt;- block_lnlp(block_data, lib = c(1, 1000), pred = c(1,NROW(block_data)
 ## validation with exclusion radius = 0.</code></pre>
 <pre class="r"><code>block</code></pre>
 <pre><code>##       embedding tp     nn theta num_pred       rho        mae       rmse
-## 1 1, 3, 4, 5, 6  1 0.0001     0      995 0.7604934 0.07535185 0.09663079
+## 1 1, 3, 4, 5, 6  1 0.0001     0      970 0.7607972 0.07574286 0.09698489
 ##   perc         p_val const_pred_num_pred const_pred_rho const_pred_mae
-## 1    1 6.587537e-217                 995      -0.658924      0.2199712
+## 1    1 8.360683e-212                 995      -0.658924      0.2199712
 ##   const_pred_rmse const_pred_perc const_p_val
 ## 1       0.2626675               1           1</code></pre>
 <pre class="r"><code>block &lt;- block_lnlp(block_data, lib = c(1, 1000), pred = c(1,NROW(block_data)),
