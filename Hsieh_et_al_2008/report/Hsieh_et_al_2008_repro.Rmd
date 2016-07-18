@@ -368,9 +368,9 @@ ggplot() + geom_line(data=corr_D_full, aes(x=D, y=`50%`)) +
 
 Looks pretty similar to figure 2, with full time series showing the best predictive skill across dimensionality 10, composite time series being pretty similar and only short time series suffering from a strong decay in predictive skill at higher dimensionalities.
 
-Attemps to reproduce Figure 3 was abandoned as the three goals of the reproduction were achieved. 
+Attemps to reproduce remainder of the paper (including Fig. 3) were abandoned as the three goals of the reproduction were achieved. 
 
-```{r, eval=F}
+```{r, eval=F, include=F}
 # check the predictions along theta
 
 theta_list <- c(0,exp(0:9*.76753)*.01)
