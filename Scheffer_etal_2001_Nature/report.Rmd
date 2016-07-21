@@ -1,0 +1,44 @@
+---
+title: "Reproduction of Catastrophic shifts in ecosystems, Scheffer et al, 2001, Nature"
+author: "Owen Petchey, Colette Ward, Aurélie Garnier"
+date: "21 July 2016"
+output: html_document
+---
+
+# Introduction
+
+The paper describes how smooth changes in environmental conditions can create drastic / catastrophic changes in ecosystem state. These changes can display hysteresis, whereby responses to changing environmental conditions strongly depend on historical events. The initial purpose of this reproduction is to use the model in Box 1, described as a minimal model of an ecosystem showing hysteresis, to create versions of figures 1, 2, and 3. Some times series of dynamics might also be nice.
+
+# A minimal model of an ecosystem showing hysteresis
+
+$\frac{dx}{dt} = a - bx + rf(x)$
+
+$x$ is an "unwanted" ecosystem property.
+$a$ is an environmental factor that "promotes" $x$.
+$b$ is the rate of decay of $x$.
+$r$ is the rate at which $x$ recovers, as a function of $x$.
+
+"For a lake, one can think of $x$ as nutrients suspended in phytoplankton causing turbidity, of $a$ as nutrient loading, and $b$ as nutrient removal rate, and of $r$ as internal nutrient recycling. For desertification, one could interpret $x$ as barren soil, $a$ as vegetation destruction, $b$ as recolonization of barren soil by plants and $r$ as erosion by wind and runoff."
+
+Hysteresis and alternative stable states can occur if $f(x)$ is a function with a threshold, e.g. the hill function:
+
+$f(x) = \frac{x^p}{x^p + h^p}$
+
+```{r, echo=FALSE}
+# here we should write and test the functions that implement this model
+
+```
+
+
+
+# Figure 1: environment - state relationships
+
+Three relationships between environmental conditions ($a$) and ecosystem state ($x$), going from smooth relationship, to threshold relationship, to folded relationship. Perhaps show a time series for each of these.
+
+
+# Figure 2: shifting between states
+
+A folded relationship between environmental conditions ($a$) and ecosystem state ($x$), with two ways of shifting between the alternate states. Again, perhaps show a time series?
+
+# Figure 3: basins of attraction
+

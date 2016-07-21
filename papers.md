@@ -1,8 +1,8 @@
 # Papers we might reproduce
 
-[Tina Toni, David Welch, Natalja Strelkowa, Andreas Ipsen, Michael P.H. Stumpf (2009) Approximate Bayesian computation scheme for parameter inference and model selection in dynamical systems. Journal of the Royal Society Interface, 6, 187-202.] (http://rsif.royalsocietypublishing.org/content/6/31/187) Propose to reproduce ABC on Lotka Volterra equations. No data needed
+[Tina Toni, David Welch, Natalja Strelkowa, Andreas Ipsen, Michael P.H. Stumpf (2009) Approximate Bayesian computation scheme for parameter inference and model selection in dynamical systems. Journal of the Royal Society Interface, 6, 187-202.](http://rsif.royalsocietypublishing.org/content/6/31/187) Propose to reproduce ABC on Lotka Volterra equations. No data needed.
 
-[Scheffer, M., Carpenter, S., Foley, J. a, Folke, C. & Walker, B. (2001) Catastrophic shifts in ecosystems. Nature, 413, 591–6.] (http://www.nature.com/nature/journal/v413/n6856/full/413591a0.html) At least reproduce / use the minimal mathematical model in Box 1, to recreate something like figure 3.
+
 
 [Tessa B. Francis, Mark D. Scheuerell, Richard D. Brodeur, Phillip S. Levin, James J. Ruzicka, Nick Tolimieri and William T. Peterson (2012) Climate shifts the interaction web of a marine plankton community](http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2486.2012.02702.x/abstract).     
 The paper uses multivariate autoregressive models (introduced in "Quantifying effects of abiotic and biotic drivers on community dynamics with multivariate autoregressive (MAR) models", http://www.esajournals.org/doi/full/10.1890/13-0996.1), which maybe an interesting approach for our BEEP data. We need to check data availability, however, there are other potentially interesting papers using the approach, if we cannot get the data of this one.
@@ -21,6 +21,8 @@ TMM: How do early warning signals perform when two environmental changes act sim
 
 
 # Papers with reproduction underway
+
+[Scheffer, M., Carpenter, S., Foley, J. a, Folke, C. & Walker, B. (2001) Catastrophic shifts in ecosystems. Nature, 413, 591–6.](http://www.nature.com/nature/journal/v413/n6856/full/413591a0.html) Owen, Colette, Aurélie.
 
 [Ito, H.C and Dieckmann, U. A New Mechanism for Recurrent Adaptive Radiations (2007), AmNat 170, E96-E111](http://www.iiasa.ac.at/~dieckman/reprints/ItoDieckmann2007.pdf) TMM: A faster population-based appraoch to simulate adapteive radiations(Mikael).
 
