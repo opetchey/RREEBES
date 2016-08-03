@@ -19,6 +19,22 @@ What to attempt next week (to be refered to next week)?
 Meeting minutes for 2015 are archived [here](meeting_minutes_2015.md).
 
 
+# 02.08.2016 (minutes by Ale)
+## Attendance: Frank, Owen, Colette, Aurelie, Andrea, Ale
+
+No new people 
+
+New paper for meta-analysis Ale
+
+## Outstanding issues
+Still need to fix outstanding issue (Hooper to website)
+
+## Progress
+No progress to be reported
+
+##Presentation
+Owen, Colette and Aurelie start Scheffer et al. and gave a presentation of the paper and their intentions. They got feedback on it.
+
 
 # 12.07.2016 (minutes by Ale)
 ## Attendance: Frank, Owen, Colette, Vane, Ale
