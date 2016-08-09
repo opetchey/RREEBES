@@ -27,6 +27,27 @@ $f(x) = \frac{x^p}{x^p + h^p}$
 ```{r, echo=FALSE}
 # here we should write and test the functions that implement this model
 
+dx_dt <- function(x, a, b, r, p, h) {
+  a - b*x + r*f_of_x(x, p, h)
+}
+
+f_of_x <- function(x, p, h) {
+  x^p / (x^p + h^p)
+}
+
+```
+
+## Explore f(x)
+```{r, echo = FALSE}
+
+# plot f_of_x vs x:
+x <- seq(0, 10, 0.1)
+
+plot(x, f_of_x(x, p = 1.1, h = 5), type = "l", ylim = c(0,1))
+lines(x, f_of_x(x, p = 10, h = 5), type = "l")
+lines(x, f_of_x(x, p = 100, h = 5), type = "l")
+
+
 ```
 
 
@@ -34,6 +55,27 @@ $f(x) = \frac{x^p}{x^p + h^p}$
 # Figure 1: environment - state relationships
 
 Three relationships between environmental conditions ($a$) and ecosystem state ($x$), going from smooth relationship, to threshold relationship, to folded relationship. Perhaps show a time series for each of these.
+
+```{r, echo=FALSE}
+library(deSolve)
+parameters <- c(a = 1, b = 1, r = 1, p = 1.1, h = 5)
+state <- c(x = 1)
+
+model <- function(t, state, parameters) {
+  with(as.list(c(state, parameters)), {
+    dx <- dx_dt(x, a, b, r, p, h)
+    list(c(dx))
+  })
+}
+
+times <- seq(0, 100, by = 0.1)
+
+out <- ode(y = state, times = times, func = model, parms = parameters)
+head(out)
+
+# now do with a range of values of a and plot
+```
+
 
 
 # Figure 2: shifting between states
