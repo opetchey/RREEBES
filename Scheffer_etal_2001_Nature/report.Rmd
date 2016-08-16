@@ -5,6 +5,28 @@ date: "21 July 2016"
 output: html_document
 ---
 
+```{r}
+library(purrr)
+library(dplyr)
+library(tidyr)
+library(broom)
+library(ggplot2)
+library(rootSolve)
+```
+
+```{r}
+# set some global parameter values
+a = 1
+b = 1
+r = 1
+h = 1
+p = 1
+ps <- c(2, 5, 10, 20, 50)
+xs <- seq(0, 2, 0.01)
+```
+
+
+
 # Introduction
 
 The paper describes how smooth changes in environmental conditions can create drastic / catastrophic changes in ecosystem state. These changes can display hysteresis, whereby responses to changing environmental conditions strongly depend on historical events. The initial purpose of this reproduction is to use the model in Box 1, described as a minimal model of an ecosystem showing hysteresis, to create versions of figures 1, 2, and 3. Some times series of dynamics might also be nice.
@@ -41,11 +63,13 @@ f_of_x <- function(x, p, h) {
 ```{r, echo = FALSE}
 
 # plot f_of_x vs x:
-x <- seq(0, 10, 0.1)
+expt1 <- expand.grid(ps=ps, xs=xs)
+results1 <- mutate(expt1, f_of_x=f_of_x(x=xs, p=ps, h=h))
 
-plot(x, f_of_x(x, p = 1.1, h = 5), type = "l", ylim = c(0,1))
-lines(x, f_of_x(x, p = 10, h = 5), type = "l")
-lines(x, f_of_x(x, p = 100, h = 5), type = "l")
+qplot(xs, f_of_x, data=results1, col=as.factor(ps), geom="path") +
+  xlab("System state (X)") +
+  ylab("Value of self feedback (f(X))") +
+  scale_colour_discrete(guide = guide_legend(title = "Nonlinearity of self feedback (p)"))
 
 
 ```
@@ -55,6 +79,38 @@ lines(x, f_of_x(x, p = 100, h = 5), type = "l")
 # Figure 1: environment - state relationships
 
 Three relationships between environmental conditions ($a$) and ecosystem state ($x$), going from smooth relationship, to threshold relationship, to folded relationship. Perhaps show a time series for each of these.
+
+
+```{r}
+# set the range of values of a, for the x-axis of plot
+as <- seq(0, 1, 0.01)
+
+# set the values of p (non-linearity of self feedback)
+#ps <- seq(0, 100, 1)
+#ps <- c(2, 5, 10, 20, 50) ## now defined previously
+
+## calculate equilibria for all combinations
+expt2 <- expand.grid(as=as, ps=ps)
+results2 <- expt2 %>%
+  group_by(as, ps) %>%
+  do(roots = as.data.frame(uniroot.all(dx_dt, interval=c(0,10),
+        a=.$as, b=b, r=r, p=.$ps, h=h))) %>%
+  unnest()
+names(results2) <- c("as", "ps", "roots")
+results2 <- arrange(results2, ps, roots)
+
+qplot(as, roots, data=results2, col=as.factor(ps), geom="path") +
+  xlab("Environmental condition (a)") +
+  ylab("Equilibrium state (X)") +
+  scale_colour_discrete(guide = guide_legend(title = "Nonlinearity of self feedback (p)"))
+  
+
+
+```
+
+
+
+
 
 ```{r, echo=FALSE}
 library(deSolve)
@@ -73,58 +129,6 @@ times <- seq(0, 100, by = 0.1)
 out <- ode(y = state, times = times, func = model, parms = parameters)
 head(out)
 ```
-
-
-```{r}
-# now do with a range of values of a and plot
-as <- seq(0, 2, 0.01)
-#ps <- seq(0, 100, 1)
-ps <- c(0, 5, 10, 50, 100)
-
-expt <- expand.grid(as=as, ps=ps)
-
-
-library(rootSolve)
-roots <- uniroot.all(dx_dt, interval=c(0,10),
-        a=1, b=1, r=1, p=100, h=1.5)
-
-library(purrr)
-library(dplyr)
-library(tidyr)
-library(broom)
-library(ggplot2)
-
-
- 
-results <- expt %>%
-  group_by(as, ps) %>%
-  do(roots = as.data.frame(uniroot.all(dx_dt, interval=c(0,10),
-        a=.$as, b=1, r=1, p=.$ps, h=1.5)))
-results <-unnest(results)
-names(results) <- c("as", "ps", "roots")
-results
-
-qplot(as, roots, data=results, col=as.factor(ps), geom="point")
-
-
-
-```
-
-# now do with a range of values of a and plot
-as <- seq(0, 10, 2)
-ps <- seq(0, 10, 5)
-expt <- expand.grid(as=as, ps=ps)
-
-## set other modelling parameters etc
-out_times <- seq(0, 100, 0.1)
-other.things <- list(b=1, r=1, h=5,
-                     X_0=1, out_times=out_times)
-
-
-expt
-```
-
-
 
 # Figure 2: shifting between states
 
