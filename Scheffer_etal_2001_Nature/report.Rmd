@@ -72,8 +72,56 @@ times <- seq(0, 100, by = 0.1)
 
 out <- ode(y = state, times = times, func = model, parms = parameters)
 head(out)
+```
+
+
+```{r}
+# now do with a range of values of a and plot
+as <- seq(0, 2, 0.01)
+#ps <- seq(0, 100, 1)
+ps <- c(0, 5, 10, 50, 100)
+
+expt <- expand.grid(as=as, ps=ps)
+
+
+library(rootSolve)
+roots <- uniroot.all(dx_dt, interval=c(0,10),
+        a=1, b=1, r=1, p=100, h=1.5)
+
+library(purrr)
+library(dplyr)
+library(tidyr)
+library(broom)
+library(ggplot2)
+
+
+ 
+results <- expt %>%
+  group_by(as, ps) %>%
+  do(roots = as.data.frame(uniroot.all(dx_dt, interval=c(0,10),
+        a=.$as, b=1, r=1, p=.$ps, h=1.5)))
+results <-unnest(results)
+names(results) <- c("as", "ps", "roots")
+results
+
+qplot(as, roots, data=results, col=as.factor(ps), geom="point")
+
+
+
+```
 
 # now do with a range of values of a and plot
+as <- seq(0, 10, 2)
+ps <- seq(0, 10, 5)
+expt <- expand.grid(as=as, ps=ps)
+
+## set other modelling parameters etc
+out_times <- seq(0, 100, 0.1)
+other.things <- list(b=1, r=1, h=5,
+                     X_0=1, out_times=out_times)
+
+
+expt
 ```
 
 
