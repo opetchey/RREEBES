@@ -128,6 +128,11 @@ times <- seq(0, 100, by = 0.1)
 
 out <- ode(y = state, times = times, func = model, parms = parameters)
 head(out)
+
+# now do with a range of values of a and plot
+
+
+
 ```
 
 # Figure 2: shifting between states
