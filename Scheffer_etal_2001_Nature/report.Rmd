@@ -12,6 +12,7 @@ library(tidyr)
 library(broom)
 library(ggplot2)
 library(rootSolve)
+library(numDeriv)
 ```
 
 ```{r}
@@ -83,11 +84,15 @@ Three relationships between environmental conditions ($a$) and ecosystem state (
 
 ```{r}
 # set the range of values of a, for the x-axis of plot
-as <- seq(0, 1, 0.01)
+as <- seq(0, 1, 0.001)
 
 # set the values of p (non-linearity of self feedback)
 #ps <- seq(0, 100, 1)
 #ps <- c(2, 5, 10, 20, 50) ## now defined previously
+
+
+plot(xs, dx_dt(xs, a=0.5, b=1, r=1, h=1, p=10))
+abline(h=0)
 
 ## calculate equilibria for all combinations
 expt2 <- expand.grid(as=as, ps=ps)
@@ -99,10 +104,17 @@ results2 <- expt2 %>%
 names(results2) <- c("as", "ps", "roots")
 results2 <- arrange(results2, ps, roots)
 
-qplot(as, roots, data=results2, col=as.factor(ps), geom="path") +
+results2$stability <- ifelse(grad(dx_dt, x=results2$roots, a=results2$as, b=b, r=r, p=results2$ps, h=h)<0, "Stable", "Unstable")
+
+qplot(as, roots, data=filter(results2, stability=="Stable", roots<1),
+      col=as.factor(ps), geom="path") +
+  geom_path(data=filter(results2, stability=="Stable", roots>1)) +
+  geom_path(data=filter(results2, stability=="Unstable"), linetype="dashed") +
   xlab("Environmental condition (a)") +
   ylab("Equilibrium state (X)") +
-  scale_colour_discrete(guide = guide_legend(title = "Nonlinearity of self feedback (p)"))
+  scale_colour_discrete(guide = guide_legend(title = "Nonlinearity of self feedback (p)")) +
+  scale_linetype_manual(values=c("Yes"="solid", "No"="Dashed")) +
+  ylim(0,2)
   
 
 
