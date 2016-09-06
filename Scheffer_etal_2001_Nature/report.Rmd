@@ -11,11 +11,8 @@ library(dplyr)
 library(broom)
 library(ggplot2)
 library(rootSolve)
-<<<<<<< Updated upstream
 library(numDeriv)
-=======
 library(tidyr)
->>>>>>> Stashed changes
 ```
 
 ```{r}
@@ -119,18 +116,6 @@ qplot(as, roots, data=filter(results2, stability=="Stable", roots<1),
       col=as.factor(ps), geom="path") +
   geom_path(data=filter(results2, stability=="Stable", roots>1)) +
   geom_path(data=filter(results2, stability=="Unstable"), linetype="dashed") +
-=======
-results2$stable <- logical(length(results2[,1]))
-for(i in 1:length(results2[,1])) {
-  results2$stable[i] <- gradient(dx_dt, x=results2$roots[i],
-                                 p=results2$ps[i],
-                                 a=results2$as[i], b=b, r=r, h=h) < 0
-}
-
-  
-  
-qplot(as, roots, data=results2, col=as.factor(ps), geom="path") +
->>>>>>> Stashed changes
   xlab("Environmental condition (a)") +
   ylab("Equilibrium state (X)") +
   scale_colour_discrete(guide = guide_legend(title = "Nonlinearity of self feedback (p)")) +
