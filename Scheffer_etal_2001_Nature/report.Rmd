@@ -5,7 +5,9 @@ date: "21 July 2016"
 output: html_document
 ---
 
-```{r}
+```{r, echo=F, message=FALSE, warning=FALSE}
+library(knitr)
+opts_knit$set(cache=TRUE, autodep=TRUE)
 library(purrr)
 library(dplyr)
 library(broom)
@@ -13,6 +15,7 @@ library(ggplot2)
 library(rootSolve)
 library(numDeriv)
 library(tidyr)
+library(deSolve)
 ```
 
 ```{r}
@@ -84,10 +87,10 @@ qplot(xs, f_of_x, data=results1, col=as.factor(ps), geom="path") +
 
 # Figure 1: environment - state relationships
 
-Three relationships between environmental conditions ($a$) and ecosystem state ($x$), going from smooth relationship, to threshold relationship, to folded relationship. Perhaps show a time series for each of these.
+Relationships between environmental conditions ($a$) and ecosystem state ($x$), going from smooth relationship, to threshold relationship, to folded relationship.
 
 
-```{r}
+```{r, echo=FALSE}
 # set the range of values of a, for the x-axis of plot
 as <- seq(0, 1, 0.001)
 
@@ -96,8 +99,8 @@ as <- seq(0, 1, 0.001)
 #ps <- c(2, 5, 10, 20, 50) ## now defined previously
 
 
-plot(xs, dx_dt(xs, a=0.5, b=1, r=1, h=1, p=10))
-abline(h=0)
+#plot(xs, dx_dt(xs, a=0.5, b=1, r=1, h=1, p=10))
+#abline(h=0)
 
 ## calculate equilibria for all combinations
 expt2 <- expand.grid(as=as, ps=ps)
@@ -109,7 +112,6 @@ results2 <- expt2 %>%
 names(results2) <- c("as", "ps", "roots")
 results2 <- arrange(results2, ps, roots)
 
-<<<<<<< Updated upstream
 results2$stability <- ifelse(grad(dx_dt, x=results2$roots, a=results2$as, b=b, r=r, p=results2$ps, h=h)<0, "Stable", "Unstable")
 
 qplot(as, roots, data=filter(results2, stability=="Stable", roots<1),
@@ -127,35 +129,51 @@ qplot(as, roots, data=filter(results2, stability=="Stable", roots<1),
 ```
 
 
+# Figure 2: shifting between states
+
+A folded relationship between environmental conditions ($a$) and ecosystem state ($x$), with two ways of shifting between the alternate states.
 
 
 
 ```{r, echo=FALSE}
-library(deSolve)
-parameters <- c(a = 1, b = 1, r = 1, p = 1.1, h = 5)
-state <- c(x = 1)
+
+this.p <- ps[3]
+parameters <- c(a = a, b = b, r = r, p = this.p, h = h)
+state <- c(x = 0.1)
 
 model <- function(t, state, parameters) {
   with(as.list(c(state, parameters)), {
-    dx <- dx_dt(x, a, b, r, p, h)
-    list(c(dx))
+    dx <- dx_dt(x, a_forcing2(t), b, r, p, h)
+    list(c(dx), a=a_forcing2(t))
   })
 }
 
-times <- seq(0, 100, by = 0.1)
+times <- seq(0, 200, by = 0.1)
 
-out <- ode(y = state, times = times, func = model, parms = parameters)
-head(out)
+a_forcing1 <- matrix(ncol=2, byrow=T, data=c(0,0, mean(times), 1, max(times), 0))
+a_forcing2 <- approxfun(x = a_forcing1[,1], y = a_forcing1[,2], method = "linear", rule = 2)
 
-# now do with a range of values of a and plot
+out <- as.data.frame(ode(y = state, times = times, func = model, parms = parameters))
 
+ggplot(out, aes(x=time, y=x)) + 
+  geom_line(aes(y=a), col="green", size=3) +
+  geom_line() +
+  ylab("Ecosystem state (X)") +
+  xlab("Time")
 
 
 ```
 
-# Figure 2: shifting between states
+```{r, echo=FALSE}
+ggplot(out, aes(x=a, y=x)) +
+  geom_path(data=filter(results2, ps==this.p), aes(x=as, y=roots), col="lightblue", size=5) +
+  geom_path() +
+  xlab("Environmental condition (a)") +
+  ylab("Ecosystem state (X)")
+  
+```
 
-A folded relationship between environmental conditions ($a$) and ecosystem state ($x$), with two ways of shifting between the alternate states. Again, perhaps show a time series?
+
 
 # Figure 3: basins of attraction
 
