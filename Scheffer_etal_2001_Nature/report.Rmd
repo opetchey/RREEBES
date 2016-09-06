@@ -8,11 +8,14 @@ output: html_document
 ```{r}
 library(purrr)
 library(dplyr)
-library(tidyr)
 library(broom)
 library(ggplot2)
 library(rootSolve)
+<<<<<<< Updated upstream
 library(numDeriv)
+=======
+library(tidyr)
+>>>>>>> Stashed changes
 ```
 
 ```{r}
@@ -58,6 +61,11 @@ f_of_x <- function(x, p, h) {
   x^p / (x^p + h^p)
 }
 
+dx_dt2 <- function(x, p=1) {
+  a - b*x + r * x^p / (x^p + h^p)
+}
+
+
 ```
 
 ## Explore f(x)
@@ -100,16 +108,29 @@ results2 <- expt2 %>%
   group_by(as, ps) %>%
   do(roots = as.data.frame(uniroot.all(dx_dt, interval=c(0,10),
         a=.$as, b=b, r=r, p=.$ps, h=h))) %>%
-  unnest()
+  tidyr::unnest()
 names(results2) <- c("as", "ps", "roots")
 results2 <- arrange(results2, ps, roots)
 
+<<<<<<< Updated upstream
 results2$stability <- ifelse(grad(dx_dt, x=results2$roots, a=results2$as, b=b, r=r, p=results2$ps, h=h)<0, "Stable", "Unstable")
 
 qplot(as, roots, data=filter(results2, stability=="Stable", roots<1),
       col=as.factor(ps), geom="path") +
   geom_path(data=filter(results2, stability=="Stable", roots>1)) +
   geom_path(data=filter(results2, stability=="Unstable"), linetype="dashed") +
+=======
+results2$stable <- logical(length(results2[,1]))
+for(i in 1:length(results2[,1])) {
+  results2$stable[i] <- gradient(dx_dt, x=results2$roots[i],
+                                 p=results2$ps[i],
+                                 a=results2$as[i], b=b, r=r, h=h) < 0
+}
+
+  
+  
+qplot(as, roots, data=results2, col=as.factor(ps), geom="path") +
+>>>>>>> Stashed changes
   xlab("Environmental condition (a)") +
   ylab("Equilibrium state (X)") +
   scale_colour_discrete(guide = guide_legend(title = "Nonlinearity of self feedback (p)")) +
