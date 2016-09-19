@@ -177,3 +177,31 @@ ggplot(out, aes(x=a, y=x)) +
 
 # Figure 3: basins of attraction
 
+```{r, echo=FALSE}
+#gr <- dx_dt(xs, a=0.25, b=b, r=r, p=ps[3], h=h)
+#plot(xs, (-1*cumsum(gr)-min(-1*cumsum(gr))), type="l",
+#     ylab=" ", xlab="Ecosystem state (X)")
+#gr1 <- dx_dt(xs, a=0.5, b=b, r=r, p=ps[3], h=h)
+#lines(xs, (-1*cumsum(gr1)-min(-1*cumsum(gr1))), type="l")
+
+as <- seq(0, 1, 0.1)
+as <- c(0.2, 0.35, 0.45, 0.5)
+expt3 <- expand.grid(as=as, xs=xs)
+results3 <- expt3 %>%
+  mutate(grad=dx_dt(x=xs, a=as, b=b, r=r, p=ps[3], h=h)) %>%
+  arrange(as, xs) %>%
+  group_by(as) %>%
+  mutate(height=(-1*cumsum(grad)-min(-1*cumsum(grad))))
+  
+ggplot(results3, aes(x=xs, y=height, col=as.factor(as))) +
+  geom_line(size=2) +
+  ylab("Basin height") +
+  xlab("Ecosystem state (X)") +
+  scale_colour_discrete(guide = guide_legend(title = "Environmental condition (a)"))
+  
+
+
+```
+
+
+
