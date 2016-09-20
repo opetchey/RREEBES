@@ -10,7 +10,7 @@ Any suggested papers added to the repository?
 
 Any outstanding issues?
 
-Any progress on focal paper since last week?
+Progress report for reproduction underway
 
 What to attempt this week (refer to closing note from last week)?
 
