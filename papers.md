@@ -38,6 +38,8 @@ TMM: How do early warning signals perform when two environmental changes act sim
 
 [Hanks et al. (2015) Continuous-time discrete-space models for animal movement. The Annals of Applied Statistics 9(1) 145–165.] (http://arxiv.org/abs/1211.1992) (Data: http://r-forge.r-project.org/projects/ctds/ )(Wilfredo)
 
+[Vellend et al. (2013) Global meta-analysis reveals no net change in local-scale plant biodiversity over time.] (http://www.pnas.org/content/110/48/19456.full.pdf) (Data: http://www.pnas.org/content/110/48/19456/suppl/DCSupplemental) (Ale, Owen)
+
 
 # Papers without appropriate data
 
