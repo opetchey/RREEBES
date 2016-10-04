@@ -146,7 +146,7 @@ qplot(as, roots, data=filter(results2, stability=="Stable", roots<1),
 
 # Figure 2: dynamically shifting between states
 
-A folded relationship between environmental conditions ($a$) and ecosystem state ($x$), produced by a relatively high value of $p$, with two ways of shifting between the alternate states. One way as the environmental condition increases from low to high, and the other as the environmental conditions decreases from high to low.
+Here we simulate the model through time, with increasing and then decreasing environmental condition $a$ (green line in the first graph) driving the dynamics. A relatively large value of $p$ is used, so we get a folded relationship between environmental conditions ($a$) and ecosystem state ($x$) (light blue line in second graph). The system dynamics are the thin black line; there are two ways of shifting between the alternate states. One way as the environmental condition increases from low to high, and the other as the environmental conditions decreases from high to low.
 
 
 
@@ -202,7 +202,7 @@ A locally stable equilibrium is sometimes viewed as a depression, or basin, in a
 #lines(xs, (-1*cumsum(gr1)-min(-1*cumsum(gr1))), type="l")
 
 as <- seq(0, 1, 0.1)
-as <- c(0.2, 0.35, 0.45, 0.5, 0.8)
+as <- c(0.2, 0.35, 0.45, 0.5, 0.65, 0.8)
 expt3 <- expand.grid(as=as, xs=xs)
 results3 <- expt3 %>%
   mutate(grad=dx_dt(x=xs, a=as, b=b, r=r, p=ps[3], h=h)) %>%
@@ -212,7 +212,7 @@ results3 <- expt3 %>%
   
 ggplot(results3, aes(x=xs, y=height, col=as.factor(as))) +
   geom_line(size=2) +
-  ylab("Basin height") +
+  ylab("Surface height") +
   xlab("Ecosystem state (X)") +
   scale_colour_discrete(guide = guide_legend(title = "Environmental condition (a)"))
   
