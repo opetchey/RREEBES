@@ -1,5 +1,5 @@
 ---
-title: "Reproduction of Catastrophic shifts in ecosystems, Scheffer et al, 2001, Nature"
+title: "Partial reproduction of Catastrophic shifts in ecosystems, Scheffer et al, 2001, Nature"
 author: "Owen Petchey, Colette Ward, Aurélie Garnier"
 date: "21 July 2016"
 output: html_document
@@ -18,7 +18,7 @@ library(tidyr)
 library(deSolve)
 ```
 
-```{r}
+```{r, echo=FALSE}
 # set some global parameter values
 a = 1
 b = 1
@@ -33,7 +33,19 @@ xs <- seq(0, 2, 0.01)
 
 # Introduction
 
-The paper describes how smooth changes in environmental conditions can create drastic / catastrophic changes in ecosystem state. These changes can display hysteresis, whereby responses to changing environmental conditions strongly depend on historical events. The initial purpose of this reproduction is to use the model in Box 1, described as a minimal model of an ecosystem showing hysteresis, to create versions of figures 1, 2, and 3. Some times series of dynamics might also be nice.
+[The original paper by Scheffer et al (a review in Nature in 2001)](http://www.nature.com/nature/journal/v413/n6856/full/413591a0.html) describes how smooth changes in environmental conditions can create drastic / catastrophic changes in ecosystem state. These changes can display hysteresis, whereby responses to changing environmental conditions strongly depend on historical events. The paper reviews evidence of such shifts in lakes, coral reefs, woodlands, deserts, and oceans. It goes on to discuss emerging patterns and implications for management.
+
+The initial purpose of this reproduction is to use the model in Box 1, described as a minimal model of an ecosystem showing hysteresis, to create versions of figures 1, 2, and 3. Some time series of dynamics might also be nice.
+
+There is much more that could be added:
+
+* Putting the model exploration into a shiny app.
+
+* Some stochasticity in the model, to show how flips between states can be caused by chance.
+
+* Examination of early warning signals.
+
+
 
 # A minimal model of an ecosystem showing hysteresis
 
@@ -68,7 +80,10 @@ dx_dt2 <- function(x, p=1) {
 
 ```
 
-## Explore f(x)
+## Explore f(x), the function that determines the internal feedback
+
+The non-linearity of this function is all important for the system dynamics. If the function is smooth (little non-linearity when $p$ is small) then the rate $r * f(x)$ varies smoothly with $x$ and dynamics are quite linear with the environmental condition $a$.  If the function is very nonlinear (large $p$), then the system responds quite nonlinearly to changes in the environmental condition. Here is the function for some different values of $p$.
+
 ```{r, echo = FALSE}
 
 # plot f_of_x vs x:
@@ -85,9 +100,9 @@ qplot(xs, f_of_x, data=results1, col=as.factor(ps), geom="path") +
 
 
 
-# Figure 1: environment - state relationships
+# Figure 1: environment - equilibrium state relationships
 
-Relationships between environmental conditions ($a$) and ecosystem state ($x$), going from smooth relationship, to threshold relationship, to folded relationship.
+Below are some relationships between environmental conditions ($a$) and equilibrium ecosystem state ($x$), going from smooth relationship (low values of $p$), to nonlinear relationship (medium values of $p$), to folded relationship (high values of $p$). Solid lines indicate a stable equilibrium, dashed lines an unstable one.
 
 
 ```{r, echo=FALSE}
@@ -129,9 +144,9 @@ qplot(as, roots, data=filter(results2, stability=="Stable", roots<1),
 ```
 
 
-# Figure 2: shifting between states
+# Figure 2: dynamically shifting between states
 
-A folded relationship between environmental conditions ($a$) and ecosystem state ($x$), with two ways of shifting between the alternate states.
+A folded relationship between environmental conditions ($a$) and ecosystem state ($x$), produced by a relatively high value of $p$, with two ways of shifting between the alternate states. One way as the environmental condition increases from low to high, and the other as the environmental conditions decreases from high to low.
 
 
 
@@ -177,6 +192,8 @@ ggplot(out, aes(x=a, y=x)) +
 
 # Figure 3: basins of attraction
 
+A locally stable equilibrium is sometimes viewed as a depression, or basin, in a surface, and a ball on the surface is attracted to and sits at the bottom of the basin. A locally unstable equilibrium is a peak, where a ball can sit, though will fall off given the slightest push. Below we can see the surface, basins of attraction, and the peaks, for some different values of $a$. Imagine the position of a ball when $a$ is low: it will sit in the single basin around $x=0.2$. An increase in $a$ moves the bottom of the basin slowly to the right (i.e. higher equilibrium value of $x$). At intermediate values of $a$ (e.g. 0.45, 0.5) there are two basins with a peak in between. Which basin the ball is in depends on where it was before. At high values of $a$ there is again only one basin.
+
 ```{r, echo=FALSE}
 #gr <- dx_dt(xs, a=0.25, b=b, r=r, p=ps[3], h=h)
 #plot(xs, (-1*cumsum(gr)-min(-1*cumsum(gr))), type="l",
@@ -185,7 +202,7 @@ ggplot(out, aes(x=a, y=x)) +
 #lines(xs, (-1*cumsum(gr1)-min(-1*cumsum(gr1))), type="l")
 
 as <- seq(0, 1, 0.1)
-as <- c(0.2, 0.35, 0.45, 0.5)
+as <- c(0.2, 0.35, 0.45, 0.5, 0.8)
 expt3 <- expand.grid(as=as, xs=xs)
 results3 <- expt3 %>%
   mutate(grad=dx_dt(x=xs, a=as, b=b, r=r, p=ps[3], h=h)) %>%
