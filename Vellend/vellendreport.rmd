@@ -43,9 +43,10 @@ B) We then try a random effects model, where we allow that the true effect could
 
 R code for reproduction
 
- *Clear R and load data
+*Load data and calculate effect sizes that match original
+
 ```{r}
-#clear R
+#clear R, load packages, load data
 rm(list=ls())
 install.packages("metafor")
 library("metafor")
@@ -53,20 +54,43 @@ install.packages("RCurl")
 library(RCurl)
 
 setwd("~/Documents/RREEBES/Vellend")
-dat <- read.table(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Vellend/vellend%20analyses%20reproduction/vellend_original_data.txt"), check.names=FALSE) 
+dat <- read.table(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Vellend/vellend%20analyses%20reproduction/vellend_original_data.txt"), check.names=FALSE, header=TRUE) 
+View(dat)
 
+#extract columns as vectors for the function of effect size calculation
+names(dat)
+mtreat<-dat$SR_Year2_CT
+mcontrol<-dat$SR_Year1_CT
+etreat<-dat$SR_Year2_STDEV
+econtrol<-dat$SR_Year1_STDEV
+ntreat<-dat$N_plots_Year2
+ncont<-dat$N_plots_Year1
 
-head(powInfo)
+### to understand the original data
+# datef$ratio<- log(datef$SR_Year2_CT/datef$SR_Year1_CT)  #gives you the simple log ratio between means that in original data is named"log_SR_ratio"
+# datef$ratiostandard<-datef$ratio/datef$Duration  #gives you the effect size standarized that they claim to have used in the paper
+# View(datef)
 
-setwd("~/Documents/RREEBES/Vellend/vellend analyses reproduction")
-dat <- read.table("vellend_original_data.txt", header=TRUE)
-
+#effect size calculation with log transformed ratio of means, to compare with authors calculation in column "log_SR_ratio"
+datef <- escalc(measure="ROM", n1i=ntreat, n2i=ncont, m1i=mtreat, m2i=mcontrol, sd1i=etreat, sd2i=etreat, data=dat)
+View(datef)
 
 ```
 
+The authors used "log transformed ratio of means" divided by the standarized time (column: "duration"). Data calculated by us with function escalc using "ROM" fits original data (effect sizes column "yi""). "escalc" provides a variance associated with this effect size. Since authors divided the effect size for the duration, I will divide also the variance (vi) for the duration. This is because I need yi and vi for fitting the fixed effects model (function: "rma"), and vi should have gone through the same standarization as yi. 
 
+```{r}
 
+#standarization of effect sizes for the duration of studies
+datef$yistand<-datef$yi / datef$Duration
+datef$vistand<-datef$vi / datef$Duration
 
+#fit fixed effects model to standarized effect sizes
+res<-rma(yi=datef$yistand,vi=datef$vistand,method="FE", data=datef)
+print(res,digits=3)
+```
+
+The model indicates only 108 studies could be used for this analysis (in original study, authors say 155 studies were included for species richness). It would seem that the difference is that the variance could not be calculated for many studies that were included in original paper. 
 
 
 
