@@ -10,7 +10,7 @@ output: html_document
 
 This is an attempt to reproduce the anaylses presented in the paper "Global meta-analysis reveals no net change in local-scale plant biodiversity over time", from Vellend et al. 2013
 
-Biodiversity reduction in small study plots can bring problems to ecosystem function. However, lots of studies have looked at biodiversity loss in experiments while assuming that in nature loss is actually happen at those small scales. The authors tried to test that assumption, by doing a meta-analysis with 168 studies of local-scale non experimental vegetation plots facing distrubance. They showed that mean temporal change in species diversity over periods of 261 years was not different from zero. They found invasive species have a tendency to reduce biodiversity and succession after disturbances show a tendency to increase, but other distinctions among studies showed little effect on temporal richness. 
+Biodiversity reduction in small study plots can bring problems to ecosystem function. However, lots of studies have looked at biodiversity loss in experiments while assuming that in nature loss is actually happen at those small scales. The authors tried to test that assumption, by doing a meta-analysis with 168 studies of local-scale non experimental vegetation plots facing disturbance. They showed that mean temporal change in species diversity over periods of 261 years was not different from zero. They found invasive species have a tendency to reduce biodiversity and succession after disturbances show a tendency to increase biodiversity, but other distinctions among studies showed little effect on temporal richness modifications. 
 
 Species involved: all major vegetation types
 Median plot area: 44 m2 - specially designed to match spatial scale of BDEF experiments
@@ -29,10 +29,11 @@ Figure S2: Number of studies vs raw effect sizes (not devided by decade)
 
 
 # Method/Analyses in original paper: 
-Criteria for the search fo papers is stated in the meta-analysis paper itself and will not be reproduced.
+Criteria for the search of papers is stated in the meta-analysis paper itself and this bibliography search will not be reproduced.
 Analyses were done with species richness from 155 studies comprising data from 318 data sets. For each data set a raw effect size was calculated as log ratio of mean species richness in the last and first years of survey. The raw log ratio was standarized to a common decadal time scale, by dividing by the time interval between points. 
-The analyses where carried in 2 ways: i) Bayesian analysis of multilevel model, ii) Fixed effect meta-analysis with each study weighted by the square root of the sample size. 
-Same analyses where carried for eveness and diversity except for the evaluation of predictor variables, which was omitted due to small sample size. Analyses where done with OepnBUGS in R package. 
+
+The analyses were carried in 2 ways: i) Bayesian analysis of multilevel model, ii) Fixed effect meta-analysis with each study weighted by the square root of the sample size. 
+Same analyses where carried for eveness and diversity except for the evaluation of predictor variables, which was omitted due to small sample size. Analyses where done with OepnBUGS in R package, but we will attempt them with the "metafor" package. 
 
 # Method/Analyses in our reproduction: 
 Choice of model to use
@@ -48,8 +49,16 @@ R code for reproduction
 rm(list=ls())
 install.packages("metafor")
 library("metafor")
+install.packages("RCurl")
+library(RCurl)
 
-setwd("~/Desktop/vellend analyses reproduction")
+setwd("~/Documents/RREEBES/Vellend")
+dat <- read.table(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Vellend/vellend%20analyses%20reproduction/vellend_original_data.txt"), check.names=FALSE) 
+
+
+head(powInfo)
+
+setwd("~/Documents/RREEBES/Vellend/vellend analyses reproduction")
 dat <- read.table("vellend_original_data.txt", header=TRUE)
 
 
@@ -72,6 +81,6 @@ Declines of more than 20% were found only in 8% of the datasets. Declines of les
 
 The argument in the discussion is that when sufficiently profound ecosystem changes occur (eg: changing a rainforest to a parking lot), then the impact of biodiversity change on ecosystem function is negligible compared to the overal change in ecosystem composition (soil, nutrients, management, others). So they excluded studies that had gone through overall changes, to reduce the scope of the studie to those that really state a change in ecosystem function based on solely or mainly biodiversity changes. 
 
-Finally they stte that although plant species diversity shows no net directional change, there are tremendous variation in direction and magnitude of biodiversity trends and in the identities of species (species composition), which can indeed have an important consequecne for ecosystem function. 
+Finally they state that although plant species diversity shows no net directional change, there are tremendous variation in direction and magnitude of biodiversity trends and in the identities of species (species composition), which can indeed have an important consequecne for ecosystem function. 
 
 
