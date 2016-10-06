@@ -1,0 +1,77 @@
+---
+title: "Vellend"
+author: "ale, owen"
+date: "4 October 2016"
+output: html_document
+---
+
+# Introduction
+
+
+This is an attempt to reproduce the anaylses presented in the paper "Global meta-analysis reveals no net change in local-scale plant biodiversity over time", from Vellend et al. 2013
+
+Biodiversity reduction in small study plots can bring problems to ecosystem function. However, lots of studies have looked at biodiversity loss in experiments while assuming that in nature loss is actually happen at those small scales. The authors tried to test that assumption, by doing a meta-analysis with 168 studies of local-scale non experimental vegetation plots facing distrubance. They showed that mean temporal change in species diversity over periods of 261 years was not different from zero. They found invasive species have a tendency to reduce biodiversity and succession after disturbances show a tendency to increase, but other distinctions among studies showed little effect on temporal richness. 
+
+Species involved: all major vegetation types
+Median plot area: 44 m2 - specially designed to match spatial scale of BDEF experiments
+Effect sizes used: log ratio of species diversity per decade (log(Species richness at the end of study/Species richness at the beginning of study)/time expressed in decades)
+
+
+
+# Figures we will intend to reproduce: 
+
+Figure 1: Localize studies in a map based on their coordinates
+Figure 2: Number of studies vs effect sizes/decade 
+Figure 3: Effect sizes/decade of subsets of studies per Habitat, Continent and Driver. 
+
+Figure S1 and Table S2 in supplementary material: show similar results with subsets of studies that used diversity or eveness as indices instead of species richness. 
+Figure S2: Number of studies vs raw effect sizes (not devided by decade)
+
+
+# Method/Analyses in original paper: 
+Criteria for the search fo papers is stated in the meta-analysis paper itself and will not be reproduced.
+Analyses were done with species richness from 155 studies comprising data from 318 data sets. For each data set a raw effect size was calculated as log ratio of mean species richness in the last and first years of survey. The raw log ratio was standarized to a common decadal time scale, by dividing by the time interval between points. 
+The analyses where carried in 2 ways: i) Bayesian analysis of multilevel model, ii) Fixed effect meta-analysis with each study weighted by the square root of the sample size. 
+Same analyses where carried for eveness and diversity except for the evaluation of predictor variables, which was omitted due to small sample size. Analyses where done with OepnBUGS in R package. 
+
+# Method/Analyses in our reproduction: 
+Choice of model to use
+A) We try first a fixed effects meta-analysis (without weight of the studies). By using fixed effects we assume that there is one true effect size that is shared by all the included studies, so the combined effect estimates a common effect size. Large studies will be given a lot of weight and small studies will be given less weight. The source of error in our estimate is the random error within studies (Borestein et al 2007). 
+
+B) We then try a random effects model, where we allow that the true effect could vary from study to study, so the combined effect estimates the mean effect of the distribution of study effects. The weights assigned under random effects model are more balanced, because each study is estimating a different effect size (from one study to estimate the true effect in a specific populaion and for all the true effects used to estimate the mean of the true effects). Therefore, our estimate depends on the number of subjects within studies and from the total number of studies (Borestein et al 2007)
+
+R code for reproduction
+
+ *Clear R and load data
+```{r}
+#clear R
+rm(list=ls())
+install.packages("metafor")
+library("metafor")
+
+setwd("~/Desktop/vellend analyses reproduction")
+dat <- read.table("vellend_original_data.txt", header=TRUE)
+
+
+```
+
+
+
+
+
+
+
+# Results in original paper:
+From authors:
+The authors found there were increases in biodiversity when original authors had taken succession following major disturbances and to a lesser extent to stop in grazing. A tendency to see declines in species richness were found when authors took invasive species and climate change as drivers, but the 95% credible intervals overlapped zero. 
+Temporal change in species richness was independent of plot area, temporal duration and latitude and longitude of a given study. Factors such as spatial constrains and stabilizing species interactions likely buffer against prolonged local-scale diversity change in either direction, given that changes in richness didnt depend on study duration. 
+
+Note: these results dont apply to global large scale biodiversity loss. Also it doesnt undermines conservation efforts to protect ecosystem services. But it assesses the argument that conservation efforts can be justified because of potential ecoszstem function losses. 
+
+Declines of more than 20% were found only in 8% of the datasets. Declines of less than 20% have negligible effects on ecosystem function according to other papers. 
+
+The argument in the discussion is that when sufficiently profound ecosystem changes occur (eg: changing a rainforest to a parking lot), then the impact of biodiversity change on ecosystem function is negligible compared to the overal change in ecosystem composition (soil, nutrients, management, others). So they excluded studies that had gone through overall changes, to reduce the scope of the studie to those that really state a change in ecosystem function based on solely or mainly biodiversity changes. 
+
+Finally they stte that although plant species diversity shows no net directional change, there are tremendous variation in direction and magnitude of biodiversity trends and in the identities of species (species composition), which can indeed have an important consequecne for ecosystem function. 
+
+
