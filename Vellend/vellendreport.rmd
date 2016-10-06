@@ -33,7 +33,7 @@ Criteria for the search of papers is stated in the meta-analysis paper itself an
 Analyses were done with species richness from 155 studies comprising data from 318 data sets. For each data set a raw effect size was calculated as log ratio of mean species richness in the last and first years of survey. The raw log ratio was standarized to a common decadal time scale, by dividing by the time interval between points. 
 
 The analyses were carried in 2 ways: i) Bayesian analysis of multilevel model, ii) Fixed effect meta-analysis with each study weighted by the square root of the sample size. 
-Same analyses where carried for eveness and diversity except for the evaluation of predictor variables, which was omitted due to small sample size. Analyses where done with OepnBUGS in R package, but we will attempt them with the "metafor" package. 
+Same analyses were carried for eveness and diversity except for the evaluation of predictor variables, which was omitted due to small sample size. Analyses where done with OepnBUGS in R package, but we will attempt them with the "metafor" package. 
 
 # Method/Analyses in our reproduction: 
 Choice of model to use
