@@ -28,6 +28,10 @@ Figure S1 and Table S2 in supplementary material: show similar results with subs
 Figure S2: Number of studies vs raw effect sizes (not devided by decade)
 
 
+
+
+
+
 # Method/Analyses in original paper: 
 Criteria for the search of papers is stated in the meta-analysis paper itself and this bibliography search will not be reproduced.
 Analyses were done with species richness from 155 studies comprising data from 318 data sets. For each data set a raw effect size was calculated as log ratio of mean species richness in the last and first years of survey. The raw log ratio was standarized to a common decadal time scale, by dividing by the time interval between points. 
@@ -42,6 +46,62 @@ A) We try first a fixed effects meta-analysis (without weight of the studies). B
 B) We then try a random effects model, where we allow that the true effect could vary from study to study, so the combined effect estimates the mean effect of the distribution of study effects. The weights assigned under random effects model are more balanced, because each study is estimating a different effect size (from one study to estimate the true effect in a specific populaion and for all the true effects used to estimate the mean of the true effects). Therefore, our estimate depends on the number of subjects within studies and from the total number of studies (Borestein et al 2007)
 
 R code for reproduction
+
+*Figure 1: map points of studies
+
+```{r}
+#read data
+install.packages("RCurl")
+library(RCurl)
+setwd("~/Documents/RREEBES/Vellend")
+dat <- read.table(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Vellend/vellend%20analyses%20reproduction/vellend_original_data.txt"), check.names=FALSE, header=TRUE) 
+
+#make map of the world and lay points from data coordinates
+install.packages("rworldmap")
+install.packages("rworldxtra")
+library(rworldmap)
+newmap <- getMap(resolution = "low")
+plot(newmap)
+points(dat$Longitud, dat$Latitude, col= "red", cex = .6)
+
+#another (nicer) way - world map - legend missing
+library("ggmap")
+library(maptools)
+library(maps)
+
+map("world", fill=TRUE, col="white", bg="white", ylim=c(-60, 90), mar=c(0,0,0,0))
+points(dat$Longitud, dat$Latitude, col=dat$Habitat, pch=16, cex=0.8)
+title("Figure 1: Coordinates from studies")
+legend("bottomleft", horiz = TRUE, col=dat$Habitat) # not working legend
+
+
+##failed attempt with ggplot2
+#  library(ggplot2)
+#  world <- map_data("world")
+#  worldmap <- ggplot(world, aes(x=long, y=lat, group=group)) 
+#  + geom_path() 
+#  + scale_y_continuous(breaks=(-2:2) * 30) 
+#  + scale_x_continuous(breaks=(-5:5) * 45) 
+#  worldmappoints<- worldmap + (geom_point(aes(x = dat$Longitud, y = #  dat$Latitude, colour=dat$Habitat), data=dat)
+#  plot(worldmap)
+
+
+
+#make map of USA and Europe with points - this package uses Google maps
+install.packages("ggmap")
+library(ggmap)
+mapEu <- get_map(location = 'Europe', zoom = 4)
+mapPointsEu <- ggmap(mapEu) + geom_point(aes(x = dat$Longitud, y = dat$Latitude, colour=dat$Habitat), data = dat, alpha = 1)
+mapPEu<- mapPointsEu + labs(colour="Habitat")
+plot(mapPEu)
+
+mapUSA<-get_map(location="United States of America", zoom=4)
+mapPointsUSA <- ggmap(mapUSA) + geom_point(aes(x = dat$Longitud, y = dat$Latitude, colour= dat$Habitat), data = dat, alpha = 1)
+mapPUSA<- mapPointsUSA + labs(colour="Habitat")
+plot(mapPUSA)
+
+```
+
 
 *Load data and calculate effect sizes that match original
 
@@ -75,9 +135,10 @@ ncont<-dat$N_plots_Year1
 datef <- escalc(measure="ROM", n1i=ntreat, n2i=ncont, m1i=mtreat, m2i=mcontrol, sd1i=etreat, sd2i=etreat, data=dat)
 View(datef)
 
+
 ```
 
-The authors used "log transformed ratio of means" divided by the standarized time (column: "duration"). Data calculated by us with function escalc using "ROM" fits original data (effect sizes column "yi""). "escalc" provides a variance associated with this effect size. Since authors divided the effect size for the duration, I will divide also the variance (vi) for the duration. This is because I need yi and vi for fitting the fixed effects model (function: "rma"), and vi should have gone through the same standarization as yi. 
+The authors used "log transformed ratio of means" divided by the standarized time (column: "duration"). Data calculated by us with function escalc using "ROM" fits original data (effect sizes column "yi"). "escalc" provides a variance associated with this effect size. Since authors divided the effect size for the duration, I will divide also the variance (vi) for the duration. This is because I need yi and vi for fitting the fixed effects model (function: "rma"), and vi should have gone through the same standarization as yi. 
 
 ```{r}
 
