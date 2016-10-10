@@ -1,6 +1,6 @@
 ---
 title: "Vellend"
-author: "ale, owen"
+author: "Ale, Owen"
 date: "4 October 2016"
 output: html_document
 ---
@@ -103,7 +103,7 @@ plot(mapPUSA)
 ```
 
 
-*Load data and calculate effect sizes that match original
+*Load and understand data, exclude NA rows in species richness
 
 ```{r}
 #clear R, load packages, load data
@@ -117,43 +117,57 @@ setwd("~/Documents/RREEBES/Vellend")
 dat <- read.table(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Vellend/vellend%20analyses%20reproduction/vellend_original_data.txt"), check.names=FALSE, header=TRUE) 
 View(dat)
 
-#extract columns as vectors for the function of effect size calculation
-names(dat)
-mtreat<-dat$SR_Year2_CT
-mcontrol<-dat$SR_Year1_CT
-etreat<-dat$SR_Year2_STDEV
-econtrol<-dat$SR_Year1_STDEV
-ntreat<-dat$N_plots_Year2
-ncont<-dat$N_plots_Year1
+#to understand the original data
+dat$ratio<- log(dat$SR_Year2_CT/dat$SR_Year1_CT)  #gives you the simple log ratio between means that in original database is named"log_SR_ratio"
+dat$ratiostandard<-dat$ratio/dat$Duration  #would give you the effect size standarized that they claim to have used in the paper
+View(dat)
 
-### to understand the original data
-# datef$ratio<- log(datef$SR_Year2_CT/datef$SR_Year1_CT)  #gives you the simple log ratio between means that in original data is named"log_SR_ratio"
-# datef$ratiostandard<-datef$ratio/datef$Duration  #gives you the effect size standarized that they claim to have used in the paper
-# View(datef)
-
-#effect size calculation with log transformed ratio of means, to compare with authors calculation in column "log_SR_ratio"
-datef <- escalc(measure="ROM", n1i=ntreat, n2i=ncont, m1i=mtreat, m2i=mcontrol, sd1i=etreat, sd2i=etreat, data=dat)
-View(datef)
-
+#exclude rows with NA in Species Richness column 
+dat2<-dat[!is.na(dat$log_SR_ratio),]
+View(dat2)
 
 ```
 
-The authors used "log transformed ratio of means" divided by the standarized time (column: "duration"). Data calculated by us with function escalc using "ROM" fits original data (effect sizes column "yi"). "escalc" provides a variance associated with this effect size. Since authors divided the effect size for the duration, I will divide also the variance (vi) for the duration. This is because I need yi and vi for fitting the fixed effects model (function: "rma"), and vi should have gone through the same standarization as yi. 
+Original database has 346 observations (dat). Excluding those with NA in species richness column, I have 318 observations (dat2). 
+
+* Calculate effect size yi and its variance vi
+```{r}
+
+#effect size calculation with log transformed ratio of means, to compare with authors calculation in column "log_SR_ratio"
+dat2ef <- escalc(measure="ROM", n1i=dat2$N_plots_Year2, n2i=dat2$N_plots_Year1, m1i=dat2$SR_Year2_CT, m2i=dat2$SR_Year1_CT, sd1i=dat2$SR_Year1_STDEV, sd2i=dat2$SR_Year2_STDEV, data=dat2)
+View(dat2ef)
+
+```
+
+The authors used "log transformed ratio of means" divided by the standarized time (column: "duration"). Data calculated by us with function escalc using "ROM" fits original data ("yi" matches data in "log_SR_ratio"). "escalc" provides a variance associated with this effect size (vi). Note that there are lots of rows with NA in vi, given that there a lots of standard deviation missing in the original data for 1 of the years of the survey. 
+
+Since authors divided the effect size for the duration, I will divide also the variance (vi) for the duration. This is because I need yi and vi for fitting the fixed effects model (function: "rma"), and vi should have gone through the same standarization as yi. 
 
 ```{r}
 
 #standarization of effect sizes for the duration of studies
-datef$yistand<-datef$yi / datef$Duration
-datef$vistand<-datef$vi / datef$Duration
+dat2ef$yistand<-dat2ef$yi / dat2ef$Duration
+dat2ef$vistand<-dat2ef$vi / dat2ef$Duration
 
 #fit fixed effects model to standarized effect sizes
-res<-rma(yi=datef$yistand,vi=datef$vistand,method="FE", data=datef)
+res<-rma(yi=dat2ef$yistand,vi=dat2ef$vistand,method="FE", data=dat2ef)
 print(res,digits=3)
 ```
 
-The model indicates only 108 studies could be used for this analysis (in original study, authors say 155 studies were included for species richness). It would seem that the difference is that the variance could not be calculated for many studies that were included in original paper. 
+The model indicates only 108 studies could be used for this analysis (in original study, authors say 155 studies were included for species richness) - estimate: 0.004***. I try now with the non-standarized effect sizes to see if we get 155 studies included, to see if it makes a difference (maybe values are too small when standarized?). 
 
+```{r}
+#fit fixed effects model to standarized effect sizes
+res2<-rma(yi,vi,method="FE", data=dat2ef)
+print(res2,digits=3)
+```
 
+The number of studies included is the same, and the estimate goes up to 0.08***. The low estimate matches conclusions from original articles, although the significance would mean that there is a (really low) significant effect of treatment in species richness. Heterogeneity is highly significant and large in both studies (taking raw or standarized effect sizes).
+
+* group breakdown analyses and meta-regression
+
+```{r}
+```
 
 # Results in original paper:
 From authors:
