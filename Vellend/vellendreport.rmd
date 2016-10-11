@@ -149,6 +149,11 @@ Since authors divided the effect size for the duration, I will divide also the v
 dat2ef$yistand<-dat2ef$yi / dat2ef$Duration
 dat2ef$vistand<-dat2ef$vi / dat2ef$Duration
 
+#barplot figure 2: //needs to be fixed for ranges//
+bar<- table(dat2ef$yistand)
+barplot(bar, main="Figure 2",
+   xlab="Standarized effect size") 
+
 #fit fixed effects model to standarized effect sizes
 res<-rma(yi=dat2ef$yistand,vi=dat2ef$vistand,method="FE", data=dat2ef)
 print(res,digits=3)
