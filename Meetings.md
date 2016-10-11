@@ -18,6 +18,22 @@ What to attempt next week (to be refered to next week)?
 
 Meeting minutes for 2015 are archived [here](meeting_minutes_2015.md).
 
+# 20.09.2016 (minutes by Aurelie)
+## Attendance: 
+Frank, Owen, Mikael, Ale, Vanessa, Andrea & Aurelie
+
+## New papers on the repository:
+Andrea has a paper on eco-evolutionary dynamics with simulation.
+
+## Progress update for reproduction underway:
+Hooper on webpage? still waiting because Ale is a rebel
+Scheffer : Owen will present the update
+
+## Discussion
+- what to reproduce? method that produce gain for own research
+- how long should we spend on the reproduction?
+-> reproducing the part of the paper that really interested us.
+
 
 # 02.08.2016 (minutes by Ale)
 ## Attendance: Frank, Owen, Colette, Aurelie, Andrea, Ale
