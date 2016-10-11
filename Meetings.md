@@ -32,7 +32,7 @@ Scheffer : Owen will present the update
 ## Discussion
 - what to reproduce? method that produce gain for own research
 - how long should we spend on the reproduction?
--> reproducing the part of the paper that really interested us.
+- --> reproducing the part of the paper that really interested us.
 
 
 # 02.08.2016 (minutes by Ale)
