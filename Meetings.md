@@ -18,6 +18,22 @@ What to attempt next week (to be refered to next week)?
 
 Meeting minutes for 2015 are archived [here](meeting_minutes_2015.md).
 
+# 11.10.2016 (minutes by Aurelie)
+
+## Attendance:
+Frank, Vanessa, Mikael, Ale, Owen and Aurelie
+
+## New papers:
+Frank will clear the list
+DeLong should be in the list
+
+## Progress:
+- Scheffer is loaded — and if some people are interesting to focus on some additional points (stochasticity and early warnings signals) discussed during the presentation, it is possible to explore them!
+- Mikael and Andrea started to work on DeLong’s paper.
+
+## Presentation
+Ale presents Vellend’s paper: Global Meta-analysis reveals no net change in local-scale plant biodiversity over time.
+
 # 20.09.2016 (minutes by Aurelie)
 ## Attendance: 
 Frank, Owen, Mikael, Ale, Vanessa, Andrea & Aurelie
