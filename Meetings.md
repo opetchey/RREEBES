@@ -475,4 +475,17 @@ Frank also suggested to have sessions were the group learns more about reproduci
 
 Thomas suggested having some common template for our reproductions posted on github. In particular it is important to introduce the paper properly and to explain why certain analyses were done. 
 
+## 25.10.16
+
+- Owen taking minutes.
+
+- No new people.
+
+- Owen works with Ale on Vellend more. Then works on Huisman & Weissing.
+
+- Changes to papers listed please… add Andrea & Mikael’s, publish Connolly (Andrea), Owen to publish Sugihara.
+
+- Ale makes progress with Vellend.
+
+
 
