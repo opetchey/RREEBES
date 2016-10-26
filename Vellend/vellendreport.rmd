@@ -45,9 +45,9 @@ A) We try first a fixed effects meta-analysis (without weight of the studies). B
 
 B) We then try a random effects model, where we allow that the true effect could vary from study to study, so the combined effect estimates the mean effect of the distribution of study effects. The weights assigned under random effects model are more balanced, because each study is estimating a different effect size (from one study to estimate the true effect in a specific populaion and for all the true effects used to estimate the mean of the true effects). Therefore, our estimate depends on the number of subjects within studies and from the total number of studies (Borestein et al 2007)
 
-R code for reproduction
+R code for reproduction 
 
-*Figure 1: map points of studies
+* Figure 1: map points of studies
 
 ```{r}
 #read data
@@ -64,7 +64,7 @@ newmap <- getMap(resolution = "low")
 plot(newmap)
 points(dat$Longitud, dat$Latitude, col= "red", cex = .6)
 
-#another (nicer) way - world map - legend missing
+#another (nicer) way - world map - /legend missing/
 library("ggmap")
 library(maptools)
 library(maps)
@@ -76,7 +76,7 @@ legend("bottomleft", horiz = TRUE, col=dat$Habitat) # not working legend
 
 
 ##failed attempt with ggplot2
-#  library(ggplot2)
+library(ggplot2)
 #  world <- map_data("world")
 #  worldmap <- ggplot(world, aes(x=long, y=lat, group=group)) 
 #  + geom_path() 
@@ -103,7 +103,7 @@ plot(mapPUSA)
 ```
 
 
-*Load and understand data, exclude NA rows in species richness
+* Load and understand data, exclude NA rows in species richness
 
 ```{r}
 #clear R, load packages, load data
@@ -141,7 +141,9 @@ View(dat2ef)
 
 The authors used "log transformed ratio of means" divided by the standarized time (column: "duration"). Data calculated by us with function escalc using "ROM" fits original data ("yi" matches data in "log_SR_ratio"). "escalc" provides a variance associated with this effect size (vi). Note that there are lots of rows with NA in vi, given that there a lots of standard deviation missing in the original data for 1 of the years of the survey. 
 
-Since authors divided the effect size for the duration, I will divide also the variance (vi) for the duration. This is because I need yi and vi for fitting the fixed effects model (function: "rma"), and vi should have gone through the same standarization as yi. 
+Since authors divided the effect size for the duration, I will divide also the variance (vi) by the duration. This is because I need yi and vi for fitting the fixed effects model (function: "rma"), and vi should have gone through the same standarization as yi. 
+
+* Standarization of effect sizes and fit FE model
 
 ```{r}
 
@@ -149,10 +151,6 @@ Since authors divided the effect size for the duration, I will divide also the v
 dat2ef$yistand<-dat2ef$yi / dat2ef$Duration
 dat2ef$vistand<-dat2ef$vi / dat2ef$Duration
 
-#barplot figure 2: //needs to be fixed for ranges//
-bar<- table(dat2ef$yistand)
-barplot(bar, main="Figure 2",
-   xlab="Standarized effect size") 
 
 #fit fixed effects model to standarized effect sizes
 res<-rma(yi=dat2ef$yistand,vi=dat2ef$vistand,method="FE", data=dat2ef)
@@ -162,12 +160,42 @@ print(res,digits=3)
 The model indicates only 108 studies could be used for this analysis (in original study, authors say 155 studies were included for species richness) - estimate: 0.004***. I try now with the non-standarized effect sizes to see if we get 155 studies included, to see if it makes a difference (maybe values are too small when standarized?). 
 
 ```{r}
-#fit fixed effects model to standarized effect sizes
+#fit fixed effects model to raw effect sizes
 res2<-rma(yi,vi,method="FE", data=dat2ef)
 print(res2,digits=3)
 ```
 
 The number of studies included is the same, and the estimate goes up to 0.08***. The low estimate matches conclusions from original articles, although the significance would mean that there is a (really low) significant effect of treatment in species richness. Heterogeneity is highly significant and large in both studies (taking raw or standarized effect sizes).
+
+* Subset without NA values in vi 
+```{r}
+#subset
+dat2effinal<-dat2ef[!is.na(dat2ef$vi),]
+View(dat2effinal)
+
+## is there another way to plot values from a column (yi) only when in another column there are no NA (vi)?
+
+```
+
+
+* Figure 2: Number of studies vs standard effect size
+
+```{r}
+#barplot using hist command (for standard and raw EF)
+
+hist(dat2effinal$yistand, xlab="Standarized Effect size (log (SRy1/SRy2))/duration", 	main="Figure 2")
+
+hist(dat2effinal$yi, breaks=10, ylab = "Number of studies", xlab="Effect size (log SRy1/SRy2)", main="Figure 2")
+
+#barplot using qplot
+
+qplot(yi, ylab = "Number of studies", xlab="Effect size (log SRy1/SRy2)", main="Figure 2", xlim = c(-2, 2), bins=25, data=dat2effinal) # from subset data (107 studies) 
+
+qplot(yi, ylab = "Number of studies", xlab="Effect size (log SRy1/SRy2)", main="Figure 2", xlim = c(-2, 2), bins=25, data=dat2ef, colour=Habitat, center=0) # from original data 
+```
+
+
+
 
 * group breakdown analyses and meta-regression
 
