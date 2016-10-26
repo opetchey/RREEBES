@@ -107,17 +107,17 @@ r_star <- function(time, state, pars){ with(as.list(parms), {
 })
 }
 
-
+rkMethod("rk4")
 
 
 library(deSolve) 
 parms <- c(r=1) 
 
-initial_cond <- c(0.1, 0.2, 0.1, 0.1, 0.1, 10, 10, 10) 
+initial_cond <- c(0.1, 0.1, 0.1, 0.1, 0.1, 10, 10, 10) 
 
-out <- ode(y = initial_cond , times = 1:5000, func = r_star, parms = parms) 
-
-matplot(out[1:5000 , 2:9], type = "l", xlab = "time", ylab = "Conc",
+out <- ode(y = initial_cond , times = 1:1000, func = r_star, parms = parms, "rk4", hini =.01) 
+diagnostics(out)
+matplot(out[1:1000 , 2:9], type = "l", xlab = "time", ylab = "Conc",
         main = "5 species R* competition", lwd = 2, col=2:9)
 legend("topright", c("sp1", "sp2", "sp3", "sp4","sp5", "R1", "R2", "R3"), col = 2:9, lty = 1)
 
