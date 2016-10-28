@@ -1,0 +1,197 @@
+---
+title: "Huisman_Weissing_2001_report"
+author: "Frank Pennekamp"
+date: "10/28/2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(deSolve) 
+library(plot3D)
+```
+
+Here I aim to reproduce the paper "Fundamental unpredictability in multispecies competition" by [Huisman & Weissing (2001)](http://www.jstor.org/stable/10.1086/319929?seq=1#page_scan_tab_contents).
+
+Abstract: One of the central goals of ecology is to predict the distribution and abundance of organisms. Here, we show that, in ecosystems of high biodiversity, the outcome of multispecies competition can be fundamentally unpredictable. We consider a competition model widely applied in phytoplankton ecology and plant ecology in which multiple species compete for three resources. We show that this competition model may have several alternative outcomes, that the dynamics leading to these alternative outcomes may exhibit transient chaos, and that the basins of attraction of these alternative outcomes may have an intermingled fractal geometry. As a consequence of this fractal geometry, it is impossible to predict the winners of multispecies competition in advance.
+
+The goal of this reproduction are:
+* learn to set up a competition model based on R theory     
+* reproduce at least figures 1 to 4
+
+Two models based on the same principles are used in the paper: a 5 species model with competition over three limiting resources, and an 8 species competition model (where three additional species invade the 5 species community).
+
+Let's first define and simulate the 5 species  community:
+
+```{r 5 species model, echo=F}
+
+r_star_5 <- function(time, state, pars){ with(as.list(parms), {
+  
+  rm(list=ls())
+  
+  # initial conditions for all species and resources
+  #N <- rep(0.1,2)
+  #S <- rep(10, 3) # micro mol per litre
+  
+  R <- state[6:8]
+  N <- state[1:5]
+  S <- rep(10, 3)
+  
+  # growth rate of all species per day
+  r <- rep(1,5)
+  
+  # mortality (m = D) per day
+  m <- rep(0.25,5)
+  # resource turnover
+  D <- 0.25
+  
+  # half saturation content for each species on each resource (row = resources, column = species)
+  K <- matrix(c(0.2, 0.05, 1, 0.05, 1.2, 0.25, 0.1, 0.05, 1, 0.4, 0.15, 0.95, 0.35, 0.1, 0.05), nrow=3, byrow = T)
+  
+  # content matrix (row = resources, column = species)
+  C <- matrix(c(0.2, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.1, 0.1, 0.2, 0.1, 0.1, 0.2, 0.2, 0.1), nrow=3, byrow = T)
+  
+  # species specific growth rates as a function of resource availability
+  # maximum growth rate determined by Liebig's law of minimum
+  
+  r <- rep(1,3)
+  r1 <- r[1]*(R[1]/(K[1,1]+R[1]))
+  r2 <- r[2]*(R[2]/(K[2,1]+R[2]))
+  r3 <- r[3]*(R[3]/(K[3,1]+R[3]))
+  mu1 <- min(r1,r2,r3)
+  
+  r <- rep(1,3)
+  r1 <- r[1]*(R[1]/(K[1,2]+R[1]))
+  r2 <- r[2]*(R[2]/(K[2,2]+R[2]))
+  r3 <- r[3]*(R[3]/(K[3,2]+R[3]))
+  mu2 <- min(r1,r2,r3)
+  
+  r <- rep(1,3)
+  r1 <- r[1]*(R[1]/(K[1,3]+R[1]))
+  r2 <- r[2]*(R[2]/(K[2,3]+R[2]))
+  r3 <- r[3]*(R[3]/(K[3,3]+R[3]))
+  mu3 <- min(r1,r2,r3)
+  
+  r <- rep(1,3)
+  r1 <- r[1]*(R[1]/(K[1,4]+R[1]))
+  r2 <- r[2]*(R[2]/(K[2,4]+R[2]))
+  r3 <- r[3]*(R[3]/(K[3,4]+R[3]))
+  mu4 <- min(r1,r2,r3)
+  
+  r <- rep(1,3)
+  r1 <- r[1]*(R[1]/(K[1,5]+R[1]))
+  r2 <- r[2]*(R[2]/(K[2,5]+R[2]))
+  r3 <- r[3]*(R[3]/(K[3,5]+R[3]))
+  mu5 <- min(r1,r2,r3)
+  
+  # species dynamics
+  dn1dt <- N[1] * (mu1 - m[1])
+  dn2dt <- N[2] * (mu2 - m[2])
+  dn3dt <- N[3] * (mu3 - m[3])
+  dn4dt <- N[4] * (mu4 - m[4])
+  dn5dt <- N[5] * (mu5 - m[5])
+  
+  loss_R1 <- sum( 
+    (C[1,1] * N[1] * mu1), 
+    (C[1,2] * N[2] * mu2), 
+    (C[1,3] * N[3] * mu3), 
+    (C[1,4] * N[4] * mu4), 
+    (C[1,5] * N[5] * mu5)
+    )
+  
+  loss_R2 <- sum( 
+    (C[2,1] * N[1] * mu1), 
+    (C[2,2] * N[2] * mu2), 
+    (C[2,3] * N[3] * mu3), 
+    (C[2,4] * N[4] * mu4), 
+    (C[2,5] * N[5] * mu5)
+  )
+  
+  loss_R3 <- sum( 
+    (C[3,1] * N[1] * mu1), 
+    (C[3,2] * N[2] * mu2), 
+    (C[3,3] * N[3] * mu3), 
+    (C[3,4] * N[4] * mu4), 
+    (C[3,5] * N[5] * mu5)
+  )
+  
+  #loss1 <- sum( (C[2,1] * N[1] * mu1), (C[2,2] * N[2] * mu2))
+  #loss2 <- sum( (C[2,1] * N[1] * mu1), (C[2,2] * N[2] * mu2))
+  #loss3 <- sum( (C[3,1] * N[1] * mu1), (C[2,3] * N[2] * mu2))
+  
+  # resource dynamics replacement time 
+  dr1dt <- D * (S[1] - R[1]) - loss_R1
+  dr2dt <- D * (S[2] - R[2]) - loss_R2
+  dr3dt <- D * (S[3] - R[3]) - loss_R3
+  
+  
+  
+  list(c(dn1dt, dn2dt, dn3dt, dn4dt, dn5dt, dr1dt, dr2dt, dr3dt))
+})
+}
+
+```
+
+
+## Figure 1
+
+Uses 8 species community, will be added later
+
+## Figure 2 a)
+```{r 5 spec comp a, echo=TRUE}
+
+# define parameters for model simulation
+parms <- c(r=1) 
+
+# set up starting conditions
+initial_cond1 <- c(0.1, 0.1, 0.1, 0.1, 0.1, 10, 10, 10) 
+
+# simulate dynamics for 2000 time steps (days) using Runge-Kutta algorithm and time step of 0.01 days
+out1 <- ode(y = initial_cond1 , times = 1:2000, func = r_star_5, parms = parms) 
+```
+
+```{r}
+matplot(out1[1:2000 , 2:9], type = "l", xlab = "time", ylab = "Conc",
+        main = "5 species R* competition", lwd = 2, col=2:9)
+legend("topright", c("sp1", "sp2", "sp3", "sp4","sp5", "R1", "R2", "R3"), col = 2:9, lty = 1)
+```
+
+## Figure 2 b)
+```{r 5 spec comp b, echo=TRUE}
+# define parameters for model simulation
+parms <- c(r=1) 
+
+# set up starting conditions
+initial_cond2 <- c(0.1, 0.1, 0.1, 0.2, 0.1, 10, 10, 10) 
+ 
+# simulate dynamics for 2000 time steps (days) using Runge-Kutta algorithm and time step of 0.01 days
+out2 <- ode(y = initial_cond2 , times = 1:2000, func = r_star_5) 
+```
+
+```{r}
+matplot(out2[1:2000 , 2:9], type = "l", xlab = "time", ylab = "Conc",
+        main = "5 species R* competition", lwd = 2, col=2:9)
+legend("topright", c("sp1", "sp2", "sp3", "sp4","sp5", "R1", "R2", "R3"), col = 2:9, lty = 1)
+```
+
+```{r}
+lines3D(z = out1[1:750,2],
+         x = out1[1:750,5],
+         y = out1[1:750,3]*-1,  col="darkgreen", main = "Attractor for above time series", plot=F)
+
+lines3D(z = out1[750:2000,2],
+         x = out1[750:2000,5],
+         y = out1[750:2000,3]*-1,  col="blue",  plot=F, add=T)
+
+lines3D(z = out2[1:500,2],
+         x = out2[1:500,5],
+         y = out2[1:500,3]*-1,  col="purple", plot=F, add=T)
+
+lines3D(z = out2[500:2000,2],
+         x = out2[500:2000,5],
+         y = out2[500:2000,3]*-1,  col="blue", add=T, plot=T)
+
+```
+
+
+
