@@ -23,6 +23,7 @@ TMM: How do early warning signals perform when two environmental changes act sim
 
 [Vellend et al. (2013) Global meta-analysis reveals no net change in local-scale plant biodiversity over time.] (http://www.pnas.org/content/110/48/19456.full.pdf) (Data: http://www.pnas.org/content/110/48/19456/suppl/DCSupplemental) (Ale, Owen)
 
+[DeLong & Gibert (2016) Gillespie eco-evolutionary models (GEMs) reveal the role of heritable trait variation in eco-evolutionary dynamics.] (http://onlinelibrary.wiley.com/doi/10.1002/ece3.1959/epdf) (Andrea, Mikael)
 
 # Papers without appropriate data
 
