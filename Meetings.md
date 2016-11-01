@@ -18,6 +18,22 @@ What to attempt next week (to be refered to next week)?
 
 Meeting minutes for 2015 are archived [here](meeting_minutes_2015.md).
 
+# 1.11.2016 (minutes by Andrea)
+
+## Attendance:
+Frank, Ale, Andrea, Vanessa
+
+## New papers:
+DeLong paper added to list
+remove Connolly et al (script and data are available, so no reproduction needed)
+
+## Progress:
+- Ale added figure 2
+
+## Presentation
+Frank presents his reproduction (Fundamental unpredictability in multispecies competition). Model is based on the R* theory. 
+
+
 # 11.10.2016 (minutes by Aurelie)
 
 ## Attendance:
