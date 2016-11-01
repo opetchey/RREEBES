@@ -199,5 +199,34 @@ lines3D(z = out2[500:2000,2],
 
 ```
 
+## Figure 3
+
+Check the outcome of competition based on different starting values:
+
+```{r}
+
+initial_condition <- expand.grid(sp2=seq(0.00001,2,length.out = 10), sp4=seq(0,2,length.out = 10)) 
+initial_condition$sp1 <- initial_condition$sp3 <- initial_condition$sp5 <- 0.1
+initial_condition$R1 <- initial_condition$R2 <- initial_condition$R3 <- 10
+
+# re-arrange according to species identity
+initial_condition <- initial_condition[, c(5,1,4,2,3,6,7,8) ]
+
+basins <- lapply(1:nrow(initial_condition), function(x) ode(y = as.numeric(initial_condition[x, ]), times = 1:1000, func = r_star_5))
+save(basins, file = "/Users/frank/Documents/Git projects/RREEBES/Huisman_Weissing_2001/basins.RData")
+
+comp_out <- function(x, time, biomass_threshold){ 
+  log <- x[time,2:6] > biomass_threshold
+  winners <- c("sp1", "sp2", "sp3", "sp4", "sp5")[log]
+  winners <- stringr::str_c(winners, collapse = ", ")
+  paste0( "winners: ", winners)
+  
+  }
+
+result <- lapply(basins, comp_out, time = 10, biomass_threshold = 10)
+
+
+
+```
 
 
