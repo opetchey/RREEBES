@@ -13,8 +13,6 @@ One of Lutz Becks et al's papers.
 [DAI, L, KOROLEV, K.S. & GORE, J. (2015, PNAS): Relation between stability and resilience determines the performance of early warning signals under different drivers.](http://www.pnas.org/content/112/32/10056.short)
 TMM: How do early warning signals perform when two environmental changes act simultaniously? . **Note**: Challenging approach/analysis. Have to check for the availability of yeast populations data...!
 
-[Huisman, J. & Weissing, F.J. (2001) Fundamental unpredictability in multispecies competition. The American naturalist, 157, 488–494.](http://www.jstor.org/stable/10.1086/319929?seq=1) Added by Owen.
-
 # Papers with reproduction underway
 
 [Xiong, J., Lu, X., Zhou, Z., Chang, Y., Yuan, D., Tian, M., Zhou, Z., Wang, L., Fu, C., Orias, E., Miao, W. (2012) Transcriptome analysis of the model protozoan, Tetrahymena thermophila, using deep RNA Sequencing. PLoS ONE 7, e30630.]  (http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0030630#s4) Data available on [Gene Expression Omnibus] (http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE27971)(Vanessa)
@@ -24,6 +22,8 @@ TMM: How do early warning signals perform when two environmental changes act sim
 [Vellend et al. (2013) Global meta-analysis reveals no net change in local-scale plant biodiversity over time.] (http://www.pnas.org/content/110/48/19456.full.pdf) (Data: http://www.pnas.org/content/110/48/19456/suppl/DCSupplemental) (Ale, Owen)
 
 [DeLong & Gibert (2016) Gillespie eco-evolutionary models (GEMs) reveal the role of heritable trait variation in eco-evolutionary dynamics.] (http://onlinelibrary.wiley.com/doi/10.1002/ece3.1959/epdf) (Andrea, Mikael)
+
+[Huisman, J. & Weissing, F.J. (2001) Fundamental unpredictability in multispecies competition. The American naturalist, 157, 488–494.](http://www.jstor.org/stable/10.1086/319929?seq=1) (Frank)
 
 # Papers without appropriate data
 
