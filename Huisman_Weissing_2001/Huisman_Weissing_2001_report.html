@@ -124,9 +124,12 @@ $(document).ready(function () {
 
 
 <p>Here I aim to reproduce the paper “Fundamental unpredictability in multispecies competition” by <a href="http://www.jstor.org/stable/10.1086/319929?seq=1#page_scan_tab_contents">Huisman &amp; Weissing (2001)</a>.</p>
+<blockquote>
 <p>Abstract: One of the central goals of ecology is to predict the distribution and abundance of organisms. Here, we show that, in ecosystems of high biodiversity, the outcome of multispecies competition can be fundamentally unpredictable. We consider a competition model widely applied in phytoplankton ecology and plant ecology in which multiple species compete for three resources. We show that this competition model may have several alternative outcomes, that the dynamics leading to these alternative outcomes may exhibit transient chaos, and that the basins of attraction of these alternative outcomes may have an intermingled fractal geometry. As a consequence of this fractal geometry, it is impossible to predict the winners of multispecies competition in advance.</p>
-<p>The goal of this reproduction are: * learn to set up a competition model based on R theory<br />
-* reproduce at least figures 1 to 4</p>
+</blockquote>
+<p>The goal of this reproduction are:<br />
+1. learn to set up a competition model based on R theory<br />
+2. reproduce at least figures 1 to 4</p>
 <p>Two models based on the same principles are used in the paper: a 5 species model with competition over three limiting resources, and an 8 species competition model (where three additional species invade the 5 species community).</p>
 <p>Let’s first define and simulate the 5 species community:</p>
 <div id="figure-1" class="section level2">
@@ -150,14 +153,6 @@ legend(&quot;topright&quot;, c(&quot;sp1&quot;, &quot;sp2&quot;, &quot;sp3&quot;
 </div>
 <div id="figure-2-b" class="section level2">
 <h2>Figure 2 b)</h2>
-<pre class="r"><code># define parameters for model simulation
-parms &lt;- c(r=1) 
-
-# set up starting conditions
-initial_cond2 &lt;- c(0.1, 0.1, 0.1, 0.2, 0.1, 10, 10, 10) 
- 
-# simulate dynamics for 2000 time steps (days) using Runge-Kutta algorithm and time step of 0.01 days
-out2 &lt;- ode(y = initial_cond2 , times = 1:2000, func = r_star_5) </code></pre>
 <pre class="r"><code>matplot(out2[1:2000 , 2:9], type = &quot;l&quot;, xlab = &quot;time&quot;, ylab = &quot;Conc&quot;,
         main = &quot;5 species R* competition&quot;, lwd = 2, col=2:9)
 legend(&quot;topright&quot;, c(&quot;sp1&quot;, &quot;sp2&quot;, &quot;sp3&quot;, &quot;sp4&quot;,&quot;sp5&quot;, &quot;R1&quot;, &quot;R2&quot;, &quot;R3&quot;), col = 2:9, lty = 1)</code></pre>

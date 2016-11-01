@@ -13,15 +13,18 @@ library(plot3D)
 
 Here I aim to reproduce the paper "Fundamental unpredictability in multispecies competition" by [Huisman & Weissing (2001)](http://www.jstor.org/stable/10.1086/319929?seq=1#page_scan_tab_contents).
 
-Abstract: One of the central goals of ecology is to predict the distribution and abundance of organisms. Here, we show that, in ecosystems of high biodiversity, the outcome of multispecies competition can be fundamentally unpredictable. We consider a competition model widely applied in phytoplankton ecology and plant ecology in which multiple species compete for three resources. We show that this competition model may have several alternative outcomes, that the dynamics leading to these alternative outcomes may exhibit transient chaos, and that the basins of attraction of these alternative outcomes may have an intermingled fractal geometry. As a consequence of this fractal geometry, it is impossible to predict the winners of multispecies competition in advance.
+> Abstract: One of the central goals of ecology is to predict the distribution and abundance of organisms. Here, we show that, in ecosystems of high biodiversity, the outcome of multispecies competition can be fundamentally unpredictable. We consider a competition model widely applied in phytoplankton ecology and plant ecology in which multiple species compete for three resources. We show that this competition model may have several alternative outcomes, that the dynamics leading to these alternative outcomes may exhibit transient chaos, and that the basins of attraction of these alternative outcomes may have an intermingled fractal geometry. As a consequence of this fractal geometry, it is impossible to predict the winners of multispecies competition in advance.
 
-The goal of this reproduction are:
-* learn to set up a competition model based on R theory     
-* reproduce at least figures 1 to 4
+The goal of this reproduction are:     
+1. learn to set up a competition model based on R theory     
+2. reproduce at least figures 1 to 4    
 
 Two models based on the same principles are used in the paper: a 5 species model with competition over three limiting resources, and an 8 species competition model (where three additional species invade the 5 species community).
 
-Let's first define and simulate the 5 species  community:
+## Figure 1 
+(uses a 8 species community, will be added later)
+
+Let's first define and simulate the 5 species community:
 
 ```{r 5 species model, echo=F}
 
@@ -132,13 +135,11 @@ r_star_5 <- function(time, state, pars){ with(as.list(parms), {
 
 ```
 
-
-## Figure 1
-
-Uses 8 species community, will be added later
-
 ## Figure 2 a)
-```{r 5 spec comp a, echo=TRUE}
+
+Then simulate dynamics of 5 species with equal starting conditions (0.1) for all competitors and resources (10).
+
+```{r 5 spec comp a, echo=T}
 
 # define parameters for model simulation
 parms <- c(r=1) 
@@ -154,10 +155,14 @@ out1 <- ode(y = initial_cond1 , times = 1:2000, func = r_star_5, parms = parms)
 matplot(out1[1:2000 , 2:9], type = "l", xlab = "time", ylab = "Conc",
         main = "5 species R* competition", lwd = 2, col=2:9)
 legend("topright", c("sp1", "sp2", "sp3", "sp4","sp5", "R1", "R2", "R3"), col = 2:9, lty = 1)
+text(x=1000, y = 40, labels = "Species 1, 4 and 5 wins")
 ```
 
 ## Figure 2 b)
-```{r 5 spec comp b, echo=TRUE}
+
+Now simulate dynamics of 5 species with equal starting conditions (0.1) except N_2 (0.2) .
+
+```{r 5 spec comp b, echo=F}
 # define parameters for model simulation
 parms <- c(r=1) 
 
@@ -172,9 +177,10 @@ out2 <- ode(y = initial_cond2 , times = 1:2000, func = r_star_5)
 matplot(out2[1:2000 , 2:9], type = "l", xlab = "time", ylab = "Conc",
         main = "5 species R* competition", lwd = 2, col=2:9)
 legend("topright", c("sp1", "sp2", "sp3", "sp4","sp5", "R1", "R2", "R3"), col = 2:9, lty = 1)
+text(x=1000, y = 40, labels = "Species 1, 2 and 3 wins")
 ```
 
-```{r}
+```{r, echo=F}
 lines3D(z = out1[1:750,2],
          x = out1[1:750,5],
          y = out1[1:750,3]*-1,  col="darkgreen", main = "Attractor for above time series", plot=F)
