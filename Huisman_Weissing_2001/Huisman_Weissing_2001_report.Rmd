@@ -215,6 +215,12 @@ initial_condition <- initial_condition[, c(5,1,4,2,3,6,7,8) ]
 basins <- lapply(1:nrow(initial_condition), function(x) ode(y = as.numeric(initial_condition[x, ]), times = 1:1000, func = r_star_5))
 save(basins, file = "/Users/frank/Documents/Git projects/RREEBES/Huisman_Weissing_2001/basins.RData")
 
+# check one output
+matplot(basins[[92]][1:1000 , 2:9], type = "l", xlab = "time", ylab = "Conc",
+        main = "5 species R* competition", lwd = 2, col=2:9)
+legend("topright", c("sp1", "sp2", "sp3", "sp4","sp5", "R1", "R2", "R3"), col = 2:9, lty = 1)
+
+# evaluate which species persist
 comp_out <- function(x, time, biomass_threshold){ 
   log <- x[time,2:6] > biomass_threshold
   winners <- c("sp1", "sp2", "sp3", "sp4", "sp5")[log]
@@ -223,7 +229,13 @@ comp_out <- function(x, time, biomass_threshold){
   
   }
 
-result <- lapply(basins, comp_out, time = 10, biomass_threshold = 10)
+result <- lapply(basins, comp_out, time = 1000, biomass_threshold = 5)
+
+initial_condition$res <- unlist(result)
+
+image(matrix(ifelse(initial_condition$res == "winners: sp1, sp2, sp3", 1,0), byrow = T, ncol = 10))
+
+
 
 
 
