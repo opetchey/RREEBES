@@ -203,22 +203,23 @@ lines3D(z = out2[500:2000,2],
 
 Check the outcome of competition based on different starting values:
 
-```{r}
+```{r, eval=F}
 
-initial_condition <- expand.grid(sp2=seq(0.00001,2,length.out = 10), sp4=seq(0,2,length.out = 10)) 
+# set up initial conditions to vary across species 2 & 4
+initial_condition <- expand.grid(sp2=seq(0.00001,2,length.out = 40), sp4=seq(0,2,length.out = 40)) 
 initial_condition$sp1 <- initial_condition$sp3 <- initial_condition$sp5 <- 0.1
 initial_condition$R1 <- initial_condition$R2 <- initial_condition$R3 <- 10
 
 # re-arrange according to species identity
 initial_condition <- initial_condition[, c(5,1,4,2,3,6,7,8) ]
 
-basins <- lapply(1:nrow(initial_condition), function(x) ode(y = as.numeric(initial_condition[x, ]), times = 1:1000, func = r_star_5))
-save(basins, file = "/Users/frank/Documents/Git projects/RREEBES/Huisman_Weissing_2001/basins.RData")
+basins <- lapply(1:nrow(initial_condition), function(x) ode(y = as.numeric(initial_condition[x, ]), times = 1:2000, func = r_star_5))
+save(basins, file = "/Users/frank/Documents/Git projects/RREEBES/Huisman_Weissing_2001/basins2.RData")
 
 # check one output
-matplot(basins[[92]][1:1000 , 2:9], type = "l", xlab = "time", ylab = "Conc",
-        main = "5 species R* competition", lwd = 2, col=2:9)
-legend("topright", c("sp1", "sp2", "sp3", "sp4","sp5", "R1", "R2", "R3"), col = 2:9, lty = 1)
+# matplot(basins[[92]][1:2000 , 2:9], type = "l", xlab = "time", ylab = "Conc",
+#         main = "5 species R* competition", lwd = 2, col=2:9)
+# legend("topright", c("sp1", "sp2", "sp3", "sp4","sp5", "R1", "R2", "R3"), col = 2:9, lty = 1)
 
 # evaluate which species persist
 comp_out <- function(x, time, biomass_threshold){ 
@@ -229,16 +230,71 @@ comp_out <- function(x, time, biomass_threshold){
   
   }
 
-result <- lapply(basins, comp_out, time = 1000, biomass_threshold = 5)
-
+result <- lapply(basins, comp_out, time = 2000, biomass_threshold = 5)
 initial_condition$res <- unlist(result)
 
-image(matrix(ifelse(initial_condition$res == "winners: sp1, sp2, sp3", 1,0), byrow = T, ncol = 10))
+```
 
+
+```{r, eval=F}
+library(parallel)
+
+time_steps <- 1000
+resolution <- 5
+
+
+# Calculate the number of cores
+no_cores <- detectCores() - 2
+
+# Initiate cluster
+cl <- makeCluster(no_cores, type="FORK")
+
+
+r_star_5_par <- function(x, time_steps, resolution){
+
+# set up initial conditions to vary across species 2 & 4
+initial_condition <- expand.grid(sp2=seq(0.00001,2,length.out = resolution), sp4=seq(0,2,length.out = resolution)) 
+initial_condition$sp1 <- initial_condition$sp3 <- initial_condition$sp5 <- 0.1
+initial_condition$R1 <- initial_condition$R2 <- initial_condition$R3 <- 10
+
+# re-arrange according to species identity
+initial_condition <- initial_condition[, c(5,1,4,2,3,6,7,8) ] 
+
+init <- as.numeric(initial_condition[x, ])
+
+list(ode(y = init, times = 1:time_steps, func = r_star_5))
+  
+}
+
+clusterExport(cl, list("r_star_5_par", "time_steps", "resolution"))
+
+
+
+#basins <- lapply(1:nrow(initial_condition), function(x) ode(y = as.numeric(initial_condition[x, ]), times = 1:time_steps, func = r_star_5))
+basins2 <- parLapply(cl, 1:25, function(x) {r_star_5_par(x, time_steps, resolution)})
+
+
+
+
+
+str(out)
+save(basins2, file = "/Users/frank/Documents/Git projects/RREEBES/Huisman_Weissing_2001/basins2.RData")
 
 
 
 
 ```
 
+
+
+
+
+```{r}
+#image(matrix(ifelse(initial_condition$res == "winners: sp1, sp2, sp3", 1,0), byrow = F, ncol = 40),col=c("blue", "yellow"))
+
+library(ggplot2)
+ggplot(initial_condition, aes(x=sp2, y=sp4, fill=as.numeric(as.factor(initial_condition$res)))) + geom_tile() + scale_fill_gradient(low = "yellow", high = "blue") + guides(fill=F) + coord_fixed()
+
+
+```
 
