@@ -225,6 +225,10 @@ save(basins, file = "/Users/frank/Documents/Git projects/RREEBES/Huisman_Weissin
 
 
 ```{r, eval=F}
+
+# very time consuming code for reproducing figure 3
+
+
 library(parallel)
 
 time_steps <- 1000
@@ -268,9 +272,6 @@ clusterExport(cl, list("r_star_5_par", "time_steps", "resolution"))
 #basins <- lapply(1:nrow(initial_condition), function(x) ode(y = as.numeric(initial_condition[x, ]), times = 1:time_steps, func = r_star_5))
 basins2 <- parLapply(cl, 1:nrow(initial_condition), function(x) {r_star_5_par(x, time_steps, resolution)})
 save(basins2, file = "/Users/frank/Documents/Git projects/RREEBES/Huisman_Weissing_2001/basins2.RData")
-
-
-
 
 ```
 
