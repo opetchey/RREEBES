@@ -213,7 +213,11 @@ initial_condition$R1 <- initial_condition$R2 <- initial_condition$R3 <- 10
 # re-arrange according to species identity
 initial_condition <- initial_condition[, c(5,1,4,2,3,6,7,8) ]
 
-basins <- lapply(1:nrow(initial_condition), function(x) ode(y = as.numeric(initial_condition[x, ]), times = 1:2000, func = r_star_5))
+tic <- Sys.time()
+basins <- lapply(1:1, function(x) ode(y = as.numeric(initial_condition[x, ]), times = 1:2000, func = r_star_5))
+toc <- Sys.time()
+toc-tic
+
 save(basins, file = "/Users/frank/Documents/Git projects/RREEBES/Huisman_Weissing_2001/basins2.RData")
 
 # check one output
@@ -223,16 +227,9 @@ save(basins, file = "/Users/frank/Documents/Git projects/RREEBES/Huisman_Weissin
 
 ```
 
+Set up initial conditions: 
 
 ```{r, eval=F}
-
-# very time consuming code for reproducing figure 3
-
-
-library(parallel)
-
-time_steps <- 1000
-resolution <- 400
 
 # set up initial conditions to vary across species 2 & 4
 initial_condition <- expand.grid(sp2=seq(0.00001,2,length.out = resolution), sp4=seq(0,2,length.out = resolution)) 
@@ -241,13 +238,20 @@ initial_condition$R1 <- initial_condition$R2 <- initial_condition$R3 <- 10
 
 # re-arrange according to species identity
 initial_condition <- initial_condition[, c(5,1,4,2,3,6,7,8)]
+```
+
+Simulate:
+
+```{r, eval=F}
+library(parallel)
+
+# very time consuming code for reproducing figure 3
 
 # Calculate the number of cores
 no_cores <- detectCores() - 2
 
 # Initiate cluster
 cl <- makeCluster(no_cores, type="FORK")
-
 
 r_star_5_par <- function(x, time_steps, resolution){
 
@@ -267,15 +271,17 @@ list(ode(y = init, times = 1:time_steps, func = r_star_5))
 
 clusterExport(cl, list("r_star_5_par", "time_steps", "resolution"))
 
-
-
 #basins <- lapply(1:nrow(initial_condition), function(x) ode(y = as.numeric(initial_condition[x, ]), times = 1:time_steps, func = r_star_5))
 basins2 <- parLapply(cl, 1:nrow(initial_condition), function(x) {r_star_5_par(x, time_steps, resolution)})
-save(basins2, file = "/Users/frank/Documents/Git projects/RREEBES/Huisman_Weissing_2001/basins2.RData")
+#save(basins2, file = "/Users/frankpennekamp/Github/RREEBES/Huisman_Weissing_2001/basins2.RData")
+
+stopCluster(cl)
 
 ```
 
 ```{r}
+load(file = "/Users/frankpennekamp/Github/RREEBES/Huisman_Weissing_2001/basins2.RData")
+
 # evaluate which species persist
 comp_out <- function(x, time, biomass_threshold){ 
   x <- as.data.frame(x)
@@ -286,7 +292,7 @@ comp_out <- function(x, time, biomass_threshold){
   
   }
                                        
-result <- lapply(basins2, comp_out, time = 2000, biomass_threshold = 5)
+result <- lapply(basins2, comp_out, time = time_steps, biomass_threshold = 5)
 initial_condition$res <- unlist(result)
 ```
 
