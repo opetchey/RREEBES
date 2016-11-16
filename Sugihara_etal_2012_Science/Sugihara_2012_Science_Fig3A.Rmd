@@ -1,7 +1,7 @@
 ---
-title: 'Figure 3A, Sugihara et al (2012) Science, 338: 496'
+title: 'Convergent cross mapping, partial reproduction (Figure 3A), Sugihara et al (2012) Science, 338: 496'
 author: "Owen Petchey"
-date: "5 April 2016"
+date: "16 November 2016"
 output: 
   html_document: 
     toc: yes
@@ -14,6 +14,7 @@ The following reproduces, approximately, figure 3A in [Sugihara et al (2012) Sci
 ```{r setup}
 rm(list=ls())
 library(ggplot2)
+library(rEDM)
 ```
 
 Two functions: The first makes time delayed (embedded) representations of a variable. The second gets the convergence of the cross mapping derived estimates.
@@ -148,8 +149,6 @@ qplot(data=X_xmap_Y, x=lib_size, y=rho) +
   geom_line(data=rhos_X_Y, aes(x=L, y=rho)) +
   geom_line(data=rhos_Y_X, aes(x=L, y=rho), col="blue")
 ```
-
-
 
 # No causal relationship
 
