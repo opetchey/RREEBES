@@ -18,6 +18,24 @@ What to attempt next week (to be refered to next week)?
 
 Meeting minutes for 2015 are archived [here](meeting_minutes_2015.md).
 
+# 15.11.2016 (Minutes by Mikael)
+
+## Attendance: 
+Vanessa, Ale, Owen, Frank and Mikael
+
+## New papers: 
+No new papers
+
+## Issues: 
+Owen will update Sugihara reproduction, work in progress 
+Check out OSF.
+Berlin people will do a workshop inspired by REEBES.
+
+## Progress reports:
+Frank presented production about Huisman & Weissing 2001 where an ODE model was used to study chaotic community dynamics.   
+Ale improved on some figures for here reproduction and for her own research.  
+
+
 # 1.11.2016 (minutes by Andrea)
 
 ## Attendance:
