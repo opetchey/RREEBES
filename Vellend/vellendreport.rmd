@@ -68,13 +68,25 @@ R code for reproduction
 ```{r}
 #read data
 #install.packages("RCurl")
-#setwd("~/Documents/RREEBES/Vellend")
+library(RCurl)
+setwd("~/Documents/RREEBES/Vellend")
 dat <- read.table(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Vellend/vellend%20analyses%20reproduction/vellend_original_data.txt"), check.names=FALSE, header=TRUE) 
 ```
 
-
-
 ```{r}
+#make map of the world and lay points from data coordinates
+#install.packages("rworldmap")
+#install.packages("rworldxtra")
+library(rworldmap)
+newmap <- getMap(resolution = "low")
+plot(newmap)
+points(dat$Longitud, dat$Latitude, col= "red", cex = .6)
+
+#another (nicer) way - world map - legend missing
+library("ggmap")
+library(maptools)
+library(maps)
+
 world <- map_data("world")
 ggplot() + geom_polygon(data=world, aes(x=long, y=lat, group = group), colour="white", fill="grey10" ) +
   geom_point(aes(x = Longitude, y = Latitude, colour=Habitat), data=dat)
@@ -91,7 +103,7 @@ ggplot() + geom_polygon(data=filter(world, region %in% c("USA", "Canada", "Mexic
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 
 #make map of USA and Europe with points - this package uses Google maps
 #install.packages("ggmap")
@@ -120,8 +132,16 @@ dat$ratio<- log(dat$SR_Year2_CT/dat$SR_Year1_CT)  #gives you the simple log rati
 dat$ratiostandard<-dat$ratio/dat$Duration  #would give you the effect size standarized that they claim to have used in the paper
 View(dat)
 
+## Here is the initial species richness against the final richness.
 qplot(x=log10(SR_Year1_CT), y=log10(SR_Year2_CT), colour=log10(Duration), size=5, data=dat) +
   geom_abline(intercept=0, slope=1, linetype="dashed")
+
+## get the number of non NAs log ratios in the supplied log ratio variable
+sum(!is.na(dat$log_SR_ratio))
+
+## get the number of non NAs log ratios in the data we just calculated
+sum(!is.na(dat$ratiostandard))
+
 
 #exclude rows with NA in Species Richness column 
 na_dat1 <- dat[is.na(dat$ratiostandard),]
@@ -162,6 +182,8 @@ Since authors divided the effect size for the duration, I will divide also the v
 dat2ef$yistand<-dat2ef$yi / dat2ef$Duration
 dat2ef$vistand<-dat2ef$vi / dat2ef$Duration
 
+
+qplot(yistand, data=dat2ef)
 
 #fit fixed effects model to standarized effect sizes
 res<-rma(yi=dat2ef$yistand, vi=dat2ef$vistand, method="FE", data=dat2ef)
