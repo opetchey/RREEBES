@@ -261,20 +261,76 @@ fig2d_additive
 
 
 # Figure 3
+The figure 3 represents the population growth rates of C. reinhardtii in test environmnents containing high CO2, low pH, and high temperature.
+```{r fig3_select_data}
+subsetA_fig3 <- subset(dd, Co2=="yes" & Temp=="yes" & pH=="yes")
+subsetB_fig3 <- subset(dd, treatment=="Co2" | treatment=="Temp" | treatment=="Ph" | treatment=="Co2/Ph" | treatment=="Co2/Temp" | treatment=="Temp/Ph")
 
+subset_fig3 <- rbind(subsetB_fig3, subsetA_fig3)
+unique(subset_fig3$treatment)
+```
+
+Estimate the mean and the standard deviation for each regime, for the subset of the data set.
+```{r mean_per_regime_subset}
+mean_per_regime_subset <- ddply(.data=subset_fig3, .(regime,treatment), summarise, mean=mean(perDay),sd=sd(perDay))
+mean_per_regime_subset <- unique(merge(dd[,c("treatment","NED")], mean_per_regime_subset, by="treatment"))
+str(mean_per_regime_subset)
+
+pd <- position_dodge(width=0.3)
+lims <- aes(ymin=mean-sd, ymax=mean+sd)
 ```
 
 
+```{r plot_fig3}
+ggplot(data=mean_per_regime_subset, aes(x=NED, y=mean, group=treatment)) +
+  geom_errorbar(lims, position = pd, width=0) +
+  geom_point(aes(shape=treatment), position = pd, size=2) + geom_line()+
+  scale_shape_manual(values=rep(c(1:6),3)) +
+  geom_hline(aes(yintercept=mean_per_regime[which(mean_per_regime$NED==0),"mean"]), linetype=2) +
+  labs(x="Number of environmental drivers", y="Average cell division rate (per day)") +
+  theme_bw()+
+  theme(legend.position="none")
+```
 
-# Figure 3
+Add lines between the treatments. The lines represent the addition of a perturbation to a regime (i.e., combination of multiple perturbations). For example, a line will link the treatment "Co2" with "Co2/Temp" to highlight the addition of temperature treatment. The estimation of means and standard deviations for each treatment were stored in the dataset "line".
+```{r add_line}
+line <- read.csv(text=getURL("http://datadryad.org/bitstream/handle/10255/dryad.86870/All_lines_030515.csv?sequence=1"), check.names=FALSE)
+line <- unique(merge(dd[,c("treatment","NED")], line, by="treatment"))
+line$group <- as.factor(line$group)
+str(line)
+```
 
+```{r plot_fig3_with_lines}
+fig3 <- ggplot() +
+  geom_point(data=mean_per_regime_subset, aes(x=NED, y=mean, fill=treatment), size=4, shape=21) +
+  geom_errorbar(data=mean_per_regime_subset, aes(x=NED, ymin=mean-sd, ymax=mean+sd), width=0) +
+    geom_line(data = subset(line, group=="1"), aes(x = NED, y = mean), linetype = "solid",col="purple") +
+    geom_line(data = subset(line, group=="2"), aes(x = NED, y = mean), linetype = "solid",col="orange") +
+    geom_line(data = subset(line, group=="3"), aes(x = NED, y = mean), linetype = "dashed",col="purple") +
+    geom_line(data = subset(line, group=="4"), aes(x = NED, y = mean), linetype = "dashed",col="orange") +
+    geom_line(data = subset(line, group=="5"), aes(x = NED, y = mean), linetype = 1,col="black") +
+    geom_line(data = subset(line, group=="6"), aes(x = NED, y = mean), linetype = 2,col="black") +
+    geom_line(data = subset(line, group=="7"), aes(x = NED, y = mean), linetype = 3,col="black") +
+    geom_line(data = subset(line, group=="8"), aes(x = NED, y = mean), linetype = 4,col="black") +
+    geom_line(data = subset(line, group=="9"), aes(x = NED, y = mean), linetype = 5,col="black") +
+    geom_line(data = subset(line, group=="10"), aes(x = NED, y = mean), linetype = 6,col="black")+
+    annotate("text",  x = 4.25, y = 0.65, label = "+ LI")+
+    annotate("text",  x = 5.25, y = 0.67, label = "+ UV")+
+    annotate("text",  x = 6.25, y = 0.45, label = "+ ND")+
+    annotate("text",  x = 7.25, y = 0.13, label = "+ P")+
+    annotate("text",  x = 5.25, y = 0.30 , label = "+ Herb")+
+    annotate("text",  x = 6.25, y = 0.29, label = "+ UV")+
+    annotate("text",  x = 7.25, y = 0.30, label = "+ ND")+
+    annotate("text",  x = 7.25, y = 0.46, label = "+ P")+
+    annotate("text",  x = 7.25, y = 0.38, label = "+ Herb")+
+  scale_shape_manual(values=rep(c(1:6),3)) +
+  geom_hline(aes(yintercept=mean_per_regime[which(mean_per_regime$NED==0),"mean"]), linetype=2) +
+  labs(x="Number of environmental drivers", y="Average cell division rate (per day)") +
+  theme_bw()+
+  theme(legend.position="none")
+fig3
 
+```
 
-# Figure S1
-# Figure S2
-# Figure S3
-# Figure S4
-# Figure S6a-b-c-d
-# Figure S7
 
 
