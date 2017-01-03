@@ -25,6 +25,8 @@ TMM: How do early warning signals perform when two environmental changes act sim
 
 [Huisman, J. & Weissing, F.J. (2001) Fundamental unpredictability in multispecies competition. The American naturalist, 157, 488–494.](http://www.jstor.org/stable/10.1086/319929?seq=1) (Frank)
 
+[Gotelli N. & Ellison A. (2006) Food-web models predict species abundances in response to habitat change. PlosBiology](http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0040324) (Aurelie)
+
 # Papers without appropriate data
 
 [Graham, N.A.J., Jennings, S., MacNeil, M.A., Mouillot, D. & Wilson, S.K. (2015) Predicting climate-driven regime shifts versus rebound potential in coral reefs. Nature, 518, 94–97.](http://www.nature.com/nature/journal/v518/n7537/full/nature14140.html)  Authors contacted. Data available on request, but could not be made public, so reproduction here not possible.
