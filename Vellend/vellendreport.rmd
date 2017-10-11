@@ -5,6 +5,22 @@ date: "4 October 2016"
 output: html_document
 ---
 
+```{r}
+rm(list=ls())
+#library("ggmap")
+#library(maptools)
+library(maps)
+library(RCurl)
+library(ggplot2)
+library(dplyr)
+library("metafor")
+library(RCurl)
+
+
+```
+
+
+
 # Introduction
 
 
@@ -51,46 +67,48 @@ R code for reproduction
 
 ```{r}
 #read data
-install.packages("RCurl")
+#install.packages("RCurl")
 library(RCurl)
 setwd("~/Documents/RREEBES/Vellend")
 dat <- read.table(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Vellend/vellend%20analyses%20reproduction/vellend_original_data.txt"), check.names=FALSE, header=TRUE) 
+```
 
+```{r}
 #make map of the world and lay points from data coordinates
-install.packages("rworldmap")
-install.packages("rworldxtra")
+#install.packages("rworldmap")
+#install.packages("rworldxtra")
 library(rworldmap)
 newmap <- getMap(resolution = "low")
 plot(newmap)
 points(dat$Longitud, dat$Latitude, col= "red", cex = .6)
 
-#another (nicer) way - world map - /legend missing/
+#another (nicer) way - world map - legend missing
 library("ggmap")
 library(maptools)
 library(maps)
 
-map("world", fill=TRUE, col="white", bg="white", ylim=c(-60, 90), mar=c(0,0,0,0))
-points(dat$Longitud, dat$Latitude, col=dat$Habitat, pch=16, cex=0.8)
-title("Figure 1: Coordinates from studies")
-legend("bottomleft", horiz = TRUE, col=dat$Habitat) # not working legend
+world <- map_data("world")
+ggplot() + geom_polygon(data=world, aes(x=long, y=lat, group = group), colour="white", fill="grey10" ) +
+  geom_point(aes(x = Longitude, y = Latitude, colour=Habitat), data=dat)
+
+```
 
 
-##failed attempt with ggplot2
-library(ggplot2)
-#  world <- map_data("world")
-#  worldmap <- ggplot(world, aes(x=long, y=lat, group=group)) 
-#  + geom_path() 
-#  + scale_y_continuous(breaks=(-2:2) * 30) 
-#  + scale_x_continuous(breaks=(-5:5) * 45) 
-#  worldmappoints<- worldmap + (geom_point(aes(x = dat$Longitud, y = #  dat$Latitude, colour=dat$Habitat), data=dat)
-#  plot(worldmap)
+```{r}
+ggplot() + geom_polygon(data=filter(world, region %in% c("USA", "Canada", "Mexico")),
+                        aes(x=long, y=lat, group = group), colour="white", fill="grey10" ) +
+  geom_point(aes(x = Longitude, y = Latitude, colour=Habitat), data=dat) +
+  xlim(-180, -50) + ylim(20, 90)
+
+```
 
 
+```{r, eval=FALSE}
 
 #make map of USA and Europe with points - this package uses Google maps
-install.packages("ggmap")
+#install.packages("ggmap")
 library(ggmap)
-mapEu <- get_map(location = 'Europe', zoom = 4)
+mapEu <- get_map(location = 'Europe', zoom = 4, source="osm")
 mapPointsEu <- ggmap(mapEu) + geom_point(aes(x = dat$Longitud, y = dat$Latitude, colour=dat$Habitat), data = dat, alpha = 1)
 mapPEu<- mapPointsEu + labs(colour="Habitat")
 plot(mapPEu)
@@ -106,15 +124,7 @@ plot(mapPUSA)
 * Load and understand data, exclude NA rows in species richness
 
 ```{r}
-#clear R, load packages, load data
-rm(list=ls())
-install.packages("metafor")
-library("metafor")
-install.packages("RCurl")
-library(RCurl)
 
-setwd("~/Documents/RREEBES/Vellend")
-dat <- read.table(text=getURL("https://raw.githubusercontent.com/opetchey/RREEBES/master/Vellend/vellend%20analyses%20reproduction/vellend_original_data.txt"), check.names=FALSE, header=TRUE) 
 View(dat)
 
 #to understand the original data
@@ -122,22 +132,43 @@ dat$ratio<- log(dat$SR_Year2_CT/dat$SR_Year1_CT)  #gives you the simple log rati
 dat$ratiostandard<-dat$ratio/dat$Duration  #would give you the effect size standarized that they claim to have used in the paper
 View(dat)
 
+## Here is the initial species richness against the final richness.
+qplot(x=log10(SR_Year1_CT), y=log10(SR_Year2_CT), colour=log10(Duration), size=5, data=dat) +
+  geom_abline(intercept=0, slope=1, linetype="dashed")
+
+## get the number of non NAs log ratios in the supplied log ratio variable
+sum(!is.na(dat$log_SR_ratio))
+
+## get the number of non NAs log ratios in the data we just calculated
+sum(!is.na(dat$ratiostandard))
+
+
 #exclude rows with NA in Species Richness column 
-dat2<-dat[!is.na(dat$log_SR_ratio),]
+na_dat1 <- dat[is.na(dat$ratiostandard),]
+na_dat2 <- dat[is.na(dat$log_SR_ratio),]
+dat1 <- filter(dat, !is.na(ratiostandard))
+dat2 <- filter(dat, SR_analysis==1)
 View(dat2)
 
 ```
 
-Original database has 346 observations (dat). Excluding those with NA in species richness column, I have 318 observations (dat2). 
+Original database has 346 observations (dat). Excluding those with NA in species richness column, I have 318 observations (dat2) (same as stated are used in the publication). Though note that the original dataset does not allow us to recalculate the change in species richness for 13 rows of data since there is no species richness data present. These data from from source s139. When we use only data available in the published dataset to recalculate the ratio, we can have only 305 observations.
+
 
 * Calculate effect size yi and its variance vi
 ```{r}
 
 #effect size calculation with log transformed ratio of means, to compare with authors calculation in column "log_SR_ratio"
-dat2ef <- escalc(measure="ROM", n1i=dat2$N_plots_Year2, n2i=dat2$N_plots_Year1, m1i=dat2$SR_Year2_CT, m2i=dat2$SR_Year1_CT, sd1i=dat2$SR_Year1_STDEV, sd2i=dat2$SR_Year2_STDEV, data=dat2)
+dat2ef <- escalc(measure="ROM",
+                 n1i=dat2$N_plots_Year2, n2i=dat2$N_plots_Year1,
+                 m1i=dat2$SR_Year2_CT, m2i=dat2$SR_Year1_CT,
+                 sd1i=dat2$SR_Year1_STDEV, sd2i=dat2$SR_Year2_STDEV,
+                 data=dat2)
 View(dat2ef)
 
 ```
+
+As mentioned before, the raw data allow us to look only at 305 observations.
 
 The authors used "log transformed ratio of means" divided by the standarized time (column: "duration"). Data calculated by us with function escalc using "ROM" fits original data ("yi" matches data in "log_SR_ratio"). "escalc" provides a variance associated with this effect size (vi). Note that there are lots of rows with NA in vi, given that there a lots of standard deviation missing in the original data for 1 of the years of the survey. 
 
@@ -152,8 +183,10 @@ dat2ef$yistand<-dat2ef$yi / dat2ef$Duration
 dat2ef$vistand<-dat2ef$vi / dat2ef$Duration
 
 
+qplot(yistand, data=dat2ef)
+
 #fit fixed effects model to standarized effect sizes
-res<-rma(yi=dat2ef$yistand,vi=dat2ef$vistand,method="FE", data=dat2ef)
+res<-rma(yi=dat2ef$yistand, vi=dat2ef$vistand, method="FE", data=dat2ef)
 print(res,digits=3)
 ```
 
@@ -189,7 +222,9 @@ hist(dat2effinal$yi, breaks=10, ylab = "Number of studies", xlab="Effect size (l
 
 #barplot using qplot
 
-qplot(yi, ylab = "Number of studies", xlab="Effect size (log SRy1/SRy2)", main="Figure 2", xlim = c(-2, 2), bins=25, data=dat2effinal) # from subset data (107 studies) 
+qplot(yi, ylab = "Number of studies", xlab="Effect size (log SRy1/SRy2)", main="Figure 2", xlim = c(-2, 2), bins=25, data=dat2effinal) # from
+qplot(yi, ylab = "Number of studies", xlab="Effect size (log SRy1/SRy2)", main="Figure 2", xlim = c(-2, 2),
+      boundary=0, binwidth=0.2, data=dat2effinal) # from subset data (107 studies) 
 
 qplot(yi, ylab = "Number of studies", xlab="Effect size (log SRy1/SRy2)", main="Figure 2", xlim = c(-2, 2), bins=25, data=dat2ef, colour=Habitat, center=0) # from original data 
 ```
