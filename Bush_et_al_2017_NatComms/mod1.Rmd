@@ -1,0 +1,232 @@
+---
+title: "Reproduction of ecosystem model in *Oxic-anoxic regime shifts mediated by feedbacks between biogeochemical processes and microbial community dynamics* by Bush et al (2017) Nature Communications"
+author: "Owen Petchey (and others?)"
+date: "9/28/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(deSolve)
+```
+
+# Introduction
+
+The aim is to reproduce the model based results / figures.
+
+Here is the original publication:
+https://www.nature.com/articles/s41467-017-00912-x
+
+And here is the supplementary information, including the table of parameter values:
+https://static-content.springer.com/esm/art%3A10.1038%2Fs41467-017-00912-x/MediaObjects/41467_2017_912_MOESM1_ESM.pdf
+
+Note that below I go with the notation from the table S1 and not the main text. However there is only one small difference between these: In the main text the notation is simplified to y_S_PB (which is y_SR_PB in Table S1) and y_S_SB (which is y_SO_SB in Table S1).
+
+
+# Reproduce the model
+
+Growth rate function on one or two resources, X, and Y:
+```{r}
+growth1 <- function(X, g_max, k_X)
+  g_max * ( X / (k_X + X) )
+growth2 <- function(X, Y, g_max, k_X, k_Y)
+  g_max * ( X / (k_X + X) ) * ( Y / (k_Y + Y))
+```
+
+Inhibition function:
+```{r}
+inhibition <- function(X, h_X)
+  1 / (1 + (X / h_X))
+```
+
+The rate equations:
+```{r}
+micro_mod <- function(t, state, parameters) {
+  
+  with(as.list(c(state, parameters)),{
+    
+    # rates of change
+    N_CB_growth_rate <- growth1(P, g_max_CB, k_CB_P) * inhibition(SR, h_SR_CB) * N_CB 
+    N_CB_mortality_rate <- m_CB * N_CB
+    N_CB_rate <- N_CB_growth_rate - N_CB_mortality_rate
+    
+    N_PB_growth_rate <- growth2(P, SR, g_max_PB, k_PB_P, k_PB_SR) * inhibition(O, h_O_PB) * N_PB
+    N_PB_mortality_rate <- m_PB * N_PB
+    N_PB_rate <- N_PB_growth_rate - N_PB_mortality_rate
+    
+    N_SB_growth_rate <- growth2(P, SO, g_max_SB, k_SB_P, k_SB_SO) * inhibition(O, h_O_SB) * N_SB
+    N_SB_mortality_rate <- m_SB * N_SB
+    N_SB_rate <- N_SB_growth_rate - N_SB_mortality_rate
+    
+    SO_rate <- 1 / Y_SR_PB * N_PB_growth_rate -
+      1 / Y_SO_SB * N_SB_growth_rate +
+      c * O * SR +
+      a_S * (back_SO - SO) 
+    
+    SR_rate <- - 1 / Y_SR_PB * N_PB_growth_rate +
+      1 / Y_SO_SB * N_SB_growth_rate -
+      c * O * SR +
+      a_S * (back_SR - SR) 
+    
+    O_rate <- P_CB * N_CB_growth_rate -
+      c * O * SR +
+      a_O * (back_O - O)
+    
+    P_rate <- - 1 / y_P_CB * N_CB_growth_rate -
+      1 / y_P_PB * N_PB_growth_rate -
+      1 / y_P_SB * N_PB_growth_rate +
+      a_P * (back_P - P)
+    
+    # return the rate of change
+    list(c(N_CB_rate, N_PB_rate, N_SB_rate,
+           SO_rate, SR_rate, O_rate, P_rate))
+    
+  })
+  
+}
+```
+
+Parameter values:
+```{r}
+parameters <- c(g_max_CB = 0.05,
+                g_max_PB = 0.07,
+                g_max_SB = 0.1,
+                
+                k_PB_SR = 10,
+                k_SB_SO = 5,
+                k_CB_P = 0.2,
+                k_PB_P = 0.5,
+                k_SB_P = 0.5,
+                
+                h_SR_CB = 300,
+                h_O_PB = 100,
+                h_O_SB = 100,
+                
+                Y_SO_SB = 3.33e7,  
+                Y_SR_PB = 1.25e7, ## Y_S_PB in the main text
+                y_P_CB = 1.67e8,
+                y_P_PB = 1.67e8,
+                y_P_SB = 1.67e8,
+                
+                P_CB = 6e-9,
+                
+                m_CB = 0.02,
+                m_PB = 0.028,
+                m_SB = 0.04,
+                
+                a_S = 0.001,
+                a_O = 8e-4,
+                a_P = 0.01,
+                
+                back_SR = 300,
+                back_SO = 300,
+                back_O = 300,
+                back_P = 9.5,
+                
+                c = 4e-5)
+
+times <- seq(0, 5000, by = 1)
+
+```
+
+# Figure 2a, b
+
+```{r}
+state <- c(N_CB = 5e1,
+           N_PB = 1e7,
+           N_SB = 1e7,
+           SO = 300,
+           SR = 300,
+           O = 1e1,
+           P = 1e1)
+
+out <- as.data.frame(ode(y = state,
+                         times = times,
+                         func = micro_mod,
+                         parms = parameters,
+                         method = "radau"))
+out %>%
+  gather(species, quantity, 2:ncol(out)) %>%
+  mutate(var_type=ifelse(str_sub(species, 1, 1)=="N", "Organism", "Substrate"),
+         trans_quantity=ifelse(var_type=="Organism", log10(quantity), quantity)) %>%
+  ggplot(aes(x=time/24, y=trans_quantity, col=species)) +
+  facet_wrap(~var_type, scales = "free", ncol = 1) +
+  geom_line()
+```
+
+Population dynamics seem as in the paper.
+**Resource dynamics fluctuate more than in the paper.**
+
+# Figure 2c, d
+
+```{r}
+state <- c(N_CB = 1e8,
+           N_PB = 1e2,
+           N_SB = 1e2,
+           SO = 500,
+           SR = 50,
+           O = 300,
+           P = 4)
+out <- as.data.frame(ode(y = state,
+                         times = times,
+                         func = micro_mod,
+                         parms = parameters,
+                         method = "radau"))
+out %>%
+  gather(species, quantity, 2:ncol(out)) %>%
+  mutate(var_type=ifelse(str_sub(species, 1, 1)=="N", "Organism", "Substrate"),
+         trans_quantity=ifelse(var_type=="Organism", log10(quantity), quantity)) %>%
+  ggplot(aes(x=time/24, y=trans_quantity, col=species)) +
+  facet_wrap(~var_type, scales = "free", ncol = 1) +
+  geom_line()
+
+```
+
+Population and resource dynamics see as those in the paper.
+
+# Figure 3
+
+```{r eval=TRUE}
+get_final_states <- function(x) {
+  #print(x)
+  state["N_CB"] <- x["N_CB"]
+  parameters["a_O"] <- x["a_O"]
+  #print(state)
+   as.data.frame(ode(y=state,
+                         times = times,
+                         func = micro_mod,
+                         parms = parameters,
+                         method = "radau"))[2,-1]
+}
+
+
+times <- seq(0, 5000, by = 5000)
+state <- c(N_CB = NA,
+           N_PB = 1e8,
+           N_SB = 1e8,
+           SO = 250,
+           SR = 350,
+           O = 150,
+           P = 9.5)
+
+expt <- expand.grid(N_CB=10^seq(0, 10, length=20),
+                   a_O = 10^seq(-10, -2, length=20))
+
+result <- apply(expt, 1, function(x) get_final_states(x)) %>%
+                          tibble() %>%
+                          unnest() %>%
+                          mutate(initial_N_CB=expt$N_CB,
+                                 a_O=expt$a_O)
+
+ggplot(result, aes(x=log10(a_O), y=(N_CB))) +
+  geom_point()
+ggplot(result, aes(x=log10(a_O), y=(log10(O)))) +
+  geom_point()
+
+```
+
+**This reproduction of the model is not able to reproduce the single stable state at low levels of oxygen diffusivity.**
