@@ -204,7 +204,7 @@ get_final_states <- function(x) {
 }
 
 
-times <- seq(0, 5000, by = 5000)
+times <- seq(0, 50000, by = 50000)
 state <- c(N_CB = NA,
            N_PB = 1e8,
            N_SB = 1e8,
@@ -213,8 +213,8 @@ state <- c(N_CB = NA,
            O = 150,
            P = 9.5)
 
-expt <- expand.grid(N_CB=10^seq(0, 10, length=20),
-                   a_O = 10^seq(-10, -2, length=20))
+expt <- expand.grid(N_CB=10^seq(0, 10, length=2),
+                   a_O = 10^seq(-6, -2, length=10))
 
 result <- apply(expt, 1, function(x) get_final_states(x)) %>%
                           tibble() %>%
@@ -229,4 +229,4 @@ ggplot(result, aes(x=log10(a_O), y=(log10(O)))) +
 
 ```
 
-**This reproduction of the model is not able to reproduce the single stable state at low levels of oxygen diffusivity.**
+These graphs show an at least qualitative match to the result in the paper.
