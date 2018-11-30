@@ -9,6 +9,9 @@ output:
     toc: yes
 ---
 
+# This document is published with DOI [10.5281/zenodo.57081](https://zenodo.org/record/57081#.XAFXqy2ZPOQ).
+
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ## preliminaries
 rm(list=ls())
@@ -28,6 +31,7 @@ Simplex projection is an important method for forecasting times series. The aim 
 This document was created in Rmarkdown [the Rmarkdown version on github](https://github.com/opetchey/RREEBES/tree/master/Sugihara_and_May_1990_Nature).
 
 This document is one from [a collection of reproductions / explanations](http://opetchey.github.io/RREEBES).
+
 
 ## Why should you care about simplex projection?
 
