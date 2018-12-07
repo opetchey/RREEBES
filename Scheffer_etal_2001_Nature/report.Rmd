@@ -222,3 +222,17 @@ ggplot(results3, aes(x=xs, y=height, col=as.factor(as))) +
 
 
 
+
+# Measuring amount of hysteresis
+
+Show relationship between p and two measures of hysteresis: mean of abs difference and fraction of environmental conditions for which there are two stable state.
+
+```{r}
+out2 <- data.frame(up_x=out$x[1:1000],
+                   down_x=out$x[2000:1001])
+ggplot(out2, aes(x=up_x, y=down_x)) + geom_point()
+dist = mean(abs(out2$up_x - out2$down_x))
+```
+
+
+
