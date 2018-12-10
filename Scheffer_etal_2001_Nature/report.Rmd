@@ -25,7 +25,8 @@ b = 1
 r = 1
 h = 1
 p = 1
-ps <- c(2, 5, 10, 20, 50)
+#ps <- c(2, 5, 10, 20, 50)
+ps <- c(seq(1, 5, by=1), 10, 20, 50)
 xs <- seq(0, 2, 0.01)
 ```
 
@@ -152,7 +153,7 @@ Here we simulate the model through time, with increasing and then decreasing env
 
 ```{r, echo=FALSE}
 
-this.p <- ps[3]
+this.p <- ps[6]
 parameters <- c(a = a, b = b, r = r, p = this.p, h = h)
 state <- c(x = 0.1)
 
@@ -205,7 +206,7 @@ as <- seq(0, 1, 0.1)
 as <- c(0.2, 0.35, 0.45, 0.5, 0.65, 0.8)
 expt3 <- expand.grid(as=as, xs=xs)
 results3 <- expt3 %>%
-  mutate(grad=dx_dt(x=xs, a=as, b=b, r=r, p=ps[3], h=h)) %>%
+  mutate(grad=dx_dt(x=xs, a=as, b=b, r=r, p=ps[6], h=h)) %>%
   arrange(as, xs) %>%
   group_by(as) %>%
   mutate(height=(-1*cumsum(grad)-min(-1*cumsum(grad))))
@@ -225,13 +226,74 @@ ggplot(results3, aes(x=xs, y=height, col=as.factor(as))) +
 
 # Measuring amount of hysteresis
 
-Show relationship between p and two measures of hysteresis: mean of abs difference and fraction of environmental conditions for which there are two stable state.
+Show relationship between feedback strength and a measure of the amount of nonlinearity in the state-environmental relationship, and the similarity in state dynamics between forward and reverse direction of environmental change.
 
 ```{r}
-out2 <- data.frame(up_x=out$x[1:1000],
+## get non-linearity and hysteresis for a value of p
+get_nl_hyst_by_p <- function(p) {
+  
+  this.p <- p
+  parameters <- c(a = a, b = b, r = r, p = this.p, h = h)
+  state <- c(x = 0.1)
+  
+  model <- function(t, state, parameters) {
+    with(as.list(c(state, parameters)), {
+      dx <- dx_dt(x, a_forcing2(t), b, r, p, h)
+      list(c(dx), a=a_forcing2(t))
+    })
+  }
+  
+  times <- seq(0, 200, by = 0.1)
+  a_forcing1 <- matrix(ncol=2, byrow=T, data=c(0,0, mean(times), 1, max(times), 0))
+  a_forcing2 <- approxfun(x = a_forcing1[,1], y = a_forcing1[,2], method = "linear", rule = 2)
+  out <- as.data.frame(ode(y = state, times = times, func = model, parms = parameters))
+  
+  ## nonlinearity
+  get_nl <- function(x, y)
+  {
+    lin_pred <- predict(lm(y ~ x))
+    gam_pred <- predict(mgcv::gam(y ~ s(x)))
+    L <- sqrt(sum((lin_pred-gam_pred)^2))/length(x)
+    L
+  }
+  nl_up <- get_nl(out$a[1:1000], out$x[1:1000])
+  nl_down <- get_nl(out$a[1001:2000], out$x[1001:2000])
+  
+  ## hysteresis
+  out2 <- data.frame(up_x=out$x[1:1000],
                    down_x=out$x[2000:1001])
-ggplot(out2, aes(x=up_x, y=down_x)) + geom_point()
-dist = mean(abs(out2$up_x - out2$down_x))
+  hyst = mean(abs(out2$up_x - out2$down_x))
+  
+  return(list(nl_up=nl_up, nl_down=nl_down, hyst=hyst))
+}
+  
+
+```
+
+
+
+```{r}
+#ps <- c(seq(1, 5, by=1), 10, 20, 50)
+ps <- 10^seq(0, log10(50), length=10)
+rezs <- lapply(ps, function(x) get_nl_hyst_by_p(x))
+
+expt3 <- expand.grid(ps=ps)
+
+results3 <- expt3 %>%
+  group_by(ps) %>%
+  do(rez = as.data.frame(get_nl_hyst_by_p(p=.$ps))) %>%
+  tidyr::unnest() %>%
+  gather(key=Variable, value=Value, 2:4) %>%
+  mutate(Variable=case_when(Variable=="nl_up" ~ "Non-linearity (up phase)",
+                            Variable=="nl_down" ~ "Non-linearity (down phase)",
+                            Variable=="hyst" ~ "Hysteresis"))
+
+ggplot(results3, aes(x=ps, y=Value)) +
+  facet_wrap(~Variable, scales = "free") +
+  geom_line() + geom_point() +
+  scale_x_log10() +
+  xlab("Strength of positive feedback")
+
 ```
 
 
