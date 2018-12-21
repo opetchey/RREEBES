@@ -223,14 +223,13 @@ ggplot(results3, aes(x=xs, y=height, col=as.factor(as))) +
 
 
 
-
-# Measuring amount of hysteresis
+# Effects of $p$ and rate of change of $a$
 
 Show relationship between feedback strength and a measure of the amount of nonlinearity in the state-environmental relationship, and the similarity in state dynamics between forward and reverse direction of environmental change.
 
 ```{r}
 ## get non-linearity and hysteresis for a value of p
-get_nl_hyst_by_p <- function(p) {
+get_nl_hyst_by_p <- function(p, inv_rate=20000) {
   
   this.p <- p
   parameters <- c(a = a, b = b, r = r, p = this.p, h = h)
@@ -243,7 +242,7 @@ get_nl_hyst_by_p <- function(p) {
     })
   }
   
-  times <- seq(0, 200, by = 0.1)
+  times <- seq(0, inv_rate, length = 2001)
   a_forcing1 <- matrix(ncol=2, byrow=T, data=c(0,0, mean(times), 1, max(times), 0))
   a_forcing2 <- approxfun(x = a_forcing1[,1], y = a_forcing1[,2], method = "linear", rule = 2)
   out <- as.data.frame(ode(y = state, times = times, func = model, parms = parameters))
@@ -274,27 +273,33 @@ get_nl_hyst_by_p <- function(p) {
 
 ```{r}
 #ps <- c(seq(1, 5, by=1), 10, 20, 50)
-ps <- 10^seq(0, log10(50), length=10)
-rezs <- lapply(ps, function(x) get_nl_hyst_by_p(x))
+ps <- 10^seq(0, log10(10), length=20)
+inv_rates <- c(200, 20000)
+#rezs <- lapply(ps, function(x) get_nl_hyst_by_p(x))
 
-expt3 <- expand.grid(ps=ps)
+expt3 <- expand.grid(ps=ps,
+                     inv_rates=inv_rates)
 
-results3 <- expt3 %>%
-  group_by(ps) %>%
-  do(rez = as.data.frame(get_nl_hyst_by_p(p=.$ps))) %>%
+temp_res3 <- expt3 %>%
+  group_by(ps, inv_rates) %>%
+  do(rez = as.data.frame(get_nl_hyst_by_p(p=.$ps, inv_rate = .$inv_rates)))
+
+results3 <- temp_res3 %>%
   tidyr::unnest() %>%
-  gather(key=Variable, value=Value, 2:4) %>%
+  gather(key=Variable, value=Value, 3:5) %>%
   mutate(Variable=case_when(Variable=="nl_up" ~ "Non-linearity (up phase)",
                             Variable=="nl_down" ~ "Non-linearity (down phase)",
-                            Variable=="hyst" ~ "Hysteresis"))
+                            Variable=="hyst" ~ "Hysteresis"),
+         `Simulation duration`=as.character(inv_rates))
 
-ggplot(results3, aes(x=ps, y=Value)) +
+ggplot(results3, aes(x=ps, y=Value, col=`Simulation duration`)) +
   facet_wrap(~Variable, scales = "free") +
   geom_line() + geom_point() +
   scale_x_log10() +
   xlab("Strength of positive feedback")
 
 ```
+
 
 
 
