@@ -290,13 +290,14 @@ results3 <- temp_res3 %>%
   mutate(Variable=case_when(Variable=="nl_up" ~ "Non-linearity (up phase)",
                             Variable=="nl_down" ~ "Non-linearity (down phase)",
                             Variable=="hyst" ~ "Hysteresis"),
-         `Simulation duration`=as.character(inv_rates))
+         `Simulation duration`=as.character(1/inv_rates))
 
 ggplot(results3, aes(x=ps, y=Value, col=`Simulation duration`)) +
   facet_wrap(~Variable, scales = "free") +
   geom_line() + geom_point() +
   scale_x_log10() +
-  xlab("Strength of positive feedback")
+  xlab("Strength of positive feedback") +
+  guides(colour=guide_legend(title="Rate of\nenvironmental\nchange"))
 
 ```
 
