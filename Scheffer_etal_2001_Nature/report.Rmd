@@ -252,7 +252,7 @@ get_nl_hyst_by_p <- function(p, inv_rate=20000) {
   {
     lin_pred <- predict(lm(y ~ x))
     gam_pred <- predict(mgcv::gam(y ~ s(x)))
-    L <- sqrt(sum((lin_pred-gam_pred)^2))/length(x)
+    L <- sqrt(sum((lin_pred-gam_pred)^2)/length(x)) ## RMSE calculation
     L
   }
   nl_up <- get_nl(out$a[1:1000], out$x[1:1000])
