@@ -229,7 +229,9 @@ Show relationship between feedback strength and a measure of the amount of nonli
 
 ```{r}
 ## get non-linearity and hysteresis for a value of p
-get_nl_hyst_by_p <- function(p, inv_rate=20000) {
+get_nl_hyst_by_p <- function(p, inv_rate=20000, a_forcing) {
+  
+  #print(p)
   
   this.p <- p
   parameters <- c(a = a, b = b, r = r, p = this.p, h = h)
@@ -243,7 +245,10 @@ get_nl_hyst_by_p <- function(p, inv_rate=20000) {
   }
   
   times <- seq(0, inv_rate, length = 2001)
-  a_forcing1 <- matrix(ncol=2, byrow=T, data=c(0,0, mean(times), 1, max(times), 0))
+  
+  a_forcing1 <- matrix(ncol=2, byrow=T, data=c(0, a_forcing[1],
+                                               mean(times), a_forcing[2],
+                                               max(times), a_forcing[3]))
   a_forcing2 <- approxfun(x = a_forcing1[,1], y = a_forcing1[,2], method = "linear", rule = 2)
   out <- as.data.frame(ode(y = state, times = times, func = model, parms = parameters))
   
@@ -280,9 +285,12 @@ inv_rates <- c(200, 20000)
 expt3 <- expand.grid(ps=ps,
                      inv_rates=inv_rates)
 
+## Here a starts low, increases, then decreases
+a_forcing <- c(0.001,1,0.001)
+
 temp_res3 <- expt3 %>%
   group_by(ps, inv_rates) %>%
-  do(rez = as.data.frame(get_nl_hyst_by_p(p=.$ps, inv_rate = .$inv_rates)))
+  do(rez = as.data.frame(get_nl_hyst_by_p(p=.$ps, inv_rate = .$inv_rates, a_forcing)))
 
 results3 <- temp_res3 %>%
   tidyr::unnest() %>%
@@ -301,6 +309,42 @@ ggplot(results3, aes(x=ps, y=Value, col=`Simulation duration`)) +
 
 ```
 
+
+
+
+
+```{r}
+#ps <- c(seq(1, 5, by=1), 10, 20, 50)
+ps <- 10^seq(0, log10(10), length=20)
+inv_rates <- c(200, 20000)
+#rezs <- lapply(ps, function(x) get_nl_hyst_by_p(x))
+
+expt3 <- expand.grid(ps=ps,
+                     inv_rates=inv_rates)
+
+## Here a starts high, decreases, then increases
+a_forcing <- c(1,0.001,1)
+
+temp_res3 <- expt3 %>%
+  group_by(ps, inv_rates) %>%
+  do(rez = as.data.frame(get_nl_hyst_by_p(p=.$ps, inv_rate = .$inv_rates, a_forcing)))
+
+results3 <- temp_res3 %>%
+  tidyr::unnest() %>%
+  gather(key=Variable, value=Value, 3:5) %>%
+  mutate(Variable=case_when(Variable=="nl_up" ~ "Non-linearity (down phase)",
+                            Variable=="nl_down" ~ "Non-linearity (up phase)",
+                            Variable=="hyst" ~ "Hysteresis"),
+         `Simulation duration`=as.character(1/inv_rates))
+
+ggplot(results3, aes(x=ps, y=Value, col=`Simulation duration`)) +
+  facet_wrap(~Variable, scales = "free") +
+  geom_line() + geom_point() +
+  scale_x_log10() +
+  xlab("Strength of positive feedback") +
+  guides(colour=guide_legend(title="Rate of\nenvironmental\nchange"))
+
+```
 
 
 
